@@ -18,11 +18,9 @@ How to Contribute
 -----------------
 To contribute to this documentation, first you have to fork it on GitHub and clone it to your machine, see `Fork a Repo <https://help.github.com/articles/fork-a-repo/>`_ for the GitHub documentation on this process.
 
-Once you have the git repository locally on your computer, you will need to install ``sphinx`` and ``sphinx_bootstrap_theme`` to be able to build the documentation. See the instructions below for how to achieve this.
+Once you have the git repository locally on your computer, you will need to install ``sphinx`` to be able to build the documentation. See the instructions below for how to achieve this.
 
 Once you have made your changes and updated your Fork on GitHub you will need to `Open a Pull Request <https://help.github.com/articles/using-pull-requests/>`_.
-All changes to the repository should be made through Pull Requests, including those made by the people with direct push access.
-
 
 Building the documentation on a local Windows machine
 #####################################################
