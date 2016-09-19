@@ -11,6 +11,8 @@ Rendered Documentation
 ----------------------
 Two versions of the documentation are currently automatically built from this repository:
 
+* `Cirrus Documentation (HTML) on ReadTheDocs <http://cirrus.readthedocs.io/>`_
+* `Cirrus Documentation (PDF) on ReadTheDocs <https://readthedocs.org/projects/cirrus/downloads/pdf/latest/>`_
 
 How to Contribute
 -----------------
@@ -29,10 +31,6 @@ Install the following:-
 
 * `Anaconda Python <https://store.continuum.io/cshop/anaconda>`_.
 
-Install the following module ::
-
-     pip install sphinx_bootstrap_theme
-
 To build the HTML documentation run::
 
     make html
@@ -48,7 +46,6 @@ Then from the command line, the following will build the .pdf file ::
 
 On first run, MikTeX will prompt you to install various extra LaTeX packages.
 
-
 Building the documentation on a local Linux machine
 ###################################################
 
@@ -56,21 +53,15 @@ Have
 
 * Python 2
 * sphinx
-* sphinx_bootstrap_theme
 
 installed, then run ::
 
      make html
 
-
 Building the documentation on a local Mac machine
 #################################################
 
-For the HTML documentation you will need ``sphinx`` and ``sphinx_bootstrap_theme``. If you do not already have a python distribution installed, we recommend you install `Anaconda Python <https://store.continuum.io/cshop/anaconda>`_.
-
-Then once installed, install the following module ::
-
-     pip install sphinx_bootstrap_theme
+For the HTML documentation you will need ``sphinx``. If you do not already have a python distribution installed, we recommend you install `Anaconda Python <https://store.continuum.io/cshop/anaconda>`_.
 
 To build the HTML documentation run::
 
