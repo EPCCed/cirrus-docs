@@ -3,7 +3,7 @@ Cirrus Documentation
 
 Cirrus is EPCC's Tier-2 High Performance Computing (HPC) cluster.
 
-This repository contains a proposed replacement for the page linked to above. It makes use of `Sphinx <http://sphinx-doc.org/>`_ to build the results and represents a move to a more open, collaborative way of working.
+This repository contains the documentation for the service and is linked to a rendered version on ReadTheDocs.
 
 For a guide on the rst file format see `this <http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html>`_ document.
 
