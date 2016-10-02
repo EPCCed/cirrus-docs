@@ -15,5 +15,5 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
 | `Documentation section <documentation/>`__ - Manuals, White Papers
 | `Support section <support/>`__ - Helpdesk, FAQ
 | `Acknowledging
-  Cirrus <documentation/user-guide/introduction.php#acknowledge>`__
+  Cirrus <documentation/user-guide/introduction.html#acknowledge>`__
 

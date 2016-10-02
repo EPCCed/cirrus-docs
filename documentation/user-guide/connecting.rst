@@ -257,5 +257,5 @@ man page <http://linux.die.net/man/5/ssh_config>`__ (or "man
 ssh\_config" on any machine with SSH installed) for a description of the
 SSH configuration file.
 
-`1. Introduction <introduction.php>`__ \| `Contents <../user-guide/>`__
-\| `3. Resource Management <resource_management.php>`__
+`1. Introduction <introduction.html>`__ \| `Contents <../user-guide/>`__
+\| `3. Resource Management <resource_management.html>`__

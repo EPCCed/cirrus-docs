@@ -62,5 +62,5 @@ Policies and Reports
 
 The policies that govern the operation and use of the Cirrus service:
 
--  `Terms and Conditions of Access <policies/tandc.php>`__
--  `Personal Data and Privacy Policy <policies/privacy.php>`__
+-  `Terms and Conditions of Access <policies/tandc.html>`__
+-  `Personal Data and Privacy Policy <policies/privacy.html>`__

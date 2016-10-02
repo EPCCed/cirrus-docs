@@ -39,7 +39,7 @@ kAU
     Cirrus CPU time is measured in kAU. Each job you run on the service
     consumes kAUs from your budget. You can find out more about kAUs and
     how to track your usage in the `Resource Management
-    chapter <resource_management.php>`__.
+    chapter <resource_management.html>`__.
 
 `Contents <../user-guide/>`__ \| `Connecting and Data
-Transfer <connecting.php>`__
+Transfer <connecting.html>`__

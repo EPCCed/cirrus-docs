@@ -2,7 +2,7 @@ Privacy Policy
 ==============
 
 In the `Terms and Conditions of
-Access </about-cirrus/policies/tandc.php>`__, the service undertakes to
+Access </about-cirrus/policies/tandc.html>`__, the service undertakes to
 observe this Policy. The service provider is also bound by the terms of
 its Data Protection Act notification.
 

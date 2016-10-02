@@ -20,11 +20,11 @@ management system. Through SAFE, individual users can request Curris
 accounts, reset passwords, see available resources and track their
 usage. All users must be registered on SAFE before they can apply for
 their machine account. `Go to the SAFE guide for individual
-users <safe-guide/safe-guide-users.php>`__
+users <safe-guide/safe-guide-users.html>`__
 
 Principal investigators and Project Managers (nominated by PIs) have
 overall authority over their allocated resources and can perform
 additional project management tasks in SAFE. `Go to the SAFE Guide for
-principal investigators <safe-guide/safe-guide-pi.php>`__.
+principal investigators <safe-guide/safe-guide-pi.html>`__.
 
 `Read the SAFE User Guide... <safe-guide>`__

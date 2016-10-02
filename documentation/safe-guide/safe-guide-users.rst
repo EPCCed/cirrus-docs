@@ -178,7 +178,7 @@ simply log in to Cirrus as normal and then use the passwd command
 
 You will then be prompted to enter your current password, and then your
 new password twice. Your password must comply with the `password
-policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.php>`__.
+policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.html>`__.
 
 If you have forgotten your current password, or it has expired, then you
 can ask for it to be reset:
@@ -214,7 +214,7 @@ After you login, you will be prompted to change it. You should paste in
 the password retreived from SAFE again, and then you will be prompted to
 type in your new, easy-to-remember password, twice. Your password must
 comply with the `password
-policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.php>`__.
+policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.html>`__.
 
 Note that when you change your password on the service machine in this
 way, this is not reflected on the SAFE.

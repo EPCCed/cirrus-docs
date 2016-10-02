@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Connecting and Data Transfer &#8212; Cirrus 1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Cirrus 1 documentation" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="connecting-and-data-transfer">
+<h1>2. Connecting and Data Transfer<a class="headerlink" href="#connecting-and-data-transfer" title="Permalink to this headline">¶</a></h1>
+<p>On the Cirrus system interactive access can be achieved via SSH, either
+directly from a command line terminal or using an SSH client. In
+addition data can be transfered to and from the Cirrus system using
+<code class="docutils literal"><span class="pre">scp</span></code> from the command line or by using a file transfer client.</p>
+<p>This section covers the basic connection and data transfer methods,
+along with presenting some performance considerations. The connection
+procedure is then expanded on as the use of SSH agent is described for
+ease of access.</p>
+<div class="section" id="interactive-access">
+<h2>Interactive access<a class="headerlink" href="#interactive-access" title="Permalink to this headline">¶</a></h2>
+<p>To log into Cirrus you should use the &#8220;cirrus.epcc.ed.ac.uk&#8221; address:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="p">[</span><span class="n">userID</span><span class="p">]</span><span class="nd">@cirrus</span><span class="o">.</span><span class="n">epcc</span><span class="o">.</span><span class="n">ed</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span>
+</pre></div>
+</div>
+<div class="section" id="initial-passwords">
+<h3>Initial passwords<a class="headerlink" href="#initial-passwords" title="Permalink to this headline">¶</a></h3>
+<p>The SAFE web interface is used to provide your initial password for
+logging onto Cirrus (see the <a class="reference external" href="/documentation/safe-guide">SAFE User
+Guide</a> for more details on requesting
+accounts and picking up passwords).</p>
+<p>Note: you may now change your password on the Cirrus machine itself
+using the <em>passwd</em> command. This change will not be reflected in the
+SAFE. If you forget your password, you should use the SAFE to request a
+new one-shot password.</p>
+</div>
+<div class="section" id="performance-considerations">
+<h3>Performance considerations<a class="headerlink" href="#performance-considerations" title="Permalink to this headline">¶</a></h3>
+<p>Cirrus is capable of generating data at a rate far greater than the rate
+at which this can be downloaded. In practice, it is expected that only a
+portion of data generated on Cirrus will be required to be transfered
+back to users&#8217; institutions - the rest will be, for example,
+intermediate or checkpoint files required for subsequent runs. However,
+it is still essential that all users try to transfer data to and from
+Cirrus as efficiently as possible. The most obvious ways to do this are:</p>
+<ol class="arabic simple">
+<li>Only transfer those files that are required for subsequent analysis,
+visualisation and/or archiving. Do you really need to download those
+intermediate result or checkpointing files? Probably not.</li>
+<li>Combine lots of small files into a single tar file, to reduce the
+overheads associated in initiating data transfers.</li>
+<li>Compress data before sending it, e.g. using gzip or bzip2.</li>
+<li>Consider doing any pre- or post-processing calculations on Cirrus.
+Long running pre- or post- processing calculations should be run via
+the batch queue system, rather than on the login nodes. Such pre- or
+post-processing codes could be serial or OpenMP parallel applications
+running on a single node, though if the amount of data to be
+processed is large, an MPI application able to use multiple nodes may
+be preferable.</li>
+</ol>
+<p>Note that the performance of data transfers between Cirrus and your
+local institution may differ depending upon whether the transfer command
+is run on Cirrus or on your local system.</p>
+</div>
+</div>
+<div class="section" id="making-access-more-convenient-using-a-ssh-agent">
+<h2>Making access more convenient using a SSH Agent<a class="headerlink" href="#making-access-more-convenient-using-a-ssh-agent" title="Permalink to this headline">¶</a></h2>
+<p>Using a SSH Agent makes accessing the resources more convenient as you
+only have to enter your passphrase once per day to access any remote
+resource - this can include accessing resources via a chain of SSH
+sessions.</p>
+<p>This approach combines the security of having a passphrase to access
+remote resources with the convenince of having password-less access.
+Having this sort of access set up makes it extremely convenient to use
+client applications to access remote resources, for example:</p>
+<ul class="simple">
+<li>the <a class="reference external" href="http://www.gnu.org/software/tramp/">Tramp</a> Emacs plugin that
+allows you to access and edit files on a remote host as if they are
+local files;</li>
+<li>the <a class="reference external" href="http://www.eclipse.org/ptp/">Parallel Tools Platform</a> for the
+Eclipse IDE that allows you to edit your source code on a local
+Eclipse installation and compile and test on a remote host;</li>
+</ul>
+<p>We will demonstrate the process using the
+<a class="reference external" href="http://www.cirrus.ac.uk">Cirrus</a> facility but this should work on
+most remote Linux machines (unless the system administrator has
+explicitly set up the system to forbid access using an SSH Agent).</p>
+<p><strong>Note:</strong> this description applies if your local machine is Linux or Mac
+OSX. The procedure can also be used on Windows using the PuTTY SSH
+terminal with the PuTTYgen key pair generation tool and the Pageant SSH
+Agent. See the <a class="reference external" href="http://the.earth.li/~sgtatham/putty/0.62/htmldoc/">PuTTY
+documentation</a> for
+more information on how to use these tools.</p>
+<p><strong>Note:</strong> not all remote hosts allow connections using a SSH key pair.
+If you find this method does not work it is worth checking with the
+remote site that such connections are allowed.</p>
+<div class="section" id="setup-a-ssh-key-pair-protected-by-a-passphrase">
+<h3>Setup a SSH key pair protected by a passphrase<a class="headerlink" href="#setup-a-ssh-key-pair-protected-by-a-passphrase" title="Permalink to this headline">¶</a></h3>
+<p>Using a terminal (the command line), set up a key pair that contains
+your e-mail address and enter a passphrase you will use to unlock the
+key:</p>
+<p>(remember to replace &#8220;<a class="reference external" href="mailto:your&#37;&#52;&#48;email&#46;ac&#46;uk">your<span>&#64;</span>email<span>&#46;</span>ac<span>&#46;</span>uk</a>&#8221; with your e-mail address).</p>
+</div>
+<div class="section" id="copy-the-public-part-of-the-key-to-the-remote-host">
+<h3>Copy the public part of the key to the remote host<a class="headerlink" href="#copy-the-public-part-of-the-key-to-the-remote-host" title="Permalink to this headline">¶</a></h3>
+<p>Using you normal login password, add the public part of your key pair to
+the &#8220;authorized_keys&#8221; file on the remote host you wish to connect to
+using the SSH Agent. This can be achieved by appending the contents of
+the public part of the key to the remote file:</p>
+<div class="line-block">
+<div class="line">(remember to replace &#8220;user&#8221; with your username).</div>
+<div class="line">Now you can test that your key pair is working correctly by attempting
+to connect to the remote host and run a command. You should be asked
+for your key pair <em>passphase</em> (which you entered when you creasted the
+key pair) rather than your remote machine <em>password</em>.</div>
+</div>
+<p>(remember to replace &#8220;user&#8221; with your username).</p>
+</div>
+<div class="section" id="enabling-the-ssh-agent">
+<h3>Enabling the SSH Agent<a class="headerlink" href="#enabling-the-ssh-agent" title="Permalink to this headline">¶</a></h3>
+<p>So far we have just replaced the need to enter a password to access a
+remote host with the need to enter a key pair passphrase. The next step
+is to enable an SSH Agent on your local system so that you only have to
+enter the passphrase once per day and after that you will be able to
+access the remote system without entering the passphrase.</p>
+<p>Most modern Linux distributions (and Mac OSX) should have ssh-agent
+running by default. If your system does not then you should find the
+instructions for enabling it in your distribution using Google.</p>
+<p>To add the private part of your key pair to the SSH Agent, use the
+&#8216;ssh-add&#8217; command (on your local machine), you will need to enter your
+passphrase one more time:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>-bash-4.1$ ssh-add ~/.ssh/id_rsa
+Enter passphrase for Home/user.ssh/id_rsa: [Passphrase]
+Identity added: Home/user.ssh/id_rsa (Home/user.ssh/id_rsa)
+</pre></div>
+</div>
+<p>Now you can test that you can access the remote host without needing to
+enter your passphrase:</p>
+<p>(remember to replace &#8220;user&#8221; with your username).</p>
+</div>
+<div class="section" id="adding-access-to-other-remote-machines">
+<h3>Adding access to other remote machines<a class="headerlink" href="#adding-access-to-other-remote-machines" title="Permalink to this headline">¶</a></h3>
+<p>If you have more than one remote host that you access regularly, you can
+simply add the public part of your key pair to the &#8216;authorized_keys&#8217;
+file on any hosts you wish to access by repeating step 2 above.</p>
+</div>
+<div class="section" id="ssh-agent-forwarding">
+<h3>SSH Agent forwarding<a class="headerlink" href="#ssh-agent-forwarding" title="Permalink to this headline">¶</a></h3>
+<p>Now that you have enabled an SSH Agent to access remote resources you
+can perform an additional configuration step that will allow you to
+access all hosts that have your public key part uploaded from any host
+you connect to with the SSH Agent without the need to install the
+private part of the key pair anywhere except your local machine.</p>
+<p>This increases the security of the key pair as the private part is only
+stored in one place (your local machine) and makes access more
+convenient (as you only need to enter your passphrase once on your local
+machine to enable access between all machines that have the public part
+of the key pair).</p>
+<p>Forwarding is controlled by a configuration file located on your local
+machine at &#8221;.ssh/config&#8221;. Each remote site (or group of sites) can have
+an entry in this file which may look something like:</p>
+<p>(remember to replace &#8220;user&#8221; with your username).</p>
+<p>The &#8220;Host cirrus&#8221; line defines a short name for the entry. In this case,
+instead of typing &#8220;ssh cirrus.epcc.ed.ac.uk&#8221; to access the Cirrus login
+nodes, you could use &#8220;ssh cirrus&#8221; instead. The remaining lines define
+the options for the &#8220;cirrus&#8221; host.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">Hostname</span> <span class="pre">cirrus.epcc.ed.ac.uk</span></code> - defines the full address of the
+host</li>
+<li><code class="docutils literal"><span class="pre">User</span> <span class="pre">username</span></code> - defines the username to use by default for this
+host (replace &#8220;username&#8221; with your own username on the remote host)</li>
+<li><code class="docutils literal"><span class="pre">ForwardAgent</span> <span class="pre">yes</span></code> - tells SSH to forward the local SSH Agent to
+the remote host, this is the option that allows you to store the
+private part of your key on your local machine only and export the
+access to remote sites</li>
+</ul>
+<p>Now you can use SSH to access Cirrus without needing to enter my
+username or the full hostname every time:</p>
+<p>You can set up as many of these entries as you need in your local
+configuration file. Other options are available. See the <code class="docutils literal"><span class="pre">`ssh_config</span></code>
+man page &lt;<a class="reference external" href="http://linux.die.net/man/5/ssh_config">http://linux.die.net/man/5/ssh_config</a>&gt;`__ (or &#8220;man
+ssh_config&#8221; on any machine with SSH installed) for a description of the
+SSH configuration file.</p>
+<p><a class="reference external" href="introduction.php">1. Introduction</a> | <a class="reference external" href="../user-guide/">Contents</a>
+| <a class="reference external" href="resource_management.php">3. Resource Management</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Connecting and Data Transfer</a><ul>
+<li><a class="reference internal" href="#interactive-access">Interactive access</a><ul>
+<li><a class="reference internal" href="#initial-passwords">Initial passwords</a></li>
+<li><a class="reference internal" href="#performance-considerations">Performance considerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#making-access-more-convenient-using-a-ssh-agent">Making access more convenient using a SSH Agent</a><ul>
+<li><a class="reference internal" href="#setup-a-ssh-key-pair-protected-by-a-passphrase">Setup a SSH key pair protected by a passphrase</a></li>
+<li><a class="reference internal" href="#copy-the-public-part-of-the-key-to-the-remote-host">Copy the public part of the key to the remote host</a></li>
+<li><a class="reference internal" href="#enabling-the-ssh-agent">Enabling the SSH Agent</a></li>
+<li><a class="reference internal" href="#adding-access-to-other-remote-machines">Adding access to other remote machines</a></li>
+<li><a class="reference internal" href="#ssh-agent-forwarding">SSH Agent forwarding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/documentation/user-guide/connecting.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, G. Pringle, A. R. Turner.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../../_sources/documentation/user-guide/connecting.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

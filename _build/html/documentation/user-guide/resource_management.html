@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. File and Resource Management &#8212; Cirrus 1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Cirrus 1 documentation" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="file-and-resource-management">
+<h1>3. File and Resource Management<a class="headerlink" href="#file-and-resource-management" title="Permalink to this headline">¶</a></h1>
+<p>This section covers some of the tools and technical knowledge that will
+be key to maximising the usage of the Cirrus system, such as the online
+administration tool SAFE and calculating the CPU-time available.</p>
+<p>The default file permissions are then outlined, along with a description
+of changing these permissions to the desired setting. This leads on to
+the sharing of data between users and systems often a vital tool for
+project groups and collaboration.</p>
+<p>Finally we cover some guidelines for I/O and data archiving on Cirrus.</p>
+<div class="section" id="the-cirrus-administration-web-site-safe">
+<h2>The Cirrus Administration Web Site (SAFE)<a class="headerlink" href="#the-cirrus-administration-web-site-safe" title="Permalink to this headline">¶</a></h2>
+<p>All users have a login and password on the Cirrus Administration Web
+Site (also know as the &#8216;SAFE&#8217;):
+<a class="reference external" href="https://safe.epcc.ed.ac.uk/safadmin/">SAFE</a>. Once logged into this
+web site, users can find out much about their usage of the Cirrus
+system, including:</p>
+<ul class="simple">
+<li>Account details - password reset, change contact details</li>
+<li>Project details - project code, start and end dates</li>
+<li>kAU balance - how much time is left in each project you are a member
+of</li>
+<li>Filesystem details - current usage and quotas</li>
+<li>Reports - generate reports on your usage over a specified period,
+including individual job records</li>
+<li>Helpdesk - raise queries and track progress of open queries</li>
+</ul>
+</div>
+<div class="section" id="checking-your-cpu-time-kau-balance">
+<h2>Checking your CPU-time (kAU) balance<a class="headerlink" href="#checking-your-cpu-time-kau-balance" title="Permalink to this headline">¶</a></h2>
+<p>You can view these details by logging into the SAFE
+(<a class="reference external" href="https://safe.epcc.ed.ac.uk/safadmin/">https://safe.epcc.ed.ac.uk/safadmin/</a>). Scroll down to the panel marked
+&#8220;You are a member of the following project groups&#8221; and you will see how
+much time is left in a particular project.</p>
+<p>You can also generate reports on your usage over a particular period and
+examine the details of how many kAUs individual jobs on the system cost.</p>
+</div>
+<div class="section" id="disk-quotas">
+<h2>Disk quotas<a class="headerlink" href="#disk-quotas" title="Permalink to this headline">¶</a></h2>
+<p>Disk quotas on Cirrus are managed via
+<a class="reference external" href="https://safe.epcc.ed.ac.uk/safadmin/">SAFE</a></p>
+</div>
+<div class="section" id="file-permissions-and-security">
+<h2>File permissions and security<a class="headerlink" href="#file-permissions-and-security" title="Permalink to this headline">¶</a></h2>
+<p>By default, each user is a member of the group with the same name as
+[group_code] in the <code class="docutils literal"><span class="pre">/home</span></code> and <code class="docutils literal"><span class="pre">/work</span></code> directory paths, e.g.
+<code class="docutils literal"><span class="pre">x01-a</span></code>. This allows the user to share files with only members of that
+group by setting the appropriate group file access permissions. As on
+other UNIX or Linux systems, a user may also be a member of other
+groups. The list of groups that a user is part of can be determined by
+running the <code class="docutils literal"><span class="pre">groups</span></code> command.</p>
+<p>It is, of course, possible to make files accessible to all users on
+Cirrus, by setting the &#8220;other&#8221; file access permissions appropriately.
+You should not allow &#8220;other&#8221; write access to any of your directories,
+and for security reasons it is recommended that you do not allow anyone
+else read or write access to important account information (e.g.
+<code class="docutils literal"><span class="pre">$HOME/.ssh</span></code>).</p>
+<p>Default Unix file permissions can be specified by the <code class="docutils literal"><span class="pre">umask</span></code> command.
+The default umask value on Cirrus is 22, which provides &#8220;group&#8221; and
+&#8220;other&#8221; read permissions for all files created, and &#8220;group&#8221; and &#8220;other&#8221;
+read and execute permissions for all directories created. This is highly
+undesirable, as it allows everyone else on the system to access (but at
+least not modify or delete) every file you create. Thus it is strongly
+recommended that users change this default umask behaviour, by adding
+the command <code class="docutils literal"><span class="pre">umask</span> <span class="pre">077</span></code> to their <code class="docutils literal"><span class="pre">$HOME/.profile</span></code> file. This umask
+setting only allows the user access to any file or directory created.
+The user can then selectively enable &#8220;group&#8221; and/or &#8220;other&#8221; access to
+particular files or directories if required.</p>
+<div class="section" id="ascii-or-formatted-files">
+<h3>ASCII (or formatted) files<a class="headerlink" href="#ascii-or-formatted-files" title="Permalink to this headline">¶</a></h3>
+<p>These are the most portable, but can be extremely inefficient to read
+and write. There is also the problem that if the formatting is not done
+correctly, the data may not be output to full precision (or to the
+subsequently required precision), resulting in inaccurate results when
+the data is used. Another common problem with formatted files is FORMAT
+statements that fail to provide an adequate range to accommodate future
+requirements, e.g. if we wish to output the total number of processors,
+NPROC, used by the application, the statement:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WRITE</span> <span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;I3&#39;</span><span class="p">)</span> <span class="n">NPROC</span>
+</pre></div>
+</div>
+<p>will not work correctly if NPROC is greater than 999.</p>
+</div>
+<div class="section" id="binary-or-unformatted-files">
+<h3>Binary (or unformatted) files<a class="headerlink" href="#binary-or-unformatted-files" title="Permalink to this headline">¶</a></h3>
+<p>These are much faster to read and write, especially if an entire array
+is read or written with a single READ or WRITE statement. However the
+files produced may not be readable on other systems.</p>
+<dl class="docutils">
+<dt>GNU compiler <code class="docutils literal"><span class="pre">-fconvert=swap</span></code> compiler option.</dt>
+<dd>This compiler option often needs to be used together with a second
+option <code class="docutils literal"><span class="pre">-frecord-marker</span></code>, which specifies the length of record
+marker (extra bytes inserted before or after the actual data in the
+binary file) for unformatted files generated on a particular system.
+To read a binary file generated by a big-endian system on Cirrus,
+use
+<code class="docutils literal"><span class="pre">-fconvert=swap</span> <span class="pre">-frecord-marker=4</span></code>.
+Please note that due to the same &#8216;length of record marker&#8217; reason,
+the unformatted files generated by GNU and other compilers on Cirrus
+are not compatible. In fact, the same WRITE statements would result
+in slightly larger files with GNU compiler. Therefore it is
+recommended to use the same compiler for your simulations and
+related pre- and post-processing jobs.</dd>
+</dl>
+<p>Other options for file formats include:</p>
+<dl class="docutils">
+<dt>Direct access files</dt>
+<dd>Fortran unformatted files with specified record lengths. These may
+be more portable between different systems than ordinary (i.e.
+sequential IO) unformatted files, with significantly better
+performance than formatted (or ASCII) files. The &#8220;endian&#8221; issue
+will, however, still be a potential problem.</dd>
+<dt>Portable data formats</dt>
+<dd><p class="first">These machine-independent formats for representing scientific data
+are specifically designed to enable the same data files to be used
+on a wide variety of different hardware and operating systems. The
+most common formats are:</p>
+<ul class="simple">
+<li>netCDF: <a class="reference external" href="http://www.unidata.ucar.edu/software/netcdf/">http://www.unidata.ucar.edu/software/netcdf/</a></li>
+<li>HDF: <a class="reference external" href="http://www.hdfgroup.org/HDF5/">http://www.hdfgroup.org/HDF5/</a></li>
+</ul>
+<p class="last">It is important to note that these portable data formats are
+evolving standards, so make sure you are aware of which version of
+the standard/software you are using, and keep up-to-date with any
+backward-compatibility implications of each new release.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="file-io-performance-guidelines">
+<h2>File IO Performance Guidelines<a class="headerlink" href="#file-io-performance-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Here are some general guidelines</p>
+<ul class="simple">
+<li>Whichever data formats you choose, it is vital that you test that you
+can access your data correctly on all the different systems where it
+is required. This testing should be done as early as possible in the
+software development or porting process (i.e. before you generate
+lots of data from expensive production runs), and should be repeated
+with every major software upgrade.</li>
+<li>Document the file formats and metadata of your important data files
+very carefully. The best documentation will include a copy of the
+relevant I/O subroutines from your code. Of course, this
+documentation must be kept up-to-date with any code modifications.</li>
+<li>Use binary (or unformatted) format for files that will only be used
+on the Intel system, e.g. for checkpointing files. This will give the
+best performance. Binary files may also be suitable for larger output
+data files, if they can be read correctly on other systems.</li>
+<li>Most codes will produce some human-readable (i.e. ASCII) files to
+provide some information on the progress and correctness of the
+calculation. Plan ahead when choosing format statements to allow for
+future code usage, e.g. larger problem sizes and processor counts.</li>
+<li>If the data you generate is widely shared within a large community,
+or if it must be archived for future reference, invest the time and
+effort to standardise on a suitable portable data format, such as
+netCDF or HDF.</li>
+</ul>
+</div>
+<div class="section" id="backup-policies">
+<h2>Backup policies<a class="headerlink" href="#backup-policies" title="Permalink to this headline">¶</a></h2>
+<p>To be added.</p>
+<p><a class="reference external" href="connecting.php">2. Connecting and Transferring Data</a> |
+<a class="reference external" href="../user-guide/">Contents</a> | <a class="reference external" href="development.php">4. Application Development
+Environment</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. File and Resource Management</a><ul>
+<li><a class="reference internal" href="#the-cirrus-administration-web-site-safe">The Cirrus Administration Web Site (SAFE)</a></li>
+<li><a class="reference internal" href="#checking-your-cpu-time-kau-balance">Checking your CPU-time (kAU) balance</a></li>
+<li><a class="reference internal" href="#disk-quotas">Disk quotas</a></li>
+<li><a class="reference internal" href="#file-permissions-and-security">File permissions and security</a><ul>
+<li><a class="reference internal" href="#ascii-or-formatted-files">ASCII (or formatted) files</a></li>
+<li><a class="reference internal" href="#binary-or-unformatted-files">Binary (or unformatted) files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-io-performance-guidelines">File IO Performance Guidelines</a></li>
+<li><a class="reference internal" href="#backup-policies">Backup policies</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/documentation/user-guide/resource_management.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, G. Pringle, A. R. Turner.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../../_sources/documentation/user-guide/resource_management.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

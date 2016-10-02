@@ -13,7 +13,7 @@ Online Documentation and Resources
 -  An HPC tutorial: http://www.llnl.gov/computing/hpc/training/
 -  An MPI tutorial:
    http://www-unix.mcs.anl.gov/mpi/tutorial/gropp/talk.html
--  HPC tutorials by NCSA http://www.citutor.org/login.php
+-  HPC tutorials by NCSA http://www.citutor.org/login.html
 
 MPI programming
 ---------------
@@ -66,4 +66,4 @@ Programming skills
 -  Foundations of Parallel Programming, A Machine-independent Approach,
    Lewis.
 
-`11. Grid computing <grid.php>`__ \| `Contents <../user-guide/>`__
+`11. Grid computing <grid.html>`__ \| `Contents <../user-guide/>`__

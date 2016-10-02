@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Application Development Environment &#8212; Cirrus 1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Cirrus 1 documentation" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="application-development-environment">
+<h1>4. Application Development Environment<a class="headerlink" href="#application-development-environment" title="Permalink to this headline">¶</a></h1>
+<p>The application development environment on Cirrus is primarily
+controlled through the <em>modules</em> environment. By loading and switching
+modules you control the compilers, libraries and software available.</p>
+<p>This means that for compiling on Cirrus you typically load all the
+required library modules (e.g. numerical libraries, IO format libraries)
+and compile your code using the compiler wrapper script (described in
+detail below). The combination of the modules environment and the
+wrapper scripts ensures that all the correct headers and library files
+are included for you.</p>
+<p>By default, all users on Cirrus start with no environments loaded.</p>
+<p>Basic usage of the <code class="docutils literal"><span class="pre">module</span></code> command on Cirrus is covered below. For
+full documentation please see:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://linux.die.net/man/1/module">Linux manual page on modules</a></li>
+</ul>
+<div class="section" id="information-on-the-available-modules">
+<h2>Information on the available modules<a class="headerlink" href="#information-on-the-available-modules" title="Permalink to this headline">¶</a></h2>
+<p>Finding out which modules (and hence which compilers, libraries and
+software) are available on the system is performed using the
+<code class="docutils literal"><span class="pre">module</span> <span class="pre">avail</span></code> command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span><span class="nd">@system</span><span class="p">:</span><span class="o">~&gt;</span> <span class="n">module</span> <span class="n">avail</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>This will list all the names and versions of the modules available on
+the service. Not all of them will work in your account though due to,
+for example, licencing restrictions. You will notice that for many
+modules we have more than one version, each of which is identified by a
+version number. One of these versions is marked as the default. As the
+service develops the default version will change.</p>
+<p>You can list all the modules of a particular type by providing an
+argument to the <code class="docutils literal"><span class="pre">module</span> <span class="pre">avail</span></code> command. For example, to list all
+available versions of the Intel Compiler Environment (CCE) type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span><span class="nd">@system</span><span class="p">:</span><span class="o">~&gt;</span> <span class="n">module</span> <span class="n">avail</span> <span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="o">-</span><span class="mi">16</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>If you want more info on any of the modules, you can use the
+<code class="docutils literal"><span class="pre">module</span> <span class="pre">help</span></code> command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span><span class="nd">@system</span><span class="p">:</span><span class="o">~&gt;</span> <span class="n">module</span> <span class="n">help</span> <span class="n">cce</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>The simple <code class="docutils literal"><span class="pre">module</span> <span class="pre">list</span></code> command will give the names of the modules
+and their versions you have presently loaded</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span><span class="nd">@system</span><span class="p">:</span><span class="o">~&gt;</span> <span class="n">module</span> <span class="nb">list</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loading-unloading-and-swapping-modules">
+<h2>Loading, unloading and swapping modules<a class="headerlink" href="#loading-unloading-and-swapping-modules" title="Permalink to this headline">¶</a></h2>
+<p>To load a module to use <code class="docutils literal"><span class="pre">module</span> <span class="pre">add</span></code> or <code class="docutils literal"><span class="pre">module</span> <span class="pre">load</span></code>. For example,
+to load the intel-compilers-16 into the development environment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="o">-</span><span class="mi">16</span>
+</pre></div>
+</div>
+<p>This will load the default version of the intel commpilers Library. If
+you need a specfic version of the module, you can add more information:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="o">-</span><span class="mi">16</span><span class="o">/</span><span class="mf">16.0</span><span class="o">.</span><span class="mf">3.210</span>
+</pre></div>
+</div>
+<p>will load version 16.0.3.210 for you, regardless of the default. If you
+want to clean up, <code class="docutils literal"><span class="pre">module</span> <span class="pre">remove</span></code> will remove a loaded module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">remove</span> <span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="o">-</span><span class="mi">16</span>
+</pre></div>
+</div>
+<p>(or <code class="docutils literal"><span class="pre">module</span> <span class="pre">rm</span> <span class="pre">intel-compilers-16</span></code> or
+<code class="docutils literal"><span class="pre">module</span> <span class="pre">unload</span> <span class="pre">intel-compilers-16</span></code>) will unload what ever version of
+intel-compilers-16 (even if it is not the default) you might have
+loaded. There are many situations in which you might want to change the
+presently loaded version to a different one, such as trying the latest
+version which is not yet the default or using a legacy version to keep
+compatibility with old data.</p>
+</div>
+<div class="section" id="compiler-wrapper-scripts">
+<h2>Compiler Wrapper Scripts<a class="headerlink" href="#compiler-wrapper-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Code compiled on Cirrus should use the compiler wrapper scripts to
+ensure that all the correct libraries and header files are included in
+both the compile and link stages. The compiler wrapper scripts are
+available for Fortran, C, and C++:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">ftn</span></code></dt>
+<dd>Fortran compiler</dd>
+<dt><code class="docutils literal"><span class="pre">cc</span></code></dt>
+<dd>C compiler</dd>
+<dt><code class="docutils literal"><span class="pre">CC</span></code></dt>
+<dd>C++ compiler</dd>
+</dl>
+</div></blockquote>
+<p>The wrapper scripts can be used to compile both sequential and parallel
+codes. Further information on the wrapper scripts can be obtained from
+the <code class="docutils literal"><span class="pre">man</span></code> pages, for example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">ftn</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compiling-mpi-codes">
+<h2>Compiling MPI codes<a class="headerlink" href="#compiling-mpi-codes" title="Permalink to this headline">¶</a></h2>
+<p>To compile MPI code you must load the &#8220;mpt&#8221; and &#8220;intel-compilers-16&#8221;
+modules</p>
+<p><code class="docutils literal"><span class="pre">module</span> <span class="pre">load</span> <span class="pre">mpt</span></code></p>
+<p><code class="docutils literal"><span class="pre">module</span> <span class="pre">load</span> <span class="pre">intel-compilers-16/16.0.3.210</span></code></p>
+<p>Compilers are then available as mpif90, mpicc and mpiCC for Fortran with
+MPI, C with MPI, and C++ with MPI, respectively</p>
+<p>NB take care as there are a number of compilers available. If you load
+the intel compilers module but not the mpt module then mpif90 and mpicc
+will use the GNU compilers rather than the Intel compilers to build your
+program.</p>
+<p>You need to load both modules to get the Intel compilers when calling
+mpif90 or mpicc. This works differently for C and Fortran: for Fortran,
+mpif90 will automatically call ifort after you have loaded
+intel-compilers-16; for C, you need to specify icc explicitly using the
+syntax &#8220;mpicc -cc=icc ...&#8221; (but you still have to load
+intel-compilers-16 so mpicc will find icc).</p>
+<p>If in doubt use mpif90 -v or mpicc [-cc=icc] -v to see what compiler is
+actually being called.</p>
+<p>The manual pages for the different compiler suites are available once
+the programming environment has been switched in and are:</p>
+<dl class="docutils">
+<dt>GCC</dt>
+<dd>Fortran <code class="docutils literal"><span class="pre">man</span> <span class="pre">gfortran</span></code> ,
+C/C++ <code class="docutils literal"><span class="pre">man</span> <span class="pre">gcc</span></code></dd>
+<dt>Intel</dt>
+<dd>Fortran <code class="docutils literal"><span class="pre">man</span> <span class="pre">ifort</span></code> ,
+C/C++ <code class="docutils literal"><span class="pre">man</span> <span class="pre">icc</span></code></dd>
+</dl>
+<div class="section" id="useful-compiler-options">
+<h3>Useful compiler options<a class="headerlink" href="#useful-compiler-options" title="Permalink to this headline">¶</a></h3>
+<p>Whilst difference codes will benefit from compiler optimisations in
+different ways, for reasonable performance on Cirrus, at least
+initially, we suggest the following compiler options:</p>
+<dl class="docutils">
+<dt>Intel</dt>
+<dd><code class="docutils literal"><span class="pre">-O2</span></code></dd>
+<dt>GNU</dt>
+<dd><code class="docutils literal"><span class="pre">-O2</span> <span class="pre">-ftree-vectorize</span> <span class="pre">-funroll-loops</span> <span class="pre">-ffast-math</span></code></dd>
+</dl>
+<p>When you have a code that you are happy is working correctly and has
+reasonable performance you may wish to investigate some more aggressive
+compiler optimisations. Below is a list of some further optimisations
+that you can try on your application (Note: these optimisations may
+result in incorrect output for programs that depend on an exact
+implementation of IEEE or ISO rules/specifications for math functions):</p>
+<dl class="docutils">
+<dt>Intel</dt>
+<dd><code class="docutils literal"><span class="pre">-fast</span></code></dd>
+<dt>GNU</dt>
+<dd><code class="docutils literal"><span class="pre">-Ofast</span> <span class="pre">-funroll-loops</span></code></dd>
+</dl>
+<p>Vectorisation, which is one of the important compiler optimisations for
+Cirrus, is enabled by default as follows:</p>
+<dl class="docutils">
+<dt>Intel</dt>
+<dd>At <code class="docutils literal"><span class="pre">-O2</span></code> and above</dd>
+<dt>GNU</dt>
+<dd>At <code class="docutils literal"><span class="pre">-O3</span></code> and above or when using <code class="docutils literal"><span class="pre">-ftree-vectorize</span></code></dd>
+</dl>
+<p>To promote integer and real variables from four to eight byte precision
+for FORTRAN codes the following compiler flags can be used:</p>
+<dl class="docutils">
+<dt>Intel</dt>
+<dd><code class="docutils literal"><span class="pre">-real-size</span> <span class="pre">64</span> <span class="pre">-integer-size</span> <span class="pre">64</span> <span class="pre">-xAVX</span></code>
+(Sometimes the Intel compiler incorrectly generates AVX2
+instructions if the <code class="docutils literal"><span class="pre">-real-size</span> <span class="pre">64</span></code> or <code class="docutils literal"><span class="pre">-r8</span></code> options are set.
+Using the <code class="docutils literal"><span class="pre">-xAVX</span></code> option prevents this.)</dd>
+<dt>GNU</dt>
+<dd><code class="docutils literal"><span class="pre">-freal-4-real-8</span> <span class="pre">-finteger-4-integer-8</span></code></dd>
+</dl>
+</div>
+</div>
+<div class="section" id="using-dynamic-linking-libraries">
+<h2>Using dynamic linking/libraries<a class="headerlink" href="#using-dynamic-linking-libraries" title="Permalink to this headline">¶</a></h2>
+<p>By default, executables on Cirrus are built using static libraries (that
+is, all of the object code of referenced libraries are contained in the
+executable file) when using the wrapper scripts. This has the advantage
+that once an executable is created, whenever it is run in the future, it
+will always use the same object code and thus give the same results from
+the same input. However, executables compiled with static libraries have
+the potential disadvantage that when multiple instances are running
+simultaneously multiple copies of the libraries used are held in memory.
+This can lead to large amounts of memory being used to hold the
+executable and not application data.</p>
+<p>Alternatively, applications can be compiled to use shared/dynamic
+libraries (i.e. libraries which are loaded at run-time as and when
+needed by the application). This may be because static versions of
+certain libraries are unavailable, or to reduce the amount of memory
+executables take by sharing common sections of object codes between
+applications which use the same library.</p>
+<p>To create an application that uses shared/dynamic libraries you must
+pass extra flags during compilation, or set an environment variable. You
+can either:</p>
+<ol class="arabic simple">
+<li>Use the <code class="docutils literal"><span class="pre">-dynamic</span></code> flag when invoking the compiler for linking.</li>
+</ol>
+<p>By default an application compiled this way to use shared libraries will
+use the default version of the library installed on the system (just
+like any other Linux executable), even if the system modules were set
+differently at compile time. This means that the application may
+potentially be using slightly different object code each time the
+application runs as the defaults may change. This is usually the desired
+behaviour for many applications as any fixes or improvements to the
+default linked libraries are used without having to recompile the
+application, however some users may feel this is not the desired
+behaviour for their applications.</p>
+<p>Use the UNIX command <code class="docutils literal"><span class="pre">ldd</span> <span class="pre">exe_file</span></code> to check whether you are using an
+executable that depends on shared libraries. This utility will also
+report the shared libraries this executable will use with the current
+value of <code class="docutils literal"><span class="pre">LD_LIBRARY_PATH</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Application Development Environment</a><ul>
+<li><a class="reference internal" href="#information-on-the-available-modules">Information on the available modules</a></li>
+<li><a class="reference internal" href="#loading-unloading-and-swapping-modules">Loading, unloading and swapping modules</a></li>
+<li><a class="reference internal" href="#compiler-wrapper-scripts">Compiler Wrapper Scripts</a></li>
+<li><a class="reference internal" href="#compiling-mpi-codes">Compiling MPI codes</a><ul>
+<li><a class="reference internal" href="#useful-compiler-options">Useful compiler options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-dynamic-linking-libraries">Using dynamic linking/libraries</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/documentation/user-guide/development.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, G. Pringle, A. R. Turner.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../../_sources/documentation/user-guide/development.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

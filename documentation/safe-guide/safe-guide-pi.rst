@@ -66,7 +66,7 @@ Your allocation has been set up as a project on the service. Your first steps.
 Here are some of the things you should consider doing; not all of them
 will be needed for every project.
 
-#. `Change your own SAFE password <safe-guide-users.php#chpass>`__
+#. `Change your own SAFE password <safe-guide-users.html#chpass>`__
 #. `Set up an account on the service machine for yourself <#selfac>`__
 #. `Make sure other project users get registered <#regusers>`__
 #. `Designate one or more users as managers of your
@@ -81,7 +81,7 @@ If you are not going to work on the machine yourself, you do not need to
 do this. You can administer your project through SAFE alone. But if you
 want a service machine account:
 
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Login accounts* and select *Request login account*
    button.
 #. Select the desired project from the pull down list and click *Select
@@ -97,7 +97,7 @@ account—see the next question.
 How can I check project alerts?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to check
@@ -130,7 +130,7 @@ kAUs will automatically expire.
 
 You can view and manage your period allocation via SAFE.
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work with
@@ -165,7 +165,7 @@ How can I set up project groups within my project?
 Project groups can be used to administer time and other resources within
 your project.
 
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to create the group
 #. This will display a screen with a variety of options for managing the
@@ -238,7 +238,7 @@ other project groups.
 How can I move time between budgets?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__, and then:
+`Login to SAFE <safe-guide-users.html#login>`__, and then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work with. This displays a panel with information for the project.
@@ -348,7 +348,7 @@ How can I create a quota for a project group, or move space between quotas?
 First, read the `discussion of space administration <#space>`__. If you
 are still determined to use project group quotas, this is how.
 
-#. `Login to SAFE <safe-guide-users.php#login>`__
+#. `Login to SAFE <safe-guide-users.html#login>`__
 #. Go to the Menu *Projects manaaged* and select the *project* you wish
    to work on. This will display a panel with the project information.
 #. Click *Manage Project Resources*
@@ -382,7 +382,7 @@ particular user can occupy in workspace or homespace. There's nothing to
 stop you setting user quotas which add up to more (or less) than the
 total space. To set a quota for a user or users:
 
-#. `Login to SAFE <safe-guide-users.php#login>`__
+#. `Login to SAFE <safe-guide-users.html#login>`__
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a panel with the project information.
 #. Click *Manage Project Resources*
@@ -408,21 +408,21 @@ How can project users get registered?
 You must not apply for machine accounts on behalf of other users, or let
 others use accounts that belong to you. Account sharing is strictly
 forbidden on Cirrus. Every user must `register on
-SAFE <safe-guide-users.php#register>`__ and then `apply for their own
-machine account <safe-guide-users.php#getac>`__
+SAFE <safe-guide-users.html#register>`__ and then `apply for their own
+machine account <safe-guide-users.html#getac>`__
 
 In order to get an account, a potential user needs to know your project
 code. This is included in the email which SAFE sends to you, as PI, when
 your project is set up.
 
 #. Give the users the project code.
-#. Every user must `register on SAFE <safe-guide-users.php#register>`__
+#. Every user must `register on SAFE <safe-guide-users.html#register>`__
    and then `apply for their own machine
-   account <safe-guide-users.php#getac>`__
+   account <safe-guide-users.html#getac>`__
 #. If you notice that the Menu *Projects managed* is highlighted orange,
    then this indicates that there is a request for project membership.
    Now you have to accept (or reject) each user's request. `Login to
-   SAFE <safe-guide-users.php#login>`__.
+   SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Projects managed* and select *project requests* and
    you will see the details of the user who has applied.
 #. Click the button next to the user
@@ -439,12 +439,12 @@ When you accept a user, the systems team is automatically requested to
 create the account on the service machine. When this has been done, the
 user is emailed; allow a working day for this. The user can then login
 to SAFE and `pick up their password on the service
-machine <safe-guide-users.php#getpass>`__.
+machine <safe-guide-users.html#getpass>`__.
 
 How to track user sign up requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to affect.
@@ -463,7 +463,7 @@ except designate another project manager. You can designate as many
 project managers as you wish.
 
 #. Make sure the user has an account in your project.
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to appoint a project manager for. This will display a screen with a
    variety of options for managing the project.
@@ -485,7 +485,7 @@ its children). Sub-group managers can also accept new people into the
 project and run reports on the project.
 
 #. Make sure the user has an account in your project.
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to appoint a project sub-group manager for.
 #. Scroll down to project groups and click on *Project Group
@@ -502,7 +502,7 @@ belong to more than one project group.
 How can I add users to an existing project group?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects Managed *and select the *project* you wish
    to are work on. This will display a screen with a variety of options
@@ -527,7 +527,7 @@ A user can belong to more than one project group.
 How can I remove a user from a project group?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
@@ -553,7 +553,7 @@ deactivated cannot use any of your budgets. This means that they cannot
 do any work, in effect, so we recommend that you use this facility with
 care.
 
-#. `Login to SAFE <safe-guide-users.php#login>`__
+#. `Login to SAFE <safe-guide-users.html#login>`__
 #. Go to the Menu *Projects managed* and select the *project* you are
    working on.
 #. Click *Administer Users*
@@ -569,7 +569,7 @@ Before doing this, bear in mind that it will result in all their files
 in your project being deleted. Are you sure that this is what you want?
 If so:
 
--  `Login to SAFE <safe-guide-users.php#login>`__
+-  `Login to SAFE <safe-guide-users.html#login>`__
 -  Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
@@ -588,7 +588,7 @@ machine will be closed.
 ` <>`__ How can I send a mailing to all users in my project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  `Login to SAFE <safe-guide-users.php#login>`__
+-  `Login to SAFE <safe-guide-users.html#login>`__
 -  Go to the Menu *Projects Managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
@@ -610,7 +610,7 @@ Tracking your Project Usage
 How to check the current state of your project's time and space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.php#login>`__. Then:
+`Login to SAFE <safe-guide-users.html#login>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on.
@@ -632,7 +632,7 @@ How to track what my project's users and project groups are doing?
 
 This can be done using the Report Generator
 
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Service information* and select *Report generator*
 #. Choose a report format: HTML, PDF or CSV (comma-separated values—good
    for input to Excel, *etc.*)
@@ -645,7 +645,7 @@ This can be done using the Report Generator
 How to request automatic project reports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. `Login to SAFE <safe-guide-users.php#login>`__.
+#. `Login to SAFE <safe-guide-users.html#login>`__.
 #. Go to the Menu *Projects Managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
