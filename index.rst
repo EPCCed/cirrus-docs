@@ -1,8 +1,3 @@
-.. toctree::
-
-   hardware
-   user-guide
-   safe-guide
    
 Cirrus
 ======
@@ -22,3 +17,8 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
 | `Acknowledging
   Cirrus <documentation/user-guide/introduction.html#acknowledge>`__
 
+.. toctree::
+   :maxdepth: 2
+   :caption: User Documentation
+
+   user-guide/*
