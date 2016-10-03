@@ -1,30 +1,3 @@
-Cirrus User Support
-===================
-
-Cirrus users are supported in a number of ways. Below please find the
-links to the available resources.
-
-Cirrus Helpdesk
----------------
-
-Through the helpdesk you can ask for help and information about all
-aspects of the service. `Further information on
-Helpdesk </support/helpdesk/>`__.
-
-Cirrus Technical Documentation
-------------------------------
-
-Full Cirrus User Guide and other technical documentation available in
-the `documentation </documentation/>`__ section of the website.
-
-SAFE User Guide
----------------
-
-SAFE is a web-based interface enabling users to effectively manage their
-use of Cirrus Service. The detailed SAFE user guide contains separate
-sections for individual users and project managers. `Access the SAFE
-user guide </documentation/safe-guide/>`__.
-
 EPCC Helpdesk
 =============
 

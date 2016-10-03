@@ -7,47 +7,6 @@ machine accounts, reset passwords, see available resources and track
 their usage. All users must be registered on SAFE before they can apply
 for their machine account.
 
-`Registering, logging in, passwords <#reg-log-pass>`__
-------------------------------------------------------
-
--  `How to register on SAFE <#register>`__
--  `How to login to SAFE <#login>`__
--  `How to change your personal details on SAFE <#details>`__
--  `How to change your email address on SAFE <#chemail>`__
--  `How to change your SAFE password <#chpass>`__
--  `How to reset your SAFE password if lost or forgotten <#reset>`__
--  `How to request a machine account <#getac>`__
--  `How to reset a password on your machine account <#reset_machine>`__
--  `How can to pick up your password for the service
-   machine <#getpass>`__
--  `How to request access to a Package Group <#package-group>`__
-
-`User Mailing Options <#user-mailing>`__
-----------------------------------------
-
--  `How to view user mailings <#mailings>`__
--  `How to get added to, or removed from the email mailing
-   list? <#mlist>`__
-
-`Tracking and managing available resources <#tracking>`__
----------------------------------------------------------
-
--  `How to check how much time and space are available <#ures>`__
--  `How to request more AUs/disk space <#resources>`__
--  `How to review your usage of the service, or the activity of the
-   service as a whole <#uhist>`__
-
-`Miscellaneous <#miscellaneous>`__
-----------------------------------
-
--  `How to check the queries you have submitted to the
-   helpdesk <#checkq>`__
--  `How to register your approval — or your annoyance <#token>`__
-
-| 
-
---------------
-
 Registering, logging in, passwords
 ----------------------------------
 
@@ -155,7 +114,7 @@ How to request a machine account
    project has finished.
 
 Next you will be asked to accept the `Terms and Conditions of
-Access <http://www.cirrus.ac.uk/about-cirrus/policies/>`__, by clicking
+Access <../policies/tandc.html>`__, by clicking
 the appropriate button. When you do this, you will be sent an
 acknowledgment by email, which will include your SAFE password— you
 should `change this as soon as possible. <#chpass>`__
@@ -177,8 +136,7 @@ simply log in to Cirrus as normal and then use the passwd command
     passwd
 
 You will then be prompted to enter your current password, and then your
-new password twice. Your password must comply with the `password
-policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.html>`__.
+new password twice.
 
 If you have forgotten your current password, or it has expired, then you
 can ask for it to be reset:
@@ -212,45 +170,11 @@ copy-and-paste it across when you log in to the service machine.
 
 After you login, you will be prompted to change it. You should paste in
 the password retreived from SAFE again, and then you will be prompted to
-type in your new, easy-to-remember password, twice. Your password must
-comply with the `password
-policy <https://www.cirrus.ac.uk/about-cirrus/policies/passwords_usernames.html>`__.
+type in your new, easy-to-remember password, twice. 
 
 Note that when you change your password on the service machine in this
 way, this is not reflected on the SAFE.
 
-How to request access to a Package Group
-----------------------------------------
-
-Some software which is installed on Cirrus can only be accessed once the
-user's license has been confirmed.
-
-For some of these packages, such as gamessuk, VASP4 and VASP5 you can
-request access via SAFE
-
-#. `Log in to SAFE <#login>`__
-#. Go to the Menu *Login accounts* and select the account which requires
-   access to the package
-#. Click "New Package Group Request"
-#. Select the package from the list of available packages and click
-   "Select Package Group"
-#. Fill in as much information as possible about your license, at the
-   very least, the information requested at the top of the screen such
-   as the licence holder's name and contact details.
-   If you are covered by the license because the licence holder is your
-   supervisor, for example, please state this.
-#. Click "Submit"
-
-Your request will then be processed by the Cirrus support team who will
-confirm your license with the package developers before enabling your
-access to the package on Cirrus. This can take several days but you will
-be advised once this has been done.
-
-If you require access to a package which does not yet appear in the list
-of available packages then please just send an email to helpdesk to
-request access. We are still working to add the available packages.
-
-| 
 
 User Mailing Options
 --------------------

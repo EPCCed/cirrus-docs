@@ -7,7 +7,7 @@ Note that the Terms and Conditions include an undertaking to observe the
 Code of Conduct. It also includes an agreement to the Service processing
 the user's personal data; in return, the Service undertakes to follow
 the `Personal Data and Privacy
-Policy <http://www.cirrus.ac.uk/about-cirrus/policies/privacy.html>`__.
+Policy <privacy.html>`__.
 
 --------------
 
@@ -69,7 +69,7 @@ We agree:
    corrupted.
 -  to protect the security and privacy of the data we hold about you, as
    described in our `Personal Data and Privacy
-   Policy </about-cirrus/policies/privacy.html>`__
+   Policy <privacy.html>`__
 -  that we will acquire no intellectual property rights over your
    software and data
 -  to respond promptly to any complaints or suggestions you make about
@@ -82,7 +82,7 @@ You accept:
    perfection. In legal terms, this means that we are excluding all
    warranties and conditions applying to the service, including those
    implied by law. `What is
-   this? </about-cirrus/policies/what-is-this.html>`__ We are not liable
+   this? <what-is-this.html>`__ We are not liable
    if things go wrong and you suffer damage as a result, although if our
    negligence results in anyone's death or personal injury we do not
    limit or exclude our liability for that.
@@ -97,7 +97,7 @@ You accept:
 -  that we will use the personal details which you supply to us,
    together with records of your use of the service, as described in our
    `Personal Data and Privacy
-   Policy </about-cirrus/policies/privacy.html>`__
+   Policy <privacy.html>`__
 -  that we may suspend your access to the service and discuss this with
    your PI if it seems to us that you are breaking these Terms and
    Conditions; that if it is necessary to protect the service or other

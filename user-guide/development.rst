@@ -221,10 +221,7 @@ executables take by sharing common sections of object codes between
 applications which use the same library.
 
 To create an application that uses shared/dynamic libraries you must
-pass extra flags during compilation, or set an environment variable. You
-can either:
-
-#. Use the ``-dynamic`` flag when invoking the compiler for linking.
+pass an extra flag during compilation, ``-dynamic``, or set an environment variable. 
 
 By default an application compiled this way to use shared libraries will
 use the default version of the library installed on the system (just

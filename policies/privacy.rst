@@ -2,7 +2,7 @@ Privacy Policy
 ==============
 
 In the `Terms and Conditions of
-Access </about-cirrus/policies/tandc.html>`__, the service undertakes to
+Access <tandc.html>`__, the service undertakes to
 observe this Policy. The service provider is also bound by the terms of
 its Data Protection Act notification.
 
@@ -49,4 +49,4 @@ reason, we have to ask you to consent to this policy. This consent is
 included in the Terms and Conditions of Access.
 
 If you have any questions about the treatment of your personal data,
-please contact `The Cirrus Helpdesk </support/helpdesk/>`__.
+please please mail the `EPCC Helpdesk <mailto:support@epcc.ed.ac.uk>`__.

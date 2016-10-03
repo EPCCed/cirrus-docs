@@ -65,5 +65,3 @@ Programming skills
    Simmons et al.
 -  Foundations of Parallel Programming, A Machine-independent Approach,
    Lewis.
-
-`11. Grid computing <grid.html>`__ \| `Contents <../user-guide/>`__

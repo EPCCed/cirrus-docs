@@ -4,59 +4,6 @@ SAFE Guide for Principal Investigators: How to Manage your Allocation
 Principal Investigators (grant holders) can manage their allocations
 efficiently via `SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__
 
-`Getting started <#getting-started>`__
---------------------------------------
-
--  `Your allocation has been set up as a project on the service. Your
-   first steps. <#andnext>`__
--  `How to get your own account on the service machine <#selfac>`__
--  `How to check project alerts <#projalert>`__
-
-`Managing your allocated resources <#managing-resources>`__
------------------------------------------------------------
-
--  `What is "period allocation"? <#period>`__
--  `How to set up project groups within the project <#projgrp>`__
--  `How to delete a project group <#delgrp>`__
--  `How can I administer time within my project? <#time>`__
--  `How to move time between budgets <#mvtime>`__
--  `How to allocate time to individual user <#oneuser>`__
--  `How to administer disk space <#space>`__
--  `How to create a quota for a project group, or move space between
-   quotas <#mvspace>`__
--  `How to set a quota for an individual user <#persquota>`__
-
-`Managing project users <#managing-users>`__
---------------------------------------------
-
--  `How can project users get registered <#regusers>`__
--  `How to track user sign up requests <#signup>`__
--  `How to designate a user as a project manager <#projman>`__
--  `How to designate a user as a project sub-group
-   manager <#groupman>`__
--  `How to add a user to a project group <#addu>`__
--  `How to remove a user from a project group <#remu>`__
--  `How to (temporarily) stop a user from using time in your
-   project <#deact>`__
--  `How to remove a user (or users) from your project <#remuser>`__
--  `How to send a mailing to all users in your project <#projmailing>`__
-
-`Tracking your project usage <#track-usage>`__
-----------------------------------------------
-
--  `How to check the current state of your project's time and
-   space <#snap>`__
--  `How to track what my project's users and project groups are
-   doing? <#phist>`__
--  `How to check how much space my project's users are
-   occupying <#udisk>`__
--  `How to request automatic project reports <#autorep>`__
--  `How to request more resources (AUs and disk space) <#more>`__
-
-| 
-
---------------
-
 Getting Started
 ---------------
 
@@ -251,8 +198,8 @@ How can I move time between budgets?
 
 Do not forget the last step, or nothing will happen.
 
-` <>`__ How can I allocate time to a single user?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How can I allocate time to a single user?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As all the time in a project group is shared by all its members, the
 only way to reserve some time for a single user is to create a project

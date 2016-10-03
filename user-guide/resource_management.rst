@@ -172,6 +172,3 @@ Backup policies
 
 To be added.
 
-`2. Connecting and Transferring Data <connecting.html>`__ \|
-`Contents <../user-guide/>`__ \| `4. Application Development
-Environment <development.html>`__
