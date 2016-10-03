@@ -1,3 +1,9 @@
+.. toctree::
+   introduction
+   connecting
+   resource_management
+   
+
 Cirrus User Guide
 =================
 

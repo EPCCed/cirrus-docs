@@ -1,4 +1,11 @@
+.. toctree::
 
+   hardware
+   user-guide
+   safe-guide
+   
+Cirrus
+======
 
 Cirrus is the EPCC's HPC Service. The Cirrus Service is:
 
@@ -6,8 +13,6 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
 -  An invaluable resource for industry, commerce and researchers.
 
 `More information on Cirrus... <about-cirrus/>`__
-
-
 
 .. rubric:: Current Cirrus Users
    :name: current-cirrus-users
