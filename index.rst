@@ -22,3 +22,9 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
    user-guide/transfer
    user-guide/reading
 
+.. toctree::
+   :maxdepth: 2
+   :caption: About Cirrus
+  
+   hardware
+  
