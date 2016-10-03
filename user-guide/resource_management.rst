@@ -1,5 +1,5 @@
-3. File and Resource Management
-===============================
+File and Resource Management
+============================
 
 This section covers some of the tools and technical knowledge that will
 be key to maximising the usage of the Cirrus system, such as the online

@@ -1,5 +1,5 @@
-2. Connecting and Data Transfer
-===============================
+Connecting and Data Transfer
+============================
 
 On the Cirrus system interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In

@@ -1,5 +1,5 @@
-1. Introduction
-===============
+Introduction
+============
 
 -  `1.1 Acknowledging Cirrus <#acknowledge>`__
 -  `1.2 Hardware <#hardware>`__

@@ -21,4 +21,11 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
    :maxdepth: 2
    :caption: User Documentation
 
-   user-guide/*
+   user-guide/introduction
+   user-guide/connecting
+   user-guide/resource_management
+   user-guide/development
+   user-guide/batch
+   user-guide/transfer
+   user-guide/reading
+

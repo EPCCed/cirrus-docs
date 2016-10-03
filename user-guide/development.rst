@@ -1,5 +1,5 @@
-4. Application Development Environment
-======================================
+Application Development Environment
+===================================
 
 The application development environment on Cirrus is primarily
 controlled through the *modules* environment. By loading and switching
