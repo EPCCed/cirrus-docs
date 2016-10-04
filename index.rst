@@ -8,7 +8,7 @@ Cirrus is the EPCC's HPC Service. The Cirrus Service is:
 -  An invaluable resource for industry, commerce and researchers.
    
 The Cirrus facility is based around a Intel ICE XA HPC cluster with 2,016 cores. There are 56 compute nodes, each with 256 GB of memory, connected together by a single Infiniband fabric.
-Each node contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes can access the 200TB Lustre file system.
+Each node contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 200TB Lustre file system.
    
 .. toctree::
    :maxdepth: 2
