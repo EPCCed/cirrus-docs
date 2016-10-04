@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Cirrus'
-copyright = u'2016, G. Pringle, A. R. Turner'
-author = u'G. Pringle, A. R. Turner'
+copyright = u'2016, G. J. Pringle, A. R. Turner'
+author = u'G. J. Pringle, A. R. Turner'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -229,7 +229,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'Cirrus.tex', u'Cirrus Documentation',
-     u'G. Pringle, A. R. Turner', 'manual'),
+     u'G. J. Pringle, A. R. Turner', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
