@@ -40,7 +40,7 @@ service develops the default version will change.
 
 You can list all the modules of a particular type by providing an
 argument to the ``module avail`` command. For example, to list all
-available versions of the Intel Compiler Environment (CCE) type:
+available versions of the Intel Compiler type:
 
 ::
 
@@ -52,7 +52,7 @@ If you want more info on any of the modules, you can use the
 
 ::
 
-    user@system:~> module help cce
+    user@system:~> module help mpt
     ...
 
 The simple ``module list`` command will give the names of the modules
@@ -93,30 +93,17 @@ intel-compilers-16 (even if it is not the default) you might have
 loaded. There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
 version which is not yet the default or using a legacy version to keep
-compatibility with old data.
+compatibility with old data. This can be achieved most easily by using 
+"module swap oldmodule newmodule". 
 
-Compiler Wrapper Scripts
-------------------------
-
-Code compiled on Cirrus should use the compiler wrapper scripts to
-ensure that all the correct libraries and header files are included in
-both the compile and link stages. The compiler wrapper scripts are
-available for Fortran, C, and C++:
-
- ``ftn``
-    Fortran compiler
- ``cc``
-    C compiler
- ``CC``
-    C++ compiler
-
-The wrapper scripts can be used to compile both sequential and parallel
-codes. Further information on the wrapper scripts can be obtained from
-the ``man`` pages, for example:
+Suppose you have loaded version 3.3.0.1, say, of FFTW, the following command will change to version 2.1.5.2:
 
 ::
 
-    man ftn
+    module swap fftw fftw/16.0.2.181
+
+This swapping mechanism is often used to select a diffent compiler suite from the default on the system.
+
 
 Compiling MPI codes
 -------------------
@@ -199,31 +186,13 @@ Intel
 GNU
     ``-freal-4-real-8 -finteger-4-integer-8``
 
-Using dynamic linking/libraries
+Using static linking/libraries
 -------------------------------
+By default, executables on Cirrus are built using shared/dynamic libraries 
+(that is, libraries which are loaded at run-time as and when
+needed by the application) when using the wrapper scripts. 
 
-By default, executables on Cirrus are built using static libraries (that
-is, all of the object code of referenced libraries are contained in the
-executable file) when using the wrapper scripts. This has the advantage
-that once an executable is created, whenever it is run in the future, it
-will always use the same object code and thus give the same results from
-the same input. However, executables compiled with static libraries have
-the potential disadvantage that when multiple instances are running
-simultaneously multiple copies of the libraries used are held in memory.
-This can lead to large amounts of memory being used to hold the
-executable and not application data.
-
-Alternatively, applications can be compiled to use shared/dynamic
-libraries (i.e. libraries which are loaded at run-time as and when
-needed by the application). This may be because static versions of
-certain libraries are unavailable, or to reduce the amount of memory
-executables take by sharing common sections of object codes between
-applications which use the same library.
-
-To create an application that uses shared/dynamic libraries you must
-pass an extra flag during compilation, ``-dynamic``, or set an environment variable. 
-
-By default an application compiled this way to use shared libraries will
+An application compiled this way to use shared/dynamic libraries will
 use the default version of the library installed on the system (just
 like any other Linux executable), even if the system modules were set
 differently at compile time. This means that the application may
@@ -233,6 +202,28 @@ behaviour for many applications as any fixes or improvements to the
 default linked libraries are used without having to recompile the
 application, however some users may feel this is not the desired
 behaviour for their applications.
+
+Alternatively, applications can be compiled to use static
+libraries (i.e. all of the object code of referenced libraries are contained in the
+executable file). This may be because static versions of
+certain libraries are unavailable, or to reduce the amount of memory
+executables take by sharing common sections of object codes between
+applications which use the same library. 
+
+This has the advantage
+that once an executable is created, whenever it is run in the future, it
+will always use the same object code and thus give the same results from
+the same input. However, executables compiled with static libraries have
+the potential disadvantage that when multiple instances are running
+simultaneously multiple copies of the libraries used are held in memory.
+This can lead to large amounts of memory being used to hold the
+executable and not application data.
+
+To create an application that uses static libraries you must
+pass an extra flag during compilation, ``-static``, or set an 
+environment variable. 
+
+
 
 Use the UNIX command ``ldd exe_file`` to check whether you are using an
 executable that depends on shared libraries. This utility will also
