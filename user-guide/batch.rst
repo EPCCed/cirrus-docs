@@ -194,12 +194,7 @@ The most important ``mpiexec_mpt`` flags are:
     shared-memory threading. (This is in addition to the
     ``OMP_NUM_THREADS`` environment variable if you are using OpenMP for
     your shared memory programming.) The default on Cirrus is 1.
- ``-j [hyperthreads]``
-    Specifies the number of Intel HyperThreads to use for each physical
-    core. Valid values for this are 0, 1 or 2. 0 indicates that all
-    available HyperThreads should be used and hence is equivalent to 2
-    on Cirrus. The default is currently 2, but experience suggests -j 1
-    should give the best performance for most codes on Cirrus.
+
 
 Please use ``         man         mpiexec_mpt`` and
 ``         mpiexec_mpt`` -h to query further options.

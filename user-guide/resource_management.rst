@@ -51,7 +51,7 @@ File permissions and security
 -----------------------------
 
 By default, each user is a member of the group with the same name as
-[group\_code] in the ``/home`` and ``/work`` directory paths, e.g.
+[group\_code] in the ``/lustre/home`` and ``/lustre/work`` directory paths, e.g.
 ``x01-a``. This allows the user to share files with only members of that
 group by setting the appropriate group file access permissions. As on
 other UNIX or Linux systems, a user may also be a member of other

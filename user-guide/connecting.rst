@@ -39,7 +39,7 @@ Performance considerations
 Cirrus is capable of generating data at a rate far greater than the rate
 at which this can be downloaded. In practice, it is expected that only a
 portion of data generated on Cirrus will be required to be transfered
-back to users' institutions - the rest will be, for example,
+back to users' local storage - the rest will be, for example,
 intermediate or checkpoint files required for subsequent runs. However,
 it is still essential that all users try to transfer data to and from
 Cirrus as efficiently as possible. The most obvious ways to do this are:
@@ -87,8 +87,7 @@ We will demonstrate the process using the
 most remote Linux machines (unless the system administrator has
 explicitly set up the system to forbid access using an SSH Agent).
 
-**Note:** this description applies if your local machine is Linux or Mac
-OSX. The procedure can also be used on Windows using the PuTTY SSH
+**Note:** this description applies if your local machine is Linux or macOS. The procedure can also be used on Windows using the PuTTY SSH
 terminal with the PuTTYgen key pair generation tool and the Pageant SSH
 Agent. See the `PuTTY
 documentation <http://the.earth.li/~sgtatham/putty/0.62/htmldoc/>`__ for
@@ -107,9 +106,9 @@ key:
 
 .. code:: example
 
-    ssh-keygen -t rsa -C "your@email.ac.uk"
+    ssh-keygen -t rsa -C "your@email.com"
     ...
-    -bash-4.1$ ssh-keygen -t rsa -C "your@email.ac.uk"
+    -bash-4.1$ ssh-keygen -t rsa -C "your@email.com"
     Generating public/private rsa key pair.
     Enter file in which to save the key (/Home/user/.ssh/id_rsa): [Enter]
     Enter passphrase (empty for no passphrase): [Passphrase]
@@ -117,7 +116,7 @@ key:
     Your identification has been saved in /Home/user/.ssh/id_rsa.
     Your public key has been saved in /Home/user/.ssh/id_rsa.pub.
     The key fingerprint is:
-    03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.ac.uk
+    03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.com
     The key's randomart image is:
     +--[ RSA 2048]----+
     |    . ...+o++++. |
@@ -131,7 +130,7 @@ key:
     | ..              |
     +-----------------+
 
-(remember to replace "your@email.ac.uk" with your e-mail address).
+(remember to replace "your@email.com" with your e-mail address).
 
 Copy the public part of the key to the remote host
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,7 +168,7 @@ is to enable an SSH Agent on your local system so that you only have to
 enter the passphrase once per day and after that you will be able to
 access the remote system without entering the passphrase.
 
-Most modern Linux distributions (and Mac OSX) should have ssh-agent
+Most modern Linux distributions (and macOS) should have ssh-agent
 running by default. If your system does not then you should find the
 instructions for enabling it in your distribution using Google.
 

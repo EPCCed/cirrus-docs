@@ -4,10 +4,7 @@ Data Transfer Guide
 -  `Using scp <#Cirrus_scp>`__
 -  `Using rsync <#Cirrus_rsync>`__
 
-`Storing Data on the UK RDF <#RDF>`__
 
--  `Using cp <#RDF_cp>`__
--  `Using rsync <#RDF_rsync>`__
 
 scp command
 -----------

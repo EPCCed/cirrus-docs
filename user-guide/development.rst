@@ -35,7 +35,7 @@ This will list all the names and versions of the modules available on
 the service. Not all of them will work in your account though due to,
 for example, licencing restrictions. You will notice that for many
 modules we have more than one version, each of which is identified by a
-version number. One of these versions is marked as the default. As the
+version number. One of these versions is the default. As the
 service develops the default version will change.
 
 You can list all the modules of a particular type by providing an
@@ -205,7 +205,7 @@ behaviour for their applications.
 
 Alternatively, applications can be compiled to use static
 libraries (i.e. all of the object code of referenced libraries are contained in the
-executable file). This may be because static versions of
+executable file). cd This may be because static versions of
 certain libraries are unavailable, or to reduce the amount of memory
 executables take by sharing common sections of object codes between
 applications which use the same library. 

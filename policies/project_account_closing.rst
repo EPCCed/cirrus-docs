@@ -34,12 +34,3 @@ due to close. Reminders will be sent to users 1 month before the
 accounts are due to close with a follow up 2 weeks before the accounts
 are closed.
 
-The above procedure deals primarily with Cirrus accounts. If a user also
-has data on the RDF then
-
-A. if the Cirrus account is deleted, the user's RDF data is left intact
-   and the user still has access to the RDF via the DTN nodes,
-   administered via the SAFE and still remain part of the original
-   Cirrus project
-B. if the Cirrus account is re-owned then so is the RDF account and all
-   its data
