@@ -13,7 +13,7 @@ Acknowledging Cirrus
 You should use the following phrase to acknowledge Cirrus in all
 research outputs that have used the facility:
 
-*This work used EPCC's Cirrus HPC Service (http://www.cirrus.ac.uk).*
+*This work used EPCC's Cirrus HPC Service (https://www.epcc.ed.ac.uk/cirrus).*
 
 You should also tag outputs with the keyword *Cirrus* whenever possible.
 

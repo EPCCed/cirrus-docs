@@ -28,10 +28,23 @@ logging onto Cirrus (see the `SAFE User
 Guide </documentation/safe-guide>`__ for more details on requesting
 accounts and picking up passwords).
 
-Note: you may now change your password on the Cirrus machine itself
+**Note:** you may now change your password on the Cirrus machine itself
 using the *passwd* command. This change will not be reflected in the
 SAFE. If you forget your password, you should use the SAFE to request a
 new one-shot password.
+
+Data transfer
+-------------
+
+The standard way to transfer data to an from Cirrus is using the ``scp``
+command. For example, to transfer a single file from your local system
+to your home directory Cirrus you cold use the command:
+
+::
+
+    scp my_data_file.dat [userID]@cirrus.epcc.ed.ac.uk:
+
+(note the colon at the end of the command, this is required).
 
 Performance considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,7 +71,7 @@ Cirrus as efficiently as possible. The most obvious ways to do this are:
    processed is large, an MPI application able to use multiple nodes may
    be preferable.
 
-Note that the performance of data transfers between Cirrus and your
+**Note:** that the performance of data transfers between Cirrus and your
 local institution may differ depending upon whether the transfer command
 is run on Cirrus or on your local system.
 
@@ -87,7 +100,8 @@ We will demonstrate the process using the
 most remote Linux machines (unless the system administrator has
 explicitly set up the system to forbid access using an SSH Agent).
 
-**Note:** this description applies if your local machine is Linux or macOS. The procedure can also be used on Windows using the PuTTY SSH
+**Note:** this description applies if your local machine is Linux or macOS.
+The procedure can also be used on Windows using the PuTTY SSH
 terminal with the PuTTYgen key pair generation tool and the Pageant SSH
 Agent. See the `PuTTY
 documentation <http://the.earth.li/~sgtatham/putty/0.62/htmldoc/>`__ for
@@ -247,8 +261,8 @@ username or the full hostname every time:
 
 .. code:: example
 
-    -bash-4.1$ ssh cirrus 'hostname -a'
-    esl8 cdl8 eslogin008
+    -bash-4.1$ ssh cirrus 'hostname'
+    indy2-login0
 
 You can set up as many of these entries as you need in your local
 configuration file. Other options are available. See the ```ssh_config``
