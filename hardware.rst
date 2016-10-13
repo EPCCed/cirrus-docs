@@ -13,7 +13,7 @@ a single Infiniband fabric, with 56 compute nodes and 3 login nodes.
 Compute Nodes
 ~~~~~~~~~~~~~
 
-Cirrus compute nodes contain two 2.1 GHz, 18-core Intel Xeon E5-2695
+Cirrus compute nodes each contain two 2.1 GHz, 18-core Intel Xeon E5-2695
 (Broadwell) series processors. Each of the cores in these processors
 support 2 hardware threads (Hyperthreads), which are enabled by default.
 
