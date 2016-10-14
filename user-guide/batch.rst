@@ -141,7 +141,10 @@ options you can provide to PBS. The following options may be useful:
 Parallel job launcher ``mpiexec_mpt``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The job launcher for parallel jobs on Cirrus is ``mpiexec_mpt`` .
+The job launcher for parallel jobs on Cirrus is ``mpiexec_mpt``.
+
+**Note:** the parallel job launcher is only available once you have
+loaded the ``mpt`` module.
 
 A sample MPI job launch line using ``mpiexec_mpt`` looks like:
 
@@ -171,6 +174,11 @@ The most important ``mpiexec_mpt`` flags are:
     all the physical cores on a node) is useful if you need large
     amounts of memory per parallel process or you are using more than
     one shared-memory thread per parallel process.
+
+If you are running hybrid MPI/OpenMP code you will also often make
+use of the ``omplace`` tool in your job launcher line. This tool 
+takes the number of threads as the option ``-nt``:
+
  ``-nt [threads per parallel process]``
     Specifies the number of cores for each parallel process to use for
     shared-memory threading. (This is in addition to the
@@ -178,7 +186,8 @@ The most important ``mpiexec_mpt`` flags are:
     your shared memory programming.) The default on Cirrus is 1.
 
 
-Please use ``man mpiexec_mpt`` and ``mpiexec_mpt -h`` to query further options.
+Please use ``man mpiexec_mpt`` and ``man omplace`` to query further options.
+(Again, these are only available once you have loaded the ``mpt``module.)
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,6 +213,10 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
 
     # Change to the directory that the job was submitted from
     cd $PBS_O_WORKDIR
+  
+    # Load any required modules
+    module load mpt
+    module load intel-compilers-16
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -231,7 +244,8 @@ one node. This means that the number of shared memory threads should be
 a factor of 18.
 
 In the example below, we are using 2 nodes for 6 hours. There are 4 MPI
-processes in total and 18 OpenMP threads per MPI process.
+processes in total and 18 OpenMP threads per MPI process. Note the use
+of the ``omplace`` command to specify the number of threads.
 
 ::
 
@@ -251,6 +265,10 @@ processes in total and 18 OpenMP threads per MPI process.
     # Change to the direcotry that the job was submitted from
     cd $PBS_O_WORKDIR
 
+    # Load any required modules
+    module load mpt
+    module load intel-compilers-16
+
     # Set the number of threads to 18
     #   There are 18 OpenMP threads per MPI process
     export OMP_NUM_THREADS=18
@@ -259,7 +277,7 @@ processes in total and 18 OpenMP threads per MPI process.
     #   Using 4 MPI processes
     #   2 MPI processes per node
     #   18 OpenMP threads per MPI process
-    mpiexec_mpt -n 4 -ppn 2 -nt 16 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    mpiexec_mpt -n 4 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 MPI on the login nodes
 ~~~~~~~~~~~~~~~~~~~~~~~
