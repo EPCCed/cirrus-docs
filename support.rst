@@ -6,7 +6,7 @@ relating to the Cirrus Service. **Support is available Monday to Friday
 from 08:30 until 18:00, excluding UK public holidays.** The EPCC
 Helpdesk can be reached by:
 
--  Email support@epcc.ed.ac.uk
+-  Email epcc-support@epcc.ed.ac.uk
 -  via EPCC SAFE https://safe.epcc.ed.ac.uk/safadmin/
 -  phone: +44 (0)131 650 5000
 -  By post, to:
