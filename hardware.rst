@@ -56,7 +56,12 @@ The compute nodes are diskless. Each node boots from a cluster
 management noded called the Rack Leader and NFS mounts the root file
 system from this management node.
 
-**NB Currently, the /lustre filesystem are not backed-up in any way.**
+*Note:* There are currently no backups of data on Cirrus as backing up the whole
+Lustre file system would adversly affect the performance of write
+access for simulations. The nature of the Lustre parallel file system
+means that there is data resiliance in the case of failures of individual
+hardware components. However, we strongly advise that you keep copies of
+any critical data on different systems.
 
 Parallel I/O
 ------------

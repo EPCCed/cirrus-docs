@@ -1,9 +1,8 @@
 Data Transfer Guide
 ===================
 
--  `scp command`_
--  `rsync command`_
--  `Performance considerations`_
+This section covers the different ways that you can transfer data 
+on to and off Cirrus.
 
 scp command
 -----------

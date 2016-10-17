@@ -170,5 +170,11 @@ Here are some general guidelines
 Backup policies
 ---------------
 
-To be added.
+There are currently no backups of data on Cirrus as backing up the whole 
+Lustre file system would adversly affect the performance of write
+access for simulations. The nature of the Lustre parallel file system
+means that there is data resiliance in the case of failures of individual
+hardware components. However, we strongly advise that you keep copies of
+any critical data on different  systems.
 
+We are currently investigating options for providing backups of critical data.
