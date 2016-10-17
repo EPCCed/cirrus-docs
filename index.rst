@@ -2,11 +2,11 @@
 Cirrus
 ======
 
-Cirrus is a supercomputing service hosted and run by `EPCC <http://www.epcc.ed.ac.uk>` at 
-`The University of Edinburgh <http://www.ed.ac.uk>`.
+Cirrus is a supercomputing service hosted and run by `EPCC <http://www.epcc.ed.ac.uk>`_ at 
+`The University of Edinburgh <http://www.ed.ac.uk>`_.
 
 Cirrus is available to industry, commerce and academic researchers. For information on how
-to get access to the system please see `Cirrus on the EPCC website <http://www.epcc.ed.ac.uk/cirrus>`.
+to get access to the system please see `Cirrus on the EPCC website <http://www.epcc.ed.ac.uk/cirrus>`_.
    
 The Cirrus facility is based around an SGI ICE XA HPC cluster with 2,016 cores. There are 56 compute
 nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
