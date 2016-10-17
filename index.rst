@@ -2,13 +2,15 @@
 Cirrus
 ======
 
-Cirrus is the EPCC's HPC Service. The Cirrus Service is:
+Cirrus is a supercomputing service hosted and run by `EPCC <http://www.epcc.ed.ac.uk>` at 
+`The University of Edinburgh <http://www.ed.ac.uk>`.
 
--  A Tier-2 sized supercomputer located and run in Edinburgh, UK.
--  An invaluable resource for industry, commerce and researchers.
+Cirrus is available to industry, commerce and academic researchers. For information on how
+to get access to the system please see `Cirrus on the EPCC website <http://www.epcc.ed.ac.uk/cirrus>`.
    
-The Cirrus facility is based around an SGI ICE XA HPC cluster with 2,016 cores. There are 56 compute nodes, each with 256 GB of memory, connected together by a single Infiniband fabric.
-Each node contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 200TB Lustre file system.
+The Cirrus facility is based around an SGI ICE XA HPC cluster with 2,016 cores. There are 56 compute
+nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
+contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 116 TiB Lustre file system.
    
 .. toctree::
    :maxdepth: 2
