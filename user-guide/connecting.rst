@@ -1,14 +1,13 @@
-Connecting and Data Transfer
-============================
+Connecting to Cirrus
+====================
 
 On the Cirrus system interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In
 addition data can be transfered to and from the Cirrus system using
 ``scp`` from the command line or by using a file transfer client.
 
-This section covers the basic connection and data transfer methods,
-along with presenting some performance considerations. The connection
-procedure is then expanded on as the use of SSH agent is described for
+This section covers the basic connection methods. The connection
+procedure is then expanded on and the use of SSH agent is described for
 ease of access.
 
 Interactive access
@@ -32,48 +31,6 @@ accounts and picking up passwords).
 using the *passwd* command. This change will not be reflected in the
 SAFE. If you forget your password, you should use the SAFE to request a
 new one-shot password.
-
-Data transfer
--------------
-
-The standard way to transfer data to an from Cirrus is using the ``scp``
-command. For example, to transfer a single file from your local system
-to your home directory Cirrus you cold use the command:
-
-::
-
-    scp my_data_file.dat [userID]@cirrus.epcc.ed.ac.uk:
-
-(note the colon at the end of the command, this is required).
-
-Performance considerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Cirrus is capable of generating data at a rate far greater than the rate
-at which this can be downloaded. In practice, it is expected that only a
-portion of data generated on Cirrus will be required to be transfered
-back to users' local storage - the rest will be, for example,
-intermediate or checkpoint files required for subsequent runs. However,
-it is still essential that all users try to transfer data to and from
-Cirrus as efficiently as possible. The most obvious ways to do this are:
-
-#. Only transfer those files that are required for subsequent analysis,
-   visualisation and/or archiving. Do you really need to download those
-   intermediate result or checkpointing files? Probably not.
-#. Combine lots of small files into a single tar file, to reduce the
-   overheads associated in initiating data transfers.
-#. Compress data before sending it, e.g. using gzip or bzip2.
-#. Consider doing any pre- or post-processing calculations on Cirrus.
-   Long running pre- or post- processing calculations should be run via
-   the batch queue system, rather than on the login nodes. Such pre- or
-   post-processing codes could be serial or OpenMP parallel applications
-   running on a single node, though if the amount of data to be
-   processed is large, an MPI application able to use multiple nodes may
-   be preferable.
-
-**Note:** that the performance of data transfers between Cirrus and your
-local institution may differ depending upon whether the transfer command
-is run on Cirrus or on your local system.
 
 Making access more convenient using a SSH Agent
 -----------------------------------------------
