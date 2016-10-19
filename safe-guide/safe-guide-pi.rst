@@ -1,8 +1,8 @@
-SAFE Guide for Principal Investigators: How to Manage your Allocation
-=====================================================================
+Project Leaders
+===============
 
-Principal Investigators (grant holders) can manage their allocations
-efficiently via `SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__
+Project Leaders can manage the resources and users associated with 
+their projects through SAFE.
 
 Getting Started
 ---------------
@@ -38,8 +38,8 @@ want a service machine account:
 #. Enter your Requested username and click on *Request*
 
 You will get an acknowledgment screen, from which you can return to your
-main page. Now (as PI) you have to accept your own request for an
-account—see the next question.
+main page. Now (as a project leader) you have to accept your own request for an
+account — see below.
 
 How can I check project alerts?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

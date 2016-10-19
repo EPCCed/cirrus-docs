@@ -1,5 +1,5 @@
-SAFE Guide for Individual Users
-===============================
+Individual Users
+================
 
 `SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__ is an online user
 service management system. Through SAFE, individual users can request
