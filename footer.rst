@@ -1,4 +1,3 @@
-.. footer::
 
-   .. image:: images/epccuoe_logo.png
+.. image:: images/epccuoe_logo.png
 
