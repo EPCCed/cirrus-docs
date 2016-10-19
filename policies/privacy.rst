@@ -29,7 +29,7 @@ Principal Investigator of your research project and to anyone whom the
 PI designates as a manager of the project.
 
 Periodically, the service will be examined by auditors acting on behalf
-of EPCC, and they may see your personal data. They will be acting under
+of your funders, and they may see your personal data. They will be acting under
 conditions of professional confidentiality.
 
 We reserve the right to monitor your use of the service, including
