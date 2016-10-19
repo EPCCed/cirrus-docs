@@ -34,12 +34,17 @@ Checking your CPU-time (kAU) balance
 ------------------------------------
 
 You can view these details by logging into the SAFE
-(https://safe.epcc.ed.ac.uk/safadmin/). Scroll down to the panel marked
-"You are a member of the following project groups" and you will see how
-much time is left in a particular project.
+(https://safe.epcc.ed.ac.uk/safadmin/).
+
+Use the *Login accounts* menu to select the user account that you wish
+to query. The page for the login account will summarise the resources
+available to account.
 
 You can also generate reports on your usage over a particular period and
-examine the details of how many kAUs individual jobs on the system cost.
+examine the details of how many kAU individual jobs on the system cost.
+To do this use the *Service information* menu and selet *Report generator*.
+
+For more information on using the SAFE see the `../safe-guide/introduction`.
 
 Disk quotas
 -----------
