@@ -1,5 +1,5 @@
-Cirrus SAFE 
-===========
+Cirrus SAFE Overview
+====================
 
 The SAFE is a web-based application that is used for:
 
