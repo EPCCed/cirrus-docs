@@ -14,7 +14,7 @@ contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 11
    
 .. toctree::
    :maxdepth: 2
-   :caption: User Documentation
+   :caption: Cirrus User Documentation
 
    user-guide/introduction
    user-guide/connecting
@@ -33,9 +33,11 @@ contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 11
 
 .. toctree::
    :maxdepth: 2
-   :caption: SAFE User Documentation
+   :caption: Cirrus SAFE Documentation
 
    safe-guide/introduction
+   safe-guide/safe-guide-users
+   safe-guide/safe-guide-pi
    
 .. toctree::
    :maxdepth: 2

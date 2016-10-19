@@ -1,23 +1,31 @@
+Cirrus SAFE 
+===========
 
-SAFE Guide for Users
-====================
-`SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__ is an online user
-service management system.
+The SAFE is a web-based application that is used for:
 
-Through SAFE, individual users can request
-machine accounts, reset passwords, see available resources and track
-their usage. All users must be registered on SAFE before they can apply
-for their machine account.
+* Administering Cirrus user accounts
+* Managing account a project resources (kAU, disk quotas, etc.)
+* Reporting on usage of the system
+* Helpdesk and support
 
-Go to the `SAFE Guide for users <safe-guide-users.html>`__.
+Cirrus SAFE for individual users
+--------------------------------
 
-SAFE Guide for Principal Investigators and Project Managers
-===========================================================
+All Cirrus users have accounts on the Cirrus SAFE through which they can
+view the resources they have access to, administer their account,
+query their usage of the service, and submit support requests.
 
-Principal investigators (grant holders) and project managers (nominated
-by PIs) have overall authority over their allocated resources and can
-perform additional project management tasks in `SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__.
+More information on performing these tasks can be found in the
+:doc:`safe-guide-users` chapter.
 
-Go to the `SAFE Guide for principal
-investigators <safe-guide-pi.html>`__.
+Cirrus SAFE for project leaders
+-------------------------------
+
+Project leaders (PI's and any designated project managers) can also
+use the SAFE to approve requests to join the project, manage their
+project resources on Cirrus, and generate reports on the project 
+usage on Cirrus.
+
+More information on performing these tasks can be found in the
+:doc:`safe-guide-pi` chapter.
 
