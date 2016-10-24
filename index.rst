@@ -49,4 +49,3 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    
    support
    
-.. include:: footer.rst
