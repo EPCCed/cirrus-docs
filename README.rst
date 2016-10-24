@@ -7,6 +7,8 @@ This repository contains the documentation for the service and is linked to a re
 
 For a guide on the rst file format see `this <http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html>`_ document.
 
+This documentation is drawn from the `Sheffield Iceberg documentation <https://github.com/rcgsheffield/sheffield_hpc>`_  and the `ARCHER <http://www.archer.ac.uk>`_ documentation.
+
 Rendered Documentation
 ----------------------
 Two versions of the documentation are currently automatically built from this repository:
