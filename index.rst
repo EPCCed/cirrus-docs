@@ -12,6 +12,9 @@ to get access to the system please see `Cirrus on the EPCC website <http://www.e
 The Cirrus facility is based around an SGI ICE XA HPC cluster with 2,016 cores. There are 56 compute
 nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
 contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 116 TiB Lustre file system.
+
+This documentation draws on the `Sheffield Iceberg Documentation <https://github.com/rcgsheffield/sheffield_hpc>`_
+and the documentation for the `ARCHER National Supercomputing Service <http://www.archer.ac.uk>`_.
    
 .. toctree::
    :maxdepth: 2
