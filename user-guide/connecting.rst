@@ -75,7 +75,7 @@ Using a terminal (the command line), set up a key pair that contains
 your e-mail address and enter a passphrase you will use to unlock the
 key:
 
-.. code:: example
+::
 
     ssh-keygen -t rsa -C "your@email.com"
     ...
@@ -111,7 +111,7 @@ the "authorized\_keys" file on the remote host you wish to connect to
 using the SSH Agent. This can be achieved by appending the contents of
 the public part of the key to the remote file:
 
-.. code:: example
+::
 
     -bash-4.1$ cat ~/.ssh/id_rsa.pub | ssh user@cirrus.epcc.ed.ac.uk 'cat - >> ~/.ssh/authorized_keys'
     Password: [Password]
@@ -122,7 +122,7 @@ the public part of the key to the remote file:
   for your key pair *passphase* (which you entered when you creasted the
   key pair) rather than your remote machine *password*.
 
-.. code:: example
+::
 
     -bash-4.1$ ssh user@cirrus.epcc.ed.ac.uk 'date'
     Enter passphrase for key '/Home/user/.ssh/id_rsa': [Passphrase]
@@ -156,7 +156,7 @@ passphrase one more time:
 Now you can test that you can access the remote host without needing to
 enter your passphrase:
 
-.. code:: example
+::
 
     -bash-4.1$ ssh user@cirrus.epcc.ed.ac.uk 'date'
     Warning: Permanently added the RSA host key for IP address '192.62.216.27' to the list of known hosts.
@@ -190,7 +190,7 @@ Forwarding is controlled by a configuration file located on your local
 machine at ".ssh/config". Each remote site (or group of sites) can have
 an entry in this file which may look something like:
 
-.. code:: example
+::
 
     Host cirrus
       HostName cirrus.epcc.ed.ac.uk
@@ -216,7 +216,7 @@ the options for the "cirrus" host.
 Now you can use SSH to access Cirrus without needing to enter my
 username or the full hostname every time:
 
-.. code:: example
+::
 
     -bash-4.1$ ssh cirrus 'hostname'
     indy2-login0
