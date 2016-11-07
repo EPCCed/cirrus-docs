@@ -119,7 +119,7 @@ Compilers are then available as mpif90, mpicc and mpiCC for Fortran with
 MPI, C with MPI, and C++ with MPI, respectively
 
 NB take care as there are a number of compilers available. If you load
-the intel compilers module but not the mpt module then mpif90 and mpicc
+the mpt module but not the intel compilers module then mpif90 and mpicc
 will use the GNU compilers rather than the Intel compilers to build your
 program.
 
