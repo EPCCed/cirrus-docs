@@ -123,7 +123,7 @@ the mpt module but not the intel compilers module then mpif90 and mpicc
 will use the GNU compilers rather than the Intel compilers to build your
 program.
 
-You need to load both modules to get the Intel compilers when calling
+You must load both modules to get the Intel compilers when calling
 mpif90 or mpicc. This works differently for C and Fortran: for Fortran,
 mpif90 will automatically call ifort after you have loaded
 intel-compilers-16; for C, you need to specify icc explicitly using the
