@@ -134,7 +134,7 @@ compile MPI applications as this is the method officially supported and
 tested by SGI.
 
 **Note:** You can always check which compiler the MPI compiler wrapper scripts
-are using with ``mpicc -v`` or ``mpif90 -v``.
+are using with, for example, ``mpicc -v`` or ``mpif90 -v``.
 
 -  :download:`SGI MPT documentation </sgidocs/SGI_MPI_SHMEM_Guide_007-3773-029.pdf>`
 
@@ -146,15 +146,15 @@ Once you have loaded the MPT module you should next load the appropriate
 
 ::
 
-    module load intel-compilers-16/16.0.3.210
+    module load intel-compilers-16
 
-Compilers are then available as mpif90, mpicc and mpiCC for Fortran with
+Compilers are then available as ``mpif90``, ``mpicc`` and ``mpiCC`` for Fortran with
 MPI, C with MPI, and C++ with MPI, respectively.
 
 **Note:** When compiling C/C++ applications you must also specify that 
 ``mpicc`` should use the ``icc`` compiler with ``mpicc -cc=icc``. (This
 is not required for Fortran as the ``mpif90`` compiler automatically 
-uses ``ifort``.  If in doubt use ``mpicc -cc=icc -v`` to see
+uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
 which compiler is actually being called.
 
 Using GCC Compilers and MPI
