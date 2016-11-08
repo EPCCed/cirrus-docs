@@ -5,14 +5,15 @@ The application development environment on Cirrus is primarily
 controlled through the *modules* environment. By loading and switching
 modules you control the compilers, libraries and software available.
 
-This means that for compiling on Cirrus you typically load all the
-required library modules (e.g. numerical libraries, IO format libraries)
-and compile your code using the compiler wrapper script (described in
-detail below). The combination of the modules environment and the
-wrapper scripts ensures that all the correct headers and library files
-are included for you.
+This means that for compiling on Cirrus you typically set the compiler
+you wish to use using the appropriate modules, then load all the
+required library modules (e.g. numerical libraries, IO format libraries).
 
-By default, all users on Cirrus start with no environments loaded.
+Additionally, if you are compiling parallel applications using MPI 
+(or SHMEM, etc.) then you will need to load the ``mpt`` module and
+use the appropriate compiler wrapper scripts.
+
+By default, all users on Cirrus start with no modules loaded.
 
 Basic usage of the ``module`` command on Cirrus is covered below. For
 full documentation please see:
@@ -44,24 +45,34 @@ available versions of the Intel Compiler type:
 
 ::
 
-    user@system:~> module avail intel-compilers-16
-    ...
+    [user@cirrus-login0 ~]$ module avail intel-compilers
+ 
+    --------------------------------------- /lustre/sw/modulefiles ---------------------------------------
+    intel-compilers-16/16.0.2.181 intel-compilers-16/16.0.3.210
 
 If you want more info on any of the modules, you can use the
 ``module help`` command:
 
 ::
 
-    user@system:~> module help mpt
-    ...
+    [user@cirrus-login0 ~]$ module help mpt
+
+    ----------- Module Specific Help for 'mpt/2.14' -------------------
+
+    The SGI Message Passing Toolkit (MPT) is an optimized MPI
+    implementation for SGI systems and clusters.  See the
+    MPI(1) man page and the MPT User's Guide for more
+    information.
 
 The simple ``module list`` command will give the names of the modules
 and their versions you have presently loaded
 
 ::
 
-    user@system:~> module list           
-    ...
+    [user@cirrus-login0 ~]$ module list
+    Currently Loaded Modulefiles:
+    1) mpt/2.14                        3) intel-fc-16/16.0.3.210
+    2) intel-cc-16/16.0.3.210          4) intel-compilers-16/16.0.3.210
 
 Loading, unloading and swapping modules
 ---------------------------------------
@@ -96,45 +107,71 @@ version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using 
 "module swap oldmodule newmodule". 
 
-Suppose you have loaded version 3.3.0.1, say, of FFTW, the following command will change to version 2.1.5.2:
+Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the following command will change to version 16.0.3.210:
 
 ::
 
-    module swap fftw fftw/16.0.2.181
-
-This swapping mechanism is often used to select a diffent compiler suite from the default on the system.
+    module swap intel-compilers-16 intel-compilers-16/16.0.2.181
 
 
 Compiling MPI codes
 -------------------
 
-To compile MPI code you must load the "mpt" and "intel-compilers-16"
-modules
+To compile MPI code, using any compiler, you must first load the "mpt" module.
 
-``module load mpt``
+::
 
-``module load intel-compilers-16/16.0.3.210``
+   module load mpt
+
+This makes the compiler wrapper scripts ``mpicc`` and ``mpif90`` available
+to you.
+
+What you do next depends on which compiler (Intel or GCC) you wish to use to
+compile your code.
+
+**Note:** We recommend that you use the Intel compiler wherever possible to 
+compile MPI applications as this is the method officially supported and
+tested by SGI.
+
+**Note:** You can always check which compiler the MPI compiler wrapper scripts
+are using with ``mpicc -v`` or ``mpif90 -v``.
+
+-  :download:`SGI MPT documentation </sgidocs/SGI_MPI_SHMEM_Guide_007-3773-029.pdf>`
+
+Using Intel Compilers and MPI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once you have loaded the MPT module you should next load the appropriate 
+``intel-compilers`` module (e.g. ``intel-compilers-16``):
+
+::
+
+    module load intel-compilers-16/16.0.3.210
 
 Compilers are then available as mpif90, mpicc and mpiCC for Fortran with
-MPI, C with MPI, and C++ with MPI, respectively
+MPI, C with MPI, and C++ with MPI, respectively.
 
-NB take care as there are a number of compilers available. If you load
-the mpt module but not the intel compilers module then mpif90 and mpicc
-will use the GNU compilers rather than the Intel compilers to build your
-program.
+**Note:** When compiling C/C++ applications you must also specify that 
+``mpicc`` should use the ``icc`` compiler with ``mpicc -cc=icc``. (This
+is not required for Fortran as the ``mpif90`` compiler automatically 
+uses ``ifort``.  If in doubt use ``mpicc -cc=icc -v`` to see
+which compiler is actually being called.
 
-You must load both modules to get the Intel compilers when calling
-mpif90 or mpicc. This works differently for C and Fortran: for Fortran,
-mpif90 will automatically call ifort after you have loaded
-intel-compilers-16; for C, you need to specify icc explicitly using the
-syntax "mpicc -cc=icc ..." (but you still have to load
-intel-compilers-16 so mpicc will find icc).
+Using GCC Compilers and MPI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If in doubt use mpif90 -v or mpicc [-cc=icc] -v to see what compiler is
-actually being called.
+To use the GCC compilers with MPT you do not need to load any additional
+modules.
 
-The manual pages for the different compiler suites are available once
-the programming environment has been switched in and are:
+**Note:** SGI MPT does not support the syntax ``use mpi`` in Fortran 
+applications with the GCC compiler ``gfortran``. You should use the
+older ``include "mpif.h"`` syntax when using GCC compilers with 
+``mpif90``.
+
+Compiler Information and Options
+--------------------------------
+
+The manual pages for the different compiler suites are available:
 
 GCC
     Fortran ``man gfortran`` ,
@@ -155,7 +192,7 @@ Intel
 GNU
     ``-O2 -ftree-vectorize -funroll-loops -ffast-math``
 
-When you have a code that you are happy is working correctly and has
+When you have a application that you are happy is working correctly and has
 reasonable performance you may wish to investigate some more aggressive
 compiler optimisations. Below is a list of some further optimisations
 that you can try on your application (Note: these optimisations may
@@ -188,6 +225,7 @@ GNU
 
 Using static linking/libraries
 -------------------------------
+
 By default, executables on Cirrus are built using shared/dynamic libraries 
 (that is, libraries which are loaded at run-time as and when
 needed by the application) when using the wrapper scripts. 
@@ -205,27 +243,19 @@ behaviour for their applications.
 
 Alternatively, applications can be compiled to use static
 libraries (i.e. all of the object code of referenced libraries are contained in the
-executable file). cd This may be because static versions of
-certain libraries are unavailable, or to reduce the amount of memory
-executables take by sharing common sections of object codes between
-applications which use the same library. 
-
-This has the advantage
+executable file).  This has the advantage
 that once an executable is created, whenever it is run in the future, it
-will always use the same object code and thus give the same results from
-the same input. However, executables compiled with static libraries have
+will always use the same object code (within the limit of changing runtime 
+environemnt). However, executables compiled with static libraries have
 the potential disadvantage that when multiple instances are running
 simultaneously multiple copies of the libraries used are held in memory.
 This can lead to large amounts of memory being used to hold the
 executable and not application data.
 
 To create an application that uses static libraries you must
-pass an extra flag during compilation, ``-static``, or set an 
-environment variable. 
-
-
+pass an extra flag during compilation, ``-Bstatic``.
 
 Use the UNIX command ``ldd exe_file`` to check whether you are using an
 executable that depends on shared libraries. This utility will also
-report the shared libraries this executable will use with the current
-value of ``LD_LIBRARY_PATH``.
+report the shared libraries this executable will use if it has been
+dynamically linked.
