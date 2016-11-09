@@ -136,8 +136,6 @@ tested by SGI.
 **Note:** You can always check which compiler the MPI compiler wrapper scripts
 are using with, for example, ``mpicc -v`` or ``mpif90 -v``.
 
--  :download:`SGI MPT documentation </sgidocs/SGI_MPI_SHMEM_Guide_007-3773-029.pdf>`
-
 Using Intel Compilers and MPI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
