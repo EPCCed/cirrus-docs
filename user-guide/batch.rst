@@ -187,7 +187,7 @@ takes the number of threads as the option ``-nt``:
 
 
 Please use ``man mpiexec_mpt`` and ``man omplace`` to query further options.
-(Again, these are only available once you have loaded the ``mpt``module.)
+(Again, these are only available once you have loaded the ``mpt`` module.)
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,18 +282,17 @@ of the ``omplace`` command to specify the number of threads.
 MPI on the login nodes
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When you are developing or debugging code you often want to run many
-short jobs with a small amount of editing the code between runs. One of
-the best ways to achieve this on Cirrus is to use the login nodes.
+If you want to run a short interactive parallel applications (e.g. for 
+debugging) then you can run compiled MPI applications on the login nodes.
 
 For instance, to run a simple, short 4-way MPI job on the login node, issue the
-following command:
+following command (once you have loaded the appropriate modules):
 
 :: 
 
-   `mpirun -n 4 ./hello_mpi.x
+    mpirun -n 4 ./hello_mpi.x
 
-Note: you should not run long, compute- or memory-intensive jobs on the 
+**Note:** you should not run long, compute- or memory-intensive jobs on the 
 login nodes. Any such processes a liable to termination by the system
 with no warning.
 
@@ -373,4 +372,7 @@ when you submit a request for the interactive job.
 If you know you will be doing a lot of intensive debugging you may
 find it useful to request an interactive session lasting the expected
 length of your working session, say a full day.
+
+Your session will end when you hit the requested walltime. If you
+wish to finish before this you should use the ``exit`` command.
 
