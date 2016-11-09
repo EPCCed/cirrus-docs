@@ -296,3 +296,81 @@ following command:
 Note: you should not run long, compute- or memory-intensive jobs on the 
 login nodes. Any such processes a liable to termination by the system
 with no warning.
+
+Serial Jobs
+-----------
+
+Serial jobs are setup in a similar way to parallel jobs on Cirrus. The
+only changes are:
+
+1. You should request a single core with ``select=1``
+2. You will not need to use a parallel job launcher to run your executable
+
+A simple serial script to compress a file would be:
+
+::
+
+    #!/bin/bash --login
+
+    # PBS job options (name, compute nodes, job time)
+    #PBS -N Example_Serial_Job
+    #PBS -l select=1
+    #PBS -l walltime=0:20:0
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #PBS -A [budget code]
+
+    # Change to the direcotry that the job was submitted from
+    cd $PBS_O_WORKDIR
+
+    # Load any required modules
+    module load intel-compilers-16
+
+    # Set the number of threads to 1 to ensure serial
+    export OMP_NUM_THREADS=1
+
+    # Run the serial executable
+    gzip my_big_file.dat
+
+Interactive Jobs
+----------------
+
+When you are developing or debugging code you often want to run many
+short jobs with a small amount of editing the code between runs. This
+can be achieved by using the login nodes to run MPI but you may want
+to test on the compute nodes (e.g. you may want to test running on 
+multiple nodes across the high performance interconnect). One of the
+best ways to achieve this on Cirrus is to use interactive jobs.
+
+An interactive job allows you to issue ``mpirun_mpt`` commands directly
+from the command line without using a job submission script, and to
+see the output from your program directly in the terminal.
+
+To submit a request for an interactive job reserving 8 nodes
+(288 physical cores, 576 hyperthreaded cores)) for 1 hour you would
+issue the following qsub command from the command line:
+
+::
+
+    qsub -IVl select=576,walltime=1:0:0 -A [project code]
+
+When you submit this job your terminal will display something like:
+
+::
+
+    qsub: waiting for job 19366.indy2-login0 to start
+
+It may take some time for your interactive job to start. Once it
+runs you will enter a standard interactive terminal session.
+Whilst the interactive session lasts you will be able to run parallel
+jobs on the compute nodes by issuing the ``mpirun_mpt``  command
+directly at your command prompt (remember you will need to load the
+``mpt`` module and any compiler modules before running)  using the
+same syntax as you would inside a job script. The maximum number
+of cores you can use is limited by the value of select you specify
+when you submit a request for the interactive job.
+
+If you know you will be doing a lot of intensive debugging you may
+find it useful to request an interactive session lasting the expected
+length of your working session, say a full day.
+
