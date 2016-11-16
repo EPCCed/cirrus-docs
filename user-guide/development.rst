@@ -158,8 +158,12 @@ which compiler is actually being called.
 Using GCC Compilers and MPI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use the GCC compilers with MPT you do not need to load any additional
-modules.
+Once you have loaded the MPT module you should next load the 
+``gcc`` module:
+
+::
+
+    module load gcc
 
 **Note:** SGI MPT does not support the syntax ``use mpi`` in Fortran 
 applications with the GCC compiler ``gfortran``. You should use the
