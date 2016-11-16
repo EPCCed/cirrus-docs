@@ -113,6 +113,38 @@ Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the foll
 
     module swap intel-compilers-16 intel-compilers-16/16.0.2.181
 
+Available Compiler Suites
+-------------------------
+
+Intel Compiler Suite
+~~~~~~~~~~~~~~~~~~~~
+
+The Intel compiler suite is accessed by loading the ``intel-compilers-*`` module. For example:
+
+::
+
+    module load intel-compilers-16
+
+Once you have loaded the module, the compilers are available as:
+
+* ``ifort`` - Fortran
+* ``icc`` - C
+* ``icpc`` - C++
+
+GCC Compiler Suite
+~~~~~~~~~~~~~~~~~~
+
+The GCC compiler suite is accessed by loading the ``gcc`` module. For example:
+
+::
+
+    module load gcc
+
+Once you have loaded the module, the compilers are available as:
+
+* ``gfortran`` - Fortran
+* ``gcc`` - C
+* ``g++`` - C++
 
 Compiling MPI codes
 -------------------
@@ -146,13 +178,16 @@ Once you have loaded the MPT module you should next load the appropriate
 
     module load intel-compilers-16
 
-Compilers are then available as ``mpif90``, ``mpicc`` and ``mpiCC`` for Fortran with
-MPI, C with MPI, and C++ with MPI, respectively.
+Compilers are then available as
+
+* ``mpif90`` - Fortran with MPI
+* ``mpicc`` - C with MPI
+* ``mpiCC`` - C++ with MPI
 
 **Note:** When compiling C/C++ applications you must also specify that 
-``mpicc`` should use the ``icc`` compiler with ``mpicc -cc=icc``. (This
-is not required for Fortran as the ``mpif90`` compiler automatically 
-uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
+``mpicc``/``mpiCC`` should use the ``icc`` compiler with, for example,
+``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
+compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
 which compiler is actually being called.
 
 Using GCC Compilers and MPI
@@ -164,6 +199,12 @@ Once you have loaded the MPT module you should next load the
 ::
 
     module load gcc
+
+Compilers are then available as
+
+* ``mpif90`` - Fortran with MPI
+* ``mpicc`` - C with MPI
+* ``mpiCC`` - C++ with MPI
 
 **Note:** SGI MPT does not support the syntax ``use mpi`` in Fortran 
 applications with the GCC compiler ``gfortran``. You should use the
