@@ -280,19 +280,18 @@ The Intel Math Kernel Library (MKL) is a very useful package, as it provides opt
 and documented versions of a large number of common mathematical routines. It supports both C and Fortran
 interfaces for most of these. It features the following routines:
 
-• Basic Linear Algebra Subprograms (BLAS); vector, matrix-vector, matrix-matrix operations.
-• Sparse BLAS Levels 1, 2, and 3.
-• LAPACK routines for linear equations, least squares, eigenvalue, singular value problems and Sylvester's equations problems.
-• ScaLAPACK Routines.
-• PBLAS routines for distributed vector, matrix-vector and matrix-matrix operation.
-• Direct and iterative sparse solver routines.
-• Vector Mathematical Library (VML) for computing mathematical functions on vector arguments.
-• Vector Statistical Library (VSL) for generating pseudorandom numbers and for performing convolution and
-correlation.
-• General Fast Fourier Transform (FFT) functions for fast computation of Discrete FFTs.
-• Cluster FFT fucntions.
-• Basic Linear Algebra Communication Subprograms (BLACS).
-• GNU multiple precision arithmetic library.
+* Basic Linear Algebra Subprograms (BLAS); vector, matrix-vector, matrix-matrix operations.
+* Sparse BLAS Levels 1, 2, and 3.
+* LAPACK routines for linear equations, least squares, eigenvalue, singular value problems and Sylvester's equations problems.
+* ScaLAPACK Routines.
+* PBLAS routines for distributed vector, matrix-vector and matrix-matrix operation.
+* Direct and iterative sparse solver routines.
+* Vector Mathematical Library (VML) for computing mathematical functions on vector arguments.
+* Vector Statistical Library (VSL) for generating pseudorandom numbers and for performing convolution and correlation.
+* General Fast Fourier Transform (FFT) functions for fast computation of Discrete FFTs.
+* Cluster FFT fucntions.
+* Basic Linear Algebra Communication Subprograms (BLACS).
+* GNU multiple precision arithmetic library.
 
 If your code depends on standard libraries such as BLAS or LAPACK, it is recommended that you link against
 the MKL versions for optimal performance.
