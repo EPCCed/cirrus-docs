@@ -296,10 +296,6 @@ interfaces for most of these. It features the following routines:
 If your code depends on standard libraries such as BLAS or LAPACK, it is recommended that you link against
 the MKL versions for optimal performance.
 
-To employ the Intel MKL: visit the following website to determine the appropriate linking flags:
-
-Intel MKL Link Advisor [http://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/]
-
 Some of MKL routines are parallelised using threads, where the number of threads is set via the MKL_NUM_THREADS environment variable.  
 Codes that run in parallel on Cirrus are typically parallelised using MPI, or OpenMP or both.  
 If your code is pure MPI, then we recommend setting.
@@ -312,6 +308,10 @@ Chapter 6 of the MKL userguide explains in detail how this and other related env
 you have used a version of MKL older than 10.0 you should be aware that MKL's method for controlling thread
 numbers has changed. Similarly version 10.3 and above dramatically changed the linking model. In general this
 has simplified build codes with MKL.)
+
+The following link provides a useful tool for advising on the appropriate linking settings.
+
+Intel MKL Link Advisor [http://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/]
 	
 Using static linking/libraries
 -------------------------------
