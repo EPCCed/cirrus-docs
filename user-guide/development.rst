@@ -20,8 +20,11 @@ full documentation please see:
 
 -  `Linux manual page on modules <http://linux.die.net/man/1/module>`__
 
+Using the modules environment
+-----------------------------
+
 Information on the available modules
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finding out which modules (and hence which compilers, libraries and
 software) are available on the system is performed using the
@@ -33,7 +36,7 @@ software) are available on the system is performed using the
     ...
 
 This will list all the names and versions of the modules available on
-the service. Not all of them will work in your account though due to,
+the service. Not all of them may work in your account though due to,
 for example, licencing restrictions. You will notice that for many
 modules we have more than one version, each of which is identified by a
 version number. One of these versions is the default. As the
@@ -65,7 +68,7 @@ If you want more info on any of the modules, you can use the
     information.
 
 The simple ``module list`` command will give the names of the modules
-and their versions you have presently loaded
+and their versions you have presently loaded in your envionment:
 
 ::
 
@@ -75,7 +78,7 @@ and their versions you have presently loaded
     2) intel-cc-16/16.0.3.210          4) intel-compilers-16/16.0.3.210
 
 Loading, unloading and swapping modules
----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To load a module to use ``module add`` or ``module load``. For example,
 to load the intel-compilers-16 into the development environment:
