@@ -296,7 +296,7 @@ interfaces for most of these. It features the following routines:
 If your code depends on standard libraries such as BLAS or LAPACK, it is recommended that you link against
 the MKL versions for optimal performance.
 
-To employ the Intel MKL: visit the following website to determine the appropriate linking flags:
+To employ the Intel MKL: visit the following website to determine the appropriate linking flags, and choose "Intel(R) Parallel Studio XE 2016 Update 2" as the Intel product.
 
 Intel MKL Link Advisor [http://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/]
 
