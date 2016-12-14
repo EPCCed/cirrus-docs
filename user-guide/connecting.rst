@@ -13,11 +13,11 @@ ease of access.
 Interactive access
 ------------------
 
-To log into Cirrus you should use the "cirrus.epcc.ed.ac.uk" address:
+To log into Cirrus you should use the "login.cirrus.ac.uk" address:
 
 ::
 
-    ssh [userID]@cirrus.epcc.ed.ac.uk
+    ssh [userID]@login.cirrus.ac.uk
 
 Initial passwords
 ~~~~~~~~~~~~~~~~~
@@ -113,7 +113,7 @@ the public part of the key to the remote file:
 
 ::
 
-    -bash-4.1$ cat ~/.ssh/id_rsa.pub | ssh user@cirrus.epcc.ed.ac.uk 'cat - >> ~/.ssh/authorized_keys'
+    -bash-4.1$ cat ~/.ssh/id_rsa.pub | ssh user@login.cirrus.ac.uk 'cat - >> ~/.ssh/authorized_keys'
     Password: [Password]
 
 | (remember to replace "user" with your username).
@@ -124,7 +124,7 @@ the public part of the key to the remote file:
 
 ::
 
-    -bash-4.1$ ssh user@cirrus.epcc.ed.ac.uk 'date'
+    -bash-4.1$ ssh user@login.cirrus.ac.uk 'date'
     Enter passphrase for key '/Home/user/.ssh/id_rsa': [Passphrase]
     Wed May  8 10:36:47 BST 2013
 
@@ -158,7 +158,7 @@ enter your passphrase:
 
 ::
 
-    -bash-4.1$ ssh user@cirrus.epcc.ed.ac.uk 'date'
+    -bash-4.1$ ssh user@login.cirrus.ac.uk 'date'
     Warning: Permanently added the RSA host key for IP address '192.62.216.27' to the list of known hosts.
     Wed May  8 10:42:55 BST 2013
 
@@ -193,18 +193,18 @@ an entry in this file which may look something like:
 ::
 
     Host cirrus
-      HostName cirrus.epcc.ed.ac.uk
+      HostName login.cirrus.ac.uk
       User user
       ForwardAgent yes
 
 (remember to replace "user" with your username).
 
 The "Host cirrus" line defines a short name for the entry. In this case,
-instead of typing "ssh cirrus.epcc.ed.ac.uk" to access the Cirrus login
+instead of typing "ssh login.cirrus.ac.uk" to access the Cirrus login
 nodes, you could use "ssh cirrus" instead. The remaining lines define
 the options for the "cirrus" host.
 
--  ``Hostname cirrus.epcc.ed.ac.uk`` - defines the full address of the
+-  ``Hostname login.cirrus.ac.uk`` - defines the full address of the
    host
 -  ``User username`` - defines the username to use by default for this
    host (replace "username" with your own username on the remote host)
