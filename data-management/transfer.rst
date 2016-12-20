@@ -53,8 +53,7 @@ been executed via the command line, you will be prompted for your
 password for the specified account on the **remote machine**.
 
 To avoid having to type in your password multiple times you can set up a
-*ssh-key* as documented in the `Connecting Chapter in the Cirrus User
-Guide <../user-guide/connecting>`__
+*ssh-key* as documented in the User Guide at :doc:`../user-guide/connecting`
 
 SSH Transfer Performance Considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,6 +74,15 @@ available network bandwidth or the available disk bandwidth so you may
 see an overall improvement by running several data transfer operations
 in parallel. To reduce metadata interactions it is a good idea to
 overlap transfers of files from different directories.
+
+In addition, you should consider the following when transferring data:
+
+* Only transfer those files that are required. Consider which data you
+  really need to keep.
+* Combine lots of small files into a single tar file, to reduce the
+  overheads associated in initiating many separate data transfers (over
+  SSH each file counts as an individual transfer).
+* Compress data before sending it, e.g. using gzip.
 
 scp command
 ~~~~~~~~~~~

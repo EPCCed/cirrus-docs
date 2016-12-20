@@ -23,8 +23,7 @@ Initial passwords
 ~~~~~~~~~~~~~~~~~
 
 The SAFE web interface is used to provide your initial password for
-logging onto Cirrus (see the `SAFE User
-Guide </documentation/safe-guide>`__ for more details on requesting
+logging onto Cirrus (see the :doc:`../safe-guide` for more details on requesting
 accounts and picking up passwords).
 
 **Note:** you may now change your password on the Cirrus machine itself
@@ -51,11 +50,6 @@ client applications to access remote resources, for example:
 -  the `Parallel Tools Platform <http://www.eclipse.org/ptp/>`__ for the
    Eclipse IDE that allows you to edit your source code on a local
    Eclipse installation and compile and test on a remote host;
-
-We will demonstrate the process using the
-`Cirrus <http://www.cirrus.ac.uk>`__ facility but this should work on
-most remote Linux machines (unless the system administrator has
-explicitly set up the system to forbid access using an SSH Agent).
 
 **Note:** this description applies if your local machine is Linux or macOS.
 The procedure can also be used on Windows using the PuTTY SSH
@@ -116,11 +110,12 @@ the public part of the key to the remote file:
     -bash-4.1$ cat ~/.ssh/id_rsa.pub | ssh user@login.cirrus.ac.uk 'cat - >> ~/.ssh/authorized_keys'
     Password: [Password]
 
-| (remember to replace "user" with your username).
-| Now you can test that your key pair is working correctly by attempting
-  to connect to the remote host and run a command. You should be asked
-  for your key pair *passphase* (which you entered when you creasted the
-  key pair) rather than your remote machine *password*.
+(remember to replace "user" with your username).
+
+Now you can test that your key pair is working correctly by attempting
+to connect to the remote host and run a command. You should be asked
+for your key pair *passphase* (which you entered when you creasted the
+key pair) rather than your remote machine *password*.
 
 ::
 
@@ -218,12 +213,12 @@ username or the full hostname every time:
 
 ::
 
-    -bash-4.1$ ssh cirrus 'hostname'
-    indy2-login0
+    -bash-4.1$ ssh cirrus 'date'
+    Tue Dec 20 16:48:32 GMT 2016
 
 You can set up as many of these entries as you need in your local
-configuration file. Other options are available. See the ```ssh_config``
-man page <http://linux.die.net/man/5/ssh_config>`__ (or "man
-ssh\_config" on any machine with SSH installed) for a description of the
+configuration file. Other options are available. See the `ssh_config
+man page <http://linux.die.net/man/5/ssh_config>`__ (or ``man
+ssh_config`` on any machine with SSH installed) for a description of the
 SSH configuration file.
 
