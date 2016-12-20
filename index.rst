@@ -30,6 +30,11 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
 .. toctree::
    :maxdepth: 2
+   :caption: Data Management Guide
+   data-management/transfer
+
+.. toctree::
+   :maxdepth: 2
    :caption: About Cirrus
   
    hardware
