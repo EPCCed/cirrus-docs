@@ -98,6 +98,9 @@ logged into INDY-linux):
 
     scp [options] source user@login.cirrus.ac.uk:[destination]
 
+(Remember to replace ``user`` with your Cirrus username in the example
+above.)
+
 In the above example, the ``[destination]`` is optional, as when left
 out scp will simply copy the source into the user's home directory. Also
 the ``source`` should be the absolute path of the file/directory being
@@ -111,6 +114,9 @@ If you want to request a different encryption algorithm add the ``-c
 ::
 
     scp [options] -c arcfour source user@login.cirrus.ac.uk:[destination]
+
+(Remember to replace ``user`` with your Cirrus username in the example
+above.)
 
 rsync command
 ~~~~~~~~~~~~~
@@ -131,6 +137,9 @@ logged into INDY-linx) the command should have the form:
 
     rsync [options] -e ssh source user@login.cirrus.ac.uk:[destination]
 
+(Remember to replace ``user`` with your Cirrus username in the example
+above.)
+
 In the above example, the ``[destination]`` is optional, as when left
 out rsync will simply copy the source into the users home directory.
 Also the ``source`` should be the absolute path of the file/directory
@@ -144,3 +153,5 @@ using a quoted string as the argument of the ``-e`` flag. e.g.
 
     rsync [options] -e "ssh -c arcfour" source user@login.cirrus.ac.uk:[destination]
 
+(Remember to replace ``user`` with your Cirrus username in the example
+above.)
