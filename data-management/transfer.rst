@@ -10,7 +10,7 @@ service. Different arrangements will be made for INDY Windows HPC
 users.
 
 If you have any questions about transferring data from INDY-linux to
-Cirrus then please `contact the EPCC Helpdesk <../support>`__.
+Cirrus then please contact the :doc:`../support`
 
 Introduction
 ------------

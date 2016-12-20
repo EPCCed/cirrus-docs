@@ -23,7 +23,7 @@ Initial passwords
 ~~~~~~~~~~~~~~~~~
 
 The SAFE web interface is used to provide your initial password for
-logging onto Cirrus (see the :doc:`../safe-guide` for more details on requesting
+logging onto Cirrus (see the :doc:`../safe-guide/introduction` for more details on requesting
 accounts and picking up passwords).
 
 **Note:** you may now change your password on the Cirrus machine itself
