@@ -27,8 +27,7 @@ Project Manager for using Cirrus.
 
 How to sign up for a website account:
 
-#. Register on SAFE: Go to the SAFE New User Signup Form:
-   https://safe.epcc.ed.ac.uk/safadmin/signup.jsp
+#. Register on SAFE: Go to the SAFE New User Signup Form: https://safe.epcc.ed.ac.uk/safadmin/signup.jsp
 #. Fill in your personal details and submit the form
 #. You are now registered on the SAFE (Secure Systems Administration
    Facility). The support team at EPCC will e-mail you the required
@@ -83,11 +82,11 @@ How to run FLACS on Cirrus (in the instructions/ commands below, change
    *cd /lustre/home/projects*
 #. Transfer your data from a local folder on your machine to a remote
    folder on Cirrus:  
-   *rsync -avz local\_folder username@login.cirrus.ac.uk:remote\_folder *
+   *rsync -avz local\_folder username\@login.cirrus.ac.uk:remote\_folder *
    If you want to copy only parts of the data, e.g. only the cg-files
    you can type:
    *rsync -avz --include='cg\*dat3' --include='\*/' --exclude='\*'
-   local\_folder username@login.cirrus.ac.uk:remote\_folder *
+   local\_folder username\@login.cirrus.ac.uk:remote\_folder *
    (Please note that modern rsync usually uses ssh, to be sure you can
    specify '-e ssh')
 #. To run FLACS on Cirrus you must first change to the directory where
