@@ -71,8 +71,7 @@ How to sign up for a website account:
 #. Choose the "Account" for the Cirrus-Linux machine, and "View Password".
    You are now ready to start to use FLACS at Cirrus.
    
-Further guidance for the SAFE can be found here:
-https://cirrus.readthedocs.io/en/latest/safe-guide/introduction.html
+Further guidance for the SAFE can be found here: https://cirrus.readthedocs.io/en/latest/safe-guide/introduction.html
 
 How to run FLACS on Cirrus (in the instructions/ commands below, change
 "username" to your own username):
@@ -106,6 +105,4 @@ How to run FLACS on Cirrus (in the instructions/ commands below, change
 Please also confer manual for options related to qsub, qstat and rsync
 commands: 'man qsub', 'man qstat' and 'man rsync'.
 
-Further guidance for Cirrus can be found here:
-
-https://cirrus.readthedocs.io/en/latest/index.html
+Further guidance for Cirrus, including further details on Data Transfer, can be found here: https://cirrus.readthedocs.io/en/latest/index.html
