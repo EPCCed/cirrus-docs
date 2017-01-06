@@ -27,6 +27,12 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/batch
    user-guide/transfer
    user-guide/reading
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Software Packages
+   
+   software-packages/introduction
 
 .. toctree::
    :maxdepth: 2
