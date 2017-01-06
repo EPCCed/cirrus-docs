@@ -1,3 +1,6 @@
+FLACS
+=====
+
 The Cirrus cluster is best suited to run multiple flacs simulations
 simultaneously (using a batch queue). Short lasting simulations (a few
 minutes up to a few hours each) can be processed efficiently and you
@@ -67,26 +70,25 @@ How to sign up for a website account:
    password and other account details
 #. Choose the "Account" for the Cirrus-Linux machine, and "View Password".
    You are now ready to start to use FLACS at Cirrus.
+   
+Further guidance for the SAFE can be found here:
+https://cirrus.readthedocs.io/en/latest/safe-guide/introduction.html
 
 How to run FLACS on Cirrus (in the instructions/ commands below, change
 "username" to your own username):
 
-#. To log in on Cirrus use standard ssh client. To login from UNIX system
-   type
-   *ssh -X*
-   `*username@Cirrus0.epcc.ed.ac.uk* <mailto:username@Cirrus0.epcc.ed.ac.uk>`__
+#. To log in on Cirrus use standard ssh client. To login from UNIX system type
+   *ssh -X username@login.cirrus.ac.uk*
 #. Change to the correct project space at Cirrus (change "projects" to the
    project code for your project in the command below):
-   *cd /home/projects*
+   *cd /lustre/home/projects*
 #. Transfer your data from a local folder on your machine to a remote
-   folder on Cirrus:
-   *rsync -avz local\_folder*
-   `*username@Cirrus0.epcc.ed.ac.uk:remote\_folder* <mailto:username@Cirrus0.epcc.ed.ac.uk:remote_folder>`__
+   folder on Cirrus:  
+   *rsync -avz local\_folder username@login.cirrus.ac.uk:remote\_folder *
    If you want to copy only parts of the data, e.g. only the cg-files
    you can type:
    *rsync -avz --include='cg\*dat3' --include='\*/' --exclude='\*'
-   local\_folder*
-   `*username@Cirrus0.epcc.ed.ac.uk:remote\_folder* <mailto:username@Cirrus0.epcc.ed.ac.uk:remote_folder>`__
+   local\_folder username@login.cirrus.ac.uk:remote\_folder *
    (Please note that modern rsync usually uses ssh, to be sure you can
    specify '-e ssh')
 #. To run FLACS on Cirrus you must first change to the directory where
@@ -97,17 +99,13 @@ How to run FLACS on Cirrus (in the instructions/ commands below, change
    need to add the option and label after qsub "-P Label" in the run
    file. The label can for example contain project name and simulation
    type):
-   *qsub -P project001 /shared/GexCon/FLACS\_v10.3/bin/run runflacs
-   010101*
-#. After your simulations are finished, transfer the data back from
-   Cirrus:
-   *rsync -avz*
-   `*username@Cirrus0.epcc.ed.ac.uk:remote\_folder* <mailto:username@Cirrus0.epcc.ed.ac.uk:remote_folder>`__
-   *local\_folder*
+   *qsub -P project001 /shared/GexCon/FLACS\_v10.3/bin/run runflacs 010101*
+#. After your simulations are finished, transfer the data back from Cirrus:
+   *rsync -avz username@Cirrus0.epcc.ed.ac.uk:remote\_folder local\_folder*
 
 Please also confer manual for options related to qsub, qstat and rsync
 commands: 'man qsub', 'man qstat' and 'man rsync'.
 
 Further guidance for Cirrus can be found here:
 
-https://www.wiki.ed.ac.uk/display/EPCCIM/Industry+Machine+Wiki
+https://cirrus.readthedocs.io/en/latest/index.html
