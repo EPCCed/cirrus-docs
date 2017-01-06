@@ -92,12 +92,13 @@ How to run FLACS on Cirrus (in the instructions/ commands below, change
 #. To run FLACS on Cirrus you must first change to the directory where
    your FLACS jobs are located, use the change directory command for
    Linux (for example cd projects/sim)
+#. Run the following command to access FLACS: *module load flacs*
 #. Submit your FLACS jobs to Cirrus (for monitoring reasons you need to
    add a flag to the simulations when you run FLACS jobs on Cirrus. You
    need to add the option and label after qsub "-P Label" in the run
    file. The label can for example contain project name and simulation
    type):
-   *qsub -P project001 /shared/GexCon/FLACS\_v10.3/bin/run runflacs 010101*
+   *qsub -P project001 run runflacs 010101*
 #. After your simulations are finished, transfer the data back from Cirrus:
    *rsync -avz username@Cirrus0.epcc.ed.ac.uk:remote\_folder local\_folder*
 
