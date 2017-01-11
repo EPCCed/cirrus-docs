@@ -1,7 +1,16 @@
-Software Packages
-=================
+Modelling/Simulation Packages
+=============================
 
-This section lists the software packages currently available on Cirrus including software from both Independant Software Vendors (ISVs) and Open Source software.
+This section describes how to use various modelling and simulation
+packages available on Cirrus.
 
--  `FLACS from GexCon <flacs.html>`__
++--------------+-------------------------------------------------+
+| Package      | Description                                     |
++==============+=================================================+
+| :doc:`flacs` | FLACS from GexCon is the industry standard      |
+|              | for CFD explosion modelling and one of the best |
+|              | validated tools for modeling flammable and      |
+|              | toxic releases in a technical safety context.   |
++--------------+-------------------------------------------------+
+
 

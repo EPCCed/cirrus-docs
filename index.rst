@@ -18,7 +18,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    
 .. toctree::
    :maxdepth: 2
-   :caption: Cirrus User Documentation
+   :caption: Cirrus User Guide
 
    user-guide/introduction
    user-guide/connecting
@@ -30,9 +30,10 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    
 .. toctree::
    :maxdepth: 2
-   :caption: Software Packages
+   :caption: Software Applications
    
    software-packages/introduction
+   software-packages/flacs
 
 .. toctree::
    :maxdepth: 2
