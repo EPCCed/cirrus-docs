@@ -6,23 +6,14 @@ they register. We anticipate that they will change rarely, if at all.
 Note that the Terms and Conditions include an undertaking to observe the
 Code of Conduct. It also includes an agreement to the Service processing
 the user's personal data; in return, the Service undertakes to follow
-the `Personal Data and Privacy
-Policy <privacy.html>`__.
+the `Personal Data and Privacy Policy <privacy.html>`__.
 
---------------
+Access to Cirrus is also subject to abiding by the University of Edinburgh
+Computing Regulations and Security Policy:
 
-Please read these Terms and Conditions. By clicking the "I accept the
-Terms and Conditions of Access" button you will be entering into a
-contract with the provider of the Cirrus service. If you do not agree to
-these Terms and Conditions, we will not be able to register you or allow
-you to use the service.
+- `University of Edinburgh Computing Regulations <http://www.ed.ac.uk/information-services/about/policies-and-regulations/computing-regulations>`__
+- `University of Edinburgh Security Policy <http://www.ed.ac.uk/information-services/about/policies-and-regulations/security-policies/security-policy>`__
 
-Before accepting the Terms and Conditions, please note: you can change
-any of the details you have input by clicking your browser's BACK button
-and then editing them. You can also change them later by returning to
-this website. No specific copy of these Terms and Conditions will be
-filed under your name, but you can look at them at any time by going to
-this webpage. These Terms and Conditions are offered only in English.
 
 You agree:
 ----------
@@ -61,15 +52,14 @@ We agree:
 ---------
 
 -  as far as we reasonably can, to provide a 24-hour service as
-   described on `this website <http://www.cirrus.ac.uk/>`__, it being
+   described at `http://cirrus.readthedocs.io <http://cirrus.readthedocs.io/>`__, it being
    understood that there will be times when the service is unavailable,
    for example as a result of unexpected failures, maintenance work or
    upgrades
 -  to take reasonable steps to protect your data from being lost or
    corrupted.
 -  to protect the security and privacy of the data we hold about you, as
-   described in our `Personal Data and Privacy
-   Policy <privacy.html>`__
+   described in our `Personal Data and Privacy Policy <privacy.html>`__
 -  that we will acquire no intellectual property rights over your
    software and data
 -  to respond promptly to any complaints or suggestions you make about
@@ -81,8 +71,7 @@ You accept:
 -  that the service is provided "as is" and we can't guarantee 100%
    perfection. In legal terms, this means that we are excluding all
    warranties and conditions applying to the service, including those
-   implied by law. `What is
-   this? <what-is-this.html>`__ We are not liable
+   implied by law. `What is this? <what-is-this.html>`__ We are not liable
    if things go wrong and you suffer damage as a result, although if our
    negligence results in anyone's death or personal injury we do not
    limit or exclude our liability for that.
@@ -96,8 +85,7 @@ You accept:
 -  that we may make changes in the service
 -  that we will use the personal details which you supply to us,
    together with records of your use of the service, as described in our
-   `Personal Data and Privacy
-   Policy <privacy.html>`__
+   `Personal Data and Privacy Policy <privacy.html>`__
 -  that we may suspend your access to the service and discuss this with
    your PI if it seems to us that you are breaking these Terms and
    Conditions; that if it is necessary to protect the service or other
@@ -110,8 +98,7 @@ You accept:
    software or any information we provide
 -  that the use of the service by nationals of certain countries is
    controlled by special regulations laid down by the UK Government in
-   connection with the `Wassenaar
-   Arrangement <http://www.wassenaar.org/index.html>`__
+   connection with the `Wassenaar Arrangement <http://www.wassenaar.org/index.html>`__
 -  that we may make reasonable changes to these Terms and Conditions at
    any time, and, once we have posted those changes on our website, the
    new version will then apply to you
@@ -120,4 +107,4 @@ These Terms and Conditions are governed by the laws of England and the
 English courts.
 
 If you have any questions about these Terms and Conditions, please mail
-to the `EPCC Helpdesk <mailto:support@epcc.ed.ac.uk>`__.
+to the `EPCC Helpdesk <mailto:epcc-support@epcc.ed.ac.uk>`__.
