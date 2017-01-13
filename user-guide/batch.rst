@@ -279,8 +279,51 @@ of the ``omplace`` command to specify the number of threads.
     #   18 OpenMP threads per MPI process
     mpiexec_mpt -n 4 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
+Example: job sumission script for parallel non-MPI based jobs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to run on multiple nodes, where each node is running a self-contained job, not using MPI
+(e.g.) for processing data or a parameter sweep, you can use the mpiexec_mpt launcher to control job placement.
+
+In the example script below, work.bash is a bash script which runs a threaded executable with a command-line input and
+perf.bash is a bash script which copies data from the CPU performance counters to an output file. As both handle the
+threading themselves, it is sufficient to allocate 1 MPI rank. Using the ampersand "&" allows both to execute simultaneously.
+Both work.bash and perf.bash run on 2 nodes.
+
+::
+
+   #!/bin/bash --login
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N Example_MixedMode_Job
+   #PBS -l select=144
+   #PBS -l walltime=6:0:0
+   
+   # To get exclusive node usage
+   #PBS -l place=excl
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the direcotry that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load any required modules
+   module load mpt
+
+   # Set this variable to inform mpiexec_mpt these are not MPI jobs
+   export MPI_SHEPHERD=true
+
+   # Execute work and perf scripts on nodes simultaneously.
+   mpiexec_mpt -n 2 -ppn 1 work.bash &
+   mpiexec_mpt -n 2 -ppn 1 perf.bash &
+   wait
+
+**Note:** the wait command is required to stop the PBS job finishing before the scripts finish.
+If you find odd behvaiour, especially with respect to the values of bash variables, double check you
+have set MPI_SHEPHERD=true
+
 MPI on the login nodes
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to run a short interactive parallel applications (e.g. for 
 debugging) then you can run compiled MPI applications on the login nodes.
