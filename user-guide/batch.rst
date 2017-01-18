@@ -45,10 +45,6 @@ The qsub command submits a job to PBS:
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
 
-Note: To ensure the minimum wait time for your job, you should specify a
-walltime as short as possible for your job (i.e. if your job is going to
-run for 3 hours, do not specify 12 hours). On average, the longer the
-walltime you specify, the longer you will queue for.
 
 The qstat command
 ~~~~~~~~~~~~~~~~~
