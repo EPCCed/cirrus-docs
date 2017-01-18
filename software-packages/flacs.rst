@@ -13,7 +13,7 @@ up to a few hours computing time each) can be processed efficiently and you
 could get a few hundred done in a day or two.
 In contrast, the Cirrus cluster is not
 suited for running single big FLACS simulations with many threads:
-Each node on Cirrus has 2x4 memory channels, and for memory-bound applications
+each node on Cirrus has 2x4 memory channels, and for memory-bound applications
 like FLACS multi-threaded execution will not scale linearly beyond 8 cores.
 
 CPU time is measured for each job run on a compute node in CPUh,
