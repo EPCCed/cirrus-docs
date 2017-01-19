@@ -68,11 +68,11 @@ For example:
 
 ::
 
-   qsub -P project001 -q flacs run runflacs 010101
-
+   qsub -V -A w72 -N test-flacs -l select=2 -l walltime=0:01:0 -- run flacs 000001
+   
 For monitoring reasons you need to add a flag to the simulations when
 you run FLACS jobs on Cirrus. You need to add the option and label
-as ``-P Label`` to ``qsub``. The label can for example
+as ``-N Label`` to ``qsub``. The label can for example
 contain the project name and simulation type.
 
 All Flacs jobs must be submitted to the flacs queue using the option
