@@ -108,9 +108,9 @@ specify three things:
 
 -  The number of virtual cores you require via the
    ``-l select=[cores]`` option. Each node has 36 physical
-   cores (2x 18-core sockets) but hyperthreads are enabled (2 per core).
+   cores (2x 18-core sockets) but hyper-threads are enabled (2 per core).
    Thus, to request 2 nodes, for instance, you must select 144 "cores"
-   (36 cores \* 2 hyperthreads \* 2 nodes).
+   (36 cores \* 2 hyper-threads \* 2 nodes).
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -127,7 +127,7 @@ options you can provide to PBS. The following options may be useful:
   alongside yours if your resource request (with -l select) leaves some
   cores free. To guarantee exclusive node usage, use the option ``-l place=excl``.
 - Name for your job is set using ``-N My_job``. In the examples below
-  the name will be "My\_job", but uou can replace "My\_job" with any
+  the name will be "My\_job", but you can replace "My\_job" with any
   name you want. The name will be used in various places. In particular
   it will be used in the queue listing and to generate the name of your
   output and/or error file(s). Note there is a limit on the size of the
@@ -163,7 +163,7 @@ The most important ``mpiexec_mpt`` flags are:
  ``-ppn [parallel processes per node]``
     Specifies the number of distributed memory parallel processes per
     node. There is a choice of 1-36 for physical cores on Cirrus compute
-    nodes (1-72 if you are using HyperThreading) If you are running with
+    nodes (1-72 if you are using Hyper-Threading) If you are running with
     exclusive node usage, the most economic choice is always to run with
     "fully-packed" nodes on all physical cores if possible, i.e.
     ``-N 36`` . Running "unpacked" or "underpopulated" (i.e. not using
@@ -197,7 +197,7 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MPI_Job
-    # To get two nodes we need 72*2 = 144 cores (hyperthreading included)
+    # To get two nodes we need 72*2 = 144 cores (hyper-threading included)
     #PBS -l select=144
     #PBS -l walltime=00:20:00
 
@@ -224,7 +224,7 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
     mpiexec_mpt -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 72
-MPI processes using 2 nodes (36 cores per node, i.e. not using hyperthreading). PBS will
+MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
 allocate 2 nodes to your job and mpirun_mpt will place 36 MPI processes on each node
 (one per physical core).
 
@@ -258,7 +258,7 @@ of the ``omplace`` command to specify the number of threads.
     # Replace [budget code] below with your project code (e.g. t01)
     #PBS -A [budget code]
 
-    # Change to the direcotry that the job was submitted from
+    # Change to the directory that the job was submitted from
     cd $PBS_O_WORKDIR
 
     # Load any required modules
@@ -275,7 +275,7 @@ of the ``omplace`` command to specify the number of threads.
     #   18 OpenMP threads per MPI process
     mpiexec_mpt -n 4 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
-Example: job sumission script for parallel non-MPI based jobs
+Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to run on multiple nodes, where each node is running a self-contained job, not using MPI
@@ -300,7 +300,7 @@ Both work.bash and perf.bash run on 2 nodes.
    # Replace [budget code] below with your project code (e.g. t01)
    #PBS -A [budget code]
    
-   # Change to the direcotry that the job was submitted from
+   # Change to the directory that the job was submitted from
    cd $PBS_O_WORKDIR
    
    # Load any required modules
@@ -315,7 +315,7 @@ Both work.bash and perf.bash run on 2 nodes.
    wait
 
 **Note:** the wait command is required to stop the PBS job finishing before the scripts finish.
-If you find odd behvaiour, especially with respect to the values of bash variables, double check you
+If you find odd behaviour, especially with respect to the values of bash variables, double check you
 have set MPI_SHEPHERD=true
 
 MPI on the login nodes
@@ -358,7 +358,7 @@ A simple serial script to compress a file would be:
     # Replace [budget code] below with your project code (e.g. t01)
     #PBS -A [budget code]
 
-    # Change to the direcotry that the job was submitted from
+    # Change to the directory that the job was submitted from
     cd $PBS_O_WORKDIR
 
     # Load any required modules
@@ -385,7 +385,7 @@ from the command line without using a job submission script, and to
 see the output from your program directly in the terminal.
 
 To submit a request for an interactive job reserving 8 nodes
-(288 physical cores, 576 hyperthreaded cores)) for 1 hour you would
+(288 physical cores, 576 hyper-threaded cores)) for 1 hour you would
 issue the following qsub command from the command line:
 
 ::
