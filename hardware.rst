@@ -1,14 +1,17 @@
 Hardware
 ========
 
-The Cirrus facility is based around a Intel ICE XA 59 node cluster that
+The Cirrus facility is based around a SGI ICE XA 59 node cluster that
 provides the central computational resource.
 
 Intel ICE XA Cluster
 --------------------
 
-The Cirrus architecture consists of compute nodes connected together by
-a single Infiniband fabric, with 56 compute nodes and 3 login nodes.
+The Cirrus compute provision consists of 56 compute nodes connected together by
+a single Infiniband fabric.
+
+There are 3 login nodes that share a common software environment and file
+system with the compute nodes.
 
 Compute Nodes
 ~~~~~~~~~~~~~
@@ -37,9 +40,9 @@ Infiniband fabric
 -----------------
 
 The system has a single infiniband (IB) fabric and every compute node
-and login node has a single ib0 interface on it. The IB interface is
-FDR, rated at 54.5Gbps. The Lustre servers have two connections on the
-IB fabric and all Lustre file system IO traverses the IB fabric.
+and login node has a single ib0 interface. The IB interface is
+FDR, with a bandwidth of 54.5 Gb/s. The Lustre servers have two connections
+to the IB fabric and all Lustre file system IO traverses the IB fabric.
 
 Filesystems and Data Infrastructure
 -----------------------------------
@@ -48,7 +51,7 @@ There is currently a single filesystem available on Cirrus: the /lustre
 filesystem. This filesystem is a collection of three high-performance,
 parallel Lustre filesystems.
 
-There is currently a total of 200 TB available in ``/lustre`` on Cirrus.
+There is currently a total of 112 TiB available in ``/lustre`` on Cirrus.
 The cluster login and compute nodes mount the storage as /lustre, and
 all home directories are available on all nodes.
 
@@ -82,3 +85,4 @@ tof 4 stripes of 1 MiB and was found to be around 1.5 GB/s.
 
 Performance was evaluated using the EPCC "benchio" application, found
 at: https://github.com/ARCHER-CSE/parallel-io
+
