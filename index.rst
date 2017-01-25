@@ -33,6 +33,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :caption: Software Applications
    
    software-packages/introduction
+   software-packages/altair_hw
    software-packages/flacs
 
 .. toctree::
