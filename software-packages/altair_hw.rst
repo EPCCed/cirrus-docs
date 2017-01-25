@@ -78,9 +78,9 @@ You can use up to 36 physical cores (or 72 virtual cores using HyperThreading)
 for OptiStruct SMP mode as these are the maximum numbers available on each
 Cirrus compute node.
 
-You use the `-nt` option to OptiStruct to specify the number of cores to use.
+You use the ``-nt`` option to OptiStruct to specify the number of cores to use.
 
-For example, to run a 18 cores for an OptiStruct SMP calculation you could
+For example, to run an 18-core OptiStruct SMP calculation you could
 use the following job script:
 
 ::
@@ -88,10 +88,10 @@ use the following job script:
    #!/bin/bash --login
    
    # PBS job options (name, compute nodes, job time)
-   #PBS -N HW_RADIOSS_test
+   #PBS -N HW_OptiStruct_SMP
    
-   # Use 4 cores for this calculation
-   #PBS -l select=4
+   # Use 18 cores for this calculation
+   #PBS -l select=18
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -104,7 +104,7 @@ use the following job script:
    module load altair-hwsolvers/14.0.210
    
    # Run the OptStruct SMP Solver
-   optistruct box.fem -nt 4
+   optistruct box.fem -nt 18
 
 
 OptiStruct SPMD (MPI)
@@ -119,12 +119,12 @@ Cirrus helpdesk.
 There are four different parallelisation schemes for SPMD OptStruct that are 
 selected by different flags:
 
-* Load decomposition (master/slave): `-mpimode` flag
-* Domain decompostion: `-ddmmode` flag
-* Multi-model optimisation: `-mmomode` flag
-* Failsafe topology optimisation: `-fsomode` flag
+* Load decomposition (master/slave): ``-mpimode`` flag
+* Domain decompostion: ``-ddmmode`` flag
+* Multi-model optimisation: ``-mmomode`` flag
+* Failsafe topology optimisation: ``-fsomode`` flag
 
-You should launch OptiStruct SPMD using the standard Intel MPI `mpirun` command.
+You should launch OptiStruct SPMD using the standard Intel MPI ``mpirun`` command.
 
 *Note:* OptiStruct does not support the use of SGI MPT, you must use Intel MPI.
 
