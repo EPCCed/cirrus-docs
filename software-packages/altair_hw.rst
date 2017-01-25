@@ -1,0 +1,157 @@
+Altair Hyperworks
+=================
+
+`Hyperworks <http://www.altairhyperworks.com/>`__ includes best-in-class
+modeling, linear and nonlinear analyses, structural and system-level
+optimization, fluid and multi-body dynamics simulation, electromagnetic
+compatibility (EMC), multiphysics analysis, model-based development,
+and data management solutions.
+
+Useful Links
+------------
+
+ * `Hyperworks 14 User Guide <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/altair_help/altair_help.htm?welcome_page.htm>`__
+
+Using Hyperworks on Cirrus
+--------------------------
+
+Hyperworks is licenced software so you require access to a Hyperworks
+licence to access the software. For queries on access to Hyperworks on
+Cirrus and to enable your access please contact the Cirrus helpdesk.
+
+The standard mode of using Hyperworks on Cirrus is to use the installation
+of the Desktop application on your local workstation or laptop to set
+up your model/simulation. Once this has been doen you would transsfer the
+required files over to Cirrus using SSH and then launch the appropriate
+Solver program (OptiStruct, RADIOSS, MotionSolve).
+
+Once the Solver has finished you can transfer the output back to your 
+local system for visualisation and analysis in the Hyperworks Desktop.
+
+Running serial Hyperworks jobs
+------------------------------
+
+Each of the Hyperworks Solvers can be run in serial on Cirrus in a similar
+way. You should construct a batch submission script with the command to 
+launch your chosen Solver with the correct command line options.
+
+For example, here is a job script to run a serial RADIOSS job on Cirrus:
+
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_RADIOSS_test
+   #PBS -l select=1
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module
+   module load altair-hwsolvers/14.0.210
+   
+   # Run the RADIOSS Solver in serial
+   radioss box.fem 
+
+Running parallel Hyperworks jobs
+--------------------------------
+
+Only the OptiStruct Solver currently supports parallel execution. OptiStruct
+supports a number of parallel execution modes of which two can be used on 
+Cirrus:
+
+* Shared memory (SMP) mode uses multiple cores within a single node
+* Distributed memory (SPMD) mode uses multiple cores across multiple nodes
+  via the MPI library
+
+OptiStruct SMP
+~~~~~~~~~~~~~~
+
+* `OptiStruct SMP documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?shared_memory_parallelization.htm>`__ 
+
+You can use up to 36 physical cores (or 72 virtual cores using HyperThreading) 
+for OptiStruct SMP mode as these are the maximum numbers available on each
+Cirrus compute node.
+
+You use the `-nt` option to OptiStruct to specify the number of cores to use.
+
+For example, to run a 18 cores for an OptiStruct SMP calculation you could
+use the following job script:
+
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_RADIOSS_test
+   
+   # Use 4 cores for this calculation
+   #PBS -l select=4
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module
+   module load altair-hwsolvers/14.0.210
+   
+   # Run the OptStruct SMP Solver
+   optistruct box.fem -nt 4
+
+
+OptiStruct SPMD (MPI)
+~~~~~~~~~~~~~~~~~~~~~
+
+*Note:* OptiStruct SPMD is not currently enabled on Cirrus. We are working with
+Intel to resolve this issue. If you have questions on this, please contact the
+Cirrus helpdesk.
+
+* `OptiStruct SPMD documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?optistruct_spmd.htm>`__
+
+There are four different parallelisation schemes for SPMD OptStruct that are 
+selected by different flags:
+
+* Load decomposition (master/slave): `-mpimode` flag
+* Domain decompostion: `-ddmmode` flag
+* Multi-model optimisation: `-mmomode` flag
+* Failsafe topology optimisation: `-fsomode` flag
+
+You should launch OptiStruct SPMD using the standard Intel MPI `mpirun` command.
+
+*Note:* OptiStruct does not support the use of SGI MPT, you must use Intel MPI.
+
+Example OptiStruct SPMD job submission script:
+
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_OptiStruct_SPMD
+   
+   # Use 2 nodes for this calculation
+   #PBS -l select=144
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module and Intel MPI
+   module load altair-hwsolvers/14.0.210
+   module load intel-mpi
+   
+   # Run the OptStruct SPMD Solver (domain decompostion mode)
+   #   Use 72 cores, 36 on each node (i.e. all physical cores)
+   mpirun -n 72 -ppn 36 -f $PBS_NODEFILE optistruct_spmd box.fem -ddmmode
+
