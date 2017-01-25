@@ -37,6 +37,27 @@ launch your chosen Solver with the correct command line options.
 
 For example, here is a job script to run a serial RADIOSS job on Cirrus:
 
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_RADIOSS_test
+   #PBS -l select=1
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module
+   module load altair-hwsolvers/14.0.210
+   
+   # Run the RADIOSS Solver in serial
+   radioss box.fem 
+
 Running parallel Hyperworks jobs
 --------------------------------
 
@@ -62,6 +83,30 @@ You use the `-nt` option to OptiStruct to specify the number of cores to use.
 For example, to run a 18 cores for an OptiStruct SMP calculation you could
 use the following job script:
 
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_RADIOSS_test
+   
+   # Use 4 cores for this calculation
+   #PBS -l select=4
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module
+   module load altair-hwsolvers/14.0.210
+   
+   # Run the OptStruct SMP Solver
+   optistruct box.fem -nt 4
+
+
 OptiStruct SPMD (MPI)
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -70,4 +115,43 @@ Intel to resolve this issue. If you have questions on this, please contact the
 Cirrus helpdesk.
 
 * `OptiStruct SPMD documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?optistruct_spmd.htm>`__
+
+There are four different parallelisation schemes for SPMD OptStruct that are 
+selected by different flags:
+
+* Load decomposition (master/slave): `-mpimode` flag
+* Domain decompostion: `-ddmmode` flag
+* Multi-model optimisation: `-mmomode` flag
+* Failsafe topology optimisation: `-fsomode` flag
+
+You should launch OptiStruct SPMD using the standard Intel MPI `mpirun` command.
+
+*Note:* OptiStruct does not support the use of SGI MPT, you must use Intel MPI.
+
+Example OptiStruct SPMD job submission script:
+
+::
+
+   #!/bin/bash --login
+   
+   # PBS job options (name, compute nodes, job time)
+   #PBS -N HW_OptiStruct_SPMD
+   
+   # Use 2 nodes for this calculation
+   #PBS -l select=144
+   #PBS -l walltime=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #PBS -A [budget code]
+   
+   # Change to the directory that the job was submitted from
+   cd $PBS_O_WORKDIR
+   
+   # Load Hyperworks module and Intel MPI
+   module load altair-hwsolvers/14.0.210
+   module load intel-mpi
+   
+   # Run the OptStruct SPMD Solver (domain decompostion mode)
+   #   Use 72 cores, 36 on each node (i.e. all physical cores)
+   mpirun -n 72 -ppn 36 -f $PBS_NODEFILE optistruct_spmd box.fem -ddmmode
 
