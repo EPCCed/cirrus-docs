@@ -126,7 +126,7 @@ options you can provide to PBS. The following options may be useful:
 - By default compute nodes are shared, meaning other jobs may be placed
   alongside yours if your resource request (with -l select) leaves some
   cores free. To guarantee exclusive node usage, use the option ``-l place=excl``.
-- Name for your job is set using ``-N My_job``. In the examples below
+- The name for your job is set using ``-N My_job``. In the examples below
   the name will be "My\_job", but you can replace "My\_job" with any
   name you want. The name will be used in various places. In particular
   it will be used in the queue listing and to generate the name of your
