@@ -24,6 +24,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/connecting
    user-guide/resource_management
    user-guide/development
+   user-guide/python
    user-guide/batch
    user-guide/transfer
    user-guide/reading
