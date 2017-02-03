@@ -8,6 +8,7 @@ Conditions.
 
 -  `Terms and Conditions of Access <tandc.html>`__
 -  `Personal Data and Privacy Policy <privacy.html>`__
+-  `Policy for User Queries <metrics.html>`__
 -  `Policy on end of life procedures for Cirrus user accounts and
    projects <project_account_closing.html>`__
 
