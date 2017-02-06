@@ -10,6 +10,9 @@ This section covers the basic connection methods. The connection
 procedure is then expanded on and the use of SSH agent is described for
 ease of access.
 
+For SSH agents that we recommend you use on your local workstion, please see 
+the :doc:`ssh_clients` for more information.
+
 Interactive access
 ------------------
 
