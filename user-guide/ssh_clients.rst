@@ -1,7 +1,7 @@
 Logging In To Cirrus 
 
-SSH
-===
+SSH Clients
+===========
 
 Interaction with Cirrus is done remotely, over an encrypted
 communication channel, Secure Shell version 2 (SSH-2). This allows
@@ -108,8 +108,6 @@ XMing can be downloaded from the following link:
 
 Start PuTTY using, for example, the icon added to the Start menu during
 the installation process, which will open a configuration window.
-
->
 
 The configuration window may look a little daunting, as it presents the
 full configurability of PuTTY on a single screen. However, it is
