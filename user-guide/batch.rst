@@ -443,6 +443,6 @@ If you are dynamically linking your code and debugging it on the login node then
 Getting further help on DDT
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`DDT website <http://www.allinea.com/products/ddt/>`__
-`DDT support page <https://www.allinea.com/get-support>`__
-`DDT user guide <https://www.allinea.com/user-guide/forge/userguide.html>`__
+-  `DDT website <http://www.allinea.com/products/ddt/>`__
+-  `DDT support page <https://www.allinea.com/get-support>`__
+-  `DDT user guide <https://www.allinea.com/user-guide/forge/userguide.html>`__
