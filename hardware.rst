@@ -20,10 +20,10 @@ Cirrus compute nodes each contain two 2.1 GHz, 18-core Intel Xeon E5-2695
 (Broadwell) series processors. Each of the cores in these processors
 support 2 hardware threads (Hyperthreads), which are enabled by default.
 
-The compute nodes on Cirrus have 256 GB of memory shared between the two
+The compute nodes on Cirrus have 256 GiB of memory shared between the two
 processors. The memory is arranged in a non-uniform access (NUMA) form:
 each 18-core processor is a single NUMA region with local memory of 128
-GB. Access to the local memory by cores within a NUMA region has a lower
+GiB. Access to the local memory by cores within a NUMA region has a lower
 latency than accessing memory on the other NUMA region.
 
 There are three levels of cache, configured as follows:
