@@ -1,20 +1,14 @@
-Software Libraries
-==================
-
-This section of the User Guide covers the use of different software libraries
-on Cirrus.
-
 Intel MKL: BLAS, LAPACK, ScaLAPACK
-----------------------------------
+==================================
 
 The Intel MKL libraries contain a variety of optimised numerical libraries 
 including BLAS, LAPACK, and ScaLAPACK.
 
 Intel Compilers
-~~~~~~~~~~~~~~~
+---------------
 
 BLAS and LAPACK
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 To use MKL libraries with the Intel compilers you first need to load the Intel
 compiler module and the Intel tools module:
@@ -37,7 +31,7 @@ If you wish to build against the serial version of MKL, you would use
 ``-mkl=sequential``.
 
 ScaLAPACK
-^^^^^^^^^
+~~~~~~~~~
 
 The distributed memory linear algebra routines in ScaLAPACK require MPI in addition
 to the compilers and MKL libraries. On Cirrus, this is usually provided by SGI MPT.
@@ -58,10 +52,10 @@ the compilers:
    mpif90 -mkl=cluster -o linsolve.x linsolve.o
 
 GNU Compiler
-~~~~~~~~~~~~~~~
+------------
 
 BLAS and LAPACK
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 To use MKL libraries with the GNU compiler you first need to load the GNU compiler module
 and Intel tools module:
@@ -87,7 +81,7 @@ This will build against the serial version of MKL, to build against the threaded
    gfortran -fopenmp -o lapack_prb.x lapack_prb.o -L$MKLROOT/lib/intel64 -lmkl_gf_lp64 -lmkl_core -lmkl_gnu_thread
 
 ScaLAPACK
-^^^^^^^^^
+~~~~~~~~~
 
 The distributed memory linear algebra routines in ScaLAPACK require MPI in addition
 to the compilers and MKL libraries. On Cirrus, this is usually provided by SGI MPT.
@@ -107,6 +101,7 @@ Remember to use the MPI versions of the compilers:
    mpif90 -f90=gfortran -o linsolve.x linsolve.o -L$MKLROOT/lib/intel64 -lmkl_core -lmkl_sequential -lmkl_scalapack_lp64 -lmkl_blacs_lp64
 
 ILP vs LP libraries
-^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 If you look in the *$MKLROOT/lib/intel64* directory then you will see ILP and LP libraries, in the above we were linking against the LP libraries and you can choose either. ILP use a 64 bit integer type, whereas LP use a 32 bit integer type. For very large arrays then ILP is the best choice (as it can index far more data), but there are some limitations. For more information `see the Intel documentation here <https://software.intel.com/en-us/node/528682>`__.
+
