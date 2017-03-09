@@ -41,6 +41,13 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
 .. toctree::
    :maxdepth: 2
+   :caption: Software Libraries
+   
+   software-libraries/introduction
+   software-libraries/intel_mkl
+
+.. toctree::
+   :maxdepth: 2
    :caption: Data Management Guide
 
    data-management/transfer
