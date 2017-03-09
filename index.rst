@@ -3,15 +3,16 @@
 Cirrus
 ======
 
-Cirrus is a supercomputing service hosted and run by `EPCC <http://www.epcc.ed.ac.uk>`_ at 
-`The University of Edinburgh <http://www.ed.ac.uk>`_.
+Cirrus is a HPC and data science service hosted and run by `EPCC <http://www.epcc.ed.ac.uk>`_ at 
+`The University of Edinburgh <http://www.ed.ac.uk>`_. It is one of the `EPSRC <http://www.epsrc.ac.uk>`_
+Tier-2 National HPC Services.
 
 Cirrus is available to industry, commerce and academic researchers. For information on how
-to get access to the system please see `Cirrus on the EPCC website <http://www.epcc.ed.ac.uk/cirrus>`_.
+to get access to the system please see the `Cirrus website <http://www.cirrus.ac.uk>`_.
    
-The Cirrus facility is based around an SGI ICE XA HPC cluster with 2,016 cores. There are 56 compute
+The Cirrus facility is based around an SGI ICE XA system with 10,080 cores. There are 280 compute
 nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
-contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 116 TiB Lustre file system.
+contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 406 TiB Lustre file system.
 
 This documentation draws on the `Sheffield Iceberg Documentation <https://github.com/rcgsheffield/sheffield_hpc>`_
 and the documentation for the `ARCHER National Supercomputing Service <http://www.archer.ac.uk>`_.
