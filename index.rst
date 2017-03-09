@@ -35,7 +35,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :maxdepth: 2
    :caption: Software Applications
    
-   software-packages/introduction
    software-packages/altair_hw
    software-packages/flacs
 
@@ -43,7 +42,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :maxdepth: 2
    :caption: Software Libraries
    
-   software-libraries/introduction
    software-libraries/intel_mkl
 
 .. toctree::
