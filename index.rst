@@ -46,22 +46,9 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
 .. toctree::
    :maxdepth: 2
-   :caption: About Cirrus
-  
-   hardware
-   policies/introduction
-
-.. toctree::
-   :maxdepth: 2
    :caption: Cirrus SAFE Documentation
 
    safe-guide/introduction
    safe-guide/safe-guide-users
    safe-guide/safe-guide-pi
-   
-.. toctree::
-   :maxdepth: 2
-   :caption: Support
-   
-   support
    
