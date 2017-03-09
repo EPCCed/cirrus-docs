@@ -1,2 +1,2 @@
-.. image:: images/epccuoe_logo.png
+.. image:: images/epcc_uoe_epsrc.png
    :align: right
