@@ -237,7 +237,7 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
     export OMP_NUM_THREADS=1
 
     # Launch the parallel job
-    #   Using 72 MPI processes and 24 MPI processes per node
+    #   Using 72 MPI processes and 36 MPI processes per node
     mpiexec_mpt -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 72
