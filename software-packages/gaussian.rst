@@ -16,7 +16,7 @@ Using Gaussian on Cirrus
 through the University's site licence.**
 
 If you wish to have access to Gaussian on Cirrus please contact the
-`Cirrus Helpdesk <http://www.cirrus.ac.uk/support/helpdesk/>`__.
+`Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`__.
 
 Gaussian cannot run across multiple nodes. This means that the maximum number
 of cores you can use for Gaussian jobs is 36 (the number of cores on a compute
