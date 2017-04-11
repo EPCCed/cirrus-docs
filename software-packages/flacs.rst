@@ -174,4 +174,4 @@ Getting help
 ~~~~~~~~~~~~
 Get in touch with FLACS Support by email to flacs@gexcon.com if you
 encounter any problems. For issues related to Cirrus rather than
-FLACS contact the `Cirrus helpdesk <http://www.cirrus.ac.uk/support/helpdesk/>`__.
+FLACS contact the `Cirrus helpdesk <http://www.cirrus.ac.uk/support/>`__.
