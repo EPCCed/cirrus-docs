@@ -37,6 +37,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    
    software-packages/altair_hw
    software-packages/flacs
+   software-packages/gaussian
 
 .. toctree::
    :maxdepth: 2
