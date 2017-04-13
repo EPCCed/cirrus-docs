@@ -81,29 +81,29 @@ Loading, unloading and swapping modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To load a module to use ``module add`` or ``module load``. For example,
-to load the intel-compilers-16 into the development environment:
+to load the intel-compilers-17 into the development environment:
 
 ::
 
-    module load intel-compilers-16
+    module load intel-compilers-17
 
 This will load the default version of the intel commpilers Library. If
 you need a specfic version of the module, you can add more information:
 
 ::
 
-    module load intel-compilers-16/16.0.3.210
+    module load intel-compilers-17/17.0.2.174
 
 will load version 16.0.3.210 for you, regardless of the default. If you
 want to clean up, ``module remove`` will remove a loaded module:
 
 ::
 
-    module remove intel-compilers-16
+    module remove intel-compilers-17
 
-(or ``module rm intel-compilers-16`` or
-``module unload intel-compilers-16``) will unload what ever version of
-intel-compilers-16 (even if it is not the default) you might have
+(or ``module rm intel-compilers-17`` or
+``module unload intel-compilers-17``) will unload what ever version of
+intel-compilers-17 (even if it is not the default) you might have
 loaded. There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
 version which is not yet the default or using a legacy version to keep
@@ -126,7 +126,7 @@ The Intel compiler suite is accessed by loading the ``intel-compilers-*`` module
 
 ::
 
-    module load intel-compilers-16
+    module load intel-compilers-17
 
 Once you have loaded the module, the compilers are available as:
 
@@ -175,11 +175,11 @@ Using Intel Compilers and MPI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once you have loaded the MPT module you should next load the appropriate 
-``intel-compilers`` module (e.g. ``intel-compilers-16``):
+``intel-compilers`` module (e.g. ``intel-compilers-17``):
 
 ::
 
-    module load intel-compilers-16
+    module load intel-compilers-17
 
 Compilers are then available as
 
@@ -187,11 +187,20 @@ Compilers are then available as
 * ``mpicc`` - C with MPI
 * ``mpiCC`` - C++ with MPI
 
-**Note:** When compiling C/C++ applications you must also specify that 
+**Note** mpicc uses gcc by default:
+
+When compiling C/C++ applications you must also specify that 
 ``mpicc``/``mpiCC`` should use the ``icc`` compiler with, for example,
 ``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
 compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
 which compiler is actually being called.
+
+Alternatively, you can set the environment variable ``MPICC_CC=icc`` to 
+ensure the correct base compiler is used:
+
+::
+
+   export MPICC_CC=icc
 
 Using GCC Compilers and MPI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
