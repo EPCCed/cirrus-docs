@@ -173,7 +173,7 @@ following PBS option to your jobs:
 
 ::
 
-   #PBS -l place=excl
+    #PBS -l place=excl
 
 All of our example parallel job submission scripts below specify this option.
 
