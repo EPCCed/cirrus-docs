@@ -39,7 +39,8 @@ For example, the following script will run a CASTEP job using 4 nodes
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N CASTEP_test
-   #PBS -l select=144
+   # Must ask for double the core count due to hyperthreads
+   #PBS -l select=288
    #PBS -l place=excl
    #PBS -l walltime=0:20:0
    
