@@ -124,12 +124,12 @@ All parallel job submission scripts require (as a minimum) you to
 specify three things:
 
 -  The number of nodes and cores per node you require via the
-   ``-l select=[Nodes]:ncpus=[CoresPerNode]`` option. Each node has 36 physical
+   ``-l select=[Nodes]:ncpus=72`` option. Each node has 36 physical
    cores (2x 18-core sockets) and hyper-threads are enabled (2 per core) giving
-   a maximum of 72 cores per node (most users will only use a maximum of
+   a maximum of 72 cores per node (most users will actually only use a maximum of
    36 cores per node for best performance). For example, to select 4 nodes
-   with 36 cores per node (144 cores in total) you would use
-   ``-l select=4:ncpus=36``.
+   (144 physical cores in total) you would use
+   ``-l select=4:ncpus=72``.
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -246,8 +246,8 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MPI_Job
-    # Select 2 nodes and 36 cores per node
-    #PBS -l select=2:ncpus=36
+    # Select 2 full nodes
+    #PBS -l select=2:ncpus=72
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=00:20:00
@@ -297,7 +297,7 @@ of the ``omplace`` command to specify the number of threads.
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MixedMode_Job
-    #PBS -l select=2:ncpus=36
+    #PBS -l select=2:ncpus=72
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=6:0:0
@@ -338,7 +338,7 @@ Both work.bash and perf.bash run on 2 nodes.
    #!/bin/bash --login
    # PBS job options (name, compute nodes, job time)
    #PBS -N Example_MixedMode_Job
-   #PBS -l select=2:ncpus=36
+   #PBS -l select=2:ncpus=72
    # Parallel jobs should always specify exclusive node access
    #PBS -l place=excl
    #PBS -l walltime=6:0:0
@@ -437,7 +437,7 @@ issue the following qsub command from the command line:
 
 ::
 
-    qsub -IVl select=8:ncpus=36,walltime=1:0:0,place=excl -A [project code]
+    qsub -IVl select=8:ncpus=72,walltime=1:0:0,place=excl -A [project code]
 
 When you submit this job your terminal will display something like:
 
