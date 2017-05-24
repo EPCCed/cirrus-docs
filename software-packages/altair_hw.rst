@@ -43,7 +43,7 @@ For example, here is a job script to run a serial RADIOSS job on Cirrus:
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N HW_RADIOSS_test
-   #PBS -l select=1
+   #PBS -l select=1:ncpus=1
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -91,7 +91,7 @@ use the following job script:
    #PBS -N HW_OptiStruct_SMP
    
    # Use 18 cores for this calculation
-   #PBS -l select=18
+   #PBS -l select=1:ncpus=18
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -138,7 +138,7 @@ Example OptiStruct SPMD job submission script:
    #PBS -N HW_OptiStruct_SPMD
    
    # Use 2 nodes for this calculation
-   #PBS -l select=144
+   #PBS -l select=2:ncpus=36
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -149,7 +149,7 @@ Example OptiStruct SPMD job submission script:
    
    # Load Hyperworks module and Intel MPI
    module load altair-hwsolvers/14.0.210
-   module load intel-mpi
+   module load intel-mpi-17
    
    # Run the OptStruct SPMD Solver (domain decompostion mode)
    #   Use 72 cores, 36 on each node (i.e. all physical cores)

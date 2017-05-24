@@ -84,16 +84,16 @@ For example:
 
 ::
 
-   qsub -A xyz -l select=2 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
+   qsub -A xyz -l select=1:ncpus=1 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
 
 The ``-A xyz`` option is obligatory and states the account ``xyz``
 that the CPU consumption will be billed to. You can check your
 account in SAFE (SAFE Guide: :doc:`../safe-guide/safe-guide-users`).
 
-The ``-l select=n`` option specifies the resource allocation for
-the job you are starting. The parameter ``n`` must be *twice the
-number of physical cores* you wish to employ, which means it is 2
-when running a serial FLACS job.
+The ``-l select=x:ncpus=y`` option specifies the resource allocation for
+the job you are starting. The parameter ``x`` is the number of nodes
+required and the parameter ``y`` is the number of cores required. For
+a serial FLACS job you woudl use ``-l select=1:ncpus=1``
 
 All Flacs jobs must be submitted to the flacs queue using the option
 ``-q flacs``; the flacs queue ensures FLACS licenses are provisioned

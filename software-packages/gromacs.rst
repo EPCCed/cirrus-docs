@@ -42,8 +42,7 @@ For example, the following script will run a GROMACS MD job using 4 nodes
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N mdrun_test
-   # Must ask for double the core count due to hyperthreads
-   #PBS -l select=144
+   #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
    #PBS -l place=excl
    #PBS -l walltime=0:20:0
@@ -76,8 +75,7 @@ total) and 6 OpenMP threads per MPI process.
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N mdrun_test
-   # Must ask for double the core count due to hyperthreads
-   #PBS -l select=288
+   #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
    #PBS -l place=excl
    #PBS -l walltime=0:20:0

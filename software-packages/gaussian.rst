@@ -47,7 +47,7 @@ a Gaussian scratch directory as outlined above).
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N G09_test
-   #PBS -l select=1
+   #PBS -l select=1:ncpus=1
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -83,7 +83,7 @@ For example, the following script will run a Gaussian job using 4 cores.
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N G09_test
-   #PBS -l select=4
+   #PBS -l select=1:ncpus=4
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)

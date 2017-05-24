@@ -123,11 +123,13 @@ for different kinds of parallel jobs on Cirrus.
 All parallel job submission scripts require (as a minimum) you to
 specify three things:
 
--  The number of virtual cores you require via the
-   ``-l select=[cores]`` option. Each node has 36 physical
-   cores (2x 18-core sockets) but hyper-threads are enabled (2 per core).
-   Thus, to request 2 nodes, for instance, you must select 144 "cores"
-   (36 cores \* 2 hyper-threads \* 2 nodes).
+-  The number of nodes and cores per node you require via the
+   ``-l select=[Nodes]:ncpus=[CoresPerNode]`` option. Each node has 36 physical
+   cores (2x 18-core sockets) and hyper-threads are enabled (2 per core) giving
+   a maximum of 72 cores per node (most users will only use a maximum of
+   36 cores per node for best performance). For example, to select 4 nodes
+   with 36 cores per node (144 cores in total) you would use
+   ``-l select=4:ncpus=36``.
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -198,7 +200,8 @@ A sample MPI job launch line using ``mpiexec_mpt`` looks like:
 This will start the parallel executable "my\_mpi\_executable.x" with
 arguments "arg1" and "arg2". The job will be started using 72 MPI
 processes, with 36 MPI processes are placed on each compute node 
-(this would use all the physical cores on each node).
+(this would use all the physical cores on each node). This would
+require 2 nodes to be requested in the PBS options.
 
 The most important ``mpiexec_mpt`` flags are:
 
@@ -243,14 +246,11 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MPI_Job
-    # To get two nodes we need 72*2 = 144 cores (hyper-threading included)
-    #PBS -l select=144
+    # Select 2 nodes and 36 cores per node
+    #PBS -l select=2:ncpus=36
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=00:20:00
-
-    # To get exclusive node usage
-    #PBS -l place=excl
 
     # Replace [budget code] below with your project code (e.g. t01)
     #PBS -A [budget code]             
@@ -297,13 +297,10 @@ of the ``omplace`` command to specify the number of threads.
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MixedMode_Job
-    #PBS -l select=144
+    #PBS -l select=2:ncpus=36
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=6:0:0
-
-    # To get exclusive node usage
-    #PBS -l place=excl
 
     # Replace [budget code] below with your project code (e.g. t01)
     #PBS -A [budget code]
@@ -341,13 +338,10 @@ Both work.bash and perf.bash run on 2 nodes.
    #!/bin/bash --login
    # PBS job options (name, compute nodes, job time)
    #PBS -N Example_MixedMode_Job
-   #PBS -l select=144
+   #PBS -l select=2:ncpus=36
    # Parallel jobs should always specify exclusive node access
    #PBS -l place=excl
    #PBS -l walltime=6:0:0
-   
-   # To get exclusive node usage
-   #PBS -l place=excl
    
    # Replace [budget code] below with your project code (e.g. t01)
    #PBS -A [budget code]
@@ -393,7 +387,7 @@ Serial Jobs
 Serial jobs are setup in a similar way to parallel jobs on Cirrus. The
 only changes are:
 
-1. You should request a single core with ``select=1``
+1. You should request a single core with ``select=1:ncpus=1``
 2. You will not need to use a parallel job launcher to run your executable
 3. You will generally not specify exclusive node access
 
@@ -405,7 +399,7 @@ A simple serial script to compress a file would be:
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_Serial_Job
-    #PBS -l select=1
+    #PBS -l select=1:ncpus=1
     #PBS -l walltime=0:20:0
 
     # Replace [budget code] below with your project code (e.g. t01)
@@ -438,12 +432,12 @@ from the command line without using a job submission script, and to
 see the output from your program directly in the terminal.
 
 To submit a request for an interactive job reserving 8 nodes
-(288 physical cores, 576 hyper-threaded cores)) for 1 hour you would
+(288 physical cores) for 1 hour you would
 issue the following qsub command from the command line:
 
 ::
 
-    qsub -IVl select=576,walltime=1:0:0,place=excl -A [project code]
+    qsub -IVl select=8:ncpus=36,walltime=1:0:0,place=excl -A [project code]
 
 When you submit this job your terminal will display something like:
 
