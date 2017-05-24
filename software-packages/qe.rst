@@ -32,8 +32,7 @@ For example, the following script will run a QE pw.x job using 4 nodes
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N pw_test
-   # Must ask for double the core count due to hyperthreads
-   #PBS -l select=288
+   #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
    #PBS -l place=excl
    #PBS -l walltime=0:20:0
