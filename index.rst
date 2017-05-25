@@ -40,6 +40,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/flacs
    software-packages/gaussian
    software-packages/gromacs
+   software-packages/namd
    software-packages/qe
 
 .. toctree::

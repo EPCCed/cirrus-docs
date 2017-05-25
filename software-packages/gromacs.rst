@@ -13,8 +13,8 @@ also using it for research on non-biological systems, e.g. polymers.
 Useful Links
 ------------
 
-* `GROMACS User Guides <http://www.quantum-espresso.org/users-manual/>`__
-* `GROMACS Tutorials <http://www.quantum-espresso.org/tutorials/>`__
+* `GROMACS User Guides <http://manual.gromacs.org/documentation/>`__
+* `GROMACS Tutorials <http://www.gromacs.org/Documentation/Tutorials>`__
 
 Using GROMACS on Cirrus
 -----------------------
