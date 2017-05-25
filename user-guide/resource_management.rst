@@ -30,8 +30,8 @@ system, including:
    including individual job records
 -  Helpdesk - raise queries and track progress of open queries
 
-Checking your CPU-time (kAU) balance
-------------------------------------
+Checking your CPU-time allocation
+---------------------------------
 
 You can view these details by logging into the SAFE
 (https://safe.epcc.ed.ac.uk/safadmin/).
@@ -41,7 +41,7 @@ to query. The page for the login account will summarise the resources
 available to account.
 
 You can also generate reports on your usage over a particular period and
-examine the details of how many kAU individual jobs on the system cost.
+examine the details of how many CPUh individual jobs on the system cost.
 To do this use the *Service information* menu and selet *Report generator*.
 
 For more information on using the SAFE see the :doc:`../safe-guide/introduction`.
@@ -56,19 +56,12 @@ File permissions and security
 -----------------------------
 
 By default, each user is a member of the group with the same name as
-[group\_code] in the ``/lustre/home`` and ``/lustre/work`` directory paths, e.g.
-``x01-a``. This allows the user to share files with only members of that
+[group\_code] in the ``/lustre/home`` directory path, e.g.
+``x01``. This allows the user to share files with only members of that
 group by setting the appropriate group file access permissions. As on
 other UNIX or Linux systems, a user may also be a member of other
 groups. The list of groups that a user is part of can be determined by
 running the ``groups`` command.
-
-It is, of course, possible to make files accessible to all users on
-Cirrus, by setting the "other" file access permissions appropriately.
-You should not allow "other" write access to any of your directories,
-and for security reasons it is recommended that you do not allow anyone
-else read or write access to important account information (e.g.
-``$HOME/.ssh``).
 
 Default Unix file permissions can be specified by the ``umask`` command.
 The default umask value on Cirrus is 22, which provides "group" and
