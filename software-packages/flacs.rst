@@ -93,7 +93,7 @@ account in SAFE (SAFE Guide: :doc:`../safe-guide/safe-guide-users`).
 The ``-l select=x:ncpus=y`` option specifies the resource allocation for
 the job you are starting. The parameter ``x`` is the number of nodes
 required and the parameter ``y`` is the number of cores required. For
-a serial FLACS job you woudl use ``-l select=1:ncpus=1``
+a serial FLACS job you would use ``-l select=1:ncpus=1``
 
 All Flacs jobs must be submitted to the flacs queue using the option
 ``-q flacs``; the flacs queue ensures FLACS licenses are provisioned
@@ -134,9 +134,9 @@ could look like this:
 ::
 
    module load flacs/10.5.1
-   sleep 5; qsub -A xyz -l select=2 -N f-000012 -q flacs -V -- `which run_runflacs` -dir `pwd` 000012
-   sleep 5; qsub -A xyz -l select=2 -N f-000023 -q flacs -V -- `which run_runflacs` -dir `pwd` 000023
-   sleep 5; qsub -A xyz -l select=2 -N f-000117 -q flacs -V -- `which run_runflacs` -dir `pwd` 000117
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000012 -q flacs -V -- `which run_runflacs` -dir `pwd` 000012
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000023 -q flacs -V -- `which run_runflacs` -dir `pwd` 000023
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000117 -q flacs -V -- `which run_runflacs` -dir `pwd` 000117
 
 This is also easy to formulate as a loop. 
 
