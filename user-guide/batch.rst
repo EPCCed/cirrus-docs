@@ -367,7 +367,7 @@ have set MPI_SHEPHERD=true
 MPI on the login nodes
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to run a short interactive parallel applications (e.g. for 
+If you want to run short interactive parallel applications (e.g. for 
 debugging) then you can run compiled MPI applications on the login nodes.
 
 For instance, to run a simple, short 4-way MPI job on the login node, issue the
@@ -378,7 +378,7 @@ following command (once you have loaded the appropriate modules):
     mpirun -n 4 ./hello_mpi.x
 
 **Note:** you should not run long, compute- or memory-intensive jobs on the 
-login nodes. Any such processes a liable to termination by the system
+login nodes. Any such processes are liable to termination by the system
 with no warning.
 
 Serial Jobs
@@ -416,6 +416,91 @@ A simple serial script to compress a file would be:
 
     # Run the serial executable
     gzip my_big_file.dat
+
+.. _jobarrays:
+
+Job arrays
+----------
+
+The PBSPro job scheduling system offers the *job array* concept,
+for running collections of almost-identical jobs, for example
+running the same program several times with different arguments
+or input data.
+
+Each job in a job array is called a *subjob*.  The subjobs of a job
+array can be submitted and queried as a unit, making it easier and
+cleaner to handle the full set, compared to individual jobs.
+
+All subjobs in a job array are started by running the same job script.
+The job script also contains information on the number of jobs to be
+started, and PBSPro provides a subjob index which can be passed to
+the individual subjobs or used to select the input data per subjob.
+
+
+Job script for a job array
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As an example, to start 56 subjobs, with the subjob index as the only
+argument, and 4 hours maximum runtime per subjob, save the following
+content into the file job_script.pbs:
+
+::
+
+    #!/bin/bash --login
+    #PBS -l select=1:ncpus=1
+    #PBS -l walltime=04:00:00
+    #PBS -J 1-56
+    #PBS -q workq
+    #PBS -V
+
+    cd ${PBS_O_WORKDIR}
+
+    /path/to/exe $PBS_ARRAY_INDEX
+
+Another example of a job script for submitting a job array is given
+`here <../software-packages/flacs.html#submitting-many-flacs-jobs-as-a-job-array>`_.
+
+
+Starting a job array
+~~~~~~~~~~~~~~~~~~~~
+
+When starting a job array, most options can be included in the job
+file, but the project code for the resource billing has to be
+specified on the command line:
+
+::
+
+    qsub -A [project code] job_script.pbs
+
+
+Querying a job array
+~~~~~~~~~~~~~~~~~~~~
+
+In the normal PBSPro job status, a job array will be shown as a single
+line:
+
+::
+
+    > qstat       
+    Job id            Name           User   Time Use S Queue
+    ----------------  -------------- ------ -------- - -----
+    112452[].indy2-lo dispsim        user1         0 B workq
+
+To monitor the subjobs of the job 112452, use
+
+::
+
+    > qstat -t 1235[]
+    Job id            Name             User              Time Use S Queue
+    ----------------  ---------------- ----------------  -------- - -----
+    112452[].indy2-lo dispsim          user1                    0 B flacs           
+    112452[1].indy2-l dispsim          user1             02:45:37 R flacs           
+    112452[2].indy2-l dispsim          user1             02:45:56 R flacs           
+    112452[3].indy2-l dispsim          user1             02:45:33 R flacs           
+    112452[4].indy2-l dispsim          user1             02:45:45 R flacs           
+    112452[5].indy2-l dispsim          user1             02:45:26 R flacs           
+    ...
+
 
 Interactive Jobs
 ----------------
