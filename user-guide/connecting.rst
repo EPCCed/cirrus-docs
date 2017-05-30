@@ -10,9 +10,6 @@ This section covers the basic connection methods. The connection
 procedure is then expanded on and the use of SSH agent is described for
 ease of access.
 
-For SSH agents that we recommend you use on your local workstion, please 
-see :doc:`ssh_clients` for more information.
-
 Interactive access
 ------------------
 
@@ -33,6 +30,86 @@ accounts and picking up passwords).
 using the *passwd* command. This change will not be reflected in the
 SAFE. If you forget your password, you should use the SAFE to request a
 new one-shot password.
+
+SSH Clients
+-----------
+
+Interaction with Cirrus is done remotely, over an encrypted
+communication channel, Secure Shell version 2 (SSH-2). This allows
+command-line access to one of the login nodes of a Cirrus, from which
+you can run commands or use a command-line text editor to edit files.
+SSH can also be used to run graphical programs such as GUI text editors
+and debuggers when used in conjunction with an X client.
+
+Logging in from Linux and Macs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Linux distributions and OS X each come installed with a terminal
+application that can be use for SSH access to the login nodes. Linux
+users will have different terminals depending on their distribution and
+window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult
+your Linux distribution's documentation for details on how to load a
+terminal.
+
+OS X users can use the Terminal application, located in the Utilities
+folder within the Applications folder.
+
+You can use the following command from the terminal window to login into
+Cirrus:
+
+::
+
+    ssh username@login.cirrus.ac.uk
+
+To allow remote programs, especially graphical applications to control
+your local display, such as being able to open up a new GUI window (such
+as for a debugger), use:
+
+::
+
+    ssh -X username@login.cirrus.ac.uk 
+
+Some sites recommend using the ``-Y`` flag. While this can fix some
+compatibility issues, the ``-X`` flag is more secure.
+
+Current OS X systems do not have an X window system. Users should
+install the XQuartz package to allow for SSH with X11 forwarding on OS X
+systems:
+
+::
+
+    http://www.xquartz.org/ 
+
+Logging in from Windows using MobaXterm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A typical Windows installation will not include a terminal client,
+though there are various clients available. We recommend all our Windows
+users to download and install MobaXterm to access Cirrus. It is very
+easy to use and includes an integrated X server with SSH client to run
+any graphical applications on Cirrus.
+
+You can download MobaXterm Home Edition (Installer Edition) from the
+following link:
+
+::
+
+    http://mobaxterm.mobatek.net/download-home-edition.html 
+
+Double-click the downloaded Microsoft Installer file (.msi), and the
+Windows wizard will automatically guides you through the installation
+process. Note, you might need to have administrator rights to install on
+some Windows OS. Also make sure to check whether Windows Firewall hasn't
+blocked any features of this program after installation.
+
+Start MobaXterm using, for example, the icon added to the Start menu
+during the installation process.
+
+If you would like to run any small remote GUI applications, then make
+sure to use -X option along with the ssh command (see above) to enable
+X11 forwarding, which allows you to run graphical clients on your local
+X server.
+
 
 Making access more convenient using a SSH Agent
 -----------------------------------------------
