@@ -49,7 +49,7 @@ For example, the following script will run a NAMD MD job using 4 nodes
    # Load NAMD module
    module load namd
 
-   # Run using input in test_calc.tpr
+   # Run using input in input.namd
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
    # Note: NAMD uses Intel MPI so mpirun should be used instead of
