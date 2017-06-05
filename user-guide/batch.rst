@@ -129,7 +129,9 @@ specify three things:
    a maximum of 72 cores per node (most users will actually only use a maximum of
    36 cores per node for best performance). For example, to select 4 nodes
    (144 physical cores in total) you would use
-   ``-l select=4:ncpus=72``.
+   ``-l select=4:ncpus=72``. **Note that you should always use 
+   ncpus=72, no matter how many cores you are using. This just 
+   indicates that you want to reserve all cores on a node**.
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -237,8 +239,8 @@ Please use ``man mpiexec_mpt`` and ``man omplace`` to query further options.
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A simple MPI job submission script to submit a job using 2 compute
-nodes (maximum of 72 physical cores) for 20 minutes would look like:
+A simple MPI job submission script to submit a job using 4 compute
+nodes (maximum of 144 physical cores) for 20 minutes would look like:
 
 ::
 
@@ -246,8 +248,8 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MPI_Job
-    # Select 2 full nodes
-    #PBS -l select=2:ncpus=72
+    # Select 4 full nodes
+    #PBS -l select=4:ncpus=72
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=00:20:00
@@ -268,12 +270,12 @@ nodes (maximum of 72 physical cores) for 20 minutes would look like:
     export OMP_NUM_THREADS=1
 
     # Launch the parallel job
-    #   Using 72 MPI processes and 36 MPI processes per node
-    mpiexec_mpt -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    #   Using 144 MPI processes and 36 MPI processes per node
+    mpiexec_mpt -n 144 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
-This will run your executable "my\_mpi\_executable.x" in parallel on 72
+This will run your executable "my\_mpi\_executable.x" in parallel on 144
 MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
-allocate 2 nodes to your job and mpirun_mpt will place 36 MPI processes on each node
+allocate 4 nodes to your job and mpirun_mpt will place 36 MPI processes on each node
 (one per physical core).
 
 See above for a detailed discussion of the different PBS options
@@ -287,7 +289,7 @@ memory portion of the process/thread placement does not span more than
 one node. This means that the number of shared memory threads should be
 a factor of 18.
 
-In the example below, we are using 2 nodes for 6 hours. There are 4 MPI
+In the example below, we are using 4 nodes for 6 hours. There are 4 MPI
 processes in total and 18 OpenMP threads per MPI process. Note the use
 of the ``omplace`` command to specify the number of threads.
 
@@ -297,7 +299,7 @@ of the ``omplace`` command to specify the number of threads.
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MixedMode_Job
-    #PBS -l select=2:ncpus=72
+    #PBS -l select=4:ncpus=72
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=6:0:0
@@ -317,10 +319,10 @@ of the ``omplace`` command to specify the number of threads.
     export OMP_NUM_THREADS=18
 
     # Launch the parallel job
-    #   Using 4 MPI processes
+    #   Using 8 MPI processes
     #   2 MPI processes per node
     #   18 OpenMP threads per MPI process
-    mpiexec_mpt -n 4 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    mpiexec_mpt -n 8 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -331,14 +333,14 @@ If you want to run on multiple nodes, where each node is running a self-containe
 In the example script below, work.bash is a bash script which runs a threaded executable with a command-line input and
 perf.bash is a bash script which copies data from the CPU performance counters to an output file. As both handle the
 threading themselves, it is sufficient to allocate 1 MPI rank. Using the ampersand "&" allows both to execute simultaneously.
-Both work.bash and perf.bash run on 2 nodes.
+Both work.bash and perf.bash run on 4 nodes.
 
 ::
 
    #!/bin/bash --login
    # PBS job options (name, compute nodes, job time)
    #PBS -N Example_MixedMode_Job
-   #PBS -l select=2:ncpus=72
+   #PBS -l select=4:ncpus=72
    # Parallel jobs should always specify exclusive node access
    #PBS -l place=excl
    #PBS -l walltime=6:0:0
@@ -356,8 +358,8 @@ Both work.bash and perf.bash run on 2 nodes.
    export MPI_SHEPHERD=true
 
    # Execute work and perf scripts on nodes simultaneously.
-   mpiexec_mpt -n 2 -ppn 1 work.bash &
-   mpiexec_mpt -n 2 -ppn 1 perf.bash &
+   mpiexec_mpt -n 4 -ppn 1 work.bash &
+   mpiexec_mpt -n 4 -ppn 1 perf.bash &
    wait
 
 **Note:** the wait command is required to stop the PBS job finishing before the scripts finish.
