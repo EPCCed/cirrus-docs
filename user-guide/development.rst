@@ -119,6 +119,10 @@ Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the foll
 Available Compiler Suites
 -------------------------
 
+**Note:** As Cirrus uses dynamic linking by default you will generally also need
+to load any modules you used to compile your code in your job submission
+script when you run your code.
+
 Intel Compiler Suite
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -133,6 +137,19 @@ Once you have loaded the module, the compilers are available as:
 * ``ifort`` - Fortran
 * ``icc`` - C
 * ``icpc`` - C++
+
+C++ with Intel Compilers
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Intel compilers rely on GCC C++ headers and libraries to support most recent C++
+features. If you are using Intel compilers to compile C++ on Cirrus you should 
+also load the gcc/6.2.0 module to have access to the correct C++ files:
+
+::
+    module load gcc/6.2.0
+
+**Note:** You will also need to load this module in you job submission scripts
+when running code compiled in this way.
 
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
@@ -293,54 +310,6 @@ Intel
 GNU
     ``-freal-4-real-8 -finteger-4-integer-8``
 
-Libraries
----------
-Currently, Cirrus has a number of libraries which can be linked into your executables.  
-These include the Intel Math Kernel Library (MKL), NetCDF, and HDF5, with many more to follow.
-
-Intel MKL
-~~~~~~~~~
-The Intel Math Kernel Library (MKL) is a very useful package, as it provides optimised
-and documented versions of a large number of common mathematical routines. It supports both C and Fortran
-interfaces for most of these. It features the following routines:
-
-* Basic Linear Algebra Subprograms (BLAS); vector, matrix-vector, matrix-matrix operations.
-* Sparse BLAS Levels 1, 2, and 3.
-* LAPACK routines for linear equations, least squares, eigenvalue, singular value problems and Sylvester's equations problems.
-* ScaLAPACK Routines.
-* PBLAS routines for distributed vector, matrix-vector and matrix-matrix operation.
-* Direct and iterative sparse solver routines.
-* Vector Mathematical Library (VML) for computing mathematical functions on vector arguments.
-* Vector Statistical Library (VSL) for generating pseudorandom numbers and for performing convolution and correlation.
-* General Fast Fourier Transform (FFT) functions for fast computation of Discrete FFTs.
-* Cluster FFT fucntions.
-* Basic Linear Algebra Communication Subprograms (BLACS).
-* GNU multiple precision arithmetic library.
-
-If your code depends on standard libraries such as BLAS or LAPACK, it is recommended that you link against
-the MKL versions for optimal performance.
-
-To employ the Intel MKL, first load the associated module:
-
-    ``module load intel-cmkl-16 ``
-
-Thereafter, visit the following website to determine the appropriate linking flags, and choose "Intel(R) Parallel Studio XE 2016 Update 2" as the Intel product.
-
-Intel MKL Link Advisor [http://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/]
-
-Some of MKL routines are parallelised using threads, where the number of threads is set via the MKL_NUM_THREADS environment variable.  
-Codes that run in parallel on Cirrus are typically parallelised using MPI, or OpenMP or both.  
-If your code is pure MPI, then we recommend setting.
-
-    ``MKL_NUM_THREADS=1``
-
-If your code used MKL and is pure OpenMP, or uses both MPI and OpenMP, then you may need to override this setting. 
-
-Chapter 6 of the MKL userguide explains in detail how this and other related environment variables can be used. (Note if
-you have used a version of MKL older than 10.0 you should be aware that MKL's method for controlling thread
-numbers has changed. Similarly version 10.3 and above dramatically changed the linking model. In general this
-has simplified build codes with MKL.)
-	
 Using static linking/libraries
 -------------------------------
 
