@@ -43,7 +43,7 @@ to the compilers and MKL libraries. On Cirrus, this is usually provided by SGI M
    module load mpt
 
 Once you have the modules loaded you need to use the SGI versions of BLACS
-at compile and link time to include ScaLAPACK. Remember to use the MPI versions of
+at link time to include ScaLAPACK. Remember to use the MPI versions of
 the compilers:
 
 ::
