@@ -15,8 +15,8 @@ compiler module and the Intel tools module:
 
 ::
 
-   module load intel-compilers-16
-   module load intel-tools-16
+   module load intel-compilers-17
+   module load intel-tools-17
 
 To include MKL you specify the ``-mkl`` option on your compile and link lines.
 For example, to compile a single source file, Fortran program with MKL you could use:
@@ -38,18 +38,18 @@ to the compilers and MKL libraries. On Cirrus, this is usually provided by SGI M
 
 ::
 
-   module load intel-compilers-16
-   module load intel-tools-16
+   module load intel-compilers-17
+   module load intel-tools-17
    module load mpt
 
-Once you have the modules loaded you use the ``-mkl=cluster`` option to the compiler 
+Once you have the modules loaded you need to use the SGI versions of BLACS
 at compile and link time to include ScaLAPACK. Remember to use the MPI versions of
 the compilers:
 
 ::
 
-   mpif90 -c -mkl=cluster -o linsolve.o linsolve.f90
-   mpif90 -mkl=cluster -o linsolve.x linsolve.o
+   mpif90 -c -o linsolve.o linsolve.f90
+   mpif90 -o linsolve.x linsolve.o -L${MKLROOT}/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_sgimpt_lp64 -lpthread -lm -ldl
 
 GNU Compiler
 ------------
@@ -98,7 +98,7 @@ Remember to use the MPI versions of the compilers:
 ::
 
    mpif90 -f90=gfortran -c -o linsolve.o linsolve.f90
-   mpif90 -f90=gfortran -o linsolve.x linsolve.o -L$MKLROOT/lib/intel64 -lmkl_core -lmkl_sequential -lmkl_scalapack_lp64 -lmkl_blacs_lp64
+   mpif90 -f90=gfortran -o linsolve.x linsolve.o -L${MKLROOT}/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_sgimpt_lp64 -lpthread -lm -ldl
 
 ILP vs LP libraries
 ~~~~~~~~~~~~~~~~~~~
