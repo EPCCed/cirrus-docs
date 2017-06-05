@@ -189,8 +189,8 @@ Compilers are then available as
 
 **Note** mpicc uses gcc by default:
 
-When compiling C/C++ applications you must also specify that 
-``mpicc``/``mpiCC`` should use the ``icc`` compiler with, for example,
+When compiling C applications you must also specify that 
+``mpicc`` should use the ``icc`` compiler with, for example,
 ``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
 compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
 which compiler is actually being called.
@@ -201,6 +201,21 @@ ensure the correct base compiler is used:
 ::
 
    export MPICC_CC=icc
+
+**Note** mpicxx uses g++ by default:
+
+When compiling C++ applications you must also specify that 
+``mpicxx`` should use the ``icpc`` compiler with, for example,
+``mpicxx -cc=icpc``. (This is not required for Fortran as the ``mpif90``
+compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icpc -v`` to see
+which compiler is actually being called.
+
+Alternatively, you can set the environment variable ``MPICXX_CXX=icpc`` to 
+ensure the correct base compiler is used:
+
+::
+
+   export MPICXX_CXX=icpc
 
 Using GCC Compilers and MPI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
