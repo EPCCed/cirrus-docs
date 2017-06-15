@@ -20,7 +20,9 @@ You should also tag outputs with the keyword *Cirrus* whenever possible.
 Hardware
 --------
 
-Details of the Cirrus hardware are available in the :doc:`../hardware` page:
+Details of the Cirrus hardware are available on the Cirrus website:
+
+* `Cirrus Hardware <http://www.cirrus.ac.uk/about/hardware.html>`_
 
 Useful terminology
 ------------------
