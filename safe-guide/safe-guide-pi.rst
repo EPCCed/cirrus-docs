@@ -13,13 +13,11 @@ Your allocation has been set up as a project on the service. Your first steps.
 Here are some of the things you should consider doing; not all of them
 will be needed for every project.
 
-#. `Change your own SAFE password <safe-guide-users.html#chpass>`__
-#. `Set up an account on the service machine for yourself <#selfac>`__
-#. `Make sure other project users get registered <#regusers>`__
-#. `Designate one or more users as managers of your
-   project <#projman>`__
-#. `Decide whether you need project groups within your project, in order
-   to administer time and other resources <#projgrp>`__
+#. Set up an account on the service machine for yourself
+#. Make sure other project users get registered
+#. Designate one or more users as managers of your project
+#. Decide whether you need project groups within your project, in order
+   to administer time and other resources
 
 How to get your own account on the service machine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,7 +26,7 @@ If you are not going to work on the machine yourself, you do not need to
 do this. You can administer your project through SAFE alone. But if you
 want a service machine account:
 
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Login accounts* and select *Request login account*
    button.
 #. Select the desired project from the pull down list and click *Select
@@ -44,7 +42,7 @@ account — see below.
 How can I check project alerts?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to check
@@ -61,23 +59,21 @@ How can I check project alerts?
 
 Do not forget the last step, or nothing will happen.
 
-| 
-
 Managing your allocated resources
 ---------------------------------
 
 What is "period allocation"?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A period allocation contains AUs which have been allocated for a project
+A period allocation contains CPUh which have been allocated for a project
 to use within the specified time period. Period allocations are valid
 for a specific resource pool (machine) and have definitive start and end
 dates. When the end date of the period allocation passes, any leftover
-kAUs will automatically expire.
+CPUh will automatically expire.
 
 You can view and manage your period allocation via SAFE.
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work with
@@ -90,7 +86,7 @@ You will then see the details of your allocation. *Please check them
 carefully to make sure you are looking at the correct one.*
 
 -  **Resource Pool (machine)**. "Cirrus" refers to Cirrus.
--  **Amount of kAUs**
+-  **Amount of CPUh**
 -  **Dates** It is possible to have multiple successive period
    allocations, but they can never overlap if they are for the same
    resource pool. Before carrying out any project management tasks
@@ -99,9 +95,9 @@ carefully to make sure you are looking at the correct one.*
    on the ">>>" (next period) and "<<<" (previous) buttons at the bottom
    of the page.
 
-You can manage the allocation by `setting up project
-groups <#projgrp>`__ and `allocating kAUs to project
-groups <#mvtime>`__. Project management tasks for the period allocation
+You can manage the allocation by setting up project
+groups and allocating time to project
+groups. Project management tasks for the period allocation
 can be carried out at any time, but the allocation will be active, i.e.
 usable, only between the specified dates. Thus, you can set up project
 groups in advance.
@@ -112,7 +108,7 @@ How can I set up project groups within my project?
 Project groups can be used to administer time and other resources within
 your project.
 
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to create the group
 #. This will display a screen with a variety of options for managing the
@@ -123,7 +119,8 @@ your project.
    Fill in a suffix to your project code in the box: for example, if
    your project code is t01, you might chose t01-a. Project group names
    cannot be more than eight characters in total.
-#. If this group is to be used for guest budget users, tick "Guest
+#. If this group is to be used for guest budget users (i.e. users from
+   other projects on Cirrus), tick "Guest
    Budget"
 #. click *Create*
 
@@ -133,8 +130,8 @@ How can I delete a project group?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can only delete a project group if it has no resources or members.
-You must remove all its `members <#remu>`__ and all its
-`time <#mvtime>`__. Also, if it has `disk quotas set <#space>`__, it
+You must remove all its members and all its
+time <#mvtime>. Also, if it has disk quotas set, it
 cannot be deleted; they will have to be removed first. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
@@ -151,15 +148,14 @@ to do this, so there will be a short delay.
 How can I administer time within my project?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Time is measured in `*allocation
-units* <http://www.cirrus.ac.uk/access/au-calculator/>`__ (kAUs), and is
+Time is measured in CPUh and is
 held in *budgets*. Every project group has its own budget. There are
 always at least two project groups in your project:
 
 -  The *general group*, which has the same code as the project itself.
    Every member of the project is a member of this group, so the time in
    its budget is available to them all.
--  The *reserve* project group, which has a name of form *t01-reserve*.
+-  The *Reserve* project group, which has a name of form *t01-reserve*.
    It has no members, so no one can use the time in its budget. This
    budget can be used to hold time which the PI or project manager
    wishes to hold in reserve for later use.
@@ -168,12 +164,12 @@ Initially, all your time is in the general group's budget. If you are
 happy with all your users using the same budget, you can leave things as
 they are.
 
-If you wish to divide the time up between groups, you can `create a
-project group <#projgrp>`__ for each group. In this case you will
+If you wish to divide the time up between groups, you can create a
+project group for each group. In this case you will
 probably want to move all the time out the general group, since this can
 be used by everyone.
 
-You may wish to `give time just to a single user <#oneuser>`__. This is
+You may wish to give time just to a single user. This is
 a special case of a project group: one with only one member.
 
 The reserve budget is provided so that if you wish you can control the
@@ -185,7 +181,7 @@ other project groups.
 How can I move time between budgets?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__, and then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__, and then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work with. This displays a panel with information for the project.
@@ -193,7 +189,7 @@ How can I move time between budgets?
 #. Click *Manage Group Time Allocations for Cirrus*
 #. Click the *Move From* and *Move To* buttons of the project groups you
    want to change
-#. Enter the number of kAUs you wish to move in the box
+#. Enter the number of CPUh you wish to move in the box
 #. Click the *Submit Budget Allocation Changes* button.
 
 Do not forget the last step, or nothing will happen.
@@ -205,11 +201,11 @@ As all the time in a project group is shared by all its members, the
 only way to reserve some time for a single user is to create a project
 group for that user alone.
 
-#. `Create a new project group <#projgrp>`__ for the user. For example,
+#. Create a new project group for the user. For example,
    if we are in project *t01* and the user is *fred*, you might call the
    new project group *t01-fred*
-#. `Add the user to the new project group <#addu>`__
-#. `Move the time <#mvtime>`__ you wish the user to have into the new
+#. Add the user to the new project group
+#. Move the time you wish the user to have into the new
    project group
 
 Remember that time in the general group's budget is accessible to all,
@@ -219,8 +215,8 @@ there.
 How can I administer disk space?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Start by reading the discussion of the `administration of
-time <#time>`__, as the administration of disk space is related to this,
+Start by reading the discussion of the administration of
+time above, as the administration of disk space is related to this,
 and is also done using project groups. The two project groups which
 exist in each project can also be used for administering space.
 
@@ -250,18 +246,18 @@ the task.
 Let's use homespace as an example—workspace is similar. Suppose you are
 project *t01*. To start with, one Unix group will be assigned to this
 project. The homespace directories for all users will be in directory
-``/home/t01/t01/`` —this is where the general group is held. User
-*john*, for example, will have directory ``/home/t01/t01/john/`` as his
+``/lustre/home/t01`` —this is where the general group is held. User
+*john*, for example, will have directory ``/lustre/home/t01/john/`` as his
 homespace directory. (In fact, if this is the first project he joined,
 that's where he will log in.) Any file created in any of the
-directoriesunder ``/home/t01/t01/`` will belong to the Unix group for
+directoriesunder ``/lustre/home/t01`` will belong to the Unix group for
 project *t01*.
 
 If you create a project group *t01-a* with no homespace quota, this will
 not change. But the moment you give a homespace quota to this project
 group, a Unix group will be assigned to it and a directory will be
-created for it: ``/home/t01/t01-a/`` . If user *john* is a member of
-this project group, he will have a directory ``/home/t01/t01-a/john/`` .
+created for it: ``/lustre/home/t01-a/`` . If user *john* is a member of
+this project group, he will have a directory ``/lustre/home/t01-a/john/`` .
 Any files he creates under that directory will belong to *t01-a* and
 will be counted against its quota.
 
@@ -276,26 +272,26 @@ to the right project groups.
 You should also note that once you have instituted project group quotas,
 there's no easy way back. Removing them and reassigning all the files to
 other groups is a complex job and will require special arrangement with
-the system team—send a request to the
-`helpdesk <mailto:support@epcc.ed.ac.uk>`__ if you need to do this.
+the system team — send a request to the
+`helpdesk <mailto:epcc-support@epcc.ed.ac.uk>`__ if you need to do this.
 
 Most projects in fact use their project groups only for administering
 time, and allow their users to have access to all their space. You could
-if you wish make use of `user quotas <#persquota>`__ to stop individual
+if you wish make use of user quotas to stop individual
 users from taking too much space.
 
 [Note that the above points do not apply to the reserve quotas, since
 they don't exist on the service machine. They're just a book-keeping
-fiction, and using them is cost free. We recommend this to any project
+mechanism, and using them is cost free. We recommend this to any project
 which is concerned about running out of space.]
 
 How can I create a quota for a project group, or move space between quotas?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, read the `discussion of space administration <#space>`__. If you
+First, read the discussion of space administration above. If you
 are still determined to use project group quotas, this is how.
 
-#. `Login to SAFE <safe-guide-users.html#login>`__
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
 #. Go to the Menu *Projects manaaged* and select the *project* you wish
    to work on. This will display a panel with the project information.
 #. Click *Manage Project Resources*
@@ -312,13 +308,7 @@ are still determined to use project group quotas, this is how.
 Do not forget the final step, or nothing will happen. The act of moving
 quota space to a project group which has no quota set converts that
 project group to one with a group quota, administered by a Unix group,
-as discussed `earlier <#space>`__.
-
-Quota changes are actually carried out by a human being. Once this has
-been done, you will receive an email informing you. If you ask for the
-quota to be reduced below the current size of the files in the project
-group, the human will reject your request, and you will get an email
-saying this.
+as discussed earlier.
 
 How can I set a quota for an individual user?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -329,7 +319,7 @@ particular user can occupy in workspace or homespace. There's nothing to
 stop you setting user quotas which add up to more (or less) than the
 total space. To set a quota for a user or users:
 
-#. `Login to SAFE <safe-guide-users.html#login>`__
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a panel with the project information.
 #. Click *Manage Project Resources*
@@ -354,22 +344,20 @@ How can project users get registered?
 
 You must not apply for machine accounts on behalf of other users, or let
 others use accounts that belong to you. Account sharing is strictly
-forbidden on Cirrus. Every user must `register on
-SAFE <safe-guide-users.html#register>`__ and then `apply for their own
-machine account <safe-guide-users.html#getac>`__
+forbidden on Cirrus. Every user must register on
+SAFE and then apply for their own machine account.
 
 In order to get an account, a potential user needs to know your project
 code. This is included in the email which SAFE sends to you, as PI, when
 your project is set up.
 
 #. Give the users the project code.
-#. Every user must `register on SAFE <safe-guide-users.html#register>`__
-   and then `apply for their own machine
-   account <safe-guide-users.html#getac>`__
+#. Every user must register on SAFE
+   and then apply for their own machine account
 #. If you notice that the Menu *Projects managed* is highlighted orange,
    then this indicates that there is a request for project membership.
    Now you have to accept (or reject) each user's request. `Login to
-   SAFE <safe-guide-users.html#login>`__.
+   SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Projects managed* and select *project requests* and
    you will see the details of the user who has applied.
 #. Click the button next to the user
@@ -385,13 +373,12 @@ well: it's your responsibility to make sure this is right.
 When you accept a user, the systems team is automatically requested to
 create the account on the service machine. When this has been done, the
 user is emailed; allow a working day for this. The user can then login
-to SAFE and `pick up their password on the service
-machine <safe-guide-users.html#getpass>`__.
+to SAFE and pick up their password on the service machine.
 
 How to track user sign up requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to affect.
@@ -410,7 +397,7 @@ except designate another project manager. You can designate as many
 project managers as you wish.
 
 #. Make sure the user has an account in your project.
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to appoint a project manager for. This will display a screen with a
    variety of options for managing the project.
@@ -432,7 +419,7 @@ its children). Sub-group managers can also accept new people into the
 project and run reports on the project.
 
 #. Make sure the user has an account in your project.
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to appoint a project sub-group manager for.
 #. Scroll down to project groups and click on *Project Group
@@ -449,7 +436,7 @@ belong to more than one project group.
 How can I add users to an existing project group?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects Managed *and select the *project* you wish
    to are work on. This will display a screen with a variety of options
@@ -465,16 +452,12 @@ How can I add users to an existing project group?
 To see which members have access to the project group, select *project
 sub-group* and click *List Members.*
 
-If the project group is using `disk quotas <#space>`__, this operation
-is carried out by a human, so there may be a short delay. Otherwise, it
-happens at once.
-
 A user can belong to more than one project group.
 
 How can I remove a user from a project group?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
@@ -488,9 +471,6 @@ How can I remove a user from a project group?
 To see the membership of a group, select *project group* and then click
 *List members* which shows the list of current members.
 
-If the project group is using `disk quotas <#space>`__, this operation
-is carried out by a human, so there may be a short delay. Otherwise, it
-happens at once.
 
 Can I temporarily stop a user from using any time in my project?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -500,7 +480,7 @@ deactivated cannot use any of your budgets. This means that they cannot
 do any work, in effect, so we recommend that you use this facility with
 care.
 
-#. `Login to SAFE <safe-guide-users.html#login>`__
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
 #. Go to the Menu *Projects managed* and select the *project* you are
    working on.
 #. Click *Administer Users*
@@ -516,7 +496,7 @@ Before doing this, bear in mind that it will result in all their files
 in your project being deleted. Are you sure that this is what you want?
 If so:
 
--  `Login to SAFE <safe-guide-users.html#login>`__
+-  `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
 -  Go to the Menu *Projects managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
@@ -535,7 +515,7 @@ machine will be closed.
 ` <>`__ How can I send a mailing to all users in my project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  `Login to SAFE <safe-guide-users.html#login>`__
+-  `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
 -  Go to the Menu *Projects Managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
@@ -557,7 +537,7 @@ Tracking your Project Usage
 How to check the current state of your project's time and space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <safe-guide-users.html#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Projects managed* and select the *project* you wish
    to work on.
@@ -579,7 +559,7 @@ How to track what my project's users and project groups are doing?
 
 This can be done using the Report Generator
 
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Service information* and select *Report generator*
 #. Choose a report format: HTML, PDF or CSV (comma-separated values—good
    for input to Excel, *etc.*)
@@ -592,7 +572,7 @@ This can be done using the Report Generator
 How to request automatic project reports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. `Login to SAFE <safe-guide-users.html#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Projects Managed* and select the *project* you wish
    to work on. This will display a screen with a variety of options for
    managing the project.
@@ -605,7 +585,7 @@ How to request automatic project reports
 How to check how much space my project's users are occupying
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the Report Generator (see the `previous question <#phist>`__), and
+Use the Report Generator and
 select *User disk use*. The Report Generator displays the history of
 disk use—to see the current use, make sure that the reporting period
 includes the present moment. The disk usage values known to the database
@@ -618,8 +598,8 @@ which belongs to more than one project, the disk usage shown for that
 account will be the total that the account is using in all those
 projects combined.
 
-How to request more resources (AUs and disk space)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to request more resources (CPUh and disk space)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need more home or work space, contact the
 `helpdesk <http://www.cirrus.ac.uk/support/helpdesk/>`__. We will always

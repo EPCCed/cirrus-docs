@@ -1,7 +1,7 @@
 Individual Users
 ================
 
-`SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__ is an online user
+`SAFE <https://www.archer.ac.uk/tier2/>`__ is an online user
 service management system. Through SAFE, individual users can request
 machine accounts, reset passwords, see available resources and track
 their usage. All users must be registered on SAFE before they can apply
@@ -14,7 +14,7 @@ How to register on SAFE
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Go to the SAFE `New User Signup
-   Form <https://safe.epcc.ed.ac.uk/safadmin//signup.jsp>`__
+   Form <https://www.archer.ac.uk/tier2/signup.jsp>`__
 #. Fill in your personal details. You can come back later and change
    them if you wish
 #. Click "Submit"
@@ -35,7 +35,7 @@ How to register on SAFE
 How to login to SAFE and Overview of Main Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Go to the SAFE https://safe.epcc.ed.ac.uk/safadmin/
+#. Go to the SAFE https://www.archer.ac.uk/tier2/
 #. Type in the email address you have registered with
 #. Type in your SAFE password
 #. Click "Login"
@@ -45,7 +45,7 @@ How to login to SAFE and Overview of Main Page
 How to change your personal details on SAFE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Your details* and select *Update personal details*
 #. Make the changes you wish
@@ -60,7 +60,7 @@ you must type them again.
 How to change your email address on SAFE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Your details* and select *Update email*
 #. Enter the new email address and click *Request*
@@ -73,7 +73,7 @@ use the new email address when logging into SAFE
 How to change your SAFE password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Your details* and select *Change SAFE password*
 #. Fill in the boxes and click *Change*
@@ -81,25 +81,21 @@ How to change your SAFE password
 How to reset your SAFE password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to https://safe.epcc.ed.ac.uk/safadmin/. Then:
+Go to https://www.archer.ac.uk/tier2/. Then:
 
 #. Enter your email address
 #. Click *Email*
-#. SAFE will mail your password to your email address
-
-SAFE will only mail to email addresses it already knows. But email is
-not a secure medium, so if you change your password this way, you should
-immediately change it again `from inside the SAFE. <#chpass>`__
+#. SAFE will send you a one time link to login to your SAFE account
 
 Of course, anyone could go to SAFE, type your email address and request
 a new password by clicking "Email". If that happens you will receive an
-email message out of the blue saying that your password has been
-changed. In this case you should certainly change your password again.
+email message out of the blue with a one time login.
+In this case you should certainly login to set a new password.
 
 How to request a machine account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Login accounts* and select *Request login account*
 #. Choose the project you want the account for in the "Choose Project
@@ -114,16 +110,16 @@ How to request a machine account
    project has finished.
 
 Next you will be asked to accept the `Terms and Conditions of
-Access <../policies/tandc.html>`__, by clicking
+Access <http://www.cirrus.ac.uk/about/policies/tandc.html>`__, by clicking
 the appropriate button. When you do this, you will be sent an
-acknowledgment by email, which will include your SAFE password— you
-should `change this as soon as possible. <#chpass>`__
+acknowledgment by email, which will include a one time link to 
+login to SAFE.
 
 Now you have to wait for your PI or project manager to accept your
 request to register. When this has happened, the systems team are
 prompted to create your account on the service machine. Once this has
-been done, you will be sent an email. You can then `pick up your
-password <#getpass>`__ for the service machine from your SAFE account.
+been done, you will be sent an email. You can then pick up your
+password for the service machine from your SAFE account.
 
 How to reset a password on your machine account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,7 +137,7 @@ new password twice.
 If you have forgotten your current password, or it has expired, then you
 can ask for it to be reset:
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Login accounts* and select the account you need the
    new password for
@@ -151,14 +147,14 @@ can ask for it to be reset:
 
 Now the systems team will change your password. When this has been done,
 you will be informed by email; this means that you can come back to SAFE
-and `pick up your new password <#getpass>`__.
+and pick up your new password.
 
 How can I pick up my password for the service machine?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Wait till you receive the email with your details. Then:
 
-#. `Login to SAFE <#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Login accounts* and you will see your account on the
    service machine listed. Click *username*
 #. This will display details of your account. Click *View Login Account
@@ -170,11 +166,10 @@ copy-and-paste it across when you log in to the service machine.
 
 After you login, you will be prompted to change it. You should paste in
 the password retreived from SAFE again, and then you will be prompted to
-type in your new, easy-to-remember password, twice. 
+type in your new password, twice. 
 
 Note that when you change your password on the service machine in this
 way, this is not reflected on the SAFE.
-
 
 User Mailing Options
 --------------------
@@ -183,8 +178,8 @@ How to view user mailings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | All mailings are archived and can be viewed in
-  `SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__.
-| Please `login to SAFE <#login>`__ and go to the section *View user
+  `SAFE <https://www.archer.ac.uk/tier2/>`__.
+| Please `login to SAFE <https://www.archer.ac.uk/tier2/>`__ and go to the section *View user
   mailings*. Press the *View* button to access the mailings.
 
 How to get added to, or removed from the email mailing list?
@@ -206,7 +201,7 @@ There are three mailing list options available.
 
 Any combination of these three options may be selected via SAFE:
 
-#. `Login to SAFE <#login>`__.
+#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__.
 #. Go to the Menu *Your details* click *Email list settings*
 #. In the panel headed *Mailing list preferences* click on the options
    you would like to subscribe to.
@@ -224,9 +219,7 @@ Do not forget the last step, or nothing will happen.
 
 **Note 2:** Regardless of whether you are subscribed to a particular
 mailing list, you can still view ALL user mailings which have been sent,
-in SAFE. See `here <#mailings>`__ for details.
-
-| 
+in SAFE.
 
 Tracking and Managing Available Resources
 -----------------------------------------
@@ -234,7 +227,7 @@ Tracking and Managing Available Resources
 How to check how much time and space are available to you
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__ and Go to the Menu *Login accounts*, select
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__ and Go to the Menu *Login accounts*, select
 the *username* which you wish to see details for. You will then see the
 information for this account. You will see the quotas for the disk space
 (if the project group is using these) and how much is in use. You can
@@ -265,7 +258,7 @@ project PI/project manager.
 How to review the use you have made of the service, or the activity of the service as a whole
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Service information* and select *Report Generator*
 #. Select the report you wish to run and the format you want the output
@@ -287,7 +280,7 @@ Miscellaneous
 How to check the queries you have submitted to the helpdesk
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Help and Support* and select *Your support requests*
 #. Click the number of a query to check the contents of the query log
@@ -300,7 +293,7 @@ request*.
 How to register your approval — or your annoyance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Login to SAFE <#login>`__. Then:
+`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
 
 #. Go to the Menu *Help and Support* and select *Service feedback*
 #. Click on the scale somewhere between 5 penalty points and 5 gold
