@@ -17,7 +17,7 @@ The Cirrus Administration Web Site (SAFE)
 
 All users have a login and password on the Cirrus Administration Web
 Site (also know as the 'SAFE'):
-`SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__. Once logged into this
+`SAFE <https://www.archer.ac.uk/tier2/>`__. Once logged into this
 web site, users can find out much about their usage of the Cirrus
 system, including:
 
@@ -34,7 +34,7 @@ Checking your CPU-time allocation
 ---------------------------------
 
 You can view these details by logging into the SAFE
-(https://safe.epcc.ed.ac.uk/safadmin/).
+(https://www.archer.ac.uk/tier2/).
 
 Use the *Login accounts* menu to select the user account that you wish
 to query. The page for the login account will summarise the resources
@@ -50,7 +50,7 @@ Disk quotas
 -----------
 
 Disk quotas on Cirrus are managed via
-`SAFE <https://safe.epcc.ed.ac.uk/safadmin/>`__
+`SAFE <https://www.archer.ac.uk/tier2/>`__
 
 File permissions and security
 -----------------------------
