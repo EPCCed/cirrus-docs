@@ -12,8 +12,9 @@ Useful Links
 Using Gaussian on Cirrus
 ------------------------
 
-**Gaussian on Cirrus is only avaialble to University of Edinburgh researchers
-through the University's site licence.**
+**Gaussian on Cirrus is only available to University of Edinburgh researchers
+through the University's site licence. Users from other institutions cannot
+access the version centrally-installed on Cirrus.**
 
 If you wish to have access to Gaussian on Cirrus please contact the
 `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`__.
