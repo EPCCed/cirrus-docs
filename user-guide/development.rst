@@ -309,8 +309,8 @@ ensure the correct base compiler is used:
 
 When compiling C++ applications you must also specify that 
 ``mpicxx`` should use the ``icpc`` compiler with, for example,
-``mpicxx -cc=icpc``. (This is not required for Fortran as the ``mpif90``
-compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icpc -v`` to see
+``mpicxx -cxx=icpc``. (This is not required for Fortran as the ``mpif90``
+compiler automatically uses ``ifort``.)  If in doubt use ``mpicxx -cxx=icpc -v`` to see
 which compiler is actually being called.
 
 Alternatively, you can set the environment variable ``MPICXX_CXX=icpc`` to 
