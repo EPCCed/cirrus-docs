@@ -14,6 +14,15 @@ The Cirrus facility is based around an SGI ICE XA system with 10,080 cores. Ther
 nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
 contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 406 TiB Lustre file system.
 
+This documentation covers:
+
+* Cirrus User Guide: general information on how to use Cirrus 
+* Software Applications: notes on using specific software applications on Cirrus
+* Software Libraries: notes on compiling against specific libraries on Cirrus. Most libraries work
+"as expected" so no additional notes are required however a small number require specific
+documentation
+* Software Tools: Information on using tools such as debuggers and profilers on Cirrus
+
 This documentation draws on the `Sheffield Iceberg Documentation <https://github.com/rcgsheffield/sheffield_hpc>`_
 and the documentation for the `ARCHER National Supercomputing Service <http://www.archer.ac.uk>`_.
    

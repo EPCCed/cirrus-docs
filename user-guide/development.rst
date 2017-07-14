@@ -10,8 +10,8 @@ you wish to use using the appropriate modules, then load all the
 required library modules (e.g. numerical libraries, IO format libraries).
 
 Additionally, if you are compiling parallel applications using MPI 
-(or SHMEM, etc.) then you will need to load the ``mpt`` module and
-use the appropriate compiler wrapper scripts.
+(or SHMEM, etc.) then you will need to load one of the MPI environments
+and use the appropriate compiler wrapper scripts.
 
 By default, all users on Cirrus start with no modules loaded.
 
@@ -255,7 +255,27 @@ Once you have loaded the module, the compilers are available as:
 Compiling MPI codes
 -------------------
 
-To compile MPI code, using any compiler, you must first load the "mpt" module.
+There are two MPI libraries currently available on Cirrus:
+
+* SGI Message Passing Toolkit (MPT)
+* Intel MPI
+
+The compilation and run commands are different depending on which of these
+libraries you choose. Most of the applications we have compiled on Cirrus
+have made use of the SGI MPT library and we only use Intel MPI if SGI MPT
+cannot be used for some reason. If you can use either library it is
+worthwhile running a few tests to discover if either provides a performance
+advantage for your application.
+
+The following sections discuss each of the MPI library options in turn.
+
+You should also consult the chapter on running jobs through the batch system
+for examples of how to run jobs compiled against the different MPI libraries.
+
+Using SGI MPT
+~~~~~~~~~~~~~
+
+To compile MPI code with SGI MPT, using any compiler, you must first load the "mpt" module.
 
 ::
 
@@ -274,8 +294,8 @@ tested by SGI.
 **Note:** You can always check which compiler the MPI compiler wrapper scripts
 are using with, for example, ``mpicc -v`` or ``mpif90 -v``.
 
-Using Intel Compilers and MPI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using Intel Compilers and SGI MPT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have loaded the MPT module you should next load the appropriate 
 ``intel-compilers`` module (e.g. ``intel-compilers-17``):
@@ -320,8 +340,8 @@ ensure the correct base compiler is used:
 
    export MPICXX_CXX=icpc
 
-Using GCC Compilers and MPI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using GCC Compilers and SGI MPT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have loaded the MPT module you should next load the 
 ``gcc`` module:
