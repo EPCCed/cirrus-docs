@@ -185,15 +185,59 @@ Of course, if you are running a serial job then you should not generally
 specify this option as it would result in you reserving (and being charged for)
 a full 36 core node when you are only using a single core.
 
-Parallel job launcher ``mpiexec_mpt``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running MPI parallel jobs
+-------------------------
 
-The job launcher for parallel jobs on Cirrus is ``mpiexec_mpt``.
+When you running parallel jobs requiring MPI you will use an MPI launch
+command to start your executable in parallel. The name and options for
+this MPI launch command depend on which MPI library you are using:
+SGI MPT (Message Passing Toolkit) or Intel MPI. We give details below
+of the commands used in each case and our example job submission scripts
+have examples for both libraries.
 
-**Note:** the parallel job launcher is only available once you have
+**Note:** If you are using a centrally-installed MPI software package you
+will need to know which MPI library was used to compile it so you can use the
+correct MPI launch command. You can find this information using the ``module show``
+command. For example:
+
+::
+
+   [auser@cirrus-login0 ~]$ module show vasp
+   -------------------------------------------------------------------
+   /lustre/sw/modulefiles/vasp/5.4.4-intel17-mpt214:
+
+   conflict	 vasp 
+   module		 load mpt 
+   module		 load intel-compilers-17 
+   module		 load intel-cmkl-17 
+   module		 load gcc/6.2.0 
+   prepend-path	 PATH /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/bin 
+   setenv		 VASP5 /lustre/home/y07/vasp5/5.4.4-intel17-mpt214 
+   setenv		 VASP5_VDW_KERNEL /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/vdw_kernal/vdw_kernel.bindat 
+   -------------------------------------------------------------------
+
+This shows that VASP was compiled with SGI MPT (from the ``module load mpt`` in 
+the output from the command. If a package was compiled with Intel MPI there 
+would be ``module load intel-mpi-17`` in the output instead.
+
+SGI MPT (Message Passing Toolkit)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SGI MPT is accessed at both compile and runtime by loading the ``mpt`` module:
+
+::
+
+   module load mpt
+
+SGI MPT: parallel launcher ``mpiexec_mpt``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The SGI MPT parallel launcher on Cirrus is ``mpiexec_mpt``.
+
+**Note:** this parallel job launcher is only available once you have
 loaded the ``mpt`` module.
 
-A sample MPI job launch line using ``mpiexec_mpt`` looks like:
+A sample MPI launch line using ``mpiexec_mpt`` looks like:
 
 ::
 
@@ -218,12 +262,28 @@ The most important ``mpiexec_mpt`` flags are:
     nodes (1-72 if you are using Hyper-Threading) If you are running with
     exclusive node usage, the most economic choice is always to run with
     "fully-packed" nodes on all physical cores if possible, i.e.
-    ``-N 36`` . Running "unpacked" or "underpopulated" (i.e. not using
+    ``-ppn 36`` . Running "unpacked" or "underpopulated" (i.e. not using
     all the physical cores on a node) is useful if you need large
     amounts of memory per parallel process or you are using more than
     one shared-memory thread per parallel process.
 
-If you are running hybrid MPI/OpenMP code you will also often make
+**Note:** ``mpiexec_mpt`` only works from within a PBS job submission script.
+
+Please use ``man mpiexec_mpt`` query further options. (This is only available
+once you have loaded the ``mpt`` module.)
+
+SGI MPT: interactive MPI using ``mpirun``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The SGI MPI parallel launcher ``mpirun`` can be used interactively on login
+nodes to run tests if required. This functionality can only be used for 
+short correctness tests as running intensive parallel applications will
+impact the performance of the login nodes for all other users.
+
+SGI MPT: running hybrid MPI/OpenMP applications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are running hybrid MPI/OpenMP code using SGI MPT you will also often make
 use of the ``omplace`` tool in your job launcher line. This tool 
 takes the number of threads as the option ``-nt``:
 
@@ -235,6 +295,90 @@ takes the number of threads as the option ``-nt``:
 
 Please use ``man mpiexec_mpt`` and ``man omplace`` to query further options.
 (Again, these are only available once you have loaded the ``mpt`` module.)
+
+Intel MPI
+~~~~~~~~~
+
+Intel MPI is accessed at runtime by loading the ``intel-mpi-17``.
+
+::
+
+   module load intel-mpi-17
+
+Intel MPI: parallel job launcher ``mpirun``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Intel MPI parallel job launcher on Cirrus is ``mpirun``.
+
+**Note:** this parallel job launcher is only available once you have
+loaded the ``intel-mpi-17`` module.
+
+A sample MPI launch line using ``mpirun`` looks like:
+
+::
+
+    mpirun -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2
+
+This will start the parallel executable "my\_mpi\_executable.x" with
+arguments "arg1" and "arg2". The job will be started using 72 MPI
+processes, with 36 MPI processes are placed on each compute node 
+(this would use all the physical cores on each node). This would
+require 2 nodes to be requested in the PBS options.
+
+The most important ``mpirun`` flags are:
+
+ ``-n [total number of MPI processes]``
+    Specifies the total number of distributed memory parallel processes
+    (not including shared-memory threads). For jobs that use all
+    physical cores this will usually be a multiple of 36. The default on
+    Cirrus is 1.
+ ``-ppn [parallel processes per node]``
+    Specifies the number of distributed memory parallel processes per
+    node. There is a choice of 1-36 for physical cores on Cirrus compute
+    nodes (1-72 if you are using Hyper-Threading) If you are running with
+    exclusive node usage, the most economic choice is always to run with
+    "fully-packed" nodes on all physical cores if possible, i.e.
+    ``-ppn 36`` . Running "unpacked" or "underpopulated" (i.e. not using
+    all the physical cores on a node) is useful if you need large
+    amounts of memory per parallel process or you are using more than
+    one shared-memory thread per parallel process.
+
+Documentation on using Intel MPI (including ``mpirun``) can be found 
+online at:
+
+* `Intel MPI Documentation <https://software.intel.com/en-us/articles/intel-mpi-library-documentation>`__
+
+Intel MPI: running hybrid MPI/OpenMP applications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are running hybrid MPI/OpenMP code using Intel MPI you need to 
+set the ``I_MPI_PIN_DOMAIN`` environment variable to ``omp`` so that
+MPI tasks are pinned with enough space for OpenMP threads.
+
+For example, in your job submission script you would use:
+
+::
+
+   export I_MPI_PIN_DOMAIN=omp
+
+You can then also use the ``KMP_AFFINITY`` enviroment variable 
+to control placement of OpenMP threads. For more information, see:
+
+* `Intel OpenMP Thread Affinity Control <https://software.intel.com/en-us/articles/openmp-thread-affinity-control>`__
+
+Example parallel MPI job submission scripts
+-------------------------------------------
+
+A subset of example job submssion scripts are included in full below. The
+full set are available via the following links:
+
++----------+---------+-----------+
+| Job Type | SGI MPT | Intel MPI |
++==========+=========+===========+
+| MPI      | :download:`example_mpi_sgimpt.bash <example_mpi_sgimpt.bash>` | :download:`example_mpi_impi.bash <example_mpi_impi.bash>` |
++----------+---------+-----------+
+| Hybrid MPI/OpenMPI | :download:`example_hybrid_sgimpt.bash <example_hybrid_sgimpt.bash>` |  :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` |
++----------+---------+-----------+
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -234,7 +234,7 @@ also load the gcc/6.2.0 module to have access to the correct C++ files:
 ::
     module load gcc/6.2.0
 
-**Note:** You will also need to load this module in you job submission scripts
+**Note:** You will also need to load this module in your job submission scripts
 when running code compiled in this way.
 
 GCC Compiler Suite
@@ -272,6 +272,10 @@ The following sections discuss each of the MPI library options in turn.
 You should also consult the chapter on running jobs through the batch system
 for examples of how to run jobs compiled against the different MPI libraries.
 
+**Remember:** by default, all compilers produce dynamic executables on
+Cirrus. This means that you must load the same modules at runtime (usually
+in your job submission script) as you have loaded at compile time.
+
 Using SGI MPT
 ~~~~~~~~~~~~~
 
@@ -281,7 +285,7 @@ To compile MPI code with SGI MPT, using any compiler, you must first load the "m
 
    module load mpt
 
-This makes the compiler wrapper scripts ``mpicc`` and ``mpif90`` available
+This makes the compiler wrapper scripts ``mpicc``, ``mpicxx`` and ``mpif90`` available
 to you.
 
 What you do next depends on which compiler (Intel or GCC) you wish to use to
@@ -304,11 +308,14 @@ Once you have loaded the MPT module you should next load the appropriate
 
     module load intel-compilers-17
 
+Remember, if you are compiling C++ code, then you will also need to load the ``gcc/6.2.0`` module
+for the C++ 11 headers to be available.
+
 Compilers are then available as
 
 * ``mpif90`` - Fortran with MPI
 * ``mpicc`` - C with MPI
-* ``mpiCC`` - C++ with MPI
+* ``mpicxx`` - C++ with MPI
 
 **Note** mpicc uses gcc by default:
 
@@ -354,12 +361,76 @@ Compilers are then available as
 
 * ``mpif90`` - Fortran with MPI
 * ``mpicc`` - C with MPI
-* ``mpiCC`` - C++ with MPI
+* ``mpicxx`` - C++ with MPI
 
 **Note:** SGI MPT does not support the syntax ``use mpi`` in Fortran 
 applications with the GCC compiler ``gfortran``. You should use the
 older ``include "mpif.h"`` syntax when using GCC compilers with 
 ``mpif90``.
+
+Using Intel MPI
+~~~~~~~~~~~~~~~
+
+To compile MPI code with Intel MPI, using any compiler, you must first load the
+"intel-mpi-17" module:
+
+::
+
+   module load intel-mpi-17
+
+This makes the compiler wrapper scripts available to you. The name of the  wrapper
+script depends on the compiler suite you are using. In summary:
+
++----------+----------+--------+
+| Language | Intel    | GCC    |
++==========+==========+========+
+| Fortran  | mpiifort | mpif90 |
++----------+----------+--------+
+| C++      | mpiicpc  | mpicxx |
++----------+----------+--------+
+| C        | mpiicc   | mpicc  |
++----------+----------+--------+
+
+Further details on using the different compiler suites with Intel MPI are available
+in the following sections.
+
+Using Intel Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have loaded the ``intel-mpi-17`` module you should next load the appropriate 
+``intel-compilers`` module (e.g. ``intel-compilers-17``):
+
+::
+
+    module load intel-compilers-17
+
+Remember, if you are compiling C++ code, then you will also need to load the ``gcc/6.2.0`` module
+for the C++ 11 headers to be available.
+
+MPI compilers are then available as
+
+* ``mpiifort`` - Fortran with MPI
+* ``mpiicc`` - C with MPI
+* ``mpiicpc`` - C++ with MPI
+
+**Note:** Intel compilers with Intel MPI use non-standard compiler wrapper script names.
+If you use the standard names you will end up using the GCC compilers.
+
+Using GCC Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have loaded the ``intel-mpi-17`` module you should next load the ``gcc`` module.
+
+::
+
+    module load gcc 
+
+MPI compilers are then available as
+
+* ``mpif90`` - Fortran with MPI
+* ``mpicc`` - C with MPI
+* ``mpicxx`` - C++ with MPI
+
 
 Compiler Information and Options
 --------------------------------
