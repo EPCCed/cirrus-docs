@@ -383,13 +383,11 @@ Example parallel MPI job submission scripts
 A subset of example job submssion scripts are included in full below. The
 full set are available via the following links:
 
-+----------+---------+-----------+
-| Job Type | SGI MPT | Intel MPI |
-+==========+=========+===========+
-| MPI      | :download:`example_mpi_sgimpt.bash <example_mpi_sgimpt.bash>` | :download:`example_mpi_impi.bash <example_mpi_impi.bash>` |
-+----------+---------+-----------+
-| Hybrid MPI/OpenMPI | :download:`example_hybrid_sgimpt.bash <example_hybrid_sgimpt.bash>` |  :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` |
-+----------+---------+-----------+
+* SGI MPT MPI Job: :download:`example_mpi_sgimpt.bash <example_mpi_sgimpt.bash>`
+* Intel MPI Job: :download:`example_mpi_impi.bash <example_mpi_impi.bash>`
+
+* SGI MPT Hybrid MPI/OpenMP Job: :download:`example_hybrid_sgimpt.bash <example_hybrid_sgimpt.bash>` 
+* Intel MPI Hybrid MPI/OpenMP Job: :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` 
 
 Example: SGI MPT job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
