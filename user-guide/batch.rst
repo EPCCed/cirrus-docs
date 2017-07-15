@@ -275,10 +275,21 @@ once you have loaded the ``mpt`` module.)
 SGI MPT: interactive MPI using ``mpirun``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The SGI MPI parallel launcher ``mpirun`` can be used interactively on login
-nodes to run tests if required. This functionality can only be used for 
-short correctness tests as running intensive parallel applications will
-impact the performance of the login nodes for all other users.
+If you want to run short interactive parallel applications (e.g. for 
+debugging) then you can run SGI MPT compiled MPI applications on the login
+nodes using the ``mpirun`` command.
+
+For instance, to run a simple, short 4-way MPI job on the login node, issue the
+following command (once you have loaded the appropriate modules):
+
+:: 
+
+    mpirun -n 4 ./hello_mpi.x
+
+**Note:** you should not run long, compute- or memory-intensive jobs on the 
+login nodes. Any such processes are liable to termination by the system
+with no warning.
+
 
 SGI MPT: running hybrid MPI/OpenMP applications
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -380,8 +391,8 @@ full set are available via the following links:
 | Hybrid MPI/OpenMPI | :download:`example_hybrid_sgimpt.bash <example_hybrid_sgimpt.bash>` |  :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` |
 +----------+---------+-----------+
 
-Example: job submission script for MPI parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example: SGI MPT job submission script for MPI parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple MPI job submission script to submit a job using 4 compute
 nodes (maximum of 144 physical cores) for 20 minutes would look like:
@@ -422,10 +433,10 @@ MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading).
 allocate 4 nodes to your job and mpirun_mpt will place 36 MPI processes on each node
 (one per physical core).
 
-See above for a detailed discussion of the different PBS options
+See above for a more detailed discussion of the different PBS options
 
-Example: job submission script for MPI+OpenMP (mixed mode) parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example: SGI MPT job submission script for MPI+OpenMP (mixed mode) parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Mixed mode codes that use both MPI (or another distributed memory
 parallel model) and OpenMP should take care to ensure that the shared
@@ -472,12 +483,12 @@ Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to run on multiple nodes, where each node is running a self-contained job, not using MPI
-(e.g.) for processing data or a parameter sweep, you can use the mpiexec_mpt launcher to control job placement.
+(e.g.) for processing data or a parameter sweep, you can use the SGI MPT ``mpiexec_mpt`` launcher to control job placement.
 
-In the example script below, work.bash is a bash script which runs a threaded executable with a command-line input and
-perf.bash is a bash script which copies data from the CPU performance counters to an output file. As both handle the
-threading themselves, it is sufficient to allocate 1 MPI rank. Using the ampersand "&" allows both to execute simultaneously.
-Both work.bash and perf.bash run on 4 nodes.
+In the example script below, ``work.bash`` is a bash script which runs a threaded executable with a command-line input and
+``perf.bash`` is a bash script which copies data from the CPU performance counters to an output file. As both handle the
+threading themselves, it is sufficient to allocate 1 MPI rank. Using the ampersand ``&`` allows both to execute simultaneously.
+Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
 
 ::
 
@@ -506,26 +517,9 @@ Both work.bash and perf.bash run on 4 nodes.
    mpiexec_mpt -n 4 -ppn 1 perf.bash &
    wait
 
-**Note:** the wait command is required to stop the PBS job finishing before the scripts finish.
+**Note:** the ``wait`` command is required to stop the PBS job finishing before the scripts finish.
 If you find odd behaviour, especially with respect to the values of bash variables, double check you
-have set MPI_SHEPHERD=true
-
-MPI on the login nodes
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to run short interactive parallel applications (e.g. for 
-debugging) then you can run compiled MPI applications on the login nodes.
-
-For instance, to run a simple, short 4-way MPI job on the login node, issue the
-following command (once you have loaded the appropriate modules):
-
-:: 
-
-    mpirun -n 4 ./hello_mpi.x
-
-**Note:** you should not run long, compute- or memory-intensive jobs on the 
-login nodes. Any such processes are liable to termination by the system
-with no warning.
+have set ``MPI_SHEPHERD=true``
 
 Serial Jobs
 -----------
