@@ -377,6 +377,39 @@ to control placement of OpenMP threads. For more information, see:
 
 * `Intel OpenMP Thread Affinity Control <https://software.intel.com/en-us/articles/openmp-thread-affinity-control>`__
 
+Intel MPI: MPI-IO setup
+^^^^^^^^^^^^^^^^^^^^^^^
+
+If you wish to use MPI-IO with Intel MPI you must set a couple of 
+additional environment variables in your job submission script to
+tell the MPI library to use the Lustre file system interface.
+Specifically, you should add the lines:
+
+::
+
+   export I_MPI_EXTRA_FILESYSTEM=on
+   export I_MPI_EXTRA_FILESYSTEM_LIST=lustre
+
+after you have loaded the ``intel-mpi-17`` module.
+
+If oyu fail to set these environment variables you may see errors such as:
+
+::
+
+   This requires fcntl(2) to be implemented. As of 8/25/2011 it is not. Generic MPICH
+   Message: File locking failed in
+   ADIOI_Set_lock(fd 0,cmd F_SETLKW/7,type F_WRLCK/1,whence 0) with return value
+   FFFFFFFF and errno 26.
+   - If the file system is NFS, you need to use NFS version 3, ensure that the lockd
+    daemon is running on all the machines, and mount the directory with the 'noac'
+    option (no attribute caching).
+   - If the file system is LUSTRE, ensure that the directory is mounted with the 'flock'
+    option.
+   ADIOI_Set_lock:: Function not implemented
+   ADIOI_Set_lock:offset 0, length 10
+   application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
+
+
 Example parallel MPI job submission scripts
 -------------------------------------------
 
