@@ -52,6 +52,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/lammps
    software-packages/namd
    software-packages/qe
+   software-packages/vasp
 
 .. toctree::
    :maxdepth: 2
