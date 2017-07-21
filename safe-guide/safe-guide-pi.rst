@@ -228,14 +228,13 @@ exist in each project can also be used for administering space.
    quotas. You can use these quotas to hold space which you want to hold
    in reserve for later.
 
-Homespace and workspace are administered separately. A project has an
-overall limit for each of these. Within that limit, every portion of
+A project has an overall limit on the Cirrus file system. Within that limit, every portion of
 space must belong to one or other of the project group quotas. Thus, to
-start with, all the homespace (for example) allocated to a project is
-either in the general homespace quota or the reserve homespace quota.
-Space never belongs to more than one group quota. [The reserve quota is
+start with, all the space allocated to a project is
+either in the general space quota or the reserve space quota.
+Space never belongs to more than one group quota. (The reserve quota is
 not a real quota, in fact. It has no existence on the service
-machine—just in the database.]
+machine—just in the database.)
 
 Beyond the general and reserve quotas, you can also have quotas for the
 project groups which you create. But this is not compulsory. If you're
@@ -243,18 +242,18 @@ thinking about using project group quotas, you need to be aware that
 they are implemented using Unix groups, which are only just adequate for
 the task.
 
-Let's use homespace as an example—workspace is similar. Suppose you are
+A more concrete example. Suppose you are
 project *t01*. To start with, one Unix group will be assigned to this
-project. The homespace directories for all users will be in directory
+project. The directories for all users will be in directory
 ``/lustre/home/t01`` —this is where the general group is held. User
 *john*, for example, will have directory ``/lustre/home/t01/john/`` as his
-homespace directory. (In fact, if this is the first project he joined,
+directory. (In fact, if this is the first project he joined,
 that's where he will log in.) Any file created in any of the
-directoriesunder ``/lustre/home/t01`` will belong to the Unix group for
+directories under ``/lustre/home/t01`` will belong to the Unix group for
 project *t01*.
 
-If you create a project group *t01-a* with no homespace quota, this will
-not change. But the moment you give a homespace quota to this project
+If you create a project group *t01-a* with no quota, this will
+not change. But the moment you give a quota to this project
 group, a Unix group will be assigned to it and a directory will be
 created for it: ``/lustre/home/t01-a/`` . If user *john* is a member of
 this project group, he will have a directory ``/lustre/home/t01-a/john/`` .
@@ -266,8 +265,8 @@ can still create files there. If he belongs to other project groups
 which have quotas, he'll have directories for these as well. He can only
 create files in the project groups he is a member of, since he can't
 access the directories of the other groups. It's up to him to make sure
-that he creates his files in the right places, so that they get charged
-to the right project groups.
+that he creates his files in the right places, so that they get counted
+against the right project groups.
 
 You should also note that once you have instituted project group quotas,
 there's no easy way back. Removing them and reassigning all the files to
@@ -280,10 +279,10 @@ time, and allow their users to have access to all their space. You could
 if you wish make use of user quotas to stop individual
 users from taking too much space.
 
-[Note that the above points do not apply to the reserve quotas, since
-they don't exist on the service machine. They're just a book-keeping
+(Note that the above points do not apply to the reserve quotas, since
+they don't exist on the machine. They're just a book-keeping
 mechanism, and using them is cost free. We recommend this to any project
-which is concerned about running out of space.]
+which is concerned about running out of space.)
 
 How can I create a quota for a project group, or move space between quotas?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -295,46 +294,19 @@ are still determined to use project group quotas, this is how.
 #. Go to the Menu *Projects manaaged* and select the *project* you wish
    to work on. This will display a panel with the project information.
 #. Click *Manage Project Resources*
-#. In the *Group Quotas* section, click on *Archive*, *Home* or *Work*
-   depending on which kind of quota you wish to create
+#. In the *Group Quotas* section, click on *indy2fs*
 #. You will now see a list of your project groups, including the general
    and reserve groups. Project groups which have no quota will show the
    note *No quota set*
 #. Click the *Move From* and *Move To* buttons of the groups you want to
    change
-#. Fill in the number of Gb to move in the box
+#. Fill in the number of GiB to move in the box
 #. Click *Submit Group Allocation Changes*
 
 Do not forget the final step, or nothing will happen. The act of moving
 quota space to a project group which has no quota set converts that
 project group to one with a group quota, administered by a Unix group,
 as discussed earlier.
-
-How can I set a quota for an individual user?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-User disk quotas are completely separate from project group quotas. A
-user quota simply places a limit on the amount of space which a
-particular user can occupy in workspace or homespace. There's nothing to
-stop you setting user quotas which add up to more (or less) than the
-total space. To set a quota for a user or users:
-
-#. `Login to SAFE <https://www.archer.ac.uk/tier2/>`__
-#. Go to the Menu *Projects managed* and select the *project* you wish
-   to work on. This will display a panel with the project information.
-#. Click *Manage Project Resources*
-#. In the *User Quotas* section, click *Home* or *Work*
-#. You will see a list of users. Enter a value for each of the users
-   whose quota you wish to change
-#. Click *Submit Changes*
-
-Once again, these quota changes are carried out by a human. Once they
-have finished, you will receive an email.
-
-As with group quotas on the work file-system you can only be absolutely
-sure of writing data when you are more than 7Gb below your quota limit.
-
-| 
 
 Managing Project Users
 ----------------------
@@ -529,7 +501,6 @@ machine will be closed.
    this will wipe the content of the email. The *Abort* option will take
    you out of the mailing page completely.
 
-| 
 
 Tracking your Project Usage
 ---------------------------
@@ -601,11 +572,7 @@ projects combined.
 How to request more resources (CPUh and disk space)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need more home or work space, contact the
+If you need more disk space or compute time, contact the
 `helpdesk <http://www.cirrus.ac.uk/support/helpdesk/>`__. We will always
-receive such requests sympathetically, and it is likely that we will be
-able to allocate some more to your project.
+receive such requests sympathetically and do our best to help.
 
-If you need extra time, you should contact the research council which is
-funding your project. The helpdesk cannot allocate time without
-authorisation from them.
