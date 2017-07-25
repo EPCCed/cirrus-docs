@@ -124,14 +124,12 @@ All parallel job submission scripts require (as a minimum) you to
 specify three things:
 
 -  The number of nodes and cores per node you require via the
-   ``-l select=[Nodes]:ncpus=72`` option. Each node has 36 physical
+   ``-l select=[Nodes]:ncpus=72`` option. **Note ncpus should always be 72, regardless of how many cores you intend to employ.  This simply indicates that you want to reserve all cores on a node.** Each node has 36 physical
    cores (2x 18-core sockets) and hyper-threads are enabled (2 per core) giving
    a maximum of 72 cores per node (most users will actually only use a maximum of
    36 cores per node for best performance). For example, to select 4 nodes
    (144 physical cores in total) you would use
-   ``-l select=4:ncpus=72``. **Note that you should always use 
-   ncpus=72, no matter how many cores you are using. This just 
-   indicates that you want to reserve all cores on a node**.
+   ``-l select=4:ncpus=72``. 
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -485,6 +483,7 @@ of the ``omplace`` command to specify the number of threads.
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MixedMode_Job
+    # Select 4 full nodes
     #PBS -l select=4:ncpus=72
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
@@ -526,6 +525,7 @@ Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
    #!/bin/bash --login
    # PBS job options (name, compute nodes, job time)
    #PBS -N Example_MixedMode_Job
+   # Select 4 full nodes
    #PBS -l select=4:ncpus=72
    # Parallel jobs should always specify exclusive node access
    #PBS -l place=excl
