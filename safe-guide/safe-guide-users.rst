@@ -274,36 +274,3 @@ your own usage and the usage of the service as a whole.
 
 | 
 
-Miscellaneous
--------------
-
-How to check the queries you have submitted to the helpdesk
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
-
-#. Go to the Menu *Help and Support* and select *Your support requests*
-#. Click the number of a query to check the contents of the query log
-
-This will show you the queries of yours that haven't yet been resolved.
-Note that some of the internal correspondence about a query will not be
-shown. You can also use SAFE to submit a query—use *New support
-request*.
-
-How to register your approval — or your annoyance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
-
-#. Go to the Menu *Help and Support* and select *Service feedback*
-#. Click on the scale somewhere between 5 penalty points and 5 gold
-   stars indicating your level of anger or delight.
-#. Optionally: enter a comment in the comment box.
-#. Click *Set Token*
-
-The tokens may appear in the public service reports, although your name
-will not be published with them. Although an entry in the comment field
-is optional, it necessarily gives greater weight to your
-feelings—without it we cannot tell why you have set a token.
-
-|
