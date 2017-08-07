@@ -18,9 +18,9 @@ This documentation covers:
 
 * Cirrus User Guide: general information on how to use Cirrus 
 * Software Applications: notes on using specific software applications on Cirrus
-* Software Libraries: notes on compiling against specific libraries on Cirrus. Most libraries work
-"as expected" so no additional notes are required however a small number require specific
-documentation
+* Software Libraries: notes on compiling against specific libraries on Cirrus. Most
+  libraries work *as expected* so no additional notes are required however a small number require specific
+  documentation
 * Software Tools: Information on using tools such as debuggers and profilers on Cirrus
 
 Information on using the SAFE web interface for managing and reporting on your usage on
