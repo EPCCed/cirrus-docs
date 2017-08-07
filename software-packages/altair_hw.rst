@@ -110,10 +110,6 @@ use the following job script:
 OptiStruct SPMD (MPI)
 ~~~~~~~~~~~~~~~~~~~~~
 
-*Note:* OptiStruct SPMD is not currently enabled on Cirrus. We are working with
-Intel to resolve this issue. If you have questions on this, please contact the
-Cirrus helpdesk.
-
 * `OptiStruct SPMD documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?optistruct_spmd.htm>`__
 
 There are four different parallelisation schemes for SPMD OptStruct that are 
