@@ -15,11 +15,11 @@ Useful Links
 Using ANSYS Fluent on Cirrus
 ----------------------------
 
-**ANSYS Fluent on Cirrus is only available to researcherswho bring
+**ANSYS Fluent on Cirrus is only available to researchers who bring
 their own licence. Other users cannot access the version
 centrally-installed on Cirrus.**
 
-If you wish to have any questions regarding ANSYS Fluent on Cirrus please contact the
+If you have any questions regarding ANSYS Fluent on Cirrus please contact the
 `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`__.
 
 
@@ -60,21 +60,24 @@ requires attention is "-t504". In this example 14 Cirrus nodes (14 *
      -cnf=~/fluent.launcher.host.txt                             \
      -path/lustre/sw/ansys/v172/fluent/ -ssh  >& outputfile.txt
 
-Fluent "inputfile.fl" batch script. Anything that starts with a ";" is a comment. This script does the following:
-* Starts a transcript (i.e. Fluent output is redirected to a file [transcript_output_01.txt])
-* Reads a case file [a case file in Fluent is a model]
-* Reads a data file [a data file in Fluent is the current state of a simulation (i.e. after X iterations)]
-* Prints latency and bandwidth statistics
-* Prints and resets timers
-* Run 50 iterations of the simulation
-* Prints and resets timers
-* Save the data file (so that you can continue the simulation)
-* Stops the transcript
-* Exits Fluent
+Below is the Fluent "inputfile.fl" batch script. Anything that starts
+with a ";" is a comment. This script does the following:
+
+ * Starts a transcript (i.e. Fluent output is redirected to a file [transcript_output_01.txt])
+ * Reads a case file [a case file in Fluent is a model]
+ * Reads a data file [a data file in Fluent is the current state of a simulation (i.e. after X iterations)]
+ * Prints latency and bandwidth statistics
+ * Prints and resets timers
+ * Run 50 iterations of the simulation
+ * Prints and resets timers
+ * Save the data file (so that you can continue the simulation)
+ * Stops the transcript
+ * Exits Fluent
 
 Actual Fluent script ("inputfile.fl"):
-Replace [Your Path To ] before running
 --------------------------------------
+
+Replace [Your Path To ] before running
 
 ::
 
