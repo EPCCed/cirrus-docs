@@ -10,6 +10,11 @@ submit your job to the job submission system. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
+**Note:** There are a number of different queues on Cirrus. If you do not specify a
+queue your job will be submitted to the default ``workq`` which has limits
+on the maximum job size and total amount of resource that can be used.
+See below for more information on the different queues and their limits.
+
 If you have any questions on how to run jobs on Cirrus do not hesitate
 to contact the EPCC Helpdesk.
 
@@ -44,6 +49,11 @@ The qsub command submits a job to PBS:
 
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
+
+**Note:** There are a number of different queues on Cirrus. If you do not specify a
+queue your job will be submitted to the default ``workq`` which has limits
+on the maximum job size and total amount of resource that can be used.
+See below for more information on the different queues and their limits.
 
 
 The qstat command
@@ -91,14 +101,24 @@ will remove the job with ID ``$JOBID`` from the queue.
 Queue Limits
 ------------
 
-The following limits are applied in the standard queue for all users to help
-make sure that all users have a fair share of resource:
+Queues on Cirrus are designed to enable users to use the system flexibly while 
+retaining fair access for all.
 
-* Maximum wall time (job time) = 96 hours
-* Maximum number of simultaneously running jobs = 75
+There are two queues available to general users on Cirrus:
+
+* ``workq`` (default): This is the default queue that user jobs are submitted to
+if the ``-q`` option to ``qsub`` is not specified. Jobs in this queue can have a 
+maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
+nodes). Each user can use a maximum of 2520 cores (70 nodes) summed across all
+their running jobs at any one time.
+
+* ``large``: Specified by using ``-q large`` at submission time. There is no 
+limit on job size in this queue but there is a maximum walltime of 48 hours (2 days)
+and each user can have a maximum of 1 job running at any one time and a maximum
+of 4 jobs in the queue (including a running job).
 
 If you try to submit a job that asks for more than the maximum allowed wall
-time you will see an error similar to:
+time or cores you will see an error similar to:
 
 ::
 
@@ -151,6 +171,8 @@ options you can provide to PBS. The following options may be useful:
   it will be used in the queue listing and to generate the name of your
   output and/or error file(s). Note there is a limit on the size of the
   name.
+- ``-q large`` will specify that you want to submit your job to the ``large``
+  queue for running larger jobs than are permitted in the standard queue.
 
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
