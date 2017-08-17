@@ -171,6 +171,8 @@ options you can provide to PBS. The following options may be useful:
   it will be used in the queue listing and to generate the name of your
   output and/or error file(s). Note there is a limit on the size of the
   name.
+- ``-q large`` will specify that you want to submit your job to the ``large``
+  queue for running larger jobs than are permitted in the standard queue.
 
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
