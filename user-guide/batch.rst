@@ -113,8 +113,9 @@ There are two queues available to general users on Cirrus:
   their running jobs at any one time.
 
 * ``large``: Specified by using ``-q large`` at submission time. There is no 
-  limit on job size in this queue but there is a maximum walltime of 48 hours (2 days)
-  and each user can have a maximum of 1 job running at any one time and a maximum
+  upper limit on job size in this queue but there is a minimum job size of 2521
+  cores (71 nodes), a maximum walltime of 48 hours (2 days),
+  each user can have a maximum of 1 job running at any one time, and a maximum
   of 4 jobs in the queue (including a running job).
 
 If you try to submit a job that asks for more than the maximum allowed wall
