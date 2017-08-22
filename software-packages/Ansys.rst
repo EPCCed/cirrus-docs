@@ -27,10 +27,13 @@ Running parallel ANSYS Fluent jobs
 -----------------------------------
 
 The following batch file starts Fluent in a command line mode (no GUI)
-and starts the Fluent batch file "inputfile".  The only parameter that
-requires attention is "-t504". In this example 14 Cirrus nodes (14 *
-72 = 1008 cores) are allocated; however, only 504 are
-/real/. Therefore, "-tXXX" *must* reflect the actual number of cores.
+and starts the Fluent batch file "inputfile". One parameter that
+requires particular attention is "-t504". In this example 14 Cirrus
+nodes (14 * 72 = 1008 cores) are allocated; where half of the 1008
+cores are physical and the other half are virtual.  To run fluent
+optimally on Cirrus, only the physical cores should be employed.  As
+such, fluent's -t flag should reflect the number of physical cores: in
+this example, "-t504" is employed.
 
 ::
 
