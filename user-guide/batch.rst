@@ -413,7 +413,7 @@ Specifically, you should add the lines:
 
 after you have loaded the ``intel-mpi-17`` module.
 
-If oyu fail to set these environment variables you may see errors such as:
+If you fail to set these environment variables you may see errors such as:
 
 ::
 
