@@ -48,6 +48,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :caption: Software Applications
    
    software-packages/altair_hw
+   software-packages/Ansys
    software-packages/castep
    software-packages/flacs
    software-packages/gaussian
