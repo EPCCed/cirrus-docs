@@ -109,13 +109,13 @@ There are two queues available to general users on Cirrus:
 * ``workq`` (default): This is the default queue that user jobs are submitted to
   if the ``-q`` option to ``qsub`` is not specified. Jobs in this queue can have a 
   maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
-  nodes). Each user can use a maximum of 2520 cores (70 nodes) summed across all
+  nodes). Each **project** can use a maximum of 2520 cores (70 nodes) summed across all
   their running jobs at any one time.
 
 * ``large``: Specified by using ``-q large`` at submission time. There is no 
   upper limit on job size in this queue but there is a minimum job size of 2521
   cores (71 nodes), a maximum walltime of 48 hours (2 days),
-  each user can have a maximum of 1 job running at any one time, and a maximum
+  each **user** can have a maximum of 1 job running at any one time, and a maximum
   of 4 jobs in the queue (including a running job).
 
 If you try to submit a job that asks for more than the maximum allowed wall
