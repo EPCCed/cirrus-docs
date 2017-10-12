@@ -23,8 +23,8 @@ Initial passwords
 ~~~~~~~~~~~~~~~~~
 
 The SAFE web interface is used to provide your initial password for
-logging onto Cirrus (see the :doc:`../safe-guide/introduction` for more details on requesting
-accounts and picking up passwords).
+logging onto Cirrus (see the `Tier-2 SAFE Documentation <https://tier2-safe.readthedocs.io>`__
+for more details on requesting accounts and picking up passwords).
 
 **Note:** you may now change your password on the Cirrus machine itself
 using the *passwd* command. This change will not be reflected in the
@@ -76,9 +76,7 @@ Current OS X systems do not have an X window system. Users should
 install the XQuartz package to allow for SSH with X11 forwarding on OS X
 systems:
 
-::
-
-    http://www.xquartz.org/ 
+* `XQuartz website <http://www.xquartz.org/>`__
 
 Logging in from Windows using MobaXterm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,9 +90,7 @@ any graphical applications on Cirrus.
 You can download MobaXterm Home Edition (Installer Edition) from the
 following link:
 
-::
-
-    http://mobaxterm.mobatek.net/download-home-edition.html 
+* `Install MobaXterm <http://mobaxterm.mobatek.net/download-home-edition.html>`__
 
 Double-click the downloaded Microsoft Installer file (.msi), and the
 Windows wizard will automatically guides you through the installation
