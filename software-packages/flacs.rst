@@ -84,7 +84,7 @@ For example:
 
 ::
 
-   qsub -A xyz -l select=1:ncpus=1 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
+   qsub -A xyz -l select=1:ncpus=1 -l walltime=6:00:00 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
 
 The ``-A xyz`` option is obligatory and states the account ``xyz``
 that the CPU consumption will be billed to. You can check your
@@ -94,6 +94,12 @@ The ``-l select=x:ncpus=y`` option specifies the resource allocation for
 the job you are starting. The parameter ``x`` is the number of nodes
 required and the parameter ``y`` is the number of cores required. For
 a serial FLACS job you would use ``-l select=1:ncpus=1``
+
+The maximum length of time (i.e. walltime) you want the job to run
+is specified with the ``-l walltime=[hh:mm:ss]`` option. After this
+time, your job will be stopped by the job scheduler. Setting a very
+high walltime limit may lead to your job being given lower priority
+and thus wait longer in the queue. The default walltime is 12 hours.
 
 All Flacs jobs must be submitted to the flacs queue using the option
 ``-q flacs``; the flacs queue ensures FLACS licenses are provisioned
@@ -134,9 +140,9 @@ could look like this:
 ::
 
    module load flacs/10.5.1
-   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000012 -q flacs -V -- `which run_runflacs` -dir `pwd` 000012
-   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000023 -q flacs -V -- `which run_runflacs` -dir `pwd` 000023
-   sleep 5; qsub -A xyz -l select=1:ncpus=1 -N f-000117 -q flacs -V -- `which run_runflacs` -dir `pwd` 000117
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -l walltime=24:00:00 -N f-000012 -q flacs -V -- `which run_runflacs` -dir `pwd` 000012
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -l walltime=24:00:00 -N f-000023 -q flacs -V -- `which run_runflacs` -dir `pwd` 000023
+   sleep 5; qsub -A xyz -l select=1:ncpus=1 -l walltime=24:00:00 -N f-000117 -q flacs -V -- `which run_runflacs` -dir `pwd` 000117
 
 This is also easy to formulate as a loop. 
 
