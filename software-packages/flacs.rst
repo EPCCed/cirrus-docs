@@ -12,7 +12,7 @@ simultaneously, via its `batch system <../user-guide/batch.html>`_ PBS.
 Short lasting simulations (of typically
 up to a few hours computing time each) can be processed efficiently and you
 could get a few hundred done in a day or two.
-In contrast, the Cirrus cluster is not
+In contrast, the Cirrus cluster is not particularly
 suited for running single big FLACS simulations with many threads:
 each node on Cirrus has 2x4 memory channels, and for memory-bound applications
 like FLACS multi-threaded execution will not scale linearly beyond eight cores.
@@ -21,20 +21,51 @@ FLACS User's Manual), and therefore multi-core hardware is normally best used
 by increasing the number of simulations running in parallel rather than by
 increasing the number of cores per simulation.
 
-CPU time on Cirrus is measured in CPUh for each job run on a compute node,
-based on the number of physical cores employed.
-Only jobs submitted to compute nodes via ``qsub`` are charged. Any
-processing on a login node is not charged.
-However, using login nodes for computations other than simple pre- or post-
-processing is strongly discouraged.
+Gexcon has two different service offerings on Cirrus: FLACS-Cloud and FLACS-HPC.
+From FLACS v10.7, FLACS-Cloud is the preferable way to exploit the HPC cluster,
+directly from the FLACS graphical user interfaces. For users who are familiar
+with accessing remote Linux HPC systems manually, FLACS-HPC may be an option.
+Both services are presented below. 
 
-Running FLACS on Cirrus
------------------------
 
-Follow the steps below to run FLACS on Cirrus.
+FLACS-Cloud 
+-----------
+
+FLACS-Cloud is a high performance computing service available right from
+the FLACS-Risk user interface, as well as from the FLACS RunManager. It
+allows you to run FLACS simulations on the high performance cloud
+computing infrastructure of Gexcon's partner EPCC straight from the
+graphical user interfaces of FLACS -- no need to manually log in,
+transfer data, or start jobs!
+
+By using the FLACS-Cloud service, you can run a large number of
+simulations very quickly, without having to invest into in-house
+computing hardware. The FLACS-Cloud service scales to your your demand
+and facilitates running projects with rapid development cycles.
+
+The workflow for using FLACS-Cloud is described in the FLACS User's
+Manual and in the FLACS-Risk documentation; you can also find basic
+information in the knowledge base of the 
+`FLACS User Portal <https://gexcon.freshdesk.com/solution/categories/14000072843>`_
+(accessible for FLACS license holders).
+
+
+
+FLACS-HPC
+---------
+
+Compared to FLACS-Cloud, the FLACS-HPC service is built on more
+traditional ways of accessing and using a remote Linux cluster.
+Therefore the user experience is more basic, and FLACS has to be run
+manually. For an experienced user, however, this way of exploiting
+the HPC system can be at least as efficient as FLACS-Cloud.
+
+Follow the steps below to use the FLACS-HPC facilities on Cirrus.
 
 *Note:* The instructions below assume you have a valid account on Cirrus. To
-get an account please see the instructions in the SAFE Guide: :doc:`../safe-guide/safe-guide-users`
+get an account please first get in touch with FLACS support at
+flacs@gexcon.com and then see the instructions in the
+`Tier-2 SAFE Documentation <https://tier2-safe.readthedocs.io>`__.
 
 *Note:* In the instructions below you should substitute "username" by
 your actual Cirrus username.
@@ -217,10 +248,22 @@ machine use:
    rsync -rvz --include='r[13t]*.*' --exclude='*' username@cirrus.epcc.ed.ac.uk:project_folder/ /tmp
 
 
+Billing for FLACS-HPC use on Cirrus
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CPU time on Cirrus is measured in CPUh for each job run on a compute node,
+based on the number of physical cores employed.
+Only jobs submitted to compute nodes via ``qsub`` are charged. Any
+processing on a login node is not charged.
+However, using login nodes for computations other than simple pre- or post-
+processing is strongly discouraged.
+
+Gexcon normally bills monthly for the use of FLACS-Cloud and FLACS-HPC,
+based on the Cirrus CPU usage logging.
 
 
 Getting help
-~~~~~~~~~~~~
+------------
 Get in touch with FLACS Support by email to flacs@gexcon.com if you
 encounter any problems. For issues related to Cirrus rather than
 FLACS contact the `Cirrus helpdesk <http://www.cirrus.ac.uk/support/>`__.
