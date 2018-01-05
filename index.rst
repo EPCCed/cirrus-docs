@@ -54,6 +54,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/gaussian
    software-packages/gromacs
    software-packages/lammps
+   software-packages/MATLAB
    software-packages/namd
    software-packages/openfoam
    software-packages/qe
