@@ -57,7 +57,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/namd
    software-packages/openfoam
    software-packages/qe
-   software-packages/star-ccm+
+   software-packages/starccm+
    software-packages/vasp
 
 .. toctree::
