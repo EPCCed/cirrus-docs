@@ -6,11 +6,11 @@ provides a broad range of validated models to simulate disciplines and
 physics including CFD, computational solid mechanics (CSM),
 electromagnetics, heat transfer, multiphase flow, particle dynamics,
 reacting flow, electrochemistry, aero-acoustics and rheology; the
-sSimulation of rigid and flexible body motions with techniques
+simulation of rigid and flexible body motions with techniques
 including mesh morphing, overset mesh and six degrees of freedom
-(6DOF) motion; and tThe ability to combine and account for the
+(6DOF) motion; and the ability to combine and account for the
 interaction between the various physics and motion models in a single
-simulation to cover your specific application..
+simulation to cover your specific application.
 
 Useful Links
 ------------
@@ -27,9 +27,9 @@ STAR-CCM+ on your local Windows(7 or 10) or Linux workstation. You can
 then start your local STAR-CCM+ and connect to Cirrus in order to
 submit new jobs or query the status of running jobs. When you install
 your local version, de-activate the FLEXIm installation. FLEXIm is not
-requires, since you will be using the FLEXIm on Cirrus.
+required, since you will be using the FLEXIm on Cirrus.
 
-You also need to setup passowrdless SSH connections to Cirrus.
+You also need to setup passwordless SSH connections to Cirrus.
 
 You can then start the STAR-CCM+ server on the compute nodes. The
 following script starts the server:
@@ -61,7 +61,7 @@ following script starts the server:
    starccm+ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
 
 
-The port number "42333" should be free. If it si not free STAR-CCM+
+The port number "42333" should be free. If it is not free STAR-CCM+
 will return with an error. You must then try to use another random
 port in the 42XXX range. You can then use the 'qstat' command to find
 out the first node of your application.
@@ -79,7 +79,7 @@ Select the "Connect through SSH tunnel" option and use:
 * SSH Tunnel Host Username: use your Cirrus username
 * SSH Options: -agent
 
-Your local STAR-CCM+ client should now be connected to the remoe
+Your local STAR-CCM+ client should now be connected to the remote
 server. You should be able to run a new simulation or interact with an
 existing one.
 
@@ -88,14 +88,14 @@ existing one.
 Licensing
 ---------
 
-The user will have to come with his own license for STAR-CCM+. EPCC
-requires the user's external IP address/hostname and port number.
-Our system will add port forwarding rules for those ports (assuming that
-the protocol is TCP) on the license server gateway (192.168.191.10).
- 
-If the user launches a StarCCM+ component that would normally talk to
-the external license server at xx.xx.xx.xx, the user has to tell it to
-use the same ports on 192.168.191.10 instead. The documentation
-suggests that the easiest way to do this is by setting an environment
-variable.
+All users must provide their own license for STAR_CCM+.  To use
+STAR_CCM+ on Cirrus, you must provide the IP address/hostname, and the
+port number, of your local STAR_CCM+ license server.
+
+EPCC will then add your license server's details to our License Server
+Gateway on Cirrus (192.168.191.10).
+
+Please note that your STAR_CCM+ license server must use the same ports
+as our License Server Gateway: this is achieved by simply setting an
+environment variable.
  
