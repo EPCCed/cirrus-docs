@@ -65,7 +65,7 @@ Follow the steps below to use the FLACS-HPC facilities on Cirrus.
 *Note:* The instructions below assume you have a valid account on Cirrus. To
 get an account please first get in touch with FLACS support at
 flacs@gexcon.com and then see the instructions in the
-`Tier-2 SAFE Documentation <https://tier2-safe.readthedocs.io>`__.
+`Cirrus SAFE Documentation <https://cirrus-safe.readthedocs.io>`__.
 
 *Note:* In the instructions below you should substitute "username" by
 your actual Cirrus username.
