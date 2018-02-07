@@ -24,7 +24,7 @@ This documentation covers:
 * Software Tools: Information on using tools such as debuggers and profilers on Cirrus
 
 Information on using the SAFE web interface for managing and reporting on your usage on
-Cirrus can be found on the `Tier-2 SAFE Documentation <http://tier2-safe.readthedocs.io/en/latest/>`__
+Cirrus can be found on the `Cirrus SAFE Documentation <http://cirrus-safe.readthedocs.io/en/latest/>`__
 
 This documentation draws on the `Sheffield Iceberg Documentation <https://github.com/rcgsheffield/sheffield_hpc>`__
 and the documentation for the `ARCHER National Supercomputing Service <http://www.archer.ac.uk>`__.
