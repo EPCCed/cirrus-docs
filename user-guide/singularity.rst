@@ -1,50 +1,88 @@
 Singularity Containers
 ======================
 
-Designed around the notion of extreme mobility of compute and reproducible science,
+This page was originally based on the documentation at the `University of Sheffield HPC service:
+<http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html>`_.
+
+Designed around the notion of mobility of compute and reproducible science,
 Singularity enables users to have full control of their operating system environment.
-This means that a non-privileged user can "swap out" the operating system on the host for one they control.
-So if the host system is running Centos Linux but your application runs in Ubuntu Linux,
-you can create an Ubuntu image,
-install your applications into that image,
-copy the image to another host,
-and run your application on that host in it’s native Ubuntu environment.
+This means that a non-privileged user can "swap out" the Linux operating system and 
+environment on the host for a Linux OS and environment that they control.
+So if the host system is running CentOS Linux but your application runs in Ubuntu Linux
+with a particular software stack; you can create an Ubuntu image, install your software into that image,
+copy the image to another host (e.g. Cirrus), and run your application on that host in it’s native Ubuntu
+environment.
 
 Singularity also allows you to leverage the resources of whatever host you are on.
-This includes high-speed cluster interconnects,
-resource managers,
-file systems,
-GPUs and/or
-accelerators, etc.
+This includes high-speed interconnects (i.e. Infinband on Cirrus),
+file systems (i.e. /lustre on Cirrus) and potentially other resources (e.g. the
+licensed Intel compilers on Cirrus).
+
+Useful Links
+------------
+
+* `Singularity website <http://singularity.lbl.gov/>`_
+* `Singularity user documentation <http://singularity.lbl.gov/user-guide>`_
 
 About Singularity Containers (Images)
 -------------------------------------
 
 Similar to Docker,
-a Singularity container (image) is a self-contained software stack.
-As Singularity does not require a root-level daemon to run its images
-it is compatible for use with ShARC's scheduler inside your job scripts.
-The running images also uses the credentials of the person calling it.
+a Singularity container (or, more commonly, *image*) is a self-contained software stack.
+As Singularity does not require a root-level daemon to run its images (this
+is required by Docker) it is suitable for use on a multi-user HPC system such as Cirrus.
+Within the container/image, you have exactly the same permissions as you do in a
+standard login session on the system.
 
 In practice, this means that an image created on your local machine
 with all your research software installed for local development
-will also run on the ShARC cluster.
+will also run on Cirrus.
 
-Pre-built images have been provided on the cluster and
-can also be download for use on your local machine
-(see :ref:`use_image_singularity_sharc`).
-Creating and modifying images however,
-requires root permission and so
-must be done on your machine (see :ref:`create_image_singularity_sharc`).
+Pre-built images (such as those on `DockerHub <http://hub.docker.com>`_ or
+`SingularityHub <https://singularity-hub.org/>`_) can simply be downloaded
+and used on Cirrus (or anywhere else Singularity is installed); see
+:ref:`use_image_singularity`).
 
-Singularity images are currently provided for:
+Creating and modifying images requires root permission and so
+must be done on a system where you have such access (in practice, this is
+usually within a virtual machine on your laptop/workstation); see
+:ref:`create_image_singularity`.
 
-* :ref:`caffe_sharc`
-* :ref:`theano_sharc`
-* :ref:`torch_sharc`
-* :ref:`tensorflow_sharc`
+.. _use_image_singularity:
 
-.. _use_image_singularity_sharc:
+Using Singularity Images on Cirrus
+----------------------------------
+
+Singularity images can be used on Cirrus in a number of ways, including:
+
+* Interactively on the login nodes
+* Interactively on compute nodes
+* As serial processes within a non-interactive batch script
+* As parallel processes within a non-interactive batch script (not yet documented)
+
+We provide information on each of these scenarios (apart from the parallel use where 
+we are still preparing the documentation) below. First, we describe briefly how to
+get exisitng images onto Cirrus so you can use them.
+
+Getting existing images onto Cirrus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Singularity images are simply files so, if you already have an image file, you can use
+``scp`` to copy the file to Cirrus as you would with any other file.
+
+If you wish to get a file from one of the container image repositories then Singularity
+allows you to do this from Cirrus itself. For example, to retrieve an image from
+DockerHub on Cirrus:
+
+::
+
+   module load singularity
+   singularity build lolcow.simg docker://godlovedc/lolcow
+
+
+Interactive use on the login nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 Interactive Usage of Singularity Images
 ---------------------------------------
