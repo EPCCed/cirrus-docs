@@ -9,14 +9,18 @@ Singularity enables users to have full control of their operating system environ
 This means that a non-privileged user can "swap out" the Linux operating system and 
 environment on the host for a Linux OS and environment that they control.
 So if the host system is running CentOS Linux but your application runs in Ubuntu Linux
-with a particular software stack; you can create an Ubuntu image, install your software into that image,
-copy the image to another host (e.g. Cirrus), and run your application on that host in it’s native Ubuntu
-environment.
+with a particular software stack; you can create an Ubuntu image, install your software
+into that image, copy the image to another host (e.g. Cirrus), and run your application
+on that host in it’s native Ubuntu environment.
 
 Singularity also allows you to leverage the resources of whatever host you are on.
 This includes high-speed interconnects (i.e. Infinband on Cirrus),
 file systems (i.e. /lustre on Cirrus) and potentially other resources (e.g. the
 licensed Intel compilers on Cirrus).
+
+**Note:** Singularity only supports Linux containers. You cannot create images
+that use Windows or macOS (this is a restriction of the containerisation model
+rather than Singularity).
 
 Useful Links
 ------------
@@ -29,7 +33,7 @@ About Singularity Containers (Images)
 
 Similar to Docker,
 a Singularity container (or, more commonly, *image*) is a self-contained software stack.
-As Singularity does not require a root-level daemon to run its images (this
+As Singularity does not require a root-level daemon to run its images (as
 is required by Docker) it is suitable for use on a multi-user HPC system such as Cirrus.
 Within the container/image, you have exactly the same permissions as you do in a
 standard login session on the system.
@@ -231,119 +235,66 @@ You submit this in the usual way and the output would be in the STDOUT/STDERR fi
 usual way.
 
 
-Installing Singularity on Your Local Machine
---------------------------------------------
-
-You will need Singularity installed on your machine in order to locally run, create and modify images.
-
-The following is the installation command for debian/ubuntu based systems:
-
-.. code-block:: bash
-
-  #Updating repository and installing dependencies
-  sudo apt-get update && \
-    sudo apt-get install \
-    python \
-    dh-autoreconf \
-    build-essential
-
-  # Installing Singularity
-  git clone https://github.com/singularityware/singularity.git
-  cd singularity
-  ./autogen.sh
-  ./configure --prefix=/usr/local --sysconfdir=/etc
-  make
-  sudo make install
-
-
-Manually mounting paths
------------------------
-
-When using ShARC's pre-built images on your local machine,
-it may be useful to mount the existing directories in the image to your own path.
-This can be done with the flag ``-B local/path:image/path`` with
-the path outside of the image left of the colon and
-the path in the image on the right side, e.g. ::
-
-  singularity shell -B local/datapath:/data,local/fastdatapath:/fastdata path/to/imgfile.img
-
-The command mounts the path ``local/datapath`` on your local machine to
-the ``/data`` path in the image.
-Multiple mount points can be joined with ``,``
-as shown above where we additionally specify that ``local/fastdata`` mounts to ``/fastdata``.
-The ``/home`` folder is automatically mounted by default.
-
-**Note: In order to mount a path, the directory must already exist within the image.**
-
-.. _create_image_singularity_sharc:
+.. _create_image_singularity:
 
 Creating Your Own Singularity Images
 ------------------------------------
 
-**Root access is required for modifying Singularity images so if you need to edit an image it must be done on your local machine.  However you can create disk images and import docker images using normal user privileges on recent versions of Singularity**
+As we saw above, you can create Singularity images by importing from 
+DockerHub or Singularity Hub on Cirrus itself. If you wish to create your
+own custom image then you must install Singularity on a system where you
+have root (or administrator) privileges - often your own laptop or 
+workstation.
 
-First create a Singularity definition file for bootstrapping an image your image. An example definition file we'll name ``Singularity`` is shown below ::
+We provide links below to instructions on how to install Singularity 
+locally and then cover what options you need to include in a 
+Singularity recipe file to create images that can run on Cirrus and
+access the software development modules. (This can be useful if you
+want to create a custom environment but still want to compile and
+link against libraries that you only have access to on Cirrus such
+as the Intel compilers, HPE MPI libraries, etc.)
 
-  Bootstrap: docker
-  From: ubuntu:latest
+Installing Singularity on Your Local Machine
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  %setup
-  	#Runs on host. The path to the image is $SINGULARITY_ROOTFS
+You will need Singularity installed on your machine in order to locally run,
+create and modify images. How you install Singularity on your laptop/workstation
+depends on the operating system you are using.
 
-  %post
-  	#Post setup, runs inside the image
+If yout are using Windows or macOS, the simplest solution is to use
+`Vagrant <http://www.vagrantup.com>`_ to give you am easy to use virtual
+environment with Linux and Singularity installed. The Singularity website
+has instructions on how to use this method to install Singularity:
 
-    #Default mount paths
-  	mkdir /scratch /data /shared /fastdata
+* `Installing Singularity on macOS with Vagrant <http://singularity.lbl.gov/install-mac>`_
+* `Installing Singularity on Windows with Vagrant <http://singularity.lbl.gov/install-windows>`_
 
-    #Install the packages you need
-    apt-get install git vim cmake
+If you are using Linux then you can usually install Singularity directly, see:
 
+* `Installing Singularity on Linux <http://singularity.lbl.gov/install-linux`_
 
-  %runscript
-    #Runs inside the image every time it starts up
+Singularity Recipes to Access modules on Cirrus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  %test
-    #Test script to verify that the image is built and running correctly
+You may want your custom image to be able to access the modules environment
+on Cirrus so you can make use of custom software that you cannot access
+elsewhere. We demonstrate how to do this for a CentOS 7 image but the steps
+are easily translated for other flavours of Linux.
 
-The definition file takes a base image from `docker hub <https://hub.docker.com/>`_,
-in this case the latest version of Ubuntu ``ubuntu:latest``.
-Other images on the hub can also be used as the base for the Singularity image,
-e.g. ``From: nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04`` uses Nvidia's docker image with Ubuntu 16.04 that already has CUDA 8 installed.
+Two things are needed in the Singularity recipe file:
 
-After creating a definition file, use the ``build`` command to build the image from your definition file: ::
+* Installation of ``environment-modules``
+* Setting of ``MODULEPATH`` to point to the Cirrus modulefiles
 
-  sudo singularity build myimage.simg Singularity
+In addition, when you use the container you must invoke access as a login 
+shell to have access to the module commands.
 
-It is also possible to  build Singularity images directory from `Singularity hub <https://singularity-hub.org/>`_ or `docker hub <https://hub.docker.com/>`_: ::
+In the recipe file, you install and set the environment with:
 
-  #Singularity hub
-  sudo singularity build myimage.simg shub://GodloveD/ubuntu:latest
+When you use the image interactively on Cirrus you must start with a login
+shell, i.e.:
 
+::
 
-  #Docker hub
-  sudo singularity build myimage.simg docker://ubuntu:latest
+   singularity exec myimage.simg /bin/bash --login
 
-By default, the ``build`` command creates a read-only squashfs file. It is possible to add the ``--writable`` or ``--sandbox`` flag to the build command in order to create a writable ext image or a writable sandbox directory respectively. ::
-
-  sudo singularity build --sandbox myimage_folder Singularity
-
-You will also need to add the ``--writable`` flag to the command when going in to change the contents of an image: ::
-
-  sudo singularity shell --writable myimage_folder
-
-
-How Singularity is installed and 'versioned' on the cluster
------------------------------------------------------------
-
-Singularity, unlike much of the other key software packages on ShARC,
-is not activated using module files.
-This is because module files are primarily for the purpose of
-being able to install multiple version of the same software
-and for security reasons only the most recent version of Singularity is installed.
-The security risks associated with providing outdated builds of Singularity
-are considered to outweigh the risk of upgrading to backwards incompatible versions.
-
-Singularity has been installed on all worker nodes
-using the latest RPM package
-from the `EPEL <https://fedoraproject.org/wiki/EPEL>`_ repository.
