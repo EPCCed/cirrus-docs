@@ -71,133 +71,164 @@ Singularity images are simply files so, if you already have an image file, you c
 ``scp`` to copy the file to Cirrus as you would with any other file.
 
 If you wish to get a file from one of the container image repositories then Singularity
-allows you to do this from Cirrus itself. For example, to retrieve an image from
-DockerHub on Cirrus:
+allows you to do this from Cirrus itself.
+
+This functionality requires tools that are not part of the standard OS on Cirrus so we have
+provided a Singularity image that allows you to build images from remote repositories (i.e.
+you use a Singularity image to build Singularity images!).
+
+For example, to retrieve an image from DockerHub on Cirrus we fist need to enter an 
+interactive session in the image we provide for building Singularity images:
 
 ::
 
    module load singularity
-   singularity build lolcow.simg docker://godlovedc/lolcow
+   singularity exec $CIRRUS_SIMG/cirrus-sbuild.simg /bin/bash --login
+   Singularity> 
+
+This invokes a login bash shell within the ``$CIRRUS_SIMG/cirrus-sbuild.simg`` image as 
+indicated by our prompt change. (We need a login shell to allow ``module`` commands to work 
+within the image.)
+
+Now we are in the image we can load the singularity module (to get access to the Singularity
+commands) and pull an image from DockerHub:
+
+::
+
+   Singularity> module load singularity
+   Singularity> singularity build lolcow.simg docker://godlovedc/lolcow
+   Docker image path: index.docker.io/godlovedc/lolcow:latest
+   Cache folder set to /lustre/home/t01/user/.singularity/docker
+   Importing: base Singularity environment
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/docker/sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945.tar.gz
+   Importing: /lustre/home/t01/user/.singularity/metadata/sha256:ab22e7ef68858b31e1716fa2eb0d3edec81ae69c6b235508d116a09fc7908cff.tar.gz
+   WARNING: Building container as an unprivileged user. If you run this container as root
+   WARNING: it may be missing some functionality.
+   Building Singularity image...
+   Singularity container built: lolcow.simg
+   Cleaning up...
+
+The first argument to ``singularity build`` (lolcow.simg) specifies a path and name for your container.
+The second argument (docker://godlovedc/lolcow) gives the DockerHub URI from which to download the image.
+
+Now we can exit the image and run our new image we have just built on the Cirrus login node:
+
+::
+
+   singularity run lolcow.simg
+
+This image contains a *runscript* that tells Singularity what to do if we run the image. We demonstrate
+different ways to use images below.
+
+Similar syntax can be used for Singularity Hub. For more information see the Singularity documentation:
+
+* `Build a Container <http://singularity.lbl.gov/docs-build-container>`_
 
 
 Interactive use on the login nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Once you have an image file, using it on the login nodes in an interactive way is extremely simple:
+you use the ``singularity shell`` command. Using the image we built in the example above:
 
-Interactive Usage of Singularity Images
----------------------------------------
+::
 
-**To use Singularity interactively, an interactive session must first be requested using** :ref:`qrshx` **for example.**
+   module load singularity
+   singularity shell lolcow.simg
+   Singularity: Invoking an interactive shell within container...
+   
+   Singularity lolcow.simg:~> 
 
-To get an interactive shell in to the image, use the following command: ::
+Within a Singularity image your home directory will be available. The directory with
+centrally-installed software (``/lustre/sw``) is also available in images by default. Note that
+the ``module`` command will not work in images unless you have installed he required software and
+configured the environment correctly; we describe how to do this below.
 
-  singularity shell path/to/imgfile.img
+Once you have finished using your image, you return to the Cirrus login node command line with the
+``exit`` command:
 
-Or if you prefer bash: ::
+::
 
-  singularity exec path/to/imgfile.img /bin/bash
+   Singularity lolcow.simg:~> exit
+   exit
+   [user@cirrus-login0 ~]$
 
-Note that the ``exec`` command can also be used to execute other applications/scripts inside the image or
-from the mounted directories (See :ref:`auto_mounting_filestore_singularity_sharc`): ::
+Interactive use on the compute nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    singularity exec path/to/imgfile.img my_script.sh
+The process for using an image interactively on the compute nodes is very similar to that for 
+using them on the login nodes. The only difference is that you have to submit an interactive
+serial job to get interactive access to the compute node first.
 
-.. note::
+For example, to reserve a full node for you to work on interactively you would use:
 
-    You may get a warning similar to:
+::
 
-    .. code-block:: none
+   [user@cirrus-login0 ~]$ qsub -IVl select=1:ncpus=72,walltime=0:20:0,place=excl -A t01
+   qsub: waiting for job 234192.indy2-login0 to start
+   
+   ...wait until job starts...
+   
+   qsub: job 234192.indy2-login0 ready
+   
+   [user@r1i2n13 ~]$
 
-        groups: cannot find name for group ID ...
+Note the prompt has changed to show you are on a compute node. Now you can use the image
+in the same way as on the login node
 
-    :ref:`This can be ignored <unnamed_groups>` and will not have an affect on running the image.
+::
 
+   [user@r1i2n13 ~]$ module load singularity
+   [user@r1i2n13 ~]$ singularity shell lolcow.simg
+   Singularity: Invoking an interactive shell within container...
+      
+   Singularity lolcow.simg:~> exit
+   exit
+   [user@r1i2n13 ~]$ exit
+   [user@cirrus-login0 ~]$
 
-.. _use_image_batch_singularity_sharc:
+Note we used ``exit`` to leave the interactive image shell and then ``exit`` again to leave the
+interactive job on the compute node.
 
-Submitting Batch Jobs That Uses Singularity Images
---------------------------------------------------
+Serial processes within a non-interactive batch script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When submitting a job that uses a Singularity image,
-it is not possible to use the interactive shell
-(e.g. ``singularity shell`` or ``singularity exec path/to/imgfile.img /bin/bash``).
-You must use the ``exec`` command to call the desired application or script directly.
+You can also use Singularity images within a non-interactive batch script as you would any
+other command. If your image contains a *runscript* then you can use ``singularity run`` to
+execute the runscript in the job. You can also use ``singularity exec`` to execute arbitrary
+commands (or scripts) within the image.
 
-For example, if we would like to use a command ``ls /`` to get the content of the root folder in the image,
-two approaches are shown in the following job script ``my_singularity_job.sh``:
+An exmaple job submission script to run a serial job that executes the runscript within the
+``lolcow.simg`` we built above on Cirrus would be:
 
-.. code-block:: bash
+::
 
-  #!/bin/bash
-  #$ -l rmem=8G
-  # We requested 8GB of memory in the line above, change this according to your
-  # needs e.g. add -l gpu=1 to reqest a single GPU
+    #!/bin/bash --login
 
-  #Calling ls directly using the exec command
-  singularity exec path/to/imgfile.img ls /
+    # PBS job options (name, compute nodes, job time)
+    #PBS -N simg_test
+    #PBS -l select=1:ncpus=1
+    #PBS -l walltime=0:20:0
 
-  #Have Singularity call a custom script from your home or other mounted directories
-  #Don't forget to make the script executable before running by using chmod
-  chmod +x ~/myscript.sh
-  singularity exec path/to/imgfile.img ~/myscript.sh
+    # Replace [budget code] below with your project code (e.g. t01)
+    #PBS -A [budget code]
 
-Where the content of ``~/myscript.sh`` is shown below:
+    # Change to the directory that the job was submitted from
+    cd $PBS_O_WORKDIR
 
-.. code-block:: bash
+    # Load any required modules
+    module load singularity
 
-  #!/bin/bash
+    # Run the serial executable
+    singularity run $HOME/lolcow.simg
 
-  ls /
-
-The job can then be submitted as normal with ``qsub``: ::
-
-  qsub my_singularity_job.sh
-
-
-Using Nvidia GPU with Singularity Images
---------------------------------------------------------------
-
-You can use GPUs in your image by adding the ``--nv`` flag to the command e.g. for running interactively: ::
-
-  singularity shell --nv myimage.simg
-
-or when running within the batch file: ::
-
-  singularity exec --nv myimage.sim myscript.sh
-
-A quick way to test that GPU is enabled in your image is by running the command: ::
-
-  nvidia-smi
-
-Where you will get something similar to the following:
-
-.. code-block:: none
-
-  Tue Mar 28 16:43:08 2017
-  +-----------------------------------------------------------------------------+
-  | NVIDIA-SMI 367.57                 Driver Version: 367.57                    |
-  |-------------------------------+----------------------+----------------------+
-  | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-  | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-  |===============================+======================+======================|
-  |   0  GeForce GTX TITAN   Off  | 0000:01:00.0      On |                  N/A |
-  | 30%   35C    P8    18W / 250W |    635MiB /  6078MiB |      1%      Default |
-  +-------------------------------+----------------------+----------------------+
-
-
-.. _auto_mounting_filestore_singularity_sharc:
-
-Automatic Mounting of ShARC Filestore Inside Images
-----------------------------------------------------
-
-When running Singularity images on ShARC,
-the paths ``/fastdata``, ``/data``, ``/home``, ``/scratch``, ``/shared`` are
-automatically mounted to your ShARC directories.
-
-Image Index on Github
----------------------
-
-All Singularity container definitions available on ShARC can be found at `https://github.com/rses-singularity <https://github.com/rses-singularity>`_. The definition files can be used as a template for building your own images.
+You submit this in the usual way and the output would be in the STDOUT/STDERR files in the
+usual way.
 
 
 Installing Singularity on Your Local Machine
