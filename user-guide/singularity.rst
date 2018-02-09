@@ -86,8 +86,8 @@ interactive session in the image we provide for building Singularity images:
 
 ::
 
-   module load singularity
-   singularity exec $CIRRUS_SIMG/cirrus-sbuild.simg /bin/bash --login
+   [user@cirrus-login0 ~]$ module load singularity
+   [user@cirrus-login0 ~]$ singularity exec $CIRRUS_SIMG/cirrus-sbuild.simg /bin/bash --login
    Singularity> 
 
 This invokes a login bash shell within the ``$CIRRUS_SIMG/cirrus-sbuild.simg`` image as 
@@ -124,7 +124,7 @@ Now we can exit the image and run our new image we have just built on the Cirrus
 
 ::
 
-   singularity run lolcow.simg
+   [user@cirrus-login0 ~]$ singularity run lolcow.simg
 
 This image contains a *runscript* that tells Singularity what to do if we run the image. We demonstrate
 different ways to use images below.
@@ -142,8 +142,8 @@ you use the ``singularity shell`` command. Using the image we built in the examp
 
 ::
 
-   module load singularity
-   singularity shell lolcow.simg
+   [user@cirrus-login0 ~]$ module load singularity
+   [user@cirrus-login0 ~]$ singularity shell lolcow.simg
    Singularity: Invoking an interactive shell within container...
    
    Singularity lolcow.simg:~> 
@@ -307,7 +307,7 @@ system where you have root access, not Cirrus):
 
 ::
 
-   sudo singularity build cirrus-mods.simg cirrus-mods.def
+   me@my-system:~> sudo singularity build cirrus-mods.simg cirrus-mods.def
 
 The resulting image file (``cirrus-mods.simg``) can then be compied to Cirrus 
 using scp.
@@ -317,7 +317,7 @@ shell, i.e.:
 
 ::
 
-   module load singularity
+   [user@cirrus-login0 ~]$ module load singularity
    [user@cirrus-login0 ~]$ singularity exec cirrus-mods.simg /bin/bash --login
    Singularity> module avail intel-compilers
    
