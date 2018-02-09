@@ -289,12 +289,40 @@ Two things are needed in the Singularity recipe file:
 In addition, when you use the container you must invoke access as a login 
 shell to have access to the module commands.
 
-In the recipe file, you install and set the environment with:
+Here is an example recipe file to build a CentOS 7 image with access to 
+TCL modules alread installed on Cirrus:
+
+::
+
+   BootStrap: docker
+   From: centos:centos7
+
+   %post
+       yum update -y
+       yum install environment-modules -y
+
+If we save this recipe to a file called ``cirrus-mods.def`` then we can use the
+following command to build this image (remember this command must be run on a
+system where you have root access, not Cirrus):
+
+::
+
+   sudo singularity build cirrus-mods.simg cirrus-mods.def
+
+The resulting image file (``cirrus-mods.simg``) can then be compied to Cirrus 
+using scp.
 
 When you use the image interactively on Cirrus you must start with a login
 shell, i.e.:
 
 ::
 
-   singularity exec myimage.simg /bin/bash --login
+   module load singularity
+   [user@cirrus-login0 ~]$ singularity exec cirrus-mods.simg /bin/bash --login
+   Singularity> module avail intel-compilers
+   
+   ------------------------- /lustre/sw/modulefiles ---------------------
+   intel-compilers-16/16.0.2.181
+   intel-compilers-16/16.0.3.210(default)
+   intel-compilers-17/17.0.2.174(default)
 
