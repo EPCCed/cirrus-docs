@@ -767,23 +767,27 @@ requesting the reservation, you will need the following information:
 * The start time for the resevation
 * The duration of the reservation 
 * The number of cores (or nodes for multi-node, node-exclusive jobs)
-* (Optionally) the group ID you wish to grant permission to use the reservation to
+* The project ID you wish to charge the reservation to
 
 You use the ``pbs_rsub`` command to create a reservation. This command has a similar
 syntax to the ``qsub`` command for requesting resources but takes the additional
-parameters ``-R`` (to specify the reservaiton start time) and ``-D`` (to specify the reservation
-duration). For example, to create a reservation for 3 hours at 10:30 (UK time) 
-on Saturday 26 August 2017 for 4 full nodes (144 physical cores, 288 hyperthreads) you
-would use the command:
+parameters ``-R`` (to specify the reservaiton start time); ``-D`` (to specify the reservation
+duration); and ``-G`` (to specify the project ID to charge the reservation to). For example,
+to create a reservation for 3 hours at 10:30 (UK time) on Saturday 26 August 2017 for 4
+full nodes (144 physical cores, 288 hyperthreads) and charge to project "t01" you would use the command:
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=4:ncpus=72,place=excl
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=4:ncpus=72,place=excl -G +t01
    R122604.indy2-login0 UNCONFIRMED
 
 The command will return a reservation ID (``R122604`` in the example above) and note that 
 it is currently ``UNCONFIRMED``. PBSPro will change the status to ``CONFIRMED`` once it 
 has checked that it is possible to schedule the reservation.
+
+**Note:** Only the user that requested this reservation will be able to submit jobs to it. To
+create a reservation that is available to all users in a particular project, see the instructions
+below.
 
 There are many other options to the ``pbs_rsub`` command. Please check the man page for
 a full description.
@@ -822,16 +826,23 @@ Reservations for all project users
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 By default, a reservation will only be available to the user who requested it. If you wish
-to create a reservation that is usable by all members of your project you can use the
-``-G`` option to add access for your project.
+to create a reservation that is usable by all members of your project you need to modify
+the user permissions using the ``-U`` option.
 
 For example, to create a reservation for 192 hours, starting at 16:15 (UK time) on Monday 18
 September 2017 for 64 nodes accessible by all users in the t01 project you would use:
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -G +t01 -l select=64:ncpus=72,place=excl
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=64:ncpus=72,place=excl -G +t01 -U +
    R122605.indy2-login0 UNCONFIRMED
+
+Here, the ``-G +t01`` option charges the reservation to the t01 project **and** restricts access to
+users in the ``t01`` project; the ``-U +`` option allows all users (in the t01 project) access 
+to the reservation.
+
+**Note:** You can restrict access to specific users within a project, see the pbs_rsub man 
+page for more information on how to do this.
 
 Deleting a reservation
 ^^^^^^^^^^^^^^^^^^^^^^
