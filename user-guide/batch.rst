@@ -741,3 +741,115 @@ length of your working session, say a full day.
 Your session will end when you hit the requested walltime. If you
 wish to finish before this you should use the ``exit`` command.
 
+Reservations
+------------
+
+Resource reservations are available on Cirrus. These allow users to reserve
+a number of nodes for a specified length of time starting at a particular
+time on the system.
+
+Examples of the reasons for using reservations could be:
+
+* An exceptional job requires longer than 96 hours runtime.
+* You require a job/jobs to run at a particular time e.g. for a demonstration or course.
+
+**Note:** Reservations will be charged at 1.5 times the usual rate and you
+will be charged the full rate for the entire reservation whether or not you use the
+resources reserved for the full time. In addition, you will not be refunded the resources
+if you fail to use them due to a job crash unless this crash is due to a system failure.
+
+Requesting reservations
+^^^^^^^^^^^^^^^^^^^^^^^
+
+You request a reservation on Cirrus using PBS from the command line. Before 
+requesting the reservation, you will need the following information:
+
+* The start time for the resevation
+* The duration of the reservation 
+* The number of cores (or nodes for multi-node, node-exclusive jobs)
+* The project ID you wish to charge the reservation to
+
+You use the ``pbs_rsub`` command to create a reservation. This command has a similar
+syntax to the ``qsub`` command for requesting resources but takes the additional
+parameters ``-R`` (to specify the reservaiton start time); ``-D`` (to specify the reservation
+duration); and ``-G`` (to specify the project ID to charge the reservation to). For example,
+to create a reservation for 3 hours at 10:30 (UK time) on Saturday 26 August 2017 for 4
+full nodes (144 physical cores, 288 hyperthreads) and charge to project "t01" you would use the command:
+
+::
+
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=4:ncpus=72,place=excl -G +t01
+   R122604.indy2-login0 UNCONFIRMED
+
+The command will return a reservation ID (``R122604`` in the example above) and note that 
+it is currently ``UNCONFIRMED``. PBSPro will change the status to ``CONFIRMED`` once it 
+has checked that it is possible to schedule the reservation.
+
+**Note:** Only the user that requested this reservation will be able to submit jobs to it. To
+create a reservation that is available to all users in a particular project, see the instructions
+below.
+
+There are many other options to the ``pbs_rsub`` command. Please check the man page for
+a full description.
+
+Checking the status of your reservation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can cheack the status of your reservation request with the ``pbs_rstat`` command:
+
+::
+
+   [auser@cirrus-login0 ~]$ pbs_rstat
+   Resv ID    Queue    User     State             Start / Duration / End              
+   ---------------------------------------------------------------------
+   R122604.in R122605  aturner@ CO            Sat 10:30 / 10800 / Sat 13:30 
+
+and, as you can see, the status of the requested reservation is now ``CO`` (``CONFIRMED``).
+
+Submitting jobs to a reservation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You submit jobs to reservations in the same way as you do for all other jobs using the
+``qsub`` command. The only additional information required is to specify the reservation
+ID to the ``-q`` option. For example, to submit to the reservation created above you would
+use:
+
+::
+
+   qsub -q R122604 ...usual qsub options/job script name...
+
+
+**Note:** You can submit jobs to the reservation ahead of the start time and the job will 
+start as soon as the reservation begins.
+
+Reservations for all project users
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, a reservation will only be available to the user who requested it. If you wish
+to create a reservation that is usable by all members of your project you need to modify
+the user permissions using the ``-U`` option.
+
+For example, to create a reservation for 192 hours, starting at 16:15 (UK time) on Monday 18
+September 2017 for 64 nodes accessible by all users in the t01 project you would use:
+
+::
+
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=64:ncpus=72,place=excl -G +t01 -U +
+   R122605.indy2-login0 UNCONFIRMED
+
+Here, the ``-G +t01`` option charges the reservation to the t01 project **and** restricts access to
+users in the ``t01`` project; the ``-U +`` option allows all users (in the t01 project) access 
+to the reservation.
+
+**Note:** You can restrict access to specific users within a project, see the pbs_rsub man 
+page for more information on how to do this.
+
+Deleting a reservation
+^^^^^^^^^^^^^^^^^^^^^^
+
+Use the ``pbs_rdel`` command to delete a reservation:
+
+::
+
+   [auser@cirrus-login0 ~]$ pbs_rdel R122605
+
