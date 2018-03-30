@@ -10,11 +10,11 @@ scientific computation and data analysis.
 
 If the packages you require are not included in the central Anaconda Python
 distribution, then the simplest way to make these available is often to install
-your own version of Miniconda and add the packages you need. We provide 
+your own version of `Miniconda <https://conda.io/miniconda.html>`__  and add the packages you need. We provide 
 instructions on how to do this below. An alternative way to provide your own
 packages (and to make them available more generally to other people in your
-project and beyond) would be to use a Singularity container, see the Singularity
-Containers chapter of this User Guide for more information on this topic.
+project and beyond) would be to use a Singularity container, see the :doc:`singularity`
+chapter of this User Guide for more information on this topic.
 
 Accessing central Anaconda Python
 ---------------------------------
@@ -84,7 +84,7 @@ approach is the install Miniconda locally in your own directories.
 Installing Miniconda
 ~~~~~~~~~~~~~~~~~~~~
 
-First, you should download Miniconda. You can use `wget` to do this, for example:
+First, you should download Miniconda. You can use ``wget`` to do this, for example:
 
 ::
 
@@ -182,21 +182,21 @@ correctly. There are a number of ways to do this.
 
 * If you are always going to be using this Python environment on ARCHER and do not wish to use any
   other Python environment, you can follow the advice of the Miniconda installer and add a line to
-  your `.bashrc` file
+  your ``.bashrc`` file
 * You can export PATH every time you wish to use you local install by using the bash command
-  `export PATH=/lustre/home/t01/user/miniconda3/bin:$PATH` (using the correct PATH as specified by
+  ``export PATH=/lustre/home/t01/user/miniconda3/bin:$PATH`` (using the correct PATH as specified by
   the installer). This will become tedious if you use the environment often!
 * You can create an alias in your `.bashrc` file to set the path. For example, adding the line
-  `alias condasetup="export PATH=/lustre/home/t01/user/miniconda3/bin:$PATH"` would allow you to
-  use the command `condasetup` to initialise the Miniconda environment.
+  ``alias condasetup="export PATH=/lustre/home/t01/user/miniconda3/bin:$PATH"`` would allow you to
+  use the command ``condasetup`` to initialise the Miniconda environment.
 * You could also create a modulefile to provide a way to initialise the environment using
-  `module load ...` as we do for our Anaconda environments. Please contact the helpdesk if you want help to do this.
+  ``module load ...`` as we do for our Anaconda environments. Please contact the helpdesk if you want help to do this.
 
 Installing packages into Miniconda
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once you have installed Miniconda and setup your environment to access it, you can then add whatever packages
-you wish to the installation using the `conda install ...` command. For example:
+you wish to the installation using the ``conda install ...`` command. For example:
 
 ::
 
@@ -272,7 +272,8 @@ you wish to the installation using the `conda install ...` command. For example:
    yaml                      0.1.7                had09818_2  
    zlib                      1.2.11               ha838bed_2  
 
-Please note, for some package installations it may also be necessary to specify a channel such as conda-forge. For example, the following command installs the pygobject module.
+Please note, for some package installations it may also be necessary to specify a channel such as conda-forge.
+For example, the following command installs the pygobject module.
 
 ::
 
