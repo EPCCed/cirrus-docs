@@ -18,8 +18,8 @@ you will need to load the Allinea Forge module and execute ``forge``:
 Debugging runs on the login nodes
 ---------------------------------
 
-You can execute and debug your MPI code on the login node which is useful fo
- immediate development work with short, simple runs to avoid having to wait
+You can execute and debug your MPI code on the login node which is useful for
+immediate development work with short, simple runs to avoid having to wait
 in the queue. Firstly ensure you have loaded the ``mpt`` library, then start
 forge and click *Run*. Fill in the nescesary details of your code under the
 *application* pane, then check the MPI tick box, specify the number of MPI

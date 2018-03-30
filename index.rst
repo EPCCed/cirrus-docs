@@ -41,7 +41,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/batch
    user-guide/singularity
    user-guide/python
-   user-guide/libraries
    user-guide/reading
 
 .. toctree::
@@ -55,6 +54,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/flacs
    software-packages/gaussian
    software-packages/gromacs
+   software-packages/helyx
    software-packages/lammps
    software-packages/MATLAB
    software-packages/namd

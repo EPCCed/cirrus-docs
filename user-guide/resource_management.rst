@@ -44,8 +44,6 @@ You can also generate reports on your usage over a particular period and
 examine the details of how many CPUh individual jobs on the system cost.
 To do this use the *Service information* menu and selet *Report generator*.
 
-For more information on using the SAFE see the :doc:`../safe-guide/introduction`.
-
 Disk quotas
 -----------
 

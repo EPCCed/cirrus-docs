@@ -1,5 +1,5 @@
 CP2K
-======
+====
 
 `CP2K <https://www.cp2k.org/>`__ is a quantum chemistry and solid state physics software package
 that can perform atomistic simulations of solid state, liquid, molecular, periodic, material,
@@ -18,7 +18,7 @@ Useful Links
 * `CP2K FAQs <https://www.cp2k.org/faq>`__
 
 Using CP2K on Cirrus
-----------------------
+--------------------
 
 CP2K is available through the ``cp2k-mpt`` module. MPI only ``cp2k.popt`` and MPI/OpenMP Hybrid
 ``cp2k.psmp`` binaries are available.
@@ -66,7 +66,8 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
 
 
 Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
-----------------------------------------------
+---------------------------------------------------
+
 To run CP2K using MPI and OpenMP, load the ``cp2k-mpt`` module and use the ``cp2k.psmp`` executable.
 
 Due to a thread placement bug in SGI MPT's ``omplace``, tool for GCC-compiled software, launching

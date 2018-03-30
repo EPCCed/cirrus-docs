@@ -759,7 +759,7 @@ resources reserved for the full time. In addition, you will not be refunded the 
 if you fail to use them due to a job crash unless this crash is due to a system failure.
 
 Requesting reservations
-^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
 
 You request a reservation on Cirrus using PBS from the command line. Before 
 requesting the reservation, you will need the following information:
@@ -793,7 +793,7 @@ There are many other options to the ``pbs_rsub`` command. Please check the man p
 a full description.
 
 Checking the status of your reservation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can cheack the status of your reservation request with the ``pbs_rstat`` command:
 
@@ -807,7 +807,7 @@ You can cheack the status of your reservation request with the ``pbs_rstat`` com
 and, as you can see, the status of the requested reservation is now ``CO`` (``CONFIRMED``).
 
 Submitting jobs to a reservation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You submit jobs to reservations in the same way as you do for all other jobs using the
 ``qsub`` command. The only additional information required is to specify the reservation
@@ -823,7 +823,7 @@ use:
 start as soon as the reservation begins.
 
 Reservations for all project users
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, a reservation will only be available to the user who requested it. If you wish
 to create a reservation that is usable by all members of your project you need to modify
@@ -845,7 +845,7 @@ to the reservation.
 page for more information on how to do this.
 
 Deleting a reservation
-^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~
 
 Use the ``pbs_rdel`` command to delete a reservation:
 

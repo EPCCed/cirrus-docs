@@ -119,7 +119,7 @@ For example:
 
 The ``-A xyz`` option is obligatory and states the account ``xyz``
 that the CPU consumption will be billed to. You can check your
-account in SAFE (SAFE Guide: :doc:`../safe-guide/safe-guide-users`).
+account in SAFE.
 
 The ``-l select=x:ncpus=y`` option specifies the resource allocation for
 the job you are starting. The parameter ``x`` is the number of nodes

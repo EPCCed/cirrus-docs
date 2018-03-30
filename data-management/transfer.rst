@@ -10,7 +10,7 @@ service. Different arrangements will be made for INDY Windows HPC
 users.
 
 If you have any questions about transferring data from INDY-linux to
-Cirrus then please contact the :doc:`../support`
+Cirrus then please `contact the helpdesk <mailto:support@cirrus.ac.uk>`_
 
 Introduction
 ------------

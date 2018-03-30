@@ -271,7 +271,7 @@ has instructions on how to use this method to install Singularity:
 
 If you are using Linux then you can usually install Singularity directly, see:
 
-* `Installing Singularity on Linux <http://singularity.lbl.gov/install-linux`_
+* `Installing Singularity on Linux <http://singularity.lbl.gov/install-linux>`_
 
 Singularity Recipes to Access modules on Cirrus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
