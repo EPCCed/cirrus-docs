@@ -281,10 +281,8 @@ on Cirrus so you can make use of custom software that you cannot access
 elsewhere. We demonstrate how to do this for a CentOS 7 image but the steps
 are easily translated for other flavours of Linux.
 
-Two things are needed in the Singularity recipe file:
-
-* Installation of ``environment-modules``
-* Setting of ``MODULEPATH`` to point to the Cirrus modulefiles
+For the Cirrus modules to be available in your Singularity container you need to
+ensure that the ``environment-modules`` package is installed in your image.
 
 In addition, when you use the container you must invoke access as a login 
 shell to have access to the module commands.
