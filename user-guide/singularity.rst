@@ -262,7 +262,7 @@ create and modify images. How you install Singularity on your laptop/workstation
 depends on the operating system you are using.
 
 If yout are using Windows or macOS, the simplest solution is to use
-`Vagrant <http://www.vagrantup.com>`_ to give you am easy to use virtual
+`Vagrant <http://www.vagrantup.com>`_ to give you an easy to use virtual
 environment with Linux and Singularity installed. The Singularity website
 has instructions on how to use this method to install Singularity:
 
