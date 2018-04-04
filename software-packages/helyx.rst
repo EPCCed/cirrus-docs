@@ -9,14 +9,15 @@ a flexible and cost-effective HPC solver platform for enterprise applications.
 Useful Links
 ------------
 
-* Information about HELYX
-* Information about ENGYS
+* `Information about HELYX <https://engys.com/products/helyx>`__
+* `Information about ENGYS <https://engys.com/about-us>`__
 
 Using HELYX on Cirrus
 ---------------------
 
 HELYX is only available on Cirrus to authorised users with a valid license to use the software.
-For any queries regarding HELYX on Cirrus, please contact ENGYS or the Cirrus Helpdesk.
+For any queries regarding HELYX on Cirrus, please `contact ENGYS <https://engys.com/contact-us>`_
+or the `Cirrus Helpdesk <mailto:support@cirrus.ac,uk>`_.
 
 HELYX applications can be run on Cirrus in two ways:
 
