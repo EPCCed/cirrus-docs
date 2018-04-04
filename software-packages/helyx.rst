@@ -17,7 +17,7 @@ Using HELYX on Cirrus
 
 HELYX is only available on Cirrus to authorised users with a valid license to use the software.
 For any queries regarding HELYX on Cirrus, please `contact ENGYS <https://engys.com/contact-us>`_
-or the `Cirrus Helpdesk <mailto:support@cirrus.ac,uk>`_.
+or the `Cirrus Helpdesk <mailto:support@cirrus.ac.uk>`_.
 
 HELYX applications can be run on Cirrus in two ways:
 
