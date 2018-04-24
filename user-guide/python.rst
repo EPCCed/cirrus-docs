@@ -5,7 +5,7 @@ Python on Cirrus is provided by the `Anaconda <https://www.continuum.io/>`__
 distribution. Both Python 2 and Python 3 versions of the distributions are
 supported.
 
-The central installation provides many of the most common pacakges used for
+The central installation provides many of the most common packges used for
 scientific computation and data analysis.
 
 If the packages you require are not included in the central Anaconda Python
@@ -71,7 +71,7 @@ You can list the packages currently available in the distribution you have loade
 Adding packages to the Anaconda distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Adding packages to the central Anaconda ditribution cannot be done by users. If you wish to have additional
+Adding packages to the central Anaconda distribution cannot be done by users. If you wish to have additional
 packages, we recommend installing your own local version of Miniconda and adding the packages you need. This
 approach is described in Custom Environment below.
 
