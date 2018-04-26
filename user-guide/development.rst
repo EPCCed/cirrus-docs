@@ -101,7 +101,7 @@ you need a specfic version of the module, you can add more information:
 
     module load intel-compilers-17/17.0.2.174
 
-will load version 16.0.3.210 for you, regardless of the default. If you
+will load version 17.0.2.174 for you, regardless of the default. If you
 want to clean up, ``module remove`` will remove a loaded module:
 
 ::
