@@ -39,7 +39,7 @@ software) are available on the system is performed using the
 
 ::
 
-    user@system:~> module avail
+    [user@cirrus-login0 ~]$ module avail
     ...
 
 This will list all the names and versions of the modules available on
@@ -94,7 +94,7 @@ to load the intel-compilers-17 into the development environment:
 
     module load intel-compilers-17
 
-This will load the default version of the intel commpilers Library. If
+This will load the default version of the intel compilers. If
 you need a specfic version of the module, you can add more information:
 
 ::
