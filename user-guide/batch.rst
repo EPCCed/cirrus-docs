@@ -753,10 +753,21 @@ Examples of the reasons for using reservations could be:
 * An exceptional job requires longer than 96 hours runtime.
 * You require a job/jobs to run at a particular time e.g. for a demonstration or course.
 
-**Note:** Reservations will be charged at 1.5 times the usual rate and you
-will be charged the full rate for the entire reservation whether or not you use the
-resources reserved for the full time. In addition, you will not be refunded the resources
-if you fail to use them due to a job crash unless this crash is due to a system failure.
+.. warning::
+
+   For multi-node jobs we strongly recommend requesting a reservation two nodes larger
+   than the size you want to stop the reservation failing if a node crashes. This is
+   particularly important if the reservation involves long jobs or those of a time
+   critical nature.
+
+.. note::
+
+   Reservations will be charged at 1.5 times the usual rate and you
+   will be charged the full rate for the entire reservation whether or not you use the
+   resources reserved for the full time. In addition, you will not be refunded the resources
+   if you fail to use them due to a job crash unless this crash is due to a system failure.
+   To allow people to create multi-node reservations, we will charge at number of nodes - 2
+   for resevations (with a minimum of 2 nodes charged).
 
 Requesting reservations
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -778,16 +789,19 @@ full nodes (144 physical cores, 288 hyperthreads) and charge to project "t01" yo
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=4:ncpus=72,place=excl -G +t01
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=6:ncpus=72,place=excl -G +t01
    R122604.indy2-login0 UNCONFIRMED
 
 The command will return a reservation ID (``R122604`` in the example above) and note that 
 it is currently ``UNCONFIRMED``. PBSPro will change the status to ``CONFIRMED`` once it 
-has checked that it is possible to schedule the reservation.
+has checked that it is possible to schedule the reservation. Note that we requested 6 nodes
+rather than the required 4 to reduce the risk of hardware failure affecting the reservation.
 
-**Note:** Only the user that requested this reservation will be able to submit jobs to it. To
-create a reservation that is available to all users in a particular project, see the instructions
-below.
+.. note::
+
+   Only the user that requested this reservation will be able to submit jobs to it. To
+   create a reservation that is available to all users in a particular project, see the instructions
+   below.
 
 There are many other options to the ``pbs_rsub`` command. Please check the man page for
 a full description.
@@ -802,7 +816,7 @@ You can cheack the status of your reservation request with the ``pbs_rstat`` com
    [auser@cirrus-login0 ~]$ pbs_rstat
    Resv ID    Queue    User     State             Start / Duration / End              
    ---------------------------------------------------------------------
-   R122604.in R122605  aturner@ CO            Sat 10:30 / 10800 / Sat 13:30 
+   R122604.in R122605  auser@ CO            Sat 10:30 / 10800 / Sat 13:30 
 
 and, as you can see, the status of the requested reservation is now ``CO`` (``CONFIRMED``).
 
@@ -819,8 +833,10 @@ use:
    qsub -q R122604 ...usual qsub options/job script name...
 
 
-**Note:** You can submit jobs to the reservation ahead of the start time and the job will 
-start as soon as the reservation begins.
+.. note::
+
+   You can submit jobs to the reservation ahead of the start time and the job will 
+   start as soon as the reservation begins.
 
 Reservations for all project users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -834,15 +850,18 @@ September 2017 for 64 nodes accessible by all users in the t01 project you would
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=64:ncpus=72,place=excl -G +t01 -U +
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=66:ncpus=72,place=excl -G +t01 -U +
    R122605.indy2-login0 UNCONFIRMED
 
 Here, the ``-G +t01`` option charges the reservation to the t01 project **and** restricts access to
 users in the ``t01`` project; the ``-U +`` option allows all users (in the t01 project) access 
-to the reservation.
+to the reservation. Note that, as above, we created the reservation with 66 nodes instead of the
+required 64 to reduce the risk of hardware failures affecting the reservation.
 
-**Note:** You can restrict access to specific users within a project, see the pbs_rsub man 
-page for more information on how to do this.
+.. note::
+
+   You can restrict access to specific users within a project, see the pbs_rsub man 
+   page for more information on how to do this.
 
 Deleting a reservation
 ~~~~~~~~~~~~~~~~~~~~~~
