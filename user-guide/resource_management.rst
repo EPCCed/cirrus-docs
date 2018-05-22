@@ -23,7 +23,7 @@ system, including:
 
 -  Account details - password reset, change contact details
 -  Project details - project code, start and end dates
--  kAU balance - how much time is left in each project you are a member
+-  CPUh balance - how much time is left in each project you are a member
    of
 -  Filesystem details - current usage and quotas
 -  Reports - generate reports on your usage over a specified period,

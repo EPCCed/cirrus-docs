@@ -30,7 +30,7 @@ Useful terminology
 This is a list of terminology used throughout this guide and its
 meaning.
 
-kAU
-    Cirrus CPU time is measured in kAU. Each job you run on the service
-    consumes kAUs from your budget. You can find out more about kAUs and
+CPUh
+    Cirrus CPU time is measured in CPUh. Each job you run on the service
+    consumes CPUhs from your budget. You can find out more about CPUhs and
     how to track your usage in the :doc:`resource_management`
