@@ -5,7 +5,17 @@ OpenFOAM is an open-source toolbox for computational fluid dynamics. OpenFOAM co
 
 The core technology of OpenFOAM is a flexible set of modules written in C++. These are used to build solvers and utilities to perform pre- and post-processing tasks ranging from simple data manipulation to visualisation and mesh processing.
 
-Currently we have OpenFOAM v1706 installed centrally on Cirrus.
+Available Versions
+------------------
+
+You can query the versions of OpenFOAM available on Cirrus from the command line with ``module avail openfoam``.
+
+We currently have *OpenFOAM v1706* available on Cirrus.
+
+Useful Links
+------------
+
+* `OpenFOAM Documentation <https://www.openfoam.com/documentation/>`_
 
 Using OpenFOAM on Cirrus
 ------------------------

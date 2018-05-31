@@ -39,7 +39,7 @@ software) are available on the system is performed using the
 
 ::
 
-    user@system:~> module avail
+    [user@cirrus-login0 ~]$ module avail
     ...
 
 This will list all the names and versions of the modules available on
@@ -94,14 +94,14 @@ to load the intel-compilers-17 into the development environment:
 
     module load intel-compilers-17
 
-This will load the default version of the intel commpilers Library. If
+This will load the default version of the intel compilers. If
 you need a specfic version of the module, you can add more information:
 
 ::
 
     module load intel-compilers-17/17.0.2.174
 
-will load version 16.0.3.210 for you, regardless of the default. If you
+will load version 17.0.2.174 for you, regardless of the default. If you
 want to clean up, ``module remove`` will remove a loaded module:
 
 ::

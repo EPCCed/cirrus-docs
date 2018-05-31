@@ -23,7 +23,7 @@ system, including:
 
 -  Account details - password reset, change contact details
 -  Project details - project code, start and end dates
--  kAU balance - how much time is left in each project you are a member
+-  CPUh balance - how much time is left in each project you are a member
    of
 -  Filesystem details - current usage and quotas
 -  Reports - generate reports on your usage over a specified period,
@@ -43,8 +43,6 @@ available to account.
 You can also generate reports on your usage over a particular period and
 examine the details of how many CPUh individual jobs on the system cost.
 To do this use the *Service information* menu and selet *Report generator*.
-
-For more information on using the SAFE see the :doc:`../safe-guide/introduction`.
 
 Disk quotas
 -----------
