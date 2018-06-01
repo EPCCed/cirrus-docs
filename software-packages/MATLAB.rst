@@ -83,33 +83,29 @@ following toolboxes ::
 Running parallel MATLAB jobs
 -----------------------------------
 
-MATLAB is intended to be used on the compute nodes within PBS job
-scripts.  Use on the login nodes should be restricted to setting
-preferences, accessing help, etc.  It is recommended that MATLAB is
-used without a GUI on the compute nodes, as the interactive response
-is slow.
+On Cirrus, MATLAB is intended to be used on the compute nodes within
+PBS job scripts.  Use on the login nodes should be restricted to
+setting preferences, accessing help, etc.  It is recommended that
+MATLAB is used without a GUI on the compute nodes, as the interactive
+response is slow.
 
 The license for this installation of MATLAB provides only 32 workers
 via MATLAB Distributed Computing Server (MDCS) but provides 36 workers
 via the local cluster profile (there are 36 cores on a Cirrus compute
 node), so we do not recommend the use of MDCS for parallel
-computations.
-
-MATLAB will normally use up to the total number of cores on a node for
+computations.  Instead we recommend that a whole, single compute node
+is used.  Cirrus employs exclusive node usage, thus requesting a
+whole, single node will provide 36 physical cores.  MATLAB will use up
+to the total number of physical cores on a compute node for
 multi-threaded operations (e.g., matrix inversions) and for parallel
-computations.  It also makes no restriction on its memory use.  These
-features are incompatible with the shared use of nodes on Cirrus.  A
-wrapper script is provided to limit the number of cores and amount of
-memory used, in proportion to the number of CPUs selected in the PBS
-job script.  Please use this wrapper instead of using MATLAB directly.
-Select an even number of CPUs (*ncpus*) in the PBS select statement,
-since MATLAB uses the cores without Hyper-Threading (number of cores =
-*ncpus* / 2).
+workers.
 
 An example job script would be ::
 
  #PBS -N Example_MATLAB_Job
- #PBS -l select=1:ncpus=12
+ # Select a whole, single node; ncpus=72 because there are
+ # 2 HyperThreads per physical core
+ #PBS -l select=1:ncpus=72
  #PBS -l walltime=00:20:00
  
  # Replace [budget code] below with your project code (e.g. t01)
@@ -123,24 +119,11 @@ An example job script would be ::
  matlab_wrapper -nodisplay < /lustre/sw/cse-matlab/examples/testp.m > testp.log
 
 This would run the *testp.m* script, without a display, and exit when
-*testp.m* has finished.  12 CPUs are selected, which correspond to 6
-cores, and the following limits would be set ::
+*testp.m* has finished.
 
- ncores   = 6
- memory   = 42GB
- 
- Maximum number of computational threads (maxNumCompThreads)          = 6
- Preferred number of workers in a parallel pool (PreferredNumWorkers) = 6
- Number of workers to start on your local machine (NumWorkers)        = 6
- Number of computational threads to use on each worker (NumThreads)   = 1
-
-Note that these settings persist between MATLAB sessions but will be
-updated correctly if you use the wrapper each time.
-
-*NumWorkers* and *NumThreads* can be changed (using *parcluster* and
-*saveProfile*) but *NumWorkers* * *NumThreads* should be less than
-the number of cores (*ncores* above).
-
-If you specify exclusive node access, then all the cores and memory
-will be available.  On the login nodes, a single core is used and
-memory is not limited.
+*NumWorkers* and *NumThreads* can be changed in MATLAB (using
+*parcluster* and *saveProfile*) but *NumWorkers* x *NumThreads* should
+no greater than 36.  If each worker runs a threaded routine, then
+setting *NumThreads* to 1 (the default) will ensure that each worker runs threaded
+routines serially.  If you want to run these routines in parallel,
+you must set *NumThreads* accordingly.
