@@ -163,9 +163,9 @@ specify three things:
 In addition to these mandatory specifications, there are many other
 options you can provide to PBS. The following options may be useful:
 
-- By default compute nodes are shared, meaning other jobs may be placed
-  alongside yours if your resource request (with -l select) leaves some
-  cores free. To guarantee exclusive node usage, use the option ``-l place=excl``.
+- Currently, compute nodes are not shared between jobs, in other words
+  all jobs effectively run with ``-l place=excl``, even if the exclusive
+  node usage flag is not specified in the submission script.
 - The name for your job is set using ``-N My_job``. In the examples below
   the name will be "My\_job", but you can replace "My\_job" with any
   name you want. The name will be used in various places. In particular
@@ -178,22 +178,14 @@ options you can provide to PBS. The following options may be useful:
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default on Cirrus, jobs are scheduled to nodes in a non-exclusive way.
-This means that, by default, you will likely end up sharing a node with 
-another user. This can lead to variable and/or poor performance as you 
-will be potentially be competing with other users for resources such as
-CPU and memory.
+Currently on Cirrus, jobs are scheduled to nodes in an exclusive way.
+This means each node is dedicated to one job only. However, in the past
+Cirrus nodes were shared between jobs by default and there is a chance
+that this default setting will be restored in the future. For that reason
+the following text on this page will assume that exclusive node assignment
+has to be specified explicitly in order to take effect.
 
-If you are running parallel jobs on Cirrus **we strongly recommend that
-you specify exclusive placement** to ensure that you get the best performance
-out of the compute nodes. The only case where you may not want to use
-exclusive placement for parallel jobs is when you are using a very small
-number of cores (e.g. less than half a node, 18 cores). Even then, you 
-may find that the benefits of exclusive placement outweigh the addition
-costs incurred (as you are charged for all the cores on a node in 
-exclusive mode).
-
-To make sure your josb have exclusive node access you should add the
+To make sure your jobs have exclusive node access you should add the
 following PBS option to your jobs:
 
 ::
@@ -202,14 +194,10 @@ following PBS option to your jobs:
 
 All of our example parallel job submission scripts below specify this option.
 
-Of course, if you are running a serial job then you should not generally
-specify this option as it would result in you reserving (and being charged for)
-a full 36 core node when you are only using a single core.
-
 Running MPI parallel jobs
 -------------------------
 
-When you running parallel jobs requiring MPI you will use an MPI launch
+When you are running parallel jobs requiring MPI you will use an MPI launch
 command to start your executable in parallel. The name and options for
 this MPI launch command depend on which MPI library you are using:
 SGI MPT (Message Passing Toolkit) or Intel MPI. We give details below
@@ -583,7 +571,6 @@ only changes are:
 
 1. You should request a single core with ``select=1:ncpus=1``
 2. You will not need to use a parallel job launcher to run your executable
-3. You will generally not specify exclusive node access
 
 A simple serial script to compress a file would be:
 
