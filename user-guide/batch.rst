@@ -163,7 +163,7 @@ specify three things:
 In addition to these mandatory specifications, there are many other
 options you can provide to PBS. The following options may be useful:
 
-- Currently, compute nodes are not shared between jobs, in other words
+- Currently, compute nodes are not shared between users, in other words
   all jobs effectively run with ``-l place=excl``, even if the exclusive
   node usage flag is not specified in the submission script.
 - The name for your job is set using ``-N My_job``. In the examples below
@@ -178,12 +178,12 @@ options you can provide to PBS. The following options may be useful:
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
 
-Currently on Cirrus, jobs are scheduled to nodes in an exclusive way.
-This means each node is dedicated to one job only. However, in the past
-Cirrus nodes were shared between jobs by default and there is a chance
+Currently on Cirrus, jobs are reserved for users in an exclusive way.
+This means each node is dedicated to one user only. However, in the past
+Cirrus nodes were shared between users by default and there is a chance
 that this default setting will be restored in the future. For that reason
-the following text on this page will assume that exclusive node assignment
-has to be specified explicitly in order to take effect.
+this user guide will assume that exclusive node assignment has to be
+specified explicitly in order to take effect.
 
 To make sure your jobs have exclusive node access you should add the
 following PBS option to your jobs:
