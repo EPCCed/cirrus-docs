@@ -103,9 +103,8 @@ workers.
 An example job script would be ::
 
  #PBS -N Example_MATLAB_Job
- # Select a whole, single node; ncpus=72 because there are
- # 2 HyperThreads per physical core
- #PBS -l select=1:ncpus=72
+ # Select a whole, single node
+ #PBS -l select=1:ncpus=36
  #PBS -l walltime=00:20:00
  
  # Replace [budget code] below with your project code (e.g. t01)

@@ -39,7 +39,7 @@ For example, the following script will run a CASTEP job using 4 nodes
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N CASTEP_test
-   #PBS -l select=4:ncpus=72
+   #PBS -l select=4:ncpus=36
    #PBS -l place=excl
    #PBS -l walltime=0:20:0
    

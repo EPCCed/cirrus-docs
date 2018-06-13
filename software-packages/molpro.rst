@@ -34,7 +34,7 @@ An example Molpro job submission script is shown below.
 
    #!/bin/bash --login
    #PBS -N molpro_job
-   #PBS -l select=1:ncpus=72
+   #PBS -l select=1:ncpus=36
    #PBS -l walltime=1:0:0
    #PBS -l place=excl
    
