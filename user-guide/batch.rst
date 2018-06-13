@@ -145,12 +145,10 @@ All parallel job submission scripts require (as a minimum) you to
 specify three things:
 
 -  The number of nodes and cores per node you require via the
-   ``-l select=[Nodes]:ncpus=72`` option. **Note ncpus should always be 72, regardless of how many cores you intend to employ.  This simply indicates that you want to reserve all cores on a node.** Each node has 36 physical
-   cores (2x 18-core sockets) and hyper-threads are enabled (2 per core) giving
-   a maximum of 72 cores per node (most users will actually only use a maximum of
-   36 cores per node for best performance). For example, to select 4 nodes
+   ``-l select=[Nodes]:ncpus=36`` option. **Note ncpus should always be 36, regardless of how many cores you intend to employ.  This simply indicates that you want to reserve all cores on a node.** Each node has 36 physical
+   cores (2x 18-core sockets). For example, to select 4 nodes
    (144 physical cores in total) you would use
-   ``-l select=4:ncpus=72``. 
+   ``-l select=4:ncpus=36``. 
 -  The maximum length of time (i.e. walltime) you want the job to run
    for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
    minimum wait time for your job, you should specify a walltime as
@@ -444,7 +442,7 @@ nodes (maximum of 144 physical cores) for 20 minutes would look like:
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MPI_Job
     # Select 4 full nodes
-    #PBS -l select=4:ncpus=72
+    #PBS -l select=4:ncpus=36
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=00:20:00
@@ -495,7 +493,7 @@ of the ``omplace`` command to specify the number of threads.
     # PBS job options (name, compute nodes, job time)
     #PBS -N Example_MixedMode_Job
     # Select 4 full nodes
-    #PBS -l select=4:ncpus=72
+    #PBS -l select=4:ncpus=36
     # Parallel jobs should always specify exclusive node access
     #PBS -l place=excl
     #PBS -l walltime=6:0:0
@@ -537,7 +535,7 @@ Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
    # PBS job options (name, compute nodes, job time)
    #PBS -N Example_MixedMode_Job
    # Select 4 full nodes
-   #PBS -l select=4:ncpus=72
+   #PBS -l select=4:ncpus=36
    # Parallel jobs should always specify exclusive node access
    #PBS -l place=excl
    #PBS -l walltime=6:0:0
@@ -703,7 +701,7 @@ issue the following qsub command from the command line:
 
 ::
 
-    qsub -IVl select=8:ncpus=72,walltime=1:0:0,place=excl -A [project code]
+    qsub -IVl select=8:ncpus=36,walltime=1:0:0,place=excl -A [project code]
 
 When you submit this job your terminal will display something like:
 
@@ -776,7 +774,7 @@ full nodes (144 physical cores, 288 hyperthreads) and charge to project "t01" yo
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=6:ncpus=72,place=excl -G +t01
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1708261030 -D 3:0:0 -l select=6:ncpus=36,place=excl -G +t01
    R122604.indy2-login0 UNCONFIRMED
 
 The command will return a reservation ID (``R122604`` in the example above) and note that 
@@ -837,7 +835,7 @@ September 2017 for 64 nodes accessible by all users in the t01 project you would
 
 ::
 
-   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=66:ncpus=72,place=excl -G +t01 -U +
+   [auser@cirrus-login0 ~]$ pbs_rsub -R 1709181615 -D 192:0:0 -l select=66:ncpus=36,place=excl -G +t01 -U +
    R122605.indy2-login0 UNCONFIRMED
 
 Here, the ``-G +t01`` option charges the reservation to the t01 project **and** restricts access to

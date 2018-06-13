@@ -173,7 +173,7 @@ For example, to reserve a full node for you to work on interactively you would u
 
 ::
 
-   [user@cirrus-login0 ~]$ qsub -IVl select=1:ncpus=72,walltime=0:20:0,place=excl -A t01
+   [user@cirrus-login0 ~]$ qsub -IVl select=1:ncpus=36,walltime=0:20:0,place=excl -A t01
    qsub: waiting for job 234192.indy2-login0 to start
    
    ...wait until job starts...
