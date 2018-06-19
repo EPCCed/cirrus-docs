@@ -36,7 +36,7 @@ An example Molpro job submission script is shown below.
    #PBS -N molpro_job
    #PBS -l select=1:ncpus=36
    #PBS -l walltime=1:0:0
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    
    # Replace "budget" with your budget code in the line below
    #PBS -A budget

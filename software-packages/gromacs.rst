@@ -44,7 +44,7 @@ For example, the following script will run a GROMACS MD job using 4 nodes
    #PBS -N mdrun_test
    #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
@@ -77,7 +77,7 @@ total) and 6 OpenMP threads per MPI process.
    #PBS -N mdrun_test
    #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)

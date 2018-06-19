@@ -4,7 +4,7 @@
 #PBS -N Example_MixedMode_Job
 #PBS -l select=4:ncpus=36
 # Parallel jobs should always specify exclusive node access
-#PBS -l place=excl
+#PBS -l place=scatter:excl
 #PBS -l walltime=6:0:0
 
 # Replace [budget code] below with your project code (e.g. t01)
