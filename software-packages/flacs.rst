@@ -115,7 +115,7 @@ For example:
 
 ::
 
-   qsub -A xyz -l select=1:ncpus=1 -l walltime=6:00:00 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
+   qsub -A xyz -l select=1:ncpus=2 -l walltime=6:00:00 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
 
 The ``-A xyz`` option is obligatory and states the account ``xyz``
 that the CPU consumption will be billed to. You can check your
@@ -124,7 +124,10 @@ account in SAFE.
 The ``-l select=x:ncpus=y`` option specifies the resource allocation for
 the job you are starting. The parameter ``x`` is the number of nodes
 required and the parameter ``y`` is the number of cores required. For
-a serial FLACS job you would use ``-l select=1:ncpus=1``
+a serial FLACS job you would use ``-l select=1:ncpus=2`` in order to
+force the usage of physical cores.
+When running the multithreaded version of the simulator ``y`` should
+be multiplied by the number of threads the simulator runs with.
 
 The maximum length of time (i.e. walltime) you want the job to run
 is specified with the ``-l walltime=[hh:mm:ss]`` option. After this
