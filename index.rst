@@ -76,8 +76,3 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
    software-tools/ddt
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Data Management Guide
-
-   data-management/transfer
