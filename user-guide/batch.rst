@@ -10,10 +10,7 @@ submit your job to the job submission system. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-**Note:** There are a number of different queues on Cirrus. If you do not specify a
-queue your job will be submitted to the default ``workq`` which has limits
-on the maximum job size and total amount of resource that can be used.
-See below for more information on the different queues and their limits.
+.. note:: There are a number of different queues on Cirrus. If you do not specify a queue your job will be submitted to the default ``workq`` which has limits on the maximum job size and total amount of resource that can be used.  See below for more information on the different queues and their limits.
 
 If you have any questions on how to run jobs on Cirrus do not hesitate
 to contact the EPCC Helpdesk.
@@ -50,11 +47,7 @@ The qsub command submits a job to PBS:
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
 
-**Note:** There are a number of different queues on Cirrus. If you do not specify a
-queue your job will be submitted to the default ``workq`` which has limits
-on the maximum job size and total amount of resource that can be used.
-See below for more information on the different queues and their limits.
-
+.. note:: There are a number of different queues on Cirrus. If you do not specify a queue your job will be submitted to the default ``workq`` which has limits on the maximum job size and total amount of resource that can be used.  See below for more information on the different queues and their limits.  
 
 The qstat command
 ~~~~~~~~~~~~~~~~~
@@ -201,14 +194,11 @@ Running MPI parallel jobs
 When you are running parallel jobs requiring MPI you will use an MPI launch
 command to start your executable in parallel. The name and options for
 this MPI launch command depend on which MPI library you are using:
-SGI MPT (Message Passing Toolkit) or Intel MPI. We give details below
+HPE MPT (Message Passing Toolkit) or Intel MPI. We give details below
 of the commands used in each case and our example job submission scripts
 have examples for both libraries.
 
-**Note:** If you are using a centrally-installed MPI software package you
-will need to know which MPI library was used to compile it so you can use the
-correct MPI launch command. You can find this information using the ``module show``
-command. For example:
+.. note:: If you are using a centrally-installed MPI software package you will need to know which MPI library was used to compile it so you can use the correct MPI launch command. You can find this information using the ``module show`` command. For example:
 
 ::
 
@@ -226,26 +216,25 @@ command. For example:
    setenv		 VASP5_VDW_KERNEL /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/vdw_kernal/vdw_kernel.bindat 
    -------------------------------------------------------------------
 
-This shows that VASP was compiled with SGI MPT (from the ``module load mpt`` in 
+This shows that VASP was compiled with HPE MPT (from the ``module load mpt`` in 
 the output from the command. If a package was compiled with Intel MPI there 
 would be ``module load intel-mpi-17`` in the output instead.
 
-SGI MPT (Message Passing Toolkit)
+HPE MPT (Message Passing Toolkit)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SGI MPT is accessed at both compile and runtime by loading the ``mpt`` module:
+HPE MPT is accessed at both compile and runtime by loading the ``mpt`` module:
 
 ::
 
    module load mpt
 
-SGI MPT: parallel launcher ``mpiexec_mpt``
+HPE MPT: parallel launcher ``mpiexec_mpt``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The SGI MPT parallel launcher on Cirrus is ``mpiexec_mpt``.
+The HPE MPT parallel launcher on Cirrus is ``mpiexec_mpt``.
 
-**Note:** this parallel job launcher is only available once you have
-loaded the ``mpt`` module.
+.. note:: This parallel job launcher is only available once you have loaded the ``mpt`` module.
 
 A sample MPI launch line using ``mpiexec_mpt`` looks like:
 
@@ -277,16 +266,18 @@ The most important ``mpiexec_mpt`` flags are:
     amounts of memory per parallel process or you are using more than
     one shared-memory thread per parallel process.
 
-**Note:** ``mpiexec_mpt`` only works from within a PBS job submission script.
+.. note:: ``mpiexec_mpt`` only works from within a PBS job submission script.
+
+.. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
 
 Please use ``man mpiexec_mpt`` query further options. (This is only available
 once you have loaded the ``mpt`` module.)
 
-SGI MPT: interactive MPI using ``mpirun``
+HPE MPT: interactive MPI using ``mpirun``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you want to run short interactive parallel applications (e.g. for 
-debugging) then you can run SGI MPT compiled MPI applications on the login
+debugging) then you can run HPE MPT compiled MPI applications on the login
 nodes using the ``mpirun`` command.
 
 For instance, to run a simple, short 4-way MPI job on the login node, issue the
@@ -296,15 +287,13 @@ following command (once you have loaded the appropriate modules):
 
     mpirun -n 4 ./hello_mpi.x
 
-**Note:** you should not run long, compute- or memory-intensive jobs on the 
-login nodes. Any such processes are liable to termination by the system
-with no warning.
+.. note:: you should not run long, compute- or memory-intensive jobs on the login nodes. Any such processes are liable to termination by the system with no warning.
 
 
-SGI MPT: running hybrid MPI/OpenMP applications
+HPE MPT: running hybrid MPI/OpenMP applications
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are running hybrid MPI/OpenMP code using SGI MPT you will also often make
+If you are running hybrid MPI/OpenMP code using HPE MPT you will also often make
 use of the ``omplace`` tool in your job launcher line. This tool 
 takes the number of threads as the option ``-nt``:
 
@@ -331,8 +320,7 @@ Intel MPI: parallel job launcher ``mpirun``
 
 The Intel MPI parallel job launcher on Cirrus is ``mpirun``.
 
-**Note:** this parallel job launcher is only available once you have
-loaded the ``intel-mpi-17`` module.
+.note :: This parallel job launcher is only available once you have loaded the ``intel-mpi-17`` module.
 
 A sample MPI launch line using ``mpirun`` looks like:
 
@@ -426,13 +414,13 @@ Example parallel MPI job submission scripts
 A subset of example job submssion scripts are included in full below. The
 full set are available via the following links:
 
-* SGI MPT MPI Job: :download:`example_mpi_sgimpt.bash <example_mpi_sgimpt.bash>`
+* HPE MPT MPI Job: :download:`example_mpi_sgimpt.bash <example_mpi_hpempt.bash>`
 * Intel MPI Job: :download:`example_mpi_impi.bash <example_mpi_impi.bash>`
 
-* SGI MPT Hybrid MPI/OpenMP Job: :download:`example_hybrid_sgimpt.bash <example_hybrid_sgimpt.bash>` 
+* HPE MPT Hybrid MPI/OpenMP Job: :download:`example_hybrid_hpempt.bash <example_hybrid_sgimpt.bash>` 
 * Intel MPI Hybrid MPI/OpenMP Job: :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` 
 
-Example: SGI MPT job submission script for MPI parallel job
+Example: HPE MPT job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple MPI job submission script to submit a job using 4 compute
@@ -467,6 +455,10 @@ nodes (maximum of 144 physical cores) for 20 minutes would look like:
 
     # Launch the parallel job
     #   Using 144 MPI processes and 36 MPI processes per node
+    #
+    #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
+    #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
+    #
     mpiexec_mpt -n 144 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 144
@@ -476,7 +468,9 @@ allocate 4 nodes to your job and mpirun_mpt will place 36 MPI processes on each 
 
 See above for a more detailed discussion of the different PBS options
 
-Example: SGI MPT job submission script for MPI+OpenMP (mixed mode) parallel job
+.. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
+
+Example: HPE MPT job submission script for MPI+OpenMP (mixed mode) parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Mixed mode codes that use both MPI (or another distributed memory
@@ -519,7 +513,13 @@ of the ``omplace`` command to specify the number of threads.
     #   Using 8 MPI processes
     #   2 MPI processes per node
     #   18 OpenMP threads per MPI process
+    #
+    #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
+    #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
+    #
     mpiexec_mpt -n 8 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+
+.. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
 
 Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -560,9 +560,7 @@ Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
    mpiexec_mpt -n 4 -ppn 1 perf.bash &
    wait
 
-**Note:** the ``wait`` command is required to stop the PBS job finishing before the scripts finish.
-If you find odd behaviour, especially with respect to the values of bash variables, double check you
-have set ``MPI_SHEPHERD=true``
+.note :: The ``wait`` command is required to stop the PBS job finishing before the scripts finish.  If you find odd behaviour, especially with respect to the values of bash variables, double check you have set ``MPI_SHEPHERD=true``
 
 Serial Jobs
 -----------
