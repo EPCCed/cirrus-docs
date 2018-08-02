@@ -134,7 +134,7 @@ Example OptiStruct SPMD job submission script:
    #PBS -N HW_OptiStruct_SPMD
    
    # Use 2 nodes for this calculation
-   #PBS -l select=2:ncpus=72
+   #PBS -l select=2:ncpus=36
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)

@@ -118,7 +118,6 @@ An example job script would be ::
  ## Remember that the ncpus value should be double the number of
  ## physical cores you wish to employ.
  #PBS -l select=1:ncpus=42
-
  #PBS -l walltime=00:20:00
  
  # Replace [budget code] below with your project code (e.g. t01)

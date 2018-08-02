@@ -34,9 +34,9 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N lammps_test
-   #PBS -l select=4:ncpus=72
+   #PBS -l select=4:ncpus=36
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -l walltime=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)

@@ -41,8 +41,8 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
 
    # PBS job options (name, compute nodes, job time)
    #PBS -N CP2K_test
-   #PBS -l select=4:ncpus=72
-   #PBS -l place=excl
+   #PBS -l select=4:ncpus=36
+   #PBS -l place=scatter:excl
    #PBS -l walltime=0:20:0
 
    # Replace [budget code] below with your project code (e.g. t01)
@@ -96,8 +96,8 @@ For example, the following script will run a CP2K job using 4 nodes, with 6 Open
 
     # PBS job options (name, compute nodes, job time)
     #PBS -N CP2K_test
-    #PBS -l select=4:ncpus=72
-    #PBS -l place=excl
+    #PBS -l select=4:ncpus=36
+    #PBS -l place=scatter:excl
     #PBS -l walltime=0:20:0
 
     # Replace [budget code] below with your project code (e.g. t01)

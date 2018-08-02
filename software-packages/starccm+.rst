@@ -62,7 +62,7 @@ following script starts the server:
    #PBS -N STAR-CCM_test
    #PBS -l select=1008
    #PBS -l walltime=02:00:00
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -k oe    
 
    # Replace [budget code] below with your project code (e.g. t01)
@@ -105,7 +105,7 @@ following script starts the server:
    #PBS -N STAR-CCM_test
    #PBS -l select=1008
    #PBS -l walltime=02:00:00
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -k oe    
 
    # Replace [budget code] below with your project code (e.g. t01)

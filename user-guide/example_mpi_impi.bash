@@ -3,9 +3,9 @@
 # PBS job options (name, compute nodes, job time)
 #PBS -N Example_MPI_Job
 # Select 4 full nodes
-#PBS -l select=4:ncpus=72
+#PBS -l select=4:ncpus=36
 # Parallel jobs should always specify exclusive node access
-#PBS -l place=excl
+#PBS -l place=scatter:excl
 #PBS -l walltime=00:20:00
 
 # Replace [budget code] below with your project code (e.g. t01)

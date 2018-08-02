@@ -40,8 +40,8 @@ helyxHexMesh and caseSetup are run sequentially in 144 cores.
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N HELYX_MPI_Job
-   #PBS -l select=4:ncpus=72
-   #PBS -l place=excl
+   #PBS -l select=4:ncpus=36
+   #PBS -l place=scatter:excl
    #PBS -l walltime=00:20:00
    
    # Replace [budget code] below with your project code (e.g. t01)

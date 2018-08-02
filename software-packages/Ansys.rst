@@ -41,9 +41,9 @@ this example, "-t504" is employed.
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N ANSYS_test
-   #PBS -l select=14:ncpus=72
+   #PBS -l select=14:ncpus=36
    #PBS -l walltime=23:04:0
-   #PBS -l place=excl
+   #PBS -l place=scatter:excl
    #PBS -k oe    
 
    # Replace [budget code] below with your project code (e.g. t01)
