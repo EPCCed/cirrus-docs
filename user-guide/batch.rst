@@ -10,10 +10,10 @@ submit your job to the job submission system. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-.. note:: There are a number of different queues on Cirrus. If you do not specify a queue your job will be submitted to the default ``workq`` which has limits on the maximum job size and total amount of resource that can be used.  See below for more information on the different queues and their limits.
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
 
 If you have any questions on how to run jobs on Cirrus do not hesitate
-to contact the EPCC Helpdesk.
+to contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`_.
 
 Using PBS Pro
 -------------
@@ -47,7 +47,7 @@ The qsub command submits a job to PBS:
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
 
-.. note:: There are a number of different queues on Cirrus. If you do not specify a queue your job will be submitted to the default ``workq`` which has limits on the maximum job size and total amount of resource that can be used.  See below for more information on the different queues and their limits.  
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
 
 The qstat command
 ~~~~~~~~~~~~~~~~~
@@ -97,13 +97,25 @@ Queue Limits
 Queues on Cirrus are designed to enable users to use the system flexibly while 
 retaining fair access for all.
 
-There are two queues available to general users on Cirrus:
+There are a number of queues available to general users on Cirrus. Standard jobs
+are automatically routed into either ``workq`` or ``indy`` depending on the project 
+that submitted the job. To use either of these queues, you **should not** specify 
+a queue name in your job script.
 
-* ``workq`` (default): This is the default queue that user jobs are submitted to
-  if the ``-q`` option to ``qsub`` is not specified. Jobs in this queue can have a 
-  maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
-  nodes). Each **project** can use a maximum of 2520 cores (70 nodes) summed across all
-  their running jobs at any one time or have 20 jobs running.
+* ``workq``: Jobs in this queue can have a maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
+  nodes). Each **project** can use a maximum of 2520 cores (70 nodes) summed across all their running jobs at any one time
+  or have 20 jobs running (note that these limits can be dynamically altered by the service to improve throughput on the system).
+  All jobs in this queue are node exclusive (i.e. only one job can run on one node at any one time). However, as this may not
+  continue to be the case we strongly advise that any users who wish to guarantee node exclusive mode specify the options
+  described below to ensure this.
+
+* ``indy``: Jobs in this queue have no maximum walltime or job size. Job running in this queue are node shared by default (i.e.
+  multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
+  options described below.
+
+If you wish to run jobs using more cores than are available in the standard queues,
+you should use the ``large`` queue. You do this by adding the option ``-q large`` to
+your ``qsub`` command (or by adding ``#PBS -q large`` to your job script).
 
 * ``large``: Specified by using ``-q large`` at submission time. There is no 
   upper limit on job size in this queue but there is a minimum job size of 2521
@@ -138,10 +150,11 @@ All parallel job submission scripts require (as a minimum) you to
 specify four things:
 
 -  The number of nodes and cores per node you require via the
-   ``-l select=[Nodes]:ncpus=36`` option. **Note ncpus should always be 36, regardless of how many cores you intend to employ.  This simply indicates that you want to reserve all cores on a node.** Each node has 36 physical
+   ``-l select=[Nodes]:ncpus=36`` option. Each node has 36 physical
    cores (2x 18-core sockets). For example, to select 4 nodes
    (144 physical cores in total) you would use
-   ``-l select=4:ncpus=36``. 
+   ``-l select=4:ncpus=36``. **We strongly recommend that all parallel
+   jobs use node exclusive mode as described below to get best performance.**
 -  The placement option ``-l place=scatter`` to ensure that parallel
    processes/threads are scheduled to the full set of compute nodes
    assigned to the job.
@@ -157,9 +170,6 @@ specify four things:
 In addition to these mandatory specifications, there are many other
 options you can provide to PBS. The following options may be useful:
 
-- Currently, compute nodes are not shared between users, in other words
-  all jobs effectively run with ``-l place=scatter:excl``, even if the exclusive
-  node usage flag is not specified in the submission script.
 - The name for your job is set using ``-N My_job``. In the examples below
   the name will be "My\_job", but you can replace "My\_job" with any
   name you want. The name will be used in various places. In particular
@@ -172,12 +182,7 @@ options you can provide to PBS. The following options may be useful:
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
 
-Currently on Cirrus, jobs are reserved for users in an exclusive way.
-This means each node is dedicated to one user only. However, in the past
-Cirrus nodes were shared between users by default and there is a chance
-that this default setting will be restored in the future. For that reason
-this user guide will assume that exclusive node assignment has to be
-specified explicitly in order to take effect.
+Exclusive node access means each node is dedicated to one user only.
 
 To make sure your jobs have exclusive node access you should add the
 ``excl`` sharing directive to the ``place`` option in your jobs:
@@ -186,7 +191,8 @@ To make sure your jobs have exclusive node access you should add the
 
     #PBS -l place=scatter:excl
 
-All of our example parallel job submission scripts below specify this option.
+All of our example parallel job submission scripts below specify this option as
+this mode of use is strongly recommended for all parallel jobs on Cirrus.
 
 Running MPI parallel jobs
 -------------------------
