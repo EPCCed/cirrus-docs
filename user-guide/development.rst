@@ -20,13 +20,6 @@ full documentation please see:
 
 -  `Linux manual page on modules <http://linux.die.net/man/1/module>`__
 
-**Note:** The modules provided by the `Spack <http://spack.readthedocs.io>`__
-package manager behave differently to those usually encountered in Linux
-environments. In particular, each module has the versions of dependency
-libraries hardcoded using RPATH. More information is provided below. You
-can identify Spack modules as they have a random string of 7 characters at
-the end of their name, e.g.: ``fftw-3.3.5-intel-17.0.2-dxt2dzn``.
-
 Using the modules environment
 -----------------------------
 
@@ -69,8 +62,8 @@ If you want more info on any of the modules, you can use the
 
     ----------- Module Specific Help for 'mpt/2.14' -------------------
 
-    The SGI Message Passing Toolkit (MPT) is an optimized MPI
-    implementation for SGI systems and clusters.  See the
+    The HPE Message Passing Toolkit (MPT) is an optimized MPI
+    implementation for HPE systems and clusters.  See the
     MPI(1) man page and the MPT User's Guide for more
     information.
 
@@ -126,6 +119,19 @@ Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the foll
 Modules provided by Spack
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of mdules available to users should cover most common use cases on Cirrus.
+
+The Spack package manager provides many more modules (particularly for libraries and 
+dependencies) than are visible by default to users. If you wish to see or use the
+modules provided by Spack, then you must first load the ``spack`` module:
+
+::
+
+   module load spack
+
+Once this module is loaded, the ``module avail`` command will list the additional
+modules that have been installed using Spack.
+
 Care must be taken when using modules provided by Spack as they behave differently
 from standard Linux modules.
 
@@ -169,18 +175,16 @@ to this is hrdcoded into boost itself via RPATH. If you wish to use the
 older version of zlib then you must load it and then compile boost yourself.
 
 If you wish to see what versions of libraries are hardcoded into a particular
-Spack module then you must use Spack commands available after loading the 
-``spack`` module, e.g.:
+Spack module then you must use Spack commands, e.g.
 
 ::
 
-
+    [auser@cirrus-login0 ~]$ module load spack
     [auser@cirrus-login0 ~]$ module avail boost
 
     ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
     boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
 
-    [auser@cirrus-login0 ~]$ module load spack
 
     [auser@cirrus-login0 ~]$ spack find -dl boost
     ==> 2 installed packages.
@@ -198,16 +202,18 @@ Spack module then you must use Spack commands available after loading the
 
 This shows their are two boost modules installed (one for the Intel compilers
 and one for the GCC compilers), they both depend on zlib 1.0.6 and bzip2 1.2.10
-and the GCC version also depends on MPI 2.14 (SGI MPT 2.14). The paths for these
+and the GCC version also depends on MPI 2.14 (HPE MPT 2.14). The paths for these
 dependencies are hardocoded into the boost RPATH.
 
 
 Available Compiler Suites
 -------------------------
 
-**Note:** As Cirrus uses dynamic linking by default you will generally also need
-to load any modules you used to compile your code in your job submission
-script when you run your code.
+.. note::
+
+   As Cirrus uses dynamic linking by default you will generally also need
+   to load any modules you used to compile your code in your job submission
+   script when you run your code.
 
 Intel Compiler Suite
 ~~~~~~~~~~~~~~~~~~~~
@@ -234,8 +240,10 @@ also load the gcc/6.2.0 module to have access to the correct C++ files:
 ::
     module load gcc/6.2.0
 
-**Note:** You will also need to load this module in your job submission scripts
-when running code compiled in this way.
+.. note::
+
+   You will also need to load this module in your job submission scripts
+   when running code compiled in this way.
 
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
@@ -257,12 +265,12 @@ Compiling MPI codes
 
 There are two MPI libraries currently available on Cirrus:
 
-* SGI Message Passing Toolkit (MPT)
+* HPE Message Passing Toolkit (MPT)
 * Intel MPI
 
 The compilation and run commands are different depending on which of these
 libraries you choose. Most of the applications we have compiled on Cirrus
-have made use of the SGI MPT library and we only use Intel MPI if SGI MPT
+have made use of the HPE MPT library and we only use Intel MPI if HPE MPT
 cannot be used for some reason. If you can use either library it is
 worthwhile running a few tests to discover if either provides a performance
 advantage for your application.
@@ -272,14 +280,16 @@ The following sections discuss each of the MPI library options in turn.
 You should also consult the chapter on running jobs through the batch system
 for examples of how to run jobs compiled against the different MPI libraries.
 
-**Remember:** by default, all compilers produce dynamic executables on
-Cirrus. This means that you must load the same modules at runtime (usually
-in your job submission script) as you have loaded at compile time.
+.. note::
 
-Using SGI MPT
+   By default, all compilers produce dynamic executables on
+   Cirrus. This means that you must load the same modules at runtime (usually
+   in your job submission script) as you have loaded at compile time.
+
+Using HPE MPT
 ~~~~~~~~~~~~~
 
-To compile MPI code with SGI MPT, using any compiler, you must first load the "mpt" module.
+To compile MPI code with HPE MPT, using any compiler, you must first load the "mpt" module.
 
 ::
 
@@ -291,14 +301,18 @@ to you.
 What you do next depends on which compiler (Intel or GCC) you wish to use to
 compile your code.
 
-**Note:** We recommend that you use the Intel compiler wherever possible to 
-compile MPI applications as this is the method officially supported and
-tested by SGI.
+.. note::
 
-**Note:** You can always check which compiler the MPI compiler wrapper scripts
-are using with, for example, ``mpicc -v`` or ``mpif90 -v``.
+   We recommend that you use the Intel compiler wherever possible to 
+   compile MPI applications as this is the method officially supported and
+   tested by HPE.
 
-Using Intel Compilers and SGI MPT
+.. note::
+
+   You can always check which compiler the MPI compiler wrapper scripts
+   are using with, for example, ``mpicc -v`` or ``mpif90 -v``.
+
+Using Intel Compilers and HPE MPT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have loaded the MPT module you should next load the appropriate 
@@ -317,37 +331,43 @@ Compilers are then available as
 * ``mpicc`` - C with MPI
 * ``mpicxx`` - C++ with MPI
 
-**Note** mpicc uses gcc by default:
 
-When compiling C applications you must also specify that 
-``mpicc`` should use the ``icc`` compiler with, for example,
-``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
-compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
-which compiler is actually being called.
+.. note::
 
-Alternatively, you can set the environment variable ``MPICC_CC=icc`` to 
-ensure the correct base compiler is used:
+   mpicc uses gcc by default:
 
-::
+   When compiling C applications you must also specify that 
+   ``mpicc`` should use the ``icc`` compiler with, for example,
+   ``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
+   compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
+   which compiler is actually being called.
 
-   export MPICC_CC=icc
+   Alternatively, you can set the environment variable ``MPICC_CC=icc`` to 
+   ensure the correct base compiler is used:
 
-**Note** mpicxx uses g++ by default:
+   ::
 
-When compiling C++ applications you must also specify that 
-``mpicxx`` should use the ``icpc`` compiler with, for example,
-``mpicxx -cxx=icpc``. (This is not required for Fortran as the ``mpif90``
-compiler automatically uses ``ifort``.)  If in doubt use ``mpicxx -cxx=icpc -v`` to see
-which compiler is actually being called.
+      export MPICC_CC=icc
 
-Alternatively, you can set the environment variable ``MPICXX_CXX=icpc`` to 
-ensure the correct base compiler is used:
+.. note::
 
-::
+   mpicxx uses g++ by default:
 
-   export MPICXX_CXX=icpc
+   When compiling C++ applications you must also specify that 
 
-Using GCC Compilers and SGI MPT
+   ``mpicxx`` should use the ``icpc`` compiler with, for example,
+   ``mpicxx -cxx=icpc``. (This is not required for Fortran as the ``mpif90``
+   compiler automatically uses ``ifort``.)  If in doubt use ``mpicxx -cxx=icpc -v`` to see
+   which compiler is actually being called.
+
+   Alternatively, you can set the environment variable ``MPICXX_CXX=icpc`` to 
+   ensure the correct base compiler is used:
+
+   ::
+
+      export MPICXX_CXX=icpc
+
+Using GCC Compilers and HPE MPT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have loaded the MPT module you should next load the 
@@ -363,10 +383,12 @@ Compilers are then available as
 * ``mpicc`` - C with MPI
 * ``mpicxx`` - C++ with MPI
 
-**Note:** SGI MPT does not support the syntax ``use mpi`` in Fortran 
-applications with the GCC compiler ``gfortran``. You should use the
-older ``include "mpif.h"`` syntax when using GCC compilers with 
-``mpif90``.
+.. note::
+
+   HPE MPT does not support the syntax ``use mpi`` in Fortran 
+   applications with the GCC compiler ``gfortran``. You should use the
+   older ``include "mpif.h"`` syntax when using GCC compilers with 
+   ``mpif90``. If you cannot change this, then use the Intel MPI library.
 
 Using Intel MPI
 ~~~~~~~~~~~~~~~
@@ -413,8 +435,7 @@ MPI compilers are then available as
 * ``mpiicc`` - C with MPI
 * ``mpiicpc`` - C++ with MPI
 
-**Note:** Intel compilers with Intel MPI use non-standard compiler wrapper script names.
-If you use the standard names you will end up using the GCC compilers.
+.. note:: Intel compilers with Intel MPI use non-standard compiler wrapper script names. If you use the standard names you will end up using the GCC compilers.
 
 Using GCC Compilers and Intel MPI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
