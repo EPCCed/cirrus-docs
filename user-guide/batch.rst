@@ -98,8 +98,8 @@ Queues on Cirrus are designed to enable users to use the system flexibly while
 retaining fair access for all.
 
 There are a number of queues available to general users on Cirrus. Standard jobs
-are automatically routed into either ``workq`` or ``indy`` depending on the project 
-that submitted the job. To use either of these queues, you **should not** specify 
+are automatically routed into either ``workq``, ``indy`` or ``large``  depending on the project 
+that submitted the job and the size of the job. To use any of these queues, you **should not** specify 
 a queue name in your job script.
 
 * ``workq``: Jobs in this queue can have a maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
@@ -108,16 +108,10 @@ a queue name in your job script.
   All jobs in this queue are node exclusive (i.e. only one job can run on one node at any one time). However, as this may not
   continue to be the case we strongly advise that any users who wish to guarantee node exclusive mode specify the options
   described below to ensure this.
-
 * ``indy``: Jobs in this queue have no maximum walltime or job size. Job running in this queue are node shared by default (i.e.
   multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
   options described below.
-
-If you wish to run jobs using more cores than are available in the standard queues,
-you should use the ``large`` queue. You do this by adding the option ``-q large`` to
-your ``qsub`` command (or by adding ``#PBS -q large`` to your job script).
-
-* ``large``: Specified by using ``-q large`` at submission time. There is no 
+* ``large``: There is no 
   upper limit on job size in this queue but there is a minimum job size of 2521
   cores (71 nodes), a maximum walltime of 48 hours (2 days),
   each **user** can have a maximum of 1 job running at any one time, and a maximum
