@@ -50,6 +50,14 @@ Disk quotas
 Disk quotas on Cirrus are managed via
 `SAFE <https://www.archer.ac.uk/tier2/>`__
 
+For live disk usage figures use
+
+::
+
+    lfs quota -hu <username> /lustre
+
+    lfs quota -hg <groupname> /lustre 
+
 File permissions and security
 -----------------------------
 
