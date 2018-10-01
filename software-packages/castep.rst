@@ -51,7 +51,9 @@ For example, the following script will run a CASTEP job using 4 nodes
    
    # Load CASTEP and MPI modules
    module load castep
-   module load mpt
+
+   # Set OMP_NUM_THREADS=1 to avoid unintentional threading
+   export OMP_NUM_THREADS=1
 
    # Run using input in test_calc.in
    # Note: '-ppn 36' is required to use all physical cores across
