@@ -80,8 +80,10 @@ You can now use ``nvcc`` to compile your source code, e.g.:
 
    nvcc -o cuda_test.x cuda_test.cu
 
-.. note:: When compiling using GCC for the CPUs on the GPU compute nodes you should add the flag
-``-march=skylake-avx512`` to get the correct instructions for the Skylake processors.
+.. note::
+
+   When compiling using GCC for the CPUs on the GPU compute nodes you should add the flag
+   ``-march=skylake-avx512`` to get the correct instructions for the Skylake processors.
 
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
