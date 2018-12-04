@@ -97,7 +97,11 @@ Queue Limits
 Queues on Cirrus are designed to enable users to use the system flexibly while 
 retaining fair access for all.
 
-There are a number of queues available to general users on Cirrus. Standard jobs
+Standard compute node queues
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are a number of queues available to general users on Cirrus that route jobs to the standard
+compute nodes. Standard jobs
 are automatically routed into either ``workq``, ``indy`` or ``large``  depending on the project 
 that submitted the job and the size of the job. To use any of these queues, you **should not** specify 
 a queue name in your job script.
@@ -116,6 +120,19 @@ a queue name in your job script.
   cores (71 nodes), a maximum walltime of 48 hours (2 days),
   each **user** can have a maximum of 1 job running at any one time, and a maximum
   of 4 jobs in the queue (including a running job).
+
+GPU compute node queues
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wish to use the GPU compute nodes then you need to submit to the ``gpu`` queue by adding 
+``-q gpu`` to your submission. You will also need to specify how many GPU accelerators you wish to
+use. Full details are available in the GPU chapter of this User Guide. 
+
+Jobs in the ``gpu`` queue can havea maximum walltime of 6 hours. There is a maximum job size of 2
+nodes (as there are 2 nodes available). Each user can only have one job running at any one time.
+
+Queue error messages
+~~~~~~~~~~~~~~~~~~~~
 
 If you try to submit a job that asks for more than the maximum allowed wall
 time or cores you will see an error similar to:

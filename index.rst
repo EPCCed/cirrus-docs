@@ -10,9 +10,12 @@ Tier-2 National HPC Services.
 Cirrus is available to industry, commerce and academic researchers. For information on how
 to get access to the system please see the `Cirrus website <http://www.cirrus.ac.uk>`_.
 
-The Cirrus facility is based around an SGI ICE XA system with 10,080 cores. There are 280 compute
-nodes, each with 256 GB of memory, connected together by a single Infiniband fabric. Each node
-contains two 2.1 GHz, 18-core Intel Xeon processors, and all nodes access the 406 TiB Lustre file system.
+The Cirrus facility is based around an SGI ICE XA system. There are 280 standard
+compute nodes adn 2 GPU compute nodes. Each standard compute node has 256 GiB of memory and
+contains two 2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each GPU compute node has 384 GiB of 
+memory, contains two 2.4 GHx, 20-core Intel Xeon (Skylake) processors and four NVIDIA Tesla V100-SXM2-16GB
+(Volta) GPU accelerators connected to the host processors and each other via PCIe. All nodes are
+connected using a single Infiniband fabric and access the shared, 406 TiB Lustre file system.
 
 This documentation covers:
 
