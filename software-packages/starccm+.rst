@@ -20,12 +20,12 @@ Useful Links
 Licensing
 ---------
 
-All users must provide their own license for STAR-CCM+. This licence 
+All users must provide their own licence for STAR-CCM+. This licence 
 can be provided as:
 
 1. FLEXlm licence key to be installed on Cirrus
-2. IP address and port of publicly accesible remote licence (your STAR-CCM+ license server must use the same ports
-as our License Server Gateway: this is achieved by simply setting an environment variable)
+2. IP address and port of publicly accesible remote licence (your STAR-CCM+ licence server must use the same ports
+as our Licence Server Gateway: this is achieved by simply setting an environment variable)
 3. Power on Demand (PoD) (nothing needs to be provided to Cirrus in this case)
 
 For options 1 and 2, you should contact the `Cirrus Helpdesk <mailto:support@cirrus.ac.uk>`_
@@ -60,7 +60,7 @@ following script starts the server:
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N STAR-CCM_test
-   #PBS -l select=1008
+   #PBS -l select=14:ncpus=36
    #PBS -l walltime=02:00:00
    #PBS -l place=scatter:excl
    #PBS -k oe    
@@ -103,7 +103,7 @@ following script starts the server:
    
    # PBS job options (name, compute nodes, job time)
    #PBS -N STAR-CCM_test
-   #PBS -l select=1008
+   #PBS -l select=14:ncpus=36
    #PBS -l walltime=02:00:00
    #PBS -l place=scatter:excl
    #PBS -k oe    
