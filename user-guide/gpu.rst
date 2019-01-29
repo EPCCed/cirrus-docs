@@ -4,6 +4,11 @@ Using the Cirrus GPU Nodes
 Cirrus has two compute nodes equipped with GPGPU accelerators. This section of the user
 guide explains how to compile code and submit jobs to the GPU nodes.
 
+.. note::
+
+        The GPU accelerators on Cirrus are only available in TCC (Tesla Compute Cluster)
+        mode and so do not support graphics rendering tasks, only computational tasks.
+
 Hardware details
 ----------------
 
