@@ -10,7 +10,7 @@ submit your job to the job submission system. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
 
 If you have any questions on how to run jobs on Cirrus do not hesitate
 to contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`_.
@@ -47,7 +47,7 @@ The qsub command submits a job to PBS:
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
 
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
 
 The qstat command
 ~~~~~~~~~~~~~~~~~
@@ -188,8 +188,6 @@ options you can provide to PBS. The following options may be useful:
   it will be used in the queue listing and to generate the name of your
   output and/or error file(s). Note there is a limit on the size of the
   name.
-- ``-q large`` will specify that you want to submit your job to the ``large``
-  queue for running larger jobs than are permitted in the standard queue.
 
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
