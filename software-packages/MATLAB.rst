@@ -23,8 +23,10 @@ government, commercial, or other organizational use.
 
 **If your use of MATLAB is not covered by this license then please do
 not use this installation.**  Please contact the `Cirrus Helpdesk
-<http://www.cirrus.ac.uk/support/>`__ to arrange use of your own
+<http://www.cirrus.ac.uk/support/>`_ to arrange use of your own
 MATLAB license on Cirrus.
+
+.. highlight:: none
 
 This is MATLAB Version 9.5.0.1033004 (R2018b) Update 2 and provides the
 following toolboxes ::
@@ -112,29 +114,41 @@ following toolboxes ::
  Vision HDL Toolbox                      Version 1.7
  WLAN Toolbox                            Version 2.0
  Wavelet Toolbox                         Version 5.1
-  
-Running parallel MATLAB jobs
------------------------------------
+
+
+Running MATLAB jobs
+-------------------
 
 On Cirrus, MATLAB is intended to be used on the compute nodes within
 PBS job scripts.  Use on the login nodes should be restricted to
-setting preferences, accessing help, etc.  It is recommended that
-MATLAB is used without a GUI on the compute nodes, as the interactive
-response is slow.
+setting preferences, accessing help, and launching MDCS jobs.  It is
+recommended that MATLAB is used without a GUI on the compute nodes, as
+the interactive response is slow.
+
+
+Running parallel MATLAB jobs using the *local* cluster
+------------------------------------------------------
 
 The license for this installation of MATLAB provides only 32 workers
-via MATLAB Distributed Computing Server (MDCS) but provides 36 workers
-via the local cluster profile (there are 36 cores on a Cirrus compute
-node), so we do not recommend the use of MDCS for parallel
-computations.
+via MDCS but provides 36 workers via the local cluster profile (there
+are 36 cores on a Cirrus compute node), so we only recommend the use
+of MDCS to test the configuration of distributed memory parallel
+computations for eventual use of your own MDCS license.
+
+The *local* cluster should be used within a PBS job script - you
+submit a job that runs MATLAB and uses the *local* cluster, which is
+the compute node that the job is running on.
 
 MATLAB will normally use up to the total number of cores on a node for
-multi-threaded operations (e.g., matrix inversions) and for parallel
-computations.  It also makes no restriction on its memory use.  These
-features are incompatible with the shared use of nodes on Cirrus.  A
-wrapper script is provided to limit the number of cores and amount of
-memory used, in proportion to the number of CPUs selected in the PBS
-job script.  Please use this wrapper instead of using MATLAB directly.
+multi-threaded operations (e.g. matrix inversions) and for parallel
+computations.  It also make no restriction on its memory use.  These
+features are incompatible with the shared use of nodes on Cirrus.  For
+the *local* cluster, a wrapper script is provided to limit the number
+of cores and amount of memory used, in proportion to the number of
+CPUs selected in the PBS job script.  Please use this wrapper instead
+of using MATLAB directly.
+
+.. highlight:: bash
 
 Say you have a job that requires 3 workers, each running 2 threads.
 As such, you should employ 3x2=6 physical cores (we find running
@@ -156,6 +170,8 @@ job script for this particular case would be ::
  
  matlab_wrapper -nodisplay < /lustre/sw/cse-matlab/examples/testp.m > testp.log
 
+.. highlight:: none
+
 This would run the *testp.m* script, without a display, and exit when
 *testp.m* has finished.  6 CPUs are selected, which correspond to 6
 cores, and the following limits would be set initially ::
@@ -168,8 +184,10 @@ cores, and the following limits would be set initially ::
  Number of workers to start on your local machine (NumWorkers)        = 6
  Number of computational threads to use on each worker (NumThreads)   = 1
 
-The *testp.m* program sets *NumWorkers* to 3 and *NumThreads* to 2 ::
+.. highlight:: matlab
 
+The *testp.m* program sets *NumWorkers* to 3 and *NumThreads* to 2 ::
+ 
  cirrus_cluster = parcluster('local');
  ncores = cirrus_cluster.NumWorkers * cirrus_cluster.NumThreads;
  cirrus_cluster.NumWorkers = 3;
@@ -182,6 +200,26 @@ The *testp.m* program sets *NumWorkers* to 3 and *NumThreads* to 2 ::
  end
  saveProfile(cirrus_cluster);
  clear cirrus_cluster;
+ 
+ 
+ n = 3;
+ A = 3000;
+ 
+ a=zeros(A,A,n);
+ b=1:n;
+ 
+ parpool;
+ 
+ tic
+ parfor i = 1:n
+     a(:,:,i) = rand(A);
+ end
+ toc
+ tic
+ parfor i = 1:n
+     b(i) = max(abs(eig(a(:,:,i))));
+ end
+ toc
 
 Note that *PreferredNumWorkers*, *NumWorkers* and *NumThreads* persist
 between MATLAB sessions but will be updated correctly if you use the
@@ -196,3 +234,327 @@ to 1 (the default).
 If you specify exclusive node access, then all the cores and memory
 will be available.  On the login nodes, a single core is used and
 memory is not limited.
+
+
+Running parallel MATLAB jobs using MDCS
+---------------------------------------
+
+It is possible to use MATLAB on the login node to set up an MDCS
+PBSPro cluster profile and then launch jobs using that profile.
+However, this does not give per-job control of the number of cores,
+walltime, etc.:  these are set once in the profile.
+
+Raymond Norris from MathWorks has provided a configuration script that
+gives a much more flexible MDCS profile and we recommend you use this
+method.  Instructions for using this profile are given below.
+
+This MDCS profile can be used in MATLAB on the login node - the MDCS
+computations are done in PBS jobs launched using the profile.
+
+.. highlight:: matlab
+
+Configuration
+^^^^^^^^^^^^^
+
+Start MATLAB on the login node.  Configure MATLAB to run parallel jobs
+on your cluster by calling *configCluster*.  For each cluster,
+*configCluster* only needs to be called once per version of MATLAB ::
+
+ configCluster
+
+Jobs will now default to the cluster rather than submit to the local
+machine.
+
+Configuring jobs
+^^^^^^^^^^^^^^^^
+
+Prior to submitting the job, we can specify various parameters to pass
+to our jobs, such as walltime, e-mail, etc.  Other than
+*ProjectCode* and *WallTime*, none of these are required to be
+set.
+
+NOTE: Any parameters specified using the below workflow will be
+persistent between MATLAB sessions ::
+
+ % Get a handle to the cluster.
+ c = parcluster('cirrus');
+
+ % Assign the project code for the job.  **[REQUIRED]**
+ c.AdditionalProperties.ProjectCode = 'project-code';
+
+ % Specify the walltime (e.g. 5 hours).  **[REQUIRED]**
+ c.AdditionalProperties.WallTime = '05:00:00';
+
+ % Specify e-mail address to receive notifications about your job.
+ c.AdditionalProperties.EmailAddress = 'your_name@your_address';
+
+ % Request a specific reservation to run your job.  It is better to
+ % use the queues rather than a reservation.
+ c.AdditionalProperties.Reservation = 'your-reservation';
+
+ % Set the job placement (e.g., pack, excl, scatter:excl).
+ % Usually the default of free is what you want.
+ c.AdditionalProperties.JobPlacement = 'pack';
+
+ % Request to run in a particular queue.  Usually the default (no
+ % specific queue requested) will route the job to the correct queue.
+ c.AdditionalProperties.QueueName = 'queue-name';
+
+ % If you are using GPUs, request up to 4 GPUs per node (this will
+ % override a requested queue name and will use the 'gpu' queue).
+ c.AdditionalProperties.GpusPerNode = 4;
+
+Save changes after modifying *AdditionalProperties* fields ::
+
+ c.saveProfile
+
+To see the values of the current configuration options, call the
+specific *AdditionalProperties* name ::
+
+ c.AdditionalProperties
+
+To clear a value, assign the property an empty value (*''*, *[]*, or *false*) ::
+
+ % Turn off email notifications.
+ c.AdditionalProperties.EmailAddress = '';
+
+Interactive jobs
+^^^^^^^^^^^^^^^^
+
+To run an interactive pool job on the cluster, continue to use parpool
+as before.  *configCluster* sets *NumWorkers* to 32 in the cluster to
+match the number of MDCS workers available in our TAH licence.  If you
+have your own MDCS licence, then you can change this by setting
+*c.NumWorkers* and saving the profile. ::
+
+ % Open a pool of 32 workers on the cluster.
+ p = parpool('cirrus',32);
+
+Rather than running local on the host machine, the pool can now run
+across multiple nodes on the cluster ::
+
+ % Run a parfor over 1000 iterations.
+ parfor idx = 1:1000
+   a(idx) = ...
+ end
+
+Once we're done with the pool, delete it ::
+
+ % Delete the pool
+ p.delete
+
+Serial jobs
+^^^^^^^^^^^
+
+Rather than running interactively, use the *batch* command to submit
+asynchronous jobs to the cluster.  This is generally more useful on
+Cirrus, which usually has long queues.  The *batch* command will
+return a job object which is used to access the output of the
+submitted job.  See the MATLAB documentation for more help on
+*batch* ::
+
+ % Get a handle to the cluster.
+ c = parcluster('cirrus');
+
+ % Submit job to query where MATLAB is running on the cluster.
+ j = c.batch(@pwd, 1, {});
+
+ % Query job for state.
+ j.State
+
+ % If state is finished, fetch results.
+ j.fetchOutputs{:}
+
+ % Delete the job after results are no longer needed.
+ j.delete
+
+To retrieve a list of currently running or completed jobs, call
+*parcluster* to retrieve the cluster object.  The cluster object
+stores an array of jobs that were run, are running, or are queued to
+run.  This allows us to fetch the results of completed jobs.  Retrieve
+and view the list of jobs as shown below ::
+
+ c = parcluster('cirrus');
+ jobs = c.Jobs
+
+Once we've identified the job we want, we can retrieve the results as
+we've done previously.
+
+*fetchOutputs* is used to retrieve function output arguments; if using
+batch with a script, use *load* instead.  Data that has been written to
+files on the cluster needs be retrieved directly from the file system.
+
+To view results of a previously completed job ::
+
+ % Get a handle on job with ID 2.
+ j2 = c.Jobs(2);
+
+NOTE:  You can view a list of your jobs, as well as their IDs, using
+the above *c.Jobs* command ::
+
+ % Fetch results for job with ID 2.
+ j2.fetchOutputs{:}
+
+ % If the job produces an error, view the error log file.
+ c.getDebugLog(j.Tasks(1))
+
+NOTE:  When submitting independent jobs, with multiple tasks, you will
+have to specify the task number.
+
+Parallel jobs
+^^^^^^^^^^^^^
+
+Users can also submit parallel workflows with batch.  Let's use the
+following example (*parallel_example.m*) for a parallel job ::
+
+ function t = parallel_example(iter)
+
+   if nargin==0, iter = 16; end
+
+   disp('Start sim')
+
+   t0 = tic;
+   parfor idx = 1:iter
+     A(idx) = idx;
+     pause(2);
+   end
+   t =toc(t0);
+
+   disp('Sim completed.')
+
+
+We'll use the *batch* command again, but since we're running a
+parallel job, we'll also specify a MATLAB Pool ::
+
+ % Get a handle to the cluster.
+ c = parcluster('cirrus');
+
+ % Submit a batch pool job using 4 workers for 16 simulations.
+ j = c.batch(@parallel_example, 1, {}, 'Pool', 4);
+
+ % View current job status.
+ j.State
+
+ % Fetch the results after a finished state is retrieved.
+ j.fetchOutputs{:}
+
+ ans =
+
+ 8.8872
+
+The job ran in 8.89 seconds using 4 workers.  Note that these jobs will
+always request N+1 CPU cores, since one worker is required to manage the
+batch job and pool of workers.  For example, a job that needs eight
+workers will consume nine CPU cores.  With a MDCS licence for 32 workers,
+you will be able to have a pool of 31 workers.
+
+We'll run the same simulation but increase the Pool size.  This time, to
+retrieve the results later, we'll keep track of the job ID.
+
+NOTE:  For some applications, there will be a diminishing return when
+allocating too many workers, as the overhead may exceed computation
+time. ::
+  
+
+ % Get a handle to the cluster.
+ c = parcluster('cirrus');
+
+ % Submit a batch pool job using 8 workers for 16 simulations.
+ j = c.batch(@parallel_example, 1, {}, 'Pool', 8);
+
+ % Get the job ID
+ id = j.ID
+
+ Id =
+
+ 4
+
+::
+   
+ % Clear workspace, as though we quit MATLAB.
+ clear j
+
+Once we have a handle to the cluster, we'll call the *findJob* method to
+search for the job with the specified job ID ::
+
+ % Get a handle to the cluster.
+ c = parcluster('cirrus');
+
+ % Find the old job
+ j = c.findJob('ID', 4);
+
+ % Retrieve the state of the job.
+ j.State
+
+ ans
+
+ finished
+
+ % Fetch the results.
+ j.fetchOutputs{:};
+
+ ans =
+
+ 4.7270
+
+ % If necessary, retrieve an output/error log file.
+ c.getDebugLog(j)
+
+The job now runs 4.73 seconds using 8 workers.  Run code with different
+number of workers to determine the ideal number to use.
+
+Alternatively, to retrieve job results via a graphical user interface,
+use the Job Monitor (Parallel > Monitor Jobs).
+
+|image1|
+
+Debugging
+^^^^^^^^^
+
+If a serial job produces an error, we can call the *getDebugLog* method to
+view the error log file ::
+
+ j.Parent.getDebugLog(j.Tasks(1))
+
+When submitting independent jobs, with multiple tasks, you will have to
+specify the task number.  For Pool jobs, do not dereference into the job
+object ::
+
+ j.Parent.getDebugLog(j)
+
+The scheduler ID can be derived by calling *schedID* ::
+
+ schedID(j)
+
+ ans
+
+ 25539
+
+To learn more
+^^^^^^^^^^^^^
+
+To learn more about the MATLAB Parallel Computing Toolbox, check out
+these resources:
+
+* `Parallel Computing Coding Examples <http://www.mathworks.com/products/parallel-computing/code-examples.html>`__
+
+* `Parallel Computing Documentation <http://www.mathworks.com/help/distcomp/index.html>`__
+
+* `Parallel Computing Overview <http://www.mathworks.com/products/parallel-computing/index.html>`__
+
+* `Parallel Computing Tutorials <http://www.mathworks.com/products/parallel-computing/tutorials.html>`__
+
+* `Parallel Computing Videos <http://www.mathworks.com/products/parallel-computing/videos.html>`__
+
+* `Parallel Computing Webinars <http://www.mathworks.com/products/parallel-computing/webinars.html>`__
+
+
+GPUs
+----
+
+To be completed.
+
+
+.. |image1| image:: images/MATLAB_image1.png
+   :width: 5.15625in
+   :height: 3.61458in
