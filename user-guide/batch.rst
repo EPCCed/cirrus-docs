@@ -10,7 +10,7 @@ submit your job to the job submission system. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
 
 If you have any questions on how to run jobs on Cirrus do not hesitate
 to contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`_.
@@ -47,7 +47,7 @@ The qsub command submits a job to PBS:
 This will submit your job script "job\_script.pbs" to the job-queues.
 See the sections below for details on how to write job scripts.
 
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job. The exception to this is the ``large`` queue. If you wish to use this queue, you need to specify this as described below.
+.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
 
 The qstat command
 ~~~~~~~~~~~~~~~~~
@@ -188,8 +188,6 @@ options you can provide to PBS. The following options may be useful:
   it will be used in the queue listing and to generate the name of your
   output and/or error file(s). Note there is a limit on the size of the
   name.
-- ``-q large`` will specify that you want to submit your job to the ``large``
-  queue for running larger jobs than are permitted in the standard queue.
 
 Exclusive Node Access
 ~~~~~~~~~~~~~~~~~~~~~
@@ -432,10 +430,10 @@ Example parallel MPI job submission scripts
 A subset of example job submssion scripts are included in full below. The
 full set are available via the following links:
 
-* HPE MPT MPI Job: :download:`example_mpi_sgimpt.bash <example_mpi_hpempt.bash>`
+* HPE MPT MPI Job: :download:`example_mpi_hpempt.bash <example_mpi_hpempt.bash>`
 * Intel MPI Job: :download:`example_mpi_impi.bash <example_mpi_impi.bash>`
 
-* HPE MPT Hybrid MPI/OpenMP Job: :download:`example_hybrid_hpempt.bash <example_hybrid_sgimpt.bash>` 
+* HPE MPT Hybrid MPI/OpenMP Job: :download:`example_hybrid_hpempt.bash <example_hybrid_hpempt.bash>` 
 * Intel MPI Hybrid MPI/OpenMP Job: :download:`example_hybrid_impi.bash <example_hybrid_impi.bash>` 
 
 Example: HPE MPT job submission script for MPI parallel job
@@ -543,7 +541,7 @@ Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to run on multiple nodes, where each node is running a self-contained job, not using MPI
-(e.g.) for processing data or a parameter sweep, you can use the SGI MPT ``mpiexec_mpt`` launcher to control job placement.
+(e.g.) for processing data or a parameter sweep, you can use the HPE MPT ``mpiexec_mpt`` launcher to control job placement.
 
 In the example script below, ``work.bash`` is a bash script which runs a threaded executable with a command-line input and
 ``perf.bash`` is a bash script which copies data from the CPU performance counters to an output file. As both handle the
