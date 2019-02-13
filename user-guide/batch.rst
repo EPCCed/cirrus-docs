@@ -111,9 +111,9 @@ a queue name in your job script.
   or have 20 jobs running (note that these limits can be dynamically altered by the service to improve throughput on the system). Jobs running in this queue are node shared by default (i.e.
   multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
   options described below.
-* ``indy``: Jobs in this queue have no maximum walltime or job size. Jobs running in this queue are node shared by default (i.e.
+* ``indy``: Jobs in this queue have a variable maximum job size and walltime (use `qstat -Qf indy` on Cirrus to check the current limits. Jobs running in this queue are node shared by default (i.e.
   multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
-  options described below.
+  options described below. This queue is only available to projects from industrial clients.
 * ``large``: There is no 
   upper limit on job size in this queue but there is a minimum job size of 2521
   cores (71 nodes), a maximum walltime of 48 hours (2 days),
