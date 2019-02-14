@@ -7,7 +7,7 @@ Cirrus is a HPC and data science service hosted and run by `EPCC <http://www.epc
 `The University of Edinburgh <http://www.ed.ac.uk>`_. It is one of the `EPSRC <http://www.epsrc.ac.uk>`_
 Tier-2 National HPC Services.
 
-Cirrus is available to industry, commerce and academic researchers. For information on how
+Cirrus is available to industry and academic researchers. For information on how
 to get access to the system please see the `Cirrus website <http://www.cirrus.ac.uk>`_.
 
 The Cirrus facility is based around an SGI ICE XA system. There are 280 standard
