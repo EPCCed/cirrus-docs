@@ -29,5 +29,5 @@ export OMP_NUM_THREADS=18
 #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
 #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
 #
-mpiexec_mpt -n 8 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+mpiexec_mpt -ppn 2 -n 8 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 

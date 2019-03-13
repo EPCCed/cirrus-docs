@@ -256,13 +256,13 @@ A sample MPI launch line using ``mpiexec_mpt`` looks like:
 
 ::
 
-    mpiexec_mpt -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2
+    mpiexec_mpt -ppn 72 -n 36 ./my_mpi_executable.x arg1 arg2
 
 This will start the parallel executable "my\_mpi\_executable.x" with
 arguments "arg1" and "arg2". The job will be started using 72 MPI
 processes, with 36 MPI processes are placed on each compute node 
 (this would use all the physical cores on each node). This would
-require 2 nodes to be requested in the PBS options.
+require 2 nodes to be requested in the PBS options. Note that the ordering of flags is important.
 
 The most important ``mpiexec_mpt`` flags are:
 
@@ -285,6 +285,8 @@ The most important ``mpiexec_mpt`` flags are:
 .. note:: ``mpiexec_mpt`` only works from within a PBS job submission script.
 
 .. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
+
+.. warning:: the above configuration and below examples assume using the default mpt (2.18) or above. With versions <2.18, you MUST reverse the order of the ``-ppn`` and ``-n`` options or you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*
 
 Please use ``man mpiexec_mpt`` query further options. (This is only available
 once you have loaded the ``mpt`` module.)
@@ -475,7 +477,7 @@ nodes (maximum of 144 physical cores) for 20 minutes would look like:
     #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
     #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
     #
-    mpiexec_mpt -n 144 -ppn 36 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    mpiexec_mpt -ppn 36 -n 144 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 144
 MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
@@ -533,7 +535,7 @@ of the ``omplace`` command to specify the number of threads.
     #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
     #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
     #
-    mpiexec_mpt -n 8 -ppn 2 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    mpiexec_mpt -ppn 2 -n 8 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 .. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
 
@@ -572,8 +574,8 @@ Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
    export MPI_SHEPHERD=true
 
    # Execute work and perf scripts on nodes simultaneously.
-   mpiexec_mpt -n 4 -ppn 1 work.bash &
-   mpiexec_mpt -n 4 -ppn 1 perf.bash &
+   mpiexec_mpt -ppn 1 -n 4 work.bash &
+   mpiexec_mpt -ppn 1 -n 4 perf.bash &
    wait
 
 .note :: The ``wait`` command is required to stop the PBS job finishing before the scripts finish.  If you find odd behaviour, especially with respect to the values of bash variables, double check you have set ``MPI_SHEPHERD=true``
