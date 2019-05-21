@@ -256,7 +256,7 @@ A sample MPI launch line using ``mpiexec_mpt`` looks like:
 
 ::
 
-    mpiexec_mpt -ppn 72 -n 36 ./my_mpi_executable.x arg1 arg2
+    mpiexec_mpt -ppn 36 -n 72 ./my_mpi_executable.x arg1 arg2
 
 This will start the parallel executable "my\_mpi\_executable.x" with
 arguments "arg1" and "arg2". The job will be started using 72 MPI
