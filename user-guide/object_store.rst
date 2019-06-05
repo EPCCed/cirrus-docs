@@ -4,8 +4,8 @@ The Object Store
 In addition to the lustre file-system Cirrus also has access to an Object-Store system. 
 This web-service provides an additional place for you to store your data but it works in a different way from 
 the file-system. Normally you would not access the object store directly from
- within your programs but it is a good place to archive data to free up space for new calculations.
- The object-store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
+within your programs but it is a good place to archive data to free up space for new calculations.
+The object-store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
  
  
 + Unlike files, objects cannot be modified or appended to. They are uploaded and downloade as complete objects.
@@ -50,16 +50,19 @@ Permissions and ACLs
 ====================
 
 Access permissions can be set on both buckets and objects. The Cirrus object store supports a combination of three permissions.
+
 1) Read
 2) Write
 3) Full-control
 
 For buckets:
+
 + Read permission allows you to lists its contents. You do *not* need this to access the object itself as long as you know the object name. 
 + Write permission allows you to add or delete objects.
 + Full-control allows you to change permissions on the bucket. 
 
 For objects:
+
 + Read permission allows the object to be downloaded.
 + Full-control allows you to change permissions on the object.
 
@@ -83,6 +86,7 @@ Managing the Object Store from SAFE
 
 Keys and quotas are managed through the SAFE. If a SAFE project has an allocation on the object store there will be a "Object store quotas" section in the Project Administration page for that project.
 Project managers can click on the button in that section to manage keys and quotas. From the quota management page you have two options:
+
 New key
    To create a new AccessKey
 List keys
@@ -96,22 +100,27 @@ The List-keys page shows a list of the existing keys for the project. Click on o
 View secret
    This shows details about the key including the AccessKey name, the AccessSecret and the UUID.
 Set permissions
-   This allows a project manager to share the key with selected members of the project. When a key is shared with somebody they will be able to view and download the key from the SAFE. 
-   If you want to revoke access to a key you can remove this permission then use *Regenerate* to change the AccessSecret. Other people who still have the key shared with them 
+   This allows a project manager to share the key with selected members of the project. 
+   When a key is shared with somebody they will be able to view and download the key from the SAFE. 
+   If you want to revoke access to a key you can remove this permission then use *Regenerate* to change the AccessSecret. 
+   Other people who still have the key shared with them 
    will be able to download the new secret as before.
 Test
    The SAFE will connect to the object store using the key and check that the key is working.
 List Buckets
-   This shows the buckets owned by the key. You can also click-through to the bucket and browse its contents (using that keys permissions). 
+   This shows the buckets owned by the key. 
+   You can also click-through to the bucket and browse its contents (using that keys permissions). 
 Change quota
    This allows a project manager to change the size of the storage quota allocated to the key.
 Lock/Unlock
    An AccessKey can be locked/unlocked by a project manager. While a key is locked it cannot be used to access the object store.
 Regenerate
-   A project manger can use this to change the AccessSecret. Permitted Users will be able to download the new value from the SAFE.
+   A project manger can use this to change the AccessSecret. 
+   Permitted Users will be able to download the new value from the SAFE.
 
 
-When a user had been given access to a key using the "Set permissions" menu the key will appear in their SAFEnavigation menu under "Login accounts"->"Credentials". This will then give them access to the following functions:
+When a user had been given access to a key using the "Set permissions" menu the key will appear in their SAFE
+navigation menu under "Login accounts"->"Credentials". This will then give them access to the following functions:
 
 + View secret
 + Test
