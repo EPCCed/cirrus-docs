@@ -44,7 +44,7 @@ Bucket and object names should therefore be chosen to ensure these URLs are vali
 In particular you should avoid spaces as these cause problems with some tools. An object name *can* contain slashes giving the appearance of a directory structure within
 the bucket. However this is purely cosmetic. File browsing tools usually present object names with slashes as a directory hierarchy but the object store just sees them as part of the object name.
 
-Depending on the permissions the objects within a bucket may belong to different access-keys to the bucket itself. However storage quotas are calculated based on the owner of the bucket not the object.
+Depending on the permissions the objects within a bucket may belong to different access-keys to the bucket itself. However storage quotas are always calculated based on the owner of the bucket not the object.
  
 Permissions and ACLs
 ====================
@@ -75,8 +75,10 @@ You can also grant permissions to two additional classes of users:
 You may want to set *read* permissions of this type when publishing *public* data but you should never grant write or full-control permissions to these groups.
 
 The simplest way of using the object-store is for each user to have a personal access-key and quota. This will allow each user to store and retrieve their own data independently. However this 
-makes large scale data sharing difficult as ACLs need to be set for every object including the key of every user that needs access. If you need to support data sharing you may wish to generate additional keys
-representing different levels of access. For example a key that is allowed to modify a shared data-set and another that is only allowed to read it. You can then share these keys with the appropriate groups of people.
+makes large scale data sharing difficult. ACLs need to be set for every object that include the key of every user that needs access. Whenever membership of the access group changes, the ACLs of every object needs to be updated.
+
+If you want to support data sharing you may wish to generate additional keys
+representing different levels of access. For example a key that is allowed to modify a shared data-set and another that is only allowed to read it. You can then share these keys with the appropriate groups of people. This makes managing the ACLs much less work as they only have to reference the shared keys.
 When someone leaves a group you can revoke their access by changing the AccessSecret for the shared key and re-distributing the new secret to the remaining members.
 
 
