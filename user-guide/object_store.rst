@@ -38,7 +38,7 @@ Objects in the store are organised in collections called buckets. Every object h
 
 https://cirrus-s3.epcc.ed.ac.uk/bucket-name/object-name
 
-If an object is set to be "public" then *anyone* can download the object using a web-browser and this URL. For non-public objects additional parameters of http headers are needed to handle authentication.
+If an object is set to be "public" then *anyone* can download the object using a web-browser and this URL. For non-public objects additional parameters or http headers are needed to handle authentication.
 
 Bucket and object names should therefore be chosen to ensure these URLs are valid. Good practice is to stick to alphanumeric characters underscores and hyphens. 
 In particular you should avoid spaces as these cause problems with some tools. An object name *can* contain slashes giving the appearance of a directory structure within
