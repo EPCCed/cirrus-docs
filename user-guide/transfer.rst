@@ -12,6 +12,11 @@ In all cases of data transfer, users should use the Cirrus DSN in preference to
 the Cirrus login nodes as the DSN has higher bandwidth external network connections
 (10 Gb/s rather than 1 Gb/s on the login nodes).
 
+Before you start
+----------------
+
+Read Harry Mangalam's guide on `How to transfer large amounts of data via network <http://moo.nac.uci.edu/~hjm/HOWTO_move_data.html>`_.  This tells you *all* you want to know about transferring data.
+
 Accessing the Cirrus Data Services Node (DSN)
 ---------------------------------------------
 
