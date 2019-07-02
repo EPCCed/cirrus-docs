@@ -144,7 +144,7 @@ could look like:
    #PBS -A t01
 
    # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   # Do not load the cuda module
+   module load cuda
    module load gcc/6.3.0
 
    cd $PBS_O_WORKDIR
@@ -174,7 +174,7 @@ could look like:
    #PBS -A t01
 
    # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   # Do not load the cuda module
+   module load cuda
    module load gcc/6.3.0
 
    cd $PBS_O_WORKDIR
@@ -204,7 +204,7 @@ could look like:
    #PBS -A t01
 
    # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   # Do not load the cuda module
+   module load cuda
    module load gcc/6.3.0
    module load mpt
 
