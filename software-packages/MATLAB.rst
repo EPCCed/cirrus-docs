@@ -173,6 +173,9 @@ this particular case would be ::
 
 .. highlight:: none
 
+Note, for MATLAB versions R2019 and later, the `matlab_wrapper_2019` script may be required
+(see 2019 section below).
+	       
 This would run the *testp.m* script, without a display, and exit when
 *testp.m* has finished.  6 CPUs are selected, which correspond to 6
 cores, and the following limits would be set initially ::
@@ -236,7 +239,24 @@ If you specify exclusive node access, then all the cores and memory
 will be available.  On the login nodes, a single core is used and
 memory is not limited.
 
+.. _2019:
 
+MATLAB 2019 versions
+--------------------
+
+There has been a change of configuration options for MATLAB from version R2019 and onwards
+that means the `-r` flag has been replaced with the `-batch` flag. To accommodate that a new
+job wrapper script is required to run applications. For these versions of
+MATLAB, if you need to use the `-r` or `-batch` flag replace this line in your PBS script, i.e.::
+
+  matlab_wrapper -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$PBS_JOBID"')
+
+with::
+
+  matlab_wrapper_2019 -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$PBS_JOBID"')
+
+and this should allow scripts to run normally.
+ 
 .. _MDCS:
 
 Running parallel MATLAB jobs using MDCS
