@@ -210,7 +210,7 @@ Running MPI parallel jobs
 When you are running parallel jobs requiring MPI you will use an MPI launch
 command to start your executable in parallel. The name and options for
 this MPI launch command depend on which MPI library you are using:
-HPE MPT (Message Passing Toolkit) or Intel MPI. We give details below
+HPE MPT (Message Passing Toolkit), Intel MPI or OpenMPI. We give details below
 of the commands used in each case and our example job submission scripts
 have examples for both libraries.
 
@@ -425,6 +425,63 @@ If you fail to set these environment variables you may see errors such as:
    ADIOI_Set_lock:offset 0, length 10
    application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
 
+OpenMPI
+~~~~~~~~~
+
+OpenMPI is accessed at runtime by loading the module ``openmpi``. There are three OpenMPI modules currently installed::
+  
+ module load openmpi/2.1.0
+ module load openmpi/3.1.4
+ module load openmpi/4.0.1
+
+``openmpi/2.1.0`` is installed to be primarily used with Singularity. For user applications not using Singularity the newer versions of OpenMPI should be selected, with ``openmpi/4.0.1`` being preferable.
+
+OpenMPI: parallel job launcher ``mpirun``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The OpenMPI parallel job launcher on Cirrus is ``mpirun``.
+
+.note :: This parallel job launcher is only available once you have loaded one of the OpenMPI modules.
+
+A sample MPI launch line using ``mpirun`` looks like:
+
+::
+
+    mpirun -n 72 -N 36 ./my_mpi_executable.x arg1 arg2
+
+This will start the parallel executable "my\_mpi\_executable.x" with
+arguments "arg1" and "arg2". The job will be started using 72 MPI
+processes, with 36 MPI processes are placed on each compute node 
+(this would use all the physical cores on each node). This would
+require 2 nodes to be requested in the PBS options.
+
+The most important ``mpirun`` flags are:
+
+ ``-n [total number of MPI processes]``
+    Specifies the total number of distributed memory parallel processes
+    (not including shared-memory threads). For jobs that use all
+    physical cores this will usually be a multiple of 36.
+ ``-N [parallel processes per node]``
+    Specifies the number of distributed memory parallel processes per
+    node. There is a choice of 1-36 for physical cores on Cirrus compute
+    nodes (1-72 if you are using Hyper-Threading) If you are running with
+    exclusive node usage, the most economic choice is always to run with
+    "fully-packed" nodes on all physical cores if possible, i.e.
+    ``-N 36`` . Running "unpacked" or "underpopulated" (i.e. not using
+    all the physical cores on a node) is useful if you need large
+    amounts of memory per parallel process or you are using more than
+    one shared-memory thread per parallel process.
+
+Note, to use OpenMPI the PBS batch script used for running parallel jobs must include the ``mpiprocs`` keyword when specifying the number of nodes and processes to run, i.e. to run on 2 nodes using 36 process on each node (72 in total), the PBS select line would be::
+
+  #PBS -l select=2:ncpus=36:mpiprocs=36
+    
+Documentation on using OpenMPI (including ``mpirun``) can be found 
+online at:
+
+* `OpenMPI Documentation <https://www.open-mpi.org/doc/current/>`__
+
+
 
 Example parallel MPI job submission scripts
 -------------------------------------------
@@ -539,6 +596,52 @@ of the ``omplace`` command to specify the number of threads.
 
 .. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
 
+
+Example: OpenMPI job submission script for MPI parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A simple MPI job submission script to submit a job using 4 compute
+nodes (maximum of 144 physical cores) for 20 minutes would look like:
+
+::
+
+    #!/bin/bash --login
+
+    # PBS job options (name, compute nodes, job time)
+    #PBS -N Example_MPI_Job
+    # Select 4 full nodes
+    #PBS -l select=4:ncpus=36:mpiprocs=36
+    # Parallel jobs should always specify exclusive node access
+    #PBS -l place=scatter:excl
+    #PBS -l walltime=00:20:00
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #PBS -A [budget code]             
+
+    # Change to the directory that the job was submitted from
+    cd $PBS_O_WORKDIR
+  
+    # Load any required modules
+    module load openmpi/4.0.1
+    module load intel-compilers-17
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Launch the parallel job
+    #   Using 144 MPI processes and 36 MPI processes per node
+    #
+    mpirun --mca pml ucx --mca btl ^openib -N 36 -n 144 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+
+This will run your executable "my\_mpi\_executable.x" in parallel on 144
+MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
+allocate 4 nodes to your job and mpirun will place 36 MPI processes on each node
+(one per physical core).
+
+Note the ``--mca pml ucx --mca btl ^openib`` part of the command above is only required for OpenMPI version 4.0.1. It is not required for the older versions of OpenMPI installed on ARCHER.
+	     
 Example: job submission script for parallel non-MPI based jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
