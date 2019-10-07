@@ -169,7 +169,7 @@ Configure s3cmd
 
 .. note:: You only need to do this once, before the first time you manipulate data on the object store.
 
-Before you use it to transfer data, you need to first create a configuration file using the following process, run:
+Before you use ``s3cmd`` on Cirrus to transfer data, you need to first create a configuration file, run:
 
   s3cmd --configure
 
@@ -187,9 +187,10 @@ and use the following answers to the configuration questions:
 + *Test access with supplied credentials?* ``Y``
 + *Save settings?* ``y`` to save the credential
 
-You can re-run this command later to change any setting and it will default to your previous selection.
+You can re-run this command later to change any setting and it will default to your previous selections.
 
-Run ``s3cmd --help`` to see the various supported commands.
+You can run ``s3cmd --help`` to see the various supported commands. We briefly describe how to create buckets,
+upload data from Cirrus, list buckets and their contents and download data to Cirrus in the sections below.
 
 .. note:: Cirrus object-store does not support the CloudFront or Glacier options.
 
