@@ -12,7 +12,7 @@ The object-store uses the same API as the Amazon S3 object store so many compati
 + The Object store can be accessed from anywhere with an internet connection not just Cirrus.
  
 Access Keys
-===========
+-----------
 
 Object store access permissions and storage quotas are based on AccessKeys. An access key consists of two parts:
 
@@ -31,7 +31,7 @@ These are a little bit like a randomly generated Username/Password pair which ma
 tools and scripts care needs to be taken to ensure that they are kept secret.
 
 Buckets
-=======
+-------
 
 Objects in the store are organised in collections called buckets. Every object has a URL of the form
 
@@ -46,7 +46,7 @@ the bucket. However this is purely cosmetic. File browsing tools usually present
 Depending on the permissions the objects within a bucket may belong to different access-keys to the bucket itself. However storage quotas are always calculated based on the owner of the bucket not the object.
  
 Permissions and ACLs
-====================
+--------------------
 
 Access permissions can be set on both buckets and objects. The Cirrus object store supports a combination of three permissions.
 
@@ -82,7 +82,7 @@ When someone leaves a group you can revoke their access by changing the AccessSe
 
 
 Managing the Object Store from SAFE
-===================================
+-----------------------------------
 
 Keys and quotas are managed through the SAFE. If a SAFE project has an allocation on the object store there will be a "Object store quotas" section in the Project Administration page for that project.
 Project managers can click on the button in that section to manage keys and quotas. From the quota management page you have two options:
@@ -127,10 +127,10 @@ navigation menu under "Login accounts"->"Credentials". This will then give them 
 + List Buckets
 
 Browsing the Object store from your desktop
-===========================================
+-------------------------------------------
 
 Windows: Cloudberry
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 There are a number of File browser UIS that van be used to browse the object store on your desktop. For example the
 Cloudberry browser can be used on Windows https://www.cloudberrylab.com/explorer/amazon-s3.aspx and can be setup
@@ -141,7 +141,7 @@ in the following way:
 + Fill in your AccessKey and AccessSecret. Use ``https://cirrus-s3.epcc.ed.ac.uk`` as the Service end-point.
 
 Others: s3cmd
--------------
+~~~~~~~~~~~~~
 
 On non-Windows systems and for those that prefer command-line access we recommend that you install ``s3cmd``:
 
@@ -153,8 +153,8 @@ the command line installer as described in the :doc:`python` chapter of this Use
 
  conda install -c conda-forge s3cmd
 
-Uploading and downloading Objects on Cirrus
-===========================================
+Using s3cmd to work with the object store on Cirrus
+---------------------------------------------------
 
 The Object store uses the Amazon S3 protocol so can be accessed using any of the standard tools developed to access AWS-S3.
 On the Cirrus command line, we have made ``s3cmd`` available via the standard Anaconda distribution. To get access to the 
@@ -165,7 +165,7 @@ tool, you first need to load the ``anaconda`` module:
 Once the module is loaded, you can access the ``s3cmd`` tool.
 
 Configure s3cmd
----------------
+~~~~~~~~~~~~~~~
 
 .. note:: You only need to do this once, before the first time you manipulate data on the object store.
 
@@ -194,7 +194,7 @@ Run ``s3cmd --help`` to see the various supported commands.
 .. note:: Cirrus object-store does not support the CloudFront or Glacier options.
 
 Create a bucket
----------------
+~~~~~~~~~~~~~~~
 
 Firstly, you need to create a bucket to store your data using ``s3cmd mb``:
 
@@ -204,7 +204,7 @@ Firstly, you need to create a bucket to store your data using ``s3cmd mb``:
   Bucket 's3://examplebucket/' created
 
 Upload data to the bucket
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now, you can upload data to the bucket with ``s3cmd put``:
 
@@ -223,7 +223,7 @@ Now, you can upload data to the bucket with ``s3cmd put``:
    8388608 of 8388608   100% in    0s    32.80 MB/s  done
 
 Listing buckets and the contents of buckets
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can list your buckets with ``s3cmd ls``:
 
@@ -240,7 +240,7 @@ and the contents of buckets with ``s3cmd ls s3://<bucket>``:
   2019-06-05 11:28 2147483648   s3://examplebucket/random.dat
 
 Downloading data
-----------------
+~~~~~~~~~~~~~~~~
 
 Use the ``s3cmd get`` command to download data from a bucket:
 
