@@ -1,15 +1,18 @@
 The Object Store
 ================
 
-In addition to the lustre file-system Cirrus also has access to an Object-Store system. 
-This web-service provides an additional place for you to store your data but it works in a different way from 
-the file-system. Normally you would not access the object store directly from
+In addition to the lustre file-system Cirrus also has access to an high-capacity, object store system. 
+This web service provides an additional place for you to store your data but it works in a different way from 
+the file system. Normally you would not access the object store directly from
 within your programs but it is a good place to archive data to free up space for new calculations.
-The object-store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
+The object store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
  
 + Unlike files, objects cannot be modified or appended to. They are uploaded and downloaded as complete objects.
   However it is possible to replace an Object with an entirely new version.
-+ The Object store can be accessed from anywhere with an internet connection not just Cirrus.
++ The object store can be accessed from anywhere with an internet connection, not just Cirrus.
+
+.. note:: If you would like access to the object store for your project, please contact the Cirrus helpdesk: support@cirrus.ac.uk 
+
  
 Access Keys
 -----------
@@ -207,7 +210,7 @@ Firstly, you need to create a bucket to store your data using ``s3cmd mb``:
 Upload data to the bucket
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, you can upload data to the bucket with ``s3cmd put``:
+Now, you can upload data (as objects) to the bucket with ``s3cmd put``:
 
 ::
 
@@ -223,8 +226,8 @@ Now, you can upload data to the bucket with ``s3cmd put``:
   upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 137 of 137, 8MB] [1 of 1]
    8388608 of 8388608   100% in    0s    32.80 MB/s  done
 
-Listing buckets and the contents of buckets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Listing buckets and the contents of buckets (objects)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can list your buckets with ``s3cmd ls``:
 
@@ -233,15 +236,15 @@ You can list your buckets with ``s3cmd ls``:
   [auser@cirrus-login0 ~]$ s3cmd ls
   2019-06-05 11:26  s3://examplebucket
 
-and the contents of buckets with ``s3cmd ls s3://<bucket>``:
+and the contents of buckets (i.e. objects) with ``s3cmd ls s3://<bucket>``:
 
 ::
 
   [auser@cirrus-login0 ~]$ s3cmd ls s3://examplebucket
   2019-06-05 11:28 2147483648   s3://examplebucket/random.dat
 
-Downloading data
-~~~~~~~~~~~~~~~~
+Downloading objects
+~~~~~~~~~~~~~~~~~~~
 
 Use the ``s3cmd get`` command to download data from a bucket:
 
