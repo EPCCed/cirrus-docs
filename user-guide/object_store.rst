@@ -162,28 +162,54 @@ tool, you first need to load the ``anaconda`` module:
 
    module load anaconda
 
-Once the module is loaded, you can access the ``s3cmd`` tool. Before you use it to transfer data, you need to first create a
-configuration file using the following process:
+Once the module is loaded, you can access the ``s3cmd`` tool.
 
-+ run ``s3cmd --configure``
-+ Specify Access Key when prompted
-+ Specify Secret Key when prompted
-+ Default Region should be `uk-cirrus-1`
-+ Specify ``cirrus-s3.epcc.ed.ac.uk`` when asked for the S3 endpoint.
-+ Specify ``cirrus-s3.epcc.ed.ac.uk/%(bucket)`` for the next question.
-+ Leave Encryption password blank.
-+ Leave path to GPG unchanged.
-+ Use HTTPS leave as ``Yes``
-+ Test the credential ``Y`` (default)
-+ Select ``y`` to save the credential
+Configure s3cmd
+---------------
+
+.. note:: You only need to do this once, before the first time you manipulate data on the object store.
+
+Before you use it to transfer data, you need to first create a configuration file using the following process, run:
+
+  s3cmd --configure
+
+and use the following answers to the configuration questions:
+
++ *Access Key:* use the value from SAFE
++ *Secret Key:* use the value from SAFE
++ *Default Region* ``uk-cirrus-1``
++ *S3 Endpoint:* ``cirrus-s3.epcc.ed.ac.uk``
++ *DNS-style bucket+hostname:port template for accessing a bucket* ``cirrus-s3.epcc.ed.ac.uk/%(bucket)``
++ *Encryption password:* leave blank.
++ *Path to GPG program:* leave blank
++ *Use HTTPS protocol:* ``Yes``
++ *HTTP Proxy server name:* leave blank
++ *Test access with supplied credentials?* ``Y``
++ *Save settings?* ``y`` to save the credential
 
 You can re-run this command later to change any setting and it will default to your previous selection.
 
-Run ``s3cmd --help`` to see the various supported commands. Though the Cirrus object-store does not support the CloudFront or Glacier options.
-For example:
+Run ``s3cmd --help`` to see the various supported commands.
+
+.. note:: Cirrus object-store does not support the CloudFront or Glacier options.
+
+Create a bucket
+---------------
+
+Firstly, you need to create a bucket to store your data using ``s3cmd mb``:
+
+:: 
 
   [auser@cirrus-login0 ~]$ s3cmd mb s3://examplebucket
   Bucket 's3://examplebucket/' created
+
+Upload data to the bucket
+-------------------------
+
+Now, you can upload data to the bucket with ``s3cmd put``:
+
+::
+
   [auser@cirrus-login0 ~]$ s3cmd put ~/random_2G.dat s3://examplebucket/random.dat
   WARNING: Module python-magic is not available. Guessing MIME types based on file extensions.
   upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 1 of 137, 15MB] [1 of 1]
@@ -191,9 +217,35 @@ For example:
   upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 2 of 137, 15MB] [1 of 1]
    15728640 of 15728640   100% in    0s    25.31 MB/s  done
 
-  ....
+  ...
 
   upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 137 of 137, 8MB] [1 of 1]
    8388608 of 8388608   100% in    0s    32.80 MB/s  done
-  -bash-4.1$ s3cmd ls s3://examplebucket
+
+Listing buckets and the contents of buckets
+-------------------------------------------
+
+You can list your buckets with ``s3cmd ls``:
+
+::
+
+  [auser@cirrus-login0 ~]$ s3cmd ls
+  2019-06-05 11:26  s3://examplebucket
+
+and the contents of buckets with ``s3cmd ls s3://<bucket>``:
+
+::
+
+  [auser@cirrus-login0 ~]$ s3cmd ls s3://examplebucket
   2019-06-05 11:28 2147483648   s3://examplebucket/random.dat
+
+Downloading data
+----------------
+
+Use the ``s3cmd get`` command to download data from a bucket:
+
+::
+
+  [aturner@cirrus-login0 ~]$ s3cmd get s3://examplebucket/random.dat
+  download: 's3://examplebucket/random.dat' -> './random.dat'  [1 of 1]
+  8388608 of 8388608   100% in    15s    32.80 MB/s  done

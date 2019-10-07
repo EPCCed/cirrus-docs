@@ -45,6 +45,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/singularity
    user-guide/python
    user-guide/gpu
+   user-guide/object_store
    user-guide/reading
 
 .. toctree::
