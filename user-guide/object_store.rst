@@ -7,8 +7,7 @@ the file-system. Normally you would not access the object store directly from
 within your programs but it is a good place to archive data to free up space for new calculations.
 The object-store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
  
- 
-+ Unlike files, objects cannot be modified or appended to. They are uploaded and downloade as complete objects.
++ Unlike files, objects cannot be modified or appended to. They are uploaded and downloaded as complete objects.
   However it is possible to replace an Object with an entirely new version.
 + The Object store can be accessed from anywhere with an internet connection not just Cirrus.
  
@@ -82,7 +81,6 @@ representing different levels of access. For example a key that is allowed to mo
 When someone leaves a group you can revoke their access by changing the AccessSecret for the shared key and re-distributing the new secret to the remaining members.
 
 
-
 Managing the Object Store from SAFE
 ===================================
 
@@ -95,7 +93,7 @@ List keys
    To show and manage existing keys.
    
 When creating a key you need to provide a name for the key and a storage quota for the new key. The sum of all the key quotas within a project must be less than the total storage allocation of the project. Keys can be generated with a zero storage quota 
-(for example to grant read-only access to a ashared data-set).
+(for example to grant read-only access to a a shared data-set).
 
 The List-keys page shows a list of the existing keys for the project. Click on one of the links to manage the corresponding key. The following options are available for each key:
 
@@ -128,55 +126,74 @@ navigation menu under "Login accounts"->"Credentials". This will then give them 
 + Test
 + List Buckets
 
-
-
 Browsing the Object store from your desktop
 ===========================================
 
+Windows: Cloudberry
+-------------------
+
 There are a number of File browser UIS that van be used to browse the object store on your desktop. For example the
-Cloudberry browser https://www.cloudberrylab.com/explorer/amazon-s3.aspx.
+Cloudberry browser can be used on Windows https://www.cloudberrylab.com/explorer/amazon-s3.aspx and can be setup
+in the following way:
 
 + Download and install the Freeware GUI from the above link.
 + Select File->"New S3 compatible account"->"S3 Compatible"
-+ Fill in your AccessKey and AccessSecret. Use https://cirrus-s3.epcc.ed.ac.uk as the Service end-point.
++ Fill in your AccessKey and AccessSecret. Use ``https://cirrus-s3.epcc.ed.ac.uk`` as the Service end-point.
 
-Using a desktop GUI is usually the easiest way of creating and managing buckets.
+Others: s3cmd
+-------------
 
+On non-Windows systems and for those that prefer command-line access we recommend that you install ``s3cmd``:
+
++ https://s3tools.org/s3cmd
+
+This tool can also be installed in user space on other HPC systems using miniconda. Install miniconda using 
+the command line installer as described in the :doc:`python` chapter of this User Guide and then you can add 
+``s3cmd`` with:
+
+ conda install -c conda-forge s3cmd
 
 Uploading and downloading Objects on Cirrus
-==========================================
+===========================================
 
 The Object store uses the Amazon S3 protocol so can be accessed using any of the standard tools developed to access AWS-S3.
-For example *s3cmd*. To use s3cmd you need to first create a configuration file
+On the Cirrus command line, we have made ``s3cmd`` available via the standard Anaconda distribution. To get access to the 
+tool, you first need to load the ``anaconda`` module:
 
-+ run *s3cmd --configure*
+   module load anaconda
+
+Once the module is loaded, you can access the ``s3cmd`` tool. Before you use it to transfer data, you need to first create a
+configuration file using the following process:
+
++ run ``s3cmd --configure``
 + Specify Access Key when prompted
 + Specify Secret Key when prompted
-+ Default Region should be *uk-cirrus-1*
-+ Specify *cirrus-s3.epcc.ed.ac.uk* when asked for the S3 endpoint.
-+ Specify *cirrus-s3.epcc.ed.ac.uk/%(bucket)* for the next question.
++ Default Region should be `uk-cirrus-1`
++ Specify ``cirrus-s3.epcc.ed.ac.uk`` when asked for the S3 endpoint.
++ Specify ``cirrus-s3.epcc.ed.ac.uk/%(bucket)`` for the next question.
 + Leave Encryption password blank.
 + Leave path to GPG unchanged.
-+ Use HTTPS leave as *Yes*
-+ Test the credential *Y* (default)
-+ Select *y* to save the credential
++ Use HTTPS leave as ``Yes``
++ Test the credential ``Y`` (default)
++ Select ``y`` to save the credential
 
 You can re-run this command later to change any setting and it will default to your previous selection.
 
-Run *s3cmd --help* to see the various supported commands. Though the Cirrus object-store does not support the CloudFront or Glacier options.
-For example::
-  -bash-4.1$ s3cmd mb s3://examplebucket
+Run ``s3cmd --help`` to see the various supported commands. Though the Cirrus object-store does not support the CloudFront or Glacier options.
+For example:
+
+  [auser@cirrus-login0 ~]$ s3cmd mb s3://examplebucket
   Bucket 's3://examplebucket/' created
-  -bash-4.1$ s3cmd put ~/random_2G.dat s3://examplebucket/random.dat
+  [auser@cirrus-login0 ~]$ s3cmd put ~/random_2G.dat s3://examplebucket/random.dat
   WARNING: Module python-magic is not available. Guessing MIME types based on file extensions.
-  upload: '/general/z01/z01/spb/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 1 of 137, 15MB] [1 of 1]
+  upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 1 of 137, 15MB] [1 of 1]
    15728640 of 15728640   100% in    0s    22.16 MB/s  done
-  upload: '/general/z01/z01/spb/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 2 of 137, 15MB] [1 of 1]
+  upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 2 of 137, 15MB] [1 of 1]
    15728640 of 15728640   100% in    0s    25.31 MB/s  done
 
   ....
 
-  upload: '/general/z01/z01/spb/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 137 of 137, 8MB] [1 of 1]
+  upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 137 of 137, 8MB] [1 of 1]
    8388608 of 8388608   100% in    0s    32.80 MB/s  done
   -bash-4.1$ s3cmd ls s3://examplebucket
   2019-06-05 11:28 2147483648   s3://examplebucket/random.dat
