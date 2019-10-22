@@ -73,5 +73,5 @@ The following script will run a VASP job using 4 nodes (144 cores).
    # Run standard VASP executable
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 vasp_std
+   mpiexec_mpt -ppn 36 -n 144 vasp_std
 
