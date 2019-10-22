@@ -149,5 +149,5 @@ Example OptiStruct SPMD job submission script:
    
    # Run the OptStruct SPMD Solver (domain decompostion mode)
    #   Use 72 cores, 36 on each node (i.e. all physical cores)
-   mpirun -n 72 -ppn 36 $ALTAIR_HOME/hwsolvers/optistruct/bin/linux64/optistruct_14.0.211_linux64_impi box.fem -ddmmode
+   mpirun -ppn 36 -n 72 $ALTAIR_HOME/hwsolvers/optistruct/bin/linux64/optistruct_14.0.211_linux64_impi box.fem -ddmmode
 
