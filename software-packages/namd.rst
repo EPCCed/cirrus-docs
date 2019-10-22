@@ -54,5 +54,5 @@ For example, the following script will run a NAMD MD job using 4 nodes
    # nodes as hyperthreading is enabled by default
    # Note: NAMD uses Intel MPI so mpirun should be used instead of
    # mpiexec_mpt (which is SGI MPI)
-   mpirun -n 144 -ppn 36 namd2 input.namd
+   mpirun -ppn 36 -n 144 namd2 input.namd
 
