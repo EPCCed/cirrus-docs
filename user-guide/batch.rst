@@ -284,12 +284,11 @@ The most important ``mpiexec_mpt`` flags are:
 
 .. note:: ``mpiexec_mpt`` only works from within a PBS job submission script.
 
-.. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
+.. warning:: You must use the ``-ppn`` option to the ``mpiexec_mpt`` command otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
 
-.. warning:: the ``-ppn`` option must come before the ``-n`` option otherwise you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*. (This applies to the the default version of MPT and versions
-from 2.18 upwards.)
+.. warning:: When using the ``mpiexec_mpt`` command, the ``-ppn`` option must come before the ``-n`` option otherwise you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*. (This applies to the the default version of MPT and versions from 2.18 upwards.)
 
-.. note:: If you are using an older version of MPT (2.17 or earlier) the ``-n`` option must come before the ``-ppn`` option. If you get the options the wrong way around you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*
+.. note:: If you are using an older version of MPT (2.17 or earlier), the ``-n`` option must come before the ``-ppn`` option when using the ``mpiexec_mpt`` command. If you get the options the wrong way around you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*
 
 Please use ``man mpiexec_mpt`` query further options. (This is only available
 once you have loaded the ``mpt`` module.)
