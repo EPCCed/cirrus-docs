@@ -210,7 +210,7 @@ could look like:
 
    cd $PBS_O_WORKDIR
 
-   mpirun -n 80 -ppn 40 ./cuda_test.x
+   mpirun -ppn 40 -n 80 ./cuda_test.x
 
 The line ``#PBS -l select=2:ncpus=40:ngpus=4`` requests 2 nodes, 40 cores per node (80 in total)
 and 4 GPU accelerators per node (8 in total).
