@@ -119,4 +119,4 @@ For example, the following script will run a CP2K job using 4 nodes, with 6 Open
     #  - '-ppn 6' is required to use six processes per node
     #  - we use 'dplace' with the placement file 'place.txt' to specify
     #    thread binding
-    mpiexec_mpt -n 24 -ppn 6 dplace -p place.txt cp2k.psmp -i test.inp
+    mpiexec_mpt -ppn 6 -n 24 dplace -p place.txt cp2k.psmp -i test.inp
