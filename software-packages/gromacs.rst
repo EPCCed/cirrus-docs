@@ -92,4 +92,4 @@ total) and 6 OpenMP threads per MPI process.
 
    # Run using input in test_calc.tpr
    export OMP_NUM_THREADS=6
-   mpiexec_mpt -n 24 -ppn 6 omplace -nt 6 gmx_mpi mdrun -s test_calc.tpr
+   mpiexec_mpt -ppn 6 -n 24 omplace -nt 6 gmx_mpi mdrun -s test_calc.tpr
