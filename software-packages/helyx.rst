@@ -72,7 +72,7 @@ helyxHexMesh and caseSetup are run sequentially in 144 cores.
       *                )   options="$myoptions" ;;
    esac
    
-   mpiexec_mpt -n 144 -ppn 36 $job $myoptions 2>&1 | tee log/$job.$PBS_JOBID.out
+   mpiexec_mpt -ppn 36 -n 144 $job $myoptions 2>&1 | tee log/$job.$PBS_JOBID.out
    
    done
 
