@@ -51,7 +51,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    # Run using input in in.test
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 lmp_mpi < in.test
+   mpiexec_mpt -ppn 36 -n 144 lmp_mpi < in.test
 
 Compiling LAMMPS on Cirrus
 --------------------------
