@@ -58,5 +58,5 @@ For example, the following script will run a CASTEP job using 4 nodes
    # Run using input in test_calc.in
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 castep.mpi test_calc
+   mpiexec_mpt -ppn 36 -n 144 castep.mpi test_calc
 
