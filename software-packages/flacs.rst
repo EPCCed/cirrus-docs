@@ -124,7 +124,7 @@ account in SAFE.
 The ``-l select=x:ncpus=y`` option specifies the resource allocation for
 the job you are starting. The parameter ``x`` is the number of nodes
 required and the parameter ``y`` is the number of cores required. For
-a serial FLACS job you would use ``-l select=1:ncpus=1``
+a serial FLACS job you would use ``-l select=1:ncpus=1``.
 
 The maximum length of time (i.e. walltime) you want the job to run
 is specified with the ``-l walltime=[hh:mm:ss]`` option. After this
@@ -149,6 +149,18 @@ The ``run_runflacs`` command in turn needs two arguments: first, after
 ``-dir``, the directory where to run the job and create the output; if
 it is the current directory then you can pass ``-dir `pwd```.
 Second, the job number of the FLACS scenario.
+
+Multithreaded jobs
+~~~~~~~~~~~~~~~~~~
+Multithreaded flacs simulations can be run on Cirrus with the following job submission:
+
+::
+
+   qsub -A xyz -l select=1:ncpus=4 -l walltime=6:00:00 -q flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101 NumThreads=4
+
+It is important to note that when submitting multithreaded flacs simulations the ``ncpus=x`` option must be used
+in order for the queueing system to allocate the correct resources. In addition to this one must also specify
+the number of threads used by the simulation with the ``NumThreads=x`` option to the run_runflacs.
 
 Submit FLACS jobs from a script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
