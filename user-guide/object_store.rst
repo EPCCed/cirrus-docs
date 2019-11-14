@@ -83,6 +83,8 @@ If you want to support data sharing you may wish to generate additional keys
 representing different levels of access. For example a key that is allowed to modify a shared data-set and another that is only allowed to read it. You can then share these keys with the appropriate groups of people. This makes managing the ACLs much less work as they only have to reference the shared keys.
 When someone leaves a group you can revoke their access by changing the AccessSecret for the shared key and re-distributing the new secret to the remaining members.
 
+ACLs should be set using the client interface to the object store - it is not possible to set ACLs through the SAFE interface.
+
 
 Managing the Object Store from SAFE
 -----------------------------------
@@ -95,8 +97,7 @@ New key
 List keys
    To show and manage existing keys.
    
-When creating a key you need to provide a name for the key and a storage quota for the new key. The sum of all the key quotas within a project must be less than the total storage allocation of the project. Keys can be generated with a zero storage quota 
-(for example to grant read-only access to a a shared data-set).
+When creating a key you need to provide a name for the key and a storage quota for the new key. The sum of all the key quotas within a project must be less than the total storage allocation of the project.
 
 The List-keys page shows a list of the existing keys for the project. Click on one of the links to manage the corresponding key. The following options are available for each key:
 
