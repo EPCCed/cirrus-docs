@@ -108,7 +108,7 @@ a queue name in your job script.
 
 * ``workq``: Jobs in this queue can have a maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
   nodes). **Each project** can use a maximum of 2520 cores (70 nodes) summed across all their running jobs at any one time
-  and **each user** can have a maximum of 20 jobs running (note that these limits can be dynamically altered by the service to improve throughput on the system). Jobs running in this queue are node shared by default (i.e.
+  and **each user** can have a maximum of 20 jobs running (note that these limits can be dynamically altered by the service to improve throughput on the system) and **each user** can have a maximum of 500 jobs in the queue, queued or running. Jobs running in this queue are node shared by default (i.e.
   multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
   options described below.
 * ``indy``: Jobs in this queue have a variable maximum job size and walltime (use `qstat -Qf indy` on Cirrus to check the current limits. Jobs running in this queue are node shared by default (i.e.
