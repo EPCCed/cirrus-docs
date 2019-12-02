@@ -23,9 +23,7 @@ GROMACS is Open Source software and is freely available to all Cirrus users.
 Four versions are available:
 
 * Serial/shared memory, single precision: gmx
-* Serial/shared memory, double precision: gmx_d
 * Parallel MPI/OpenMP, single precision: gmx_mpi
-* Parallel MPI/OpenMP, double precision: gmx_mpi_d
 
 Running parallel GROMACS jobs: pure MPI
 ---------------------------------------
@@ -60,7 +58,7 @@ For example, the following script will run a GROMACS MD job using 4 nodes
    # Run using input in test_calc.tpr
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 gmx_mpi mdrun -s test_calc.tpr
+   mpiexec_mpt -ppn 36 -n 144 gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
 ------------------------------------------------
