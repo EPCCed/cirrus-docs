@@ -62,7 +62,7 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
    # Run using input in test.inp
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 cp2k.popt -i test.inp
+   mpiexec_mpt -ppn 36 -n 144 cp2k.popt -i test.inp
 
 
 Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
