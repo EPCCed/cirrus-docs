@@ -1,19 +1,19 @@
 The Object Store
 ================
 
-In addition to the lustre file-system Cirrus also has access to an high-capacity, object store system. 
-This web service provides an additional place for you to store your data but it works in a different way from 
+In addition to the lustre file-system Cirrus also has access to an high-capacity, object store system.
+This web service provides an additional place for you to store your data but it works in a different way from
 the file system. Normally you would not access the object store directly from
 within your programs but it is a good place to archive data to free up space for new calculations.
 The object store uses the same API as the Amazon S3 object store so many compatible clients and tools are available
- 
+
 + Unlike files, objects cannot be modified or appended to. They are uploaded and downloaded as complete objects.
   However it is possible to replace an Object with an entirely new version.
 + The object store can be accessed from anywhere with an internet connection, not just Cirrus.
 
-.. note:: If you would like access to the object store for your project, please contact the Cirrus helpdesk: support@cirrus.ac.uk 
+.. note:: If you would like access to the object store for your project, please contact the Cirrus helpdesk: support@cirrus.ac.uk
 
- 
+
 Access Keys
 -----------
 
@@ -42,12 +42,12 @@ https://cirrus-s3.epcc.ed.ac.uk/bucket-name/object-name
 
 If an object is set to be "public" then *anyone* can download the object using a web-browser and this URL. For non-public objects additional parameters or http headers are needed to handle authentication.
 
-Bucket and object names should therefore be chosen to ensure these URLs are valid. Good practice is to stick to alphanumeric characters underscores and hyphens. 
+Bucket and object names should therefore be chosen to ensure these URLs are valid. Good practice is to stick to alphanumeric characters underscores and hyphens.
 In particular you should avoid spaces as these cause problems with some tools. An object name *can* contain slashes giving the appearance of a directory structure within
 the bucket. However this is purely cosmetic. File browsing tools usually present object names with slashes as a directory hierarchy but the object store just sees them as part of the object name.
 
 Depending on the permissions the objects within a bucket may belong to different access-keys to the bucket itself. However storage quotas are always calculated based on the owner of the bucket not the object.
- 
+
 Permissions and ACLs
 --------------------
 
@@ -59,9 +59,9 @@ Access permissions can be set on both buckets and objects. The Cirrus object sto
 
 For buckets:
 
-+ Read permission allows you to lists its contents. You do *not* need this to access the object itself as long as you know the object name. 
++ Read permission allows you to lists its contents. You do *not* need this to access the object itself as long as you know the object name.
 + Write permission allows you to add or delete objects.
-+ Full-control allows you to change permissions on the bucket. 
++ Full-control allows you to change permissions on the bucket.
 
 For objects:
 
@@ -76,7 +76,7 @@ You can also grant permissions to two additional classes of users:
 
 You may want to set *read* permissions of this type when publishing *public* data but you should never grant write or full-control permissions to these groups.
 
-The simplest way of using the object-store is for each user to have a personal access-key and quota. This will allow each user to store and retrieve their own data independently. However this 
+The simplest way of using the object-store is for each user to have a personal access-key and quota. This will allow each user to store and retrieve their own data independently. However this
 makes large scale data sharing difficult. ACLs need to be set for every object that include the key of every user that needs access. Whenever membership of the access group changes, the ACLs of every object needs to be updated.
 
 If you want to support data sharing you may wish to generate additional keys
@@ -96,7 +96,7 @@ New key
    To create a new AccessKey
 List keys
    To show and manage existing keys.
-   
+
 When creating a key you need to provide a name for the key and a storage quota for the new key. The sum of all the key quotas within a project must be less than the total storage allocation of the project.
 
 The List-keys page shows a list of the existing keys for the project. Click on one of the links to manage the corresponding key. The following options are available for each key:
@@ -104,22 +104,22 @@ The List-keys page shows a list of the existing keys for the project. Click on o
 View secret
    This shows details about the key including the AccessKey name, the AccessSecret and the UUID.
 Set permissions
-   This allows a project manager to share the key with selected members of the project. 
-   When a key is shared with somebody they will be able to view and download the key from the SAFE. 
-   If you want to revoke access to a key you can remove this permission then use *Regenerate* to change the AccessSecret. 
-   Other people who still have the key shared with them 
+   This allows a project manager to share the key with selected members of the project.
+   When a key is shared with somebody they will be able to view and download the key from the SAFE.
+   If you want to revoke access to a key you can remove this permission then use *Regenerate* to change the AccessSecret.
+   Other people who still have the key shared with them
    will be able to download the new secret as before.
 Test
    The SAFE will connect to the object store using the key and check that the key is working.
 List Buckets
-   This shows the buckets owned by the key. 
-   You can also click-through to the bucket and browse its contents (using that keys permissions). 
+   This shows the buckets owned by the key.
+   You can also click-through to the bucket and browse its contents (using that keys permissions).
 Change quota
    This allows a project manager to change the size of the storage quota allocated to the key.
 Lock/Unlock
    An AccessKey can be locked/unlocked by a project manager. While a key is locked it cannot be used to access the object store.
 Regenerate
-   A project manger can use this to change the AccessSecret. 
+   A project manger can use this to change the AccessSecret.
    Permitted Users will be able to download the new value from the SAFE.
 
 
@@ -151,8 +151,8 @@ On non-Windows systems and for those that prefer command-line access we recommen
 
 + https://s3tools.org/s3cmd
 
-This tool can also be installed in user space on other HPC systems using miniconda. Install miniconda using 
-the command line installer as described in the :doc:`python` chapter of this User Guide and then you can add 
+This tool can also be installed in user space on other HPC systems using miniconda. Install miniconda using
+the command line installer as described in the :doc:`python` chapter of this User Guide and then you can add
 ``s3cmd`` with:
 
  conda install -c conda-forge s3cmd
@@ -161,7 +161,7 @@ Using s3cmd to work with the object store on Cirrus
 ---------------------------------------------------
 
 The Object store uses the Amazon S3 protocol so can be accessed using any of the standard tools developed to access AWS-S3.
-On the Cirrus command line, we have made ``s3cmd`` available via the standard Anaconda distribution. To get access to the 
+On the Cirrus command line, we have made ``s3cmd`` available via the standard Anaconda distribution. To get access to the
 tool, you first need to load the ``anaconda`` module:
 
    module load anaconda
@@ -203,7 +203,7 @@ Create a bucket
 
 Firstly, you need to create a bucket to store your data using ``s3cmd mb``:
 
-:: 
+::
 
   [auser@cirrus-login0 ~]$ s3cmd mb s3://examplebucket
   Bucket 's3://examplebucket/' created
@@ -226,6 +226,19 @@ Now, you can upload data (as objects) to the bucket with ``s3cmd put``:
 
   upload: '/general/z01/z01/auser/random_2G.dat' -> 's3://examplebucket/random.dat'  [part 137 of 137, 8MB] [1 of 1]
    8388608 of 8388608   100% in    0s    32.80 MB/s  done
+
+By default, any object larger than 15MB in size is uploaded as a multipart upload - the data is split into smaller chunks and uploaded a piece at a time instead of as a single operation. In the example above, ``s3://examplebucket/random.dat`` is uploaded as 137 parts of default chunk size 15MB. This has the advantage that if a ``s3cmd put`` operation is interrupted, it's possible to continue the operation where it left off. If uploading large objects and experiencing issues, you may need to experiment with increasing the multipart chunk size, either with using the ``multipart-chunk-size-mb=N`` option (where N is the desired new chunk size in megabytes), or by altering the default globally in your ``.s3cfg`` file in your home directory. The maximum allowed chunk size is 5GB.
+
+Continue a paused or failed upload by passing ``--upload-id=`` to the put command, plus the hash of the update to be continued. This is given at the point the initial upload is stopped, or details of all pending multipart uploads associated with a bucket can be found with ``s3cmd multipart`` and the name of the bucket:
+
+::
+
+   [auser@cirrus-login0 ~]$ s3cmd multipart s3://examplebucket
+   s3://examplebucket/
+   Initiated       Path    Id
+   2019-12-12T13:22:27.000Z        s3://examplebucket/random.dat        7775611dd0c93819353abf93aa9bc7e6
+
+Please be aware that incomplete multipart uploads do not expire and must be manually either continued or aborted to clear them. If not cleared then they will continue occupying that space in your project storage quota. To delete uploads from this queue rather than continue them, use ``s3cmd abortmp``.
 
 Listing buckets and the contents of buckets (objects)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
