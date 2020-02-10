@@ -58,7 +58,8 @@ For example, the following script will run a GROMACS MD job using 4 nodes
    # Run using input in test_calc.tpr
    # Note: '-ppn 36' is required to use all physical cores across
    # nodes as hyperthreading is enabled by default
-   OMP_NUM_THREADS=1 mpiexec_mpt -ppn 36 -n 144 gmx_mpi mdrun -s test_calc.tpr
+   OMP_NUM_THREADS=1 
+   mpiexec_mpt -ppn 36 -n 144 gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
 ------------------------------------------------
