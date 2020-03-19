@@ -11,8 +11,8 @@ meso, or continuum scale.
 Useful Links
 ------------
 
-* `LAMMPS User Guide <http://www.ks.uiuc.edu/Research/namd/2.12/ug/>`__
-* `LAMMPS Tutorials <http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd>`__
+* LAMMPS Documentation https://lammps.sandia.gov/doc/Manual.html
+* LAMMPS Mailing list details https://lammps.sandia.gov/mail.html
 
 Using LAMMPS on Cirrus
 ----------------------
