@@ -80,4 +80,4 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :caption: Software Tools
 
    software-tools/ddt
-
+   software-tools/vtune
