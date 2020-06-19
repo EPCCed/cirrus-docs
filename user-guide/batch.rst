@@ -229,6 +229,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
+    #SBATCH --exclusive
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
@@ -278,6 +279,7 @@ process. This results in all 36 physical cores per node being used.
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --name=Example_MPI_Job
     #SBATCH --time=0:20:0
+    #SBATCH --exclusive
     #SBATCH --nodes=4
     #SBATCH --ntasks=8
     #SBATCH --tasks-per-node=2
@@ -328,6 +330,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --name=Example_Array_Job
     #SBATCH --time=0:20:0
+    #SBATCH --exclusive
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
@@ -405,7 +408,7 @@ issue the following qsub command from the command line:
 
 ::
 
-    salloc --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=1:0:0 --account=t01
+    salloc --exclusive --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=1:0:0 --account=t01
     
 
 When you submit this job your terminal will display something like:
