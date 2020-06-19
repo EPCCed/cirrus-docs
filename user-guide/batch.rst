@@ -237,9 +237,7 @@ nodes and 36 threads for 20 minutes would look like:
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]             
 
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
-    #   using threading.
+    # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
     # Launch the parallel job
