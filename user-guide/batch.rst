@@ -216,6 +216,43 @@ Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
 
+Example: job submission script for OpenMP parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A simple OpenMP job submission script to submit a job using 1 compute
+nodes and 36 threads for 20 minutes would look like:
+
+::
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=Example_OpenMP_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=1
+    #SBATCH --cpus-per-task=36
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]             
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+    # Launch the parallel job
+    #   Using 36 threads per node
+    #   srun picks up the distribution from the sbatch options
+    srun --cpu-bind=cores ./my_openmp_executable.x
+
+This will run your executable "my\_openmp\_executable.x" in parallel on 36 threads. Slurm will
+allocate 1 node to your job and srun will place 36 threads (one per physical core).
+
+See above for a more detailed discussion of the different ``sbatch`` options
+
+
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
