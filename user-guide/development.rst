@@ -74,7 +74,7 @@ and their versions you have presently loaded in your envionment:
 
     [user@cirrus-login0 ~]$ module list
     Currently Loaded Modulefiles:
-    1) mpt/2.14                        3) intel-fc-16/16.0.3.210
+    1) mpt/2.22                        3) intel-fc-16/16.0.3.210
     2) intel-cc-16/16.0.3.210          4) intel-compilers-16/16.0.3.210
 
 Loading, unloading and swapping modules
@@ -119,7 +119,7 @@ Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the foll
 Modules provided by Spack
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of mdules available to users should cover most common use cases on Cirrus.
+.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of modules available to users should cover most common use cases on Cirrus.
 
 The Spack package manager provides many more modules (particularly for libraries and 
 dependencies) than are visible by default to users. If you wish to see or use the
@@ -222,28 +222,13 @@ The Intel compiler suite is accessed by loading the ``intel-compilers-*`` module
 
 ::
 
-    module load intel-compilers-17
+    module load intel-compilers-19
 
 Once you have loaded the module, the compilers are available as:
 
 * ``ifort`` - Fortran
 * ``icc`` - C
 * ``icpc`` - C++
-
-C++ with Intel Compilers
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Intel compilers rely on GCC C++ headers and libraries to support most recent C++
-features. If you are using Intel compilers to compile C++ on Cirrus you should 
-also load the gcc/6.2.0 module to have access to the correct C++ files:
-
-::
-    module load gcc/6.2.0
-
-.. note::
-
-   You will also need to load this module in your job submission scripts
-   when running code compiled in this way.
 
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
@@ -263,22 +248,11 @@ Once you have loaded the module, the compilers are available as:
 Compiling MPI codes
 -------------------
 
-There are two MPI libraries currently available on Cirrus:
+MPI on Cirrus is currently provided by the HPE MPT library.
 
-* HPE Message Passing Toolkit (MPT)
-* Intel MPI
-
-The compilation and run commands are different depending on which of these
-libraries you choose. Most of the applications we have compiled on Cirrus
-have made use of the HPE MPT library and we only use Intel MPI if HPE MPT
-cannot be used for some reason. If you can use either library it is
-worthwhile running a few tests to discover if either provides a performance
-advantage for your application.
-
-The following sections discuss each of the MPI library options in turn.
 
 You should also consult the chapter on running jobs through the batch system
-for examples of how to run jobs compiled against the different MPI libraries.
+for examples of how to run jobs compiled against MPI.
 
 .. note::
 
@@ -316,13 +290,13 @@ Using Intel Compilers and HPE MPT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have loaded the MPT module you should next load the appropriate 
-``intel-compilers`` module (e.g. ``intel-compilers-17``):
+``intel-compilers`` module (e.g. ``intel-compilers-19``):
 
 ::
 
-    module load intel-compilers-17
+    module load intel-compilers-19
 
-Remember, if you are compiling C++ code, then you will also need to load the ``gcc/6.2.0`` module
+Remember, if you are compiling C++ code, then you will also need to load the ``gcc`` module
 for the C++ 11 headers to be available.
 
 Compilers are then available as
@@ -330,7 +304,6 @@ Compilers are then available as
 * ``mpif90`` - Fortran with MPI
 * ``mpicc`` - C with MPI
 * ``mpicxx`` - C++ with MPI
-
 
 .. note::
 
@@ -388,70 +361,8 @@ Compilers are then available as
    HPE MPT does not support the syntax ``use mpi`` in Fortran 
    applications with the GCC compiler ``gfortran``. You should use the
    older ``include "mpif.h"`` syntax when using GCC compilers with 
-   ``mpif90``. If you cannot change this, then use the Intel MPI library.
-
-Using Intel MPI
-~~~~~~~~~~~~~~~
-
-To compile MPI code with Intel MPI, using any compiler, you must first load the
-"intel-mpi-17" module:
-
-::
-
-   module load intel-mpi-17
-
-This makes the compiler wrapper scripts available to you. The name of the  wrapper
-script depends on the compiler suite you are using. In summary:
-
-+----------+----------+--------+
-| Language | Intel    | GCC    |
-+==========+==========+========+
-| Fortran  | mpiifort | mpif90 |
-+----------+----------+--------+
-| C++      | mpiicpc  | mpicxx |
-+----------+----------+--------+
-| C        | mpiicc   | mpicc  |
-+----------+----------+--------+
-
-Further details on using the different compiler suites with Intel MPI are available
-in the following sections.
-
-Using Intel Compilers and Intel MPI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once you have loaded the ``intel-mpi-17`` module you should next load the appropriate 
-``intel-compilers`` module (e.g. ``intel-compilers-17``):
-
-::
-
-    module load intel-compilers-17
-
-Remember, if you are compiling C++ code, then you will also need to load the ``gcc/6.2.0`` module
-for the C++ 11 headers to be available.
-
-MPI compilers are then available as
-
-* ``mpiifort`` - Fortran with MPI
-* ``mpiicc`` - C with MPI
-* ``mpiicpc`` - C++ with MPI
-
-.. note:: Intel compilers with Intel MPI use non-standard compiler wrapper script names. If you use the standard names you will end up using the GCC compilers.
-
-Using GCC Compilers and Intel MPI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once you have loaded the ``intel-mpi-17`` module you should next load the ``gcc`` module.
-
-::
-
-    module load gcc 
-
-MPI compilers are then available as
-
-* ``mpif90`` - Fortran with MPI
-* ``mpicc`` - C with MPI
-* ``mpicxx`` - C++ with MPI
-
+   ``mpif90``. If you cannot change this, then use the Intel compilers
+   with MPT.
 
 Compiler Information and Options
 --------------------------------
@@ -498,7 +409,7 @@ GNU
     At ``-O3`` and above or when using ``-ftree-vectorize``
 
 To promote integer and real variables from four to eight byte precision
-for FORTRAN codes the following compiler flags can be used:
+for Fortran codes the following compiler flags can be used:
 
 Intel
     ``-real-size 64 -integer-size 64 -xAVX``
