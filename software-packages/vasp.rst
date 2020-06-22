@@ -55,23 +55,22 @@ The following script will run a VASP job using 4 nodes (144 cores).
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N VASP_test
-   #PBS -l select=4:ncpus=36
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   # job options (name, compute nodes, job time)
+   #SBATCH --job-name=VASP_test
+   #SBATCH --nodes=4
+   #SBATCH --tasks-per-node=36
+   #SBATCH --exclusive
+   #SBATCH --time=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
    
    # Load VASP module
    module load vasp
 
+   # Set number of OpenMP threads to 1
+   export OMP_NUM_THREADS=1
+
    # Run standard VASP executable
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -ppn 36 -n 144 vasp_std
+   srun vasp_std
 

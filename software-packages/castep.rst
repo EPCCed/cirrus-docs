@@ -39,14 +39,16 @@ For example, the following script will run a CASTEP job using 4 nodes
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N CASTEP_test
-   #PBS -l select=4:ncpus=36
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CASTEP_Example
+    #SBATCH --time=1:0:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=36
+    #SBATCH --cpus-per-task=1
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   #SBATCH --account=[budget code]
    
    # Change to the directory that the job was submitted from
    cd $PBS_O_WORKDIR
@@ -58,7 +60,5 @@ For example, the following script will run a CASTEP job using 4 nodes
    export OMP_NUM_THREADS=1
 
    # Run using input in test_calc.in
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -ppn 36 -n 144 castep.mpi test_calc
+   srun castep.mpi test_calc
 
