@@ -54,7 +54,7 @@ For example, the following script will run a GROMACS MD job using 2 nodes
    module load gromacs
 
    # Run using input in test_calc.tpr
-   OMP_NUM_THREADS=1 
+   export OMP_NUM_THREADS=1 
    srun gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
@@ -71,7 +71,7 @@ total) and 6 OpenMP threads per MPI process.
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=gmx_test
    #SBATCH --nodes=2
-   #SBATCH --tasks-per-node=36
+   #SBATCH --tasks-per-node=6
    #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
    #SBATCH --exclusive
@@ -83,8 +83,8 @@ total) and 6 OpenMP threads per MPI process.
    module load gromacs
 
    # Run using input in test_calc.tpr
-   OMP_NUM_THREADS=6
-   srun -n 24 gmx_mpi mdrun -s test_calc.tpr
+   export OMP_NUM_THREADS=6
+   srun gmx_mpi mdrun -s test_calc.tpr
 
 GROMACS GPU jobs
 ----------------
