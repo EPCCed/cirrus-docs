@@ -50,19 +50,17 @@ For example, the following script will run a GROMACS MD job using 2 nodes
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
    
-   # Load GROMACS and MPI modules
+   # Load GROMACS module
    module load gromacs
 
    # Run using input in test_calc.tpr
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
    OMP_NUM_THREADS=1 
-   srun -n 72 gmx_mpi mdrun -s test_calc.tpr
+   srun gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
 ------------------------------------------------
 
-The following script will run a GROMACS MD job using 4 nodes
+The following script will run a GROMACS MD job using 2 nodes
 (72 cores) with 6 MPI processes per node (12 MPI processes in
 total) and 6 OpenMP threads per MPI process.
 
@@ -83,18 +81,15 @@ total) and 6 OpenMP threads per MPI process.
    
    # Load GROMACS and MPI modules
    module load gromacs
-   module load mpt
 
    # Run using input in test_calc.tpr
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
    OMP_NUM_THREADS=6
    srun -n 24 gmx_mpi mdrun -s test_calc.tpr
 
 GROMACS GPU jobs
 ----------------
 
-**Note** Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
+.. Note:: Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
 updated as and when GPUs become available again.
 
 
