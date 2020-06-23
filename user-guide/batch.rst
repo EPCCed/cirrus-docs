@@ -107,6 +107,56 @@ Resource Limits
 
 There are different resource limits on Cirrus for different purposes.
 
+Partitions
+~~~~~~~~~~
+
+On Cirrus, compute nodes are grouped into partitions. You will have to specify a partition
+using the ``--partition`` option in your submission script. The following table has a list 
+of active partitions on Cirrus.
+
+.. list-table:: Cirrus Partitions
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Partition
+     - Description
+     - Nodes
+   * - standard
+     - Standard partition
+     - 280
+   * - gpu-skylake
+     - GPUs
+     - 2
+
+
+Quality of Service
+~~~~~~~~~~~~~~~~~~
+
+On Cirrus Quality of Service (QoS) is used alongside partitions to improve user experience. The 
+following table has a list of active QoS on Cirrus.
+
+.. list-table:: Cirrus QoS
+   :widths: 30 70
+   :header-rows: 1
+
+   * - QoS
+     - Description
+   * - standard
+     - Standard QoS
+   * - long
+     - Long QoS
+   * - highpriority
+     - High Priority QoS
+   * - gpu
+     - GPU QoS
+
+You can find out the QoS that you can use by running the following command:
+
+:: 
+
+  sacctmgr show assoc user=$USER cluster=cirrus format=cluster,account,user,qos%50
+
+
 .. note::
 
    Details on the resource limits will be added shortly.
@@ -352,7 +402,11 @@ nodes and 36 threads for 20 minutes would look like:
     #SBATCH --cpus-per-task=36
 
     # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]             
+    #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
 
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -388,6 +442,10 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
     
     # Load the default HPE MPI environment
     module load mpt
@@ -442,6 +500,10 @@ process. This results in all 36 physical cores per node being used.
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
     
     # Load the default HPE MPI environment
     module load mpt
@@ -496,6 +558,10 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
     
     # Load the default HPE MPI environment
     module load mpt
