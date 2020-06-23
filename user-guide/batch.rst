@@ -465,6 +465,13 @@ MPI processes using 4 nodes (36 cores per node, i.e. not using hyper-threading).
 allocate 4 nodes to your job and srun will place 36 MPI processes on each node
 (one per physical core).
 
+By default, srun will launch an MPI job that uses all of the cores you have requested via the "nodes" and "tasks-per-node" options. If you want to run fewer MPI processes than cores you will need to change the script.
+
+For example, to run this program on 128 MPI processes you have two options:
+
+ - set ``--tasks-per-node=32`` for an even distribution across nodes (this may not always be possible depending on the exact combination of nodes requested and MPI tasks required)
+ - set the number of MPI tasks explicitly using ``#SBATCH --ntasks=128``
+
 See above for a more detailed discussion of the different ``sbatch`` options
 
 Example: job submission script for MPI+OpenMP (mixed mode) parallel job
