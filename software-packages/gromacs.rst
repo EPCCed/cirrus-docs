@@ -32,117 +32,66 @@ Running parallel GROMACS jobs: pure MPI
 GROMACS can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.
 
-For example, the following script will run a GROMACS MD job using 4 nodes
-(144 cores) with pure MPI.
+For example, the following script will run a GROMACS MD job using 2 nodes
+(72 cores) with pure MPI.
 
 ::
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N mdrun_test
-   #PBS -l select=4:ncpus=36
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=gmx_test
+   #SBATCH --nodes=2
+   #SBATCH --tasks-per-node=36
+   #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   #SBATCH --exclusive
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   #SBATCH --account=[budget code]
    
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load GROMACS and MPI modules
+   # Load GROMACS module
    module load gromacs
-   module load mpt
 
    # Run using input in test_calc.tpr
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   OMP_NUM_THREADS=1 
-   mpiexec_mpt -ppn 36 -n 144 gmx_mpi mdrun -s test_calc.tpr
+   export OMP_NUM_THREADS=1 
+   srun gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
 ------------------------------------------------
 
-The following script will run a GROMACS MD job using 4 nodes
-(144 cores) with 6 MPI processes per node (24 MPI processes in
+The following script will run a GROMACS MD job using 2 nodes
+(72 cores) with 6 MPI processes per node (12 MPI processes in
 total) and 6 OpenMP threads per MPI process.
 
 ::
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N mdrun_test
-   #PBS -l select=4:ncpus=36
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=gmx_test
+   #SBATCH --nodes=2
+   #SBATCH --tasks-per-node=6
+   #SBATCH --cpus-per-task=6
+   #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   #SBATCH --exclusive
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
    
    # Load GROMACS and MPI modules
    module load gromacs
-   module load mpt
 
    # Run using input in test_calc.tpr
    export OMP_NUM_THREADS=6
-   mpiexec_mpt -ppn 6 -n 24 omplace -nt 6 gmx_mpi mdrun -s test_calc.tpr
-
+   srun gmx_mpi mdrun -s test_calc.tpr
 
 GROMACS GPU jobs
 ----------------
 
-A separate build of GROMACS is provided to run on the NVIDIA GPU nodes
-on Cirrus (for details see :doc:`../user-guide/gpu`). Note also that
-the GPU version targets the GPU host nodes, which are Intel Skylake;
-this version will not run on the front end or the other non-GPU back-end nodes.
-
-The GPU version is accessed via, e.g.,
-
-::
-
-   module load gromacs-gpu/2020
-
-
-
-As there are currently a limited number of GPU nodes available, a
-distributed memory MPI version is not available: only the 'thread MPI'
-version is available (that is, 'gmx' is available, but not 'gmx_mpi').
-
-Further, we recommend exclusive node usage to prevent possible contention
-with other user jobs. An example of the form of the PBS submission script is:
-
-
-::
-
-   #!/bin/bash --login
-
-   #PBS -q gpu   
-   #PBS -N job-name
-   #PBS -l select=1:ncpus=40:ngpus=4
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=00:20:00
-   
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load GROMACS GPU module
-
-   module load gromacs-gpu/2020
-
-   # Invocation will depend on problem type ...
-
-   export OMP_NUM_THREADS=10
-   gmx mdrun -ntmpi 4 -nb gpu -pme cpu ...
+.. Note:: Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
+updated as and when GPUs become available again.
 
 
 Information on how to assign different types of calculation to the
