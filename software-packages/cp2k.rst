@@ -35,34 +35,31 @@ To run CP2K using MPI only, load the ``cp2k-mpt`` module and use the ``cp2k.popt
 
 For example, the following script will run a CP2K job using 4 nodes (144 cores):
 
-::
+   ::
 
-   #!/bin/bash --login
+     #!/bin/bash
 
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N CP2K_test
-   #PBS -l select=4:ncpus=36
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+     # Slurm job options (name, compute nodes, job time)
+     #SBATCH --job-name=CP2K_test
+     #SBATCH --time=0:20:0
+     #SBATCH --exclusive
+     #SBATCH --nodes=4
+     #SBATCH --tasks-per-node=36 
+     #SBATCH --cpus-per-task=1
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+     # Replace [budget code] below with your project code (e.g. t01) 
+     #SBATCH --account=[budget code]
 
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+     # Load CP2K and MPI modules
+     module load cp2k-mpt
+     module load mpt
+     module load intel-cmkl-19
 
-   # Load CASTEP and MPI modules
-   module load cp2k-mpt
-   module load mpt
-   module load intel-cmkl-16
+     #Ensure that no libraries are inadvertently using threading
+     export OMP_NUM_THREADS=1
 
-   #Ensure that no libraries are inadvertently using threading
-   export OMP_NUM_THREADS=1
-
-   # Run using input in test.inp
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -ppn 36 -n 144 cp2k.popt -i test.inp
+     # Run using input in test.inp
+     srun cp2k.popt -i test.inp
 
 
 Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
@@ -70,53 +67,49 @@ Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
 
 To run CP2K using MPI and OpenMP, load the ``cp2k-mpt`` module and use the ``cp2k.psmp`` executable.
 
-Due to a thread placement bug in SGI MPT's ``omplace``, tool for GCC-compiled software, launching
-the executable must be achieved in a different way to other hybrid OpenMP/MPI codes on Cirrus.
+.. Due to a thread placement bug in SGI MPT's ``omplace``, tool for GCC-compiled software, launching
+.. the executable must be achieved in a different way to other hybrid OpenMP/MPI codes on Cirrus.
 
-You must first run the ``placement`` tool (included in the module) to produce a thread placement
-file, `place.txt`. For example, if you wish to use 6 threads per process, use:
+.. You must first run the ``placement`` tool (included in the module) to produce a thread placement
+.. file, `place.txt`. For example, if you wish to use 6 threads per process, use:
 
-::
+.. ::
 
-    export OMP_NUM_THREADS=6
-    placement $OMP_NUM_THREADS
+..    export OMP_NUM_THREADS=6
+..    placement $OMP_NUM_THREADS
 
-to produce the placement file. Then launch the executable using ``mpiexec_mpt`` and ``dplace``
-(instead of ``omplace``) as follows:
+.. to produce the placement file. Then launch the executable using ``mpiexec_mpt`` and ``dplace``
+.. (instead of ``omplace``) as follows:
 
-::
+.. ::
 
-    mpiexec_mpt -n 6 dplace -p place.txt cp2k.psmp ...
+..    mpiexec_mpt -n 6 dplace -p place.txt cp2k.psmp ...
 
-For example, the following script will run a CP2K job using 4 nodes, with 6 OpenMP threads per MPI process:
+For example, the following script will run a CP2K job using 8 nodes, with 2 OpenMP threads per MPI process:
 
-::
+  ::
 
-    #!/bin/bash --login
+   #!/bin/bash
+  
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=CP2K_test
+   #SBATCH --time=0:20:0
+   #SBATCH --exclusive
+   #SBATCH --nodes=8
+   #SBATCH --tasks=144
+   #SBATCH --tasks-per-node=18
+   #SBATCH --cpus-per-task=2
 
-    # PBS job options (name, compute nodes, job time)
-    #PBS -N CP2K_test
-    #PBS -l select=4:ncpus=36
-    #PBS -l place=scatter:excl
-    #PBS -l walltime=0:20:0
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #PBS -A [budget code]
+   # Load CP2K and MPI modules
+   module load cp2k-mpt
+   module load mpt
+   module load intel-cmkl-19
 
-    # Change to the directory that the job was submitted from
-    cd $PBS_O_WORKDIR
+   #Ensure that no libraries are inadvertently using threading
+   export OMP_NUM_THREADS=2
 
-    # Load CASTEP and MPI modules
-    module load cp2k-mpt
-    module load mpt
-    module load intel-cmkl-16
-
-    export OMP_NUM_THREADS=6
-    placement $OMP_NUM_THREADS
-
-    # Run using input in test.inp
-    # Notes:
-    #  - '-ppn 6' is required to use six processes per node
-    #  - we use 'dplace' with the placement file 'place.txt' to specify
-    #    thread binding
-    mpiexec_mpt -ppn 6 -n 24 dplace -p place.txt cp2k.psmp -i test.inp
+   # Run using input in test.inp
+   srun cp2k.psmp -i test.inp
