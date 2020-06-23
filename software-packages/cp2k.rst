@@ -50,7 +50,7 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
      # Replace [budget code] below with your project code (e.g. t01) 
      #SBATCH --account=[budget code]
 
-     # Load CP2K and MPI modules
+     # Load CP2K
      module load cp2k
 
      #Ensure that no libraries are inadvertently using threading
@@ -83,7 +83,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
 
-   # Load CP2K and MPI modules
+   # Load CP2K
    module load cp2k
 
    # Set the number of threads to 2
