@@ -53,6 +53,10 @@ a Gaussian scratch directory as outlined above).
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Load Gaussian module
    module load gaussian
@@ -87,6 +91,10 @@ For example, the following script will run a Gaussian job using 4 cores.
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Load Gaussian module
    module load gaussian

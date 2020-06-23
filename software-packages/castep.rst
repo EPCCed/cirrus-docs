@@ -49,6 +49,10 @@ For example, the following script will run a CASTEP job using 4 nodes
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Change to the directory that the job was submitted from
    cd $PBS_O_WORKDIR
