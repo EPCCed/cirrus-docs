@@ -383,13 +383,17 @@ Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
 
+.. Hint::
+   Do not replace srun with mpirun in the following examples.
+
+
 Example: job submission script for OpenMP parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple OpenMP job submission script to submit a job using 1 compute
 nodes and 36 threads for 20 minutes would look like:
 
-::
+.. code-block:: bash
 
     #!/bin/bash
 

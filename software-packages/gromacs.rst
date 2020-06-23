@@ -99,7 +99,7 @@ GROMACS GPU jobs
 ----------------
 
 .. Note:: Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
-updated as and when GPUs become available again.
+   updated as and when GPUs become available again.
 
 
 Information on how to assign different types of calculation to the

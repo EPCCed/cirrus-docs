@@ -211,7 +211,7 @@ you could use ``ssh cirrus`` instead. The remaining lines define the options for
 
  - ``Hostname login.cirrus.ac.uk`` - defines the full address of the host
  - ``User username`` - defines the username to use by default for this host (replace
- ``username`` with your own username on the remote host)
+   ``username`` with your own username on the remote host)
 
 Now you can use SSH to access Cirrus without needing to enter your username or the full
 hostname every time:
