@@ -67,24 +67,6 @@ Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
 
 To run CP2K using MPI and OpenMP, load the ``cp2k-mpt`` module and use the ``cp2k.psmp`` executable.
 
-.. Due to a thread placement bug in SGI MPT's ``omplace``, tool for GCC-compiled software, launching
-.. the executable must be achieved in a different way to other hybrid OpenMP/MPI codes on Cirrus.
-
-.. You must first run the ``placement`` tool (included in the module) to produce a thread placement
-.. file, `place.txt`. For example, if you wish to use 6 threads per process, use:
-
-.. ::
-
-..    export OMP_NUM_THREADS=6
-..    placement $OMP_NUM_THREADS
-
-.. to produce the placement file. Then launch the executable using ``mpiexec_mpt`` and ``dplace``
-.. (instead of ``omplace``) as follows:
-
-.. ::
-
-..    mpiexec_mpt -n 6 dplace -p place.txt cp2k.psmp ...
-
 For example, the following script will run a CP2K job using 8 nodes, with 2 OpenMP threads per MPI process:
 
   ::
@@ -108,7 +90,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    module load mpt
    module load intel-cmkl-19
 
-   #Ensure that no libraries are inadvertently using threading
+   # Set the number of threads to 2
    export OMP_NUM_THREADS=2
 
    # Run using input in test.inp
