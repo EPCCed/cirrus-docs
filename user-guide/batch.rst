@@ -372,7 +372,7 @@ Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple MPI job submission script to submit a job using 4 compute
-nodes and 128 MPI ranks per node for 20 minutes would look like:
+nodes and 36 MPI ranks per node for 20 minutes would look like:
 
 ::
 
@@ -387,7 +387,10 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]             
+    #SBATCH --account=[budget code]
+    
+    # Load the default HPE MPI environment
+    module load mpt
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -395,7 +398,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     export OMP_NUM_THREADS=1
 
     # Launch the parallel job
-    #   Using 144 MPI processes and 128 MPI processes per node
+    #   Using 144 MPI processes and 36 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     srun ./my_mpi_executable.x
 
@@ -438,7 +441,10 @@ process. This results in all 36 physical cores per node being used.
     #SBATCH --cpus-per-task=18
 
     # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
+    #SBATCH --account=[budget code]
+    
+    # Load the default HPE MPI environment
+    module load mpt
 
     # Set the number of threads to 18
     #   There are 18 OpenMP threads per MPI process
@@ -489,7 +495,10 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --array=0-55
 
     # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]  
+    #SBATCH --account=[budget code]
+    
+    # Load the default HPE MPI environment
+    module load mpt
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
