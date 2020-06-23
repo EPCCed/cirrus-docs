@@ -72,6 +72,7 @@ total) and 6 OpenMP threads per MPI process.
    #SBATCH --job-name=gmx_test
    #SBATCH --nodes=2
    #SBATCH --tasks-per-node=6
+   #SBATCH --cpus-per-task=6
    #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
    #SBATCH --exclusive
