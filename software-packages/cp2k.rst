@@ -20,18 +20,18 @@ Useful Links
 Using CP2K on Cirrus
 --------------------
 
-CP2K is available through the ``cp2k-mpt`` module. MPI only ``cp2k.popt`` and MPI/OpenMP Hybrid
+CP2K is available through the ``cp2k`` module. MPI only ``cp2k.popt`` and MPI/OpenMP Hybrid
 ``cp2k.psmp`` binaries are available.
 
-**IMPORTANT:** Running cp2k in hybrid OpenMP/MPI mode requires some non-standard steps. Please see
-the `Running CP2K in OpenMP/MPI Hybrid Mode` section below for further details.
+.. **IMPORTANT:** Running cp2k in hybrid OpenMP/MPI mode requires some non-standard steps. Please see
+.. the `Running CP2K in OpenMP/MPI Hybrid Mode` section below for further details.
 
 
 
 Running parallel CP2K jobs - MPI Only
 -------------------------------------
 
-To run CP2K using MPI only, load the ``cp2k-mpt`` module and use the ``cp2k.popt`` executable.
+To run CP2K using MPI only, load the ``cp2k`` module and use the ``cp2k.popt`` executable.
 
 For example, the following script will run a CP2K job using 4 nodes (144 cores):
 
@@ -47,8 +47,12 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
      #SBATCH --tasks-per-node=36 
      #SBATCH --cpus-per-task=1
 
-     # Replace [budget code] below with your project code (e.g. t01) 
+     # Replace [budget code] below with your budget code (e.g. t01)
      #SBATCH --account=[budget code]
+     # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+     #SBATCH --partition=[partition name]
+     # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+     #SBATCH --qos=[qos name]
 
      # Load CP2K
      module load cp2k
@@ -63,13 +67,13 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
 Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
 ---------------------------------------------------
 
-To run CP2K using MPI and OpenMP, load the ``cp2k-mpt`` module and use the ``cp2k.psmp`` executable.
+To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the ``cp2k.psmp`` executable.
 
 For example, the following script will run a CP2K job using 8 nodes, with 2 OpenMP threads per MPI process:
 
   ::
 
-   #!/bin/bash
+    #!/bin/bash
   
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=CP2K_test
@@ -80,8 +84,12 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    #SBATCH --tasks-per-node=18
    #SBATCH --cpus-per-task=2
 
-   # Replace [budget code] below with your project code (e.g. t01)
+   # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
 
    # Load CP2K
    module load cp2k
@@ -90,4 +98,4 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    export OMP_NUM_THREADS=2
 
    # Run using input in test.inp
-   srun cp2k.psmp -i test.inp
+   srun -cpu-bind=cores cp2k.psmp -i test.inp
