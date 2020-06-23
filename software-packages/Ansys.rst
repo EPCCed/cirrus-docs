@@ -64,6 +64,8 @@ this example, "-t504" is employed.
     #   using threading.
     export OMP_NUM_THREADS=1
 
+    export SGI_MPI_HOME=$MPI_ROOT
+
     scontrol show hostnames $SLURM_NODELIST > ~/fluent.launcher.host.txt
 
     # Launch the parallel job

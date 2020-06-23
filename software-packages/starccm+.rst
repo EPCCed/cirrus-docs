@@ -76,6 +76,8 @@ following script starts the server:
    module load mpt
    module load starccm+
 
+   export SGI_MPI_HOME=$MPI_ROOT
+
    scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
    starccm+ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
 
@@ -120,6 +122,7 @@ following script starts the server:
    module load mpt
    module load starccm+
 
+   export SGI_MPI_HOME=$MPI_ROOT
    export PATH=$STARCCM_EXE:$PATH
    export LM_LICENSE_FILE=2999@192.168.191.10
    export CDLMD_LICENSE_FILE=2999@192.168.191.10
