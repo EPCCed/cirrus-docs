@@ -51,9 +51,7 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
      #SBATCH --account=[budget code]
 
      # Load CP2K and MPI modules
-     module load cp2k-mpt
-     module load mpt
-     module load intel-cmkl-19
+     module load cp2k
 
      #Ensure that no libraries are inadvertently using threading
      export OMP_NUM_THREADS=1
@@ -86,9 +84,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    #SBATCH --account=[budget code]
 
    # Load CP2K and MPI modules
-   module load cp2k-mpt
-   module load mpt
-   module load intel-cmkl-19
+   module load cp2k
 
    # Set the number of threads to 2
    export OMP_NUM_THREADS=2
