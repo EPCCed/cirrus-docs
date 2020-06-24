@@ -51,7 +51,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    module load lammps
 
    # Run using input in in.test
-    srun -n 144 lmp_mpi < in.test
+    srun lmp_mpi < in.test
 
 Compiling LAMMPS on Cirrus
 --------------------------
