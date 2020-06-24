@@ -48,10 +48,10 @@ e.g.
 
    [auser@cirrus-login3 ~]$ sinfo 
 
-   PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-   standard       up   infinite     36   idle r1i1n[0-35] 
-   standard       up   infinite    244   down r1i0n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33] 
-   gpu-skylake    up   infinite      2   down r2i3n[0-1] 
+  PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+  standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33] 
+  gpu-skylake    up   infinite      2   idle r2i3n[0-1] 
+  gpu-cascade    up   infinite     36   idle r2i4n[0-8],r2i5n[0-8],r2i6n[0-8],r2i7n[0-8] 
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -372,19 +372,27 @@ compute nodes. As well as launching the executable, ``srun`` also allows you
 to specify the distribution and placement (or *pinning*) of the parallel
 processes and threads.
 
+If you are running MPI jobs that do not also use OpenMP threading, then you 
+should use ``srun`` with no additional options. ``srun`` will use the 
+specification of nodes and tasks from your job script, ``sbatch`` or 
+``salloc`` command to launch the correct number of parallel tasks. 
+
+If you are using OpenMP threads then you will generally add the 
+``--cpu-bind=cores`` option to ``srun`` to bind threads to cores to obtain
+the best performance.
+
 .. note::
 
-  Usually, you will want to use ``srun`` without any additional options. Used
-  in this way, ``srun`` will use the options you provided to ``sbatch`` (or ``salloc``, see below)
-  to distribute the parallel tasks.
+   See the example job submission scripts below for examples of using
+   ``srun`` for pure MPI jobs and for jobs that use OpenMP threading.
 
-Example job submission scripts
--------------------------------
+Example parallel job submission scripts
+---------------------------------------
 
 A subset of example job submission scripts are included in full below.
 
 .. Hint::
-   Do not replace srun with mpirun in the following examples.
+   Do not replace ``srun`` with ``mpirun`` in the following examples.
 
 
 Example: job submission script for OpenMP parallel job
@@ -679,3 +687,10 @@ Reservations
 The mechanism for submitting reservations on Cirrus has yet to be specified.
 
 .. TODO: Add information on how to submit reservations
+
+Serial jobs
+-----------
+
+.. note::
+
+   Information on submitting serial jobs to Cirrus will be added shortly.
