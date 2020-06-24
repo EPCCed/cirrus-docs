@@ -37,7 +37,7 @@ For example, the following script will run a CASTEP job using 4 nodes
 
 ::
 
-   #!/bin/bash --login
+   #!/bin/bash
    
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --job-name=CASTEP_Example
@@ -54,11 +54,8 @@ For example, the following script will run a CASTEP job using 4 nodes
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
    
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load CASTEP and MPI modules
-   module load castep
+   # Load CASTEP version 18 module
+   module load castep/18
 
    # Set OMP_NUM_THREADS=1 to avoid unintentional threading
    export OMP_NUM_THREADS=1

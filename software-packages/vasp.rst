@@ -53,7 +53,7 @@ The following script will run a VASP job using 4 nodes (144 cores).
 
 ::
 
-   #!/bin/bash --login
+   #!/bin/bash
    
    # job options (name, compute nodes, job time)
    #SBATCH --job-name=VASP_test
@@ -69,8 +69,8 @@ The following script will run a VASP job using 4 nodes (144 cores).
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
    
-   # Load VASP module
-   module load vasp
+   # Load VASP version 5 module
+   module load vasp/5
 
    # Set number of OpenMP threads to 1
    export OMP_NUM_THREADS=1
