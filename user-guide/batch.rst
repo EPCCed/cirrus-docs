@@ -432,7 +432,7 @@ Example: job submission script for MPI parallel job
 A simple MPI job submission script to submit a job using 4 compute
 nodes and 36 MPI ranks per node for 20 minutes would look like:
 
-::
+.. code-block:: bash
 
     #!/bin/bash
 
@@ -496,7 +496,7 @@ process. This results in all 36 physical cores per node being used.
    the use of the ``--cpu-bind=cores`` option to generate the correct 
    affinity settings.
 
-::
+.. code-block:: bash
 
     #!/bin/bash
 
