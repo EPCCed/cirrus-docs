@@ -107,6 +107,50 @@ Resource Limits
 
 There are different resource limits on Cirrus for different purposes.
 
+The *primary resources* you request are *compute* resources: either CPU cores on the standard
+compute nodes or GPU cards on the GPU compute nodes. Other node resources: memory on the
+standard compute nodes; memory and CPU cores on the GPU nodes are assigned pro rata based on
+the primary resource that you request.
+
+.. warning::
+
+   On Cirrus, you cannot specify the memory for a job using the ``--mem`` options to Slurm
+   (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are 
+   assigned is calculated from the amount of primary resource you request.
+
+Resources on standard (CPU) compute nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The *primary resource* you request on standard compute nodes are CPU cores. The maximum amount of memory
+you are allocated is computed as the number of CPU cores you requested multiplied by 1/36th of
+the total memory available (as there are 36 CPU cores per node). So, if you request the full node (36 cores), then you will be
+allocated a maximum of all of the memory (256 GB) available on the node; however, if you request 1 core, then
+you will be assigned a maximum of 256/36 = 7.1 GB of the memory available on the node.
+
+.. note::
+
+   Using the ``--exclusive`` option in jobs will give you access to the full node memory even
+   if you do not explicitly request all of the CPU cores on the node.
+
+.. note::
+
+   You will not generally have access to the full amount of memory resource on the the node as
+   some is retained for running the operating system and other system processes.
+
+Resources on GPU nodes
+~~~~~~~~~~~~~~~~~~~~~~
+
+The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
+and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
+the total available (as there are 4 GPU cards per node). So, if you request the full node (4 GPU cards), then you will be
+allocated a maximum of all of the memory (384 GB) available on the node; however, if you request 1 GPU card, then
+you will be assigned a maximum of 384/4 = 96 GB of the memory available on the node.
+
+.. note::
+
+   Using the ``--exclusive`` option in jobs will give you access to all of the CPU cores and the full node memory even
+   if you do not explicitly request all of the GPU cards on the node.
+
 Partitions
 ~~~~~~~~~~
 
@@ -120,7 +164,7 @@ of active partitions on Cirrus.
 
    * - Partition
      - Description
-     - Nodes
+     - Maximum Job Size (Nodes)
    * - standard
      - Standard partition
      - 280
@@ -141,14 +185,24 @@ following table has a list of active QoS on Cirrus.
 
    * - QoS
      - Description
+     - Maximum Walltime
+     - Other Limits
    * - standard
      - Standard QoS
+     - 4 days
+     - max. 20 jobs running per user, max. 500 jobs queued per user
    * - long
      - Long QoS
+     - 14 days
+     - max. 5 jobs running per user, max. 20 jobs queued per user
    * - highpriority
      - High Priority QoS
+     - 4 days
+     - max. 10 jobs running per user, max. 20 jobs queued per user, restricted access
    * - gpu
      - GPU QoS
+     - 6 hours
+    - max. 2 jobs running per user, max. 4 jobs queued per user
 
 You can find out the QoS that you can use by running the following command:
 
