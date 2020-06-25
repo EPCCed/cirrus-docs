@@ -105,7 +105,14 @@ will cancel (if waiting) or stop (if running) the job with ID ``12345``.
 Resource Limits
 ---------------
 
-There are different resource limits on Cirrus for different purposes.
+There are different resource limits on Cirrus for different purposes. There 
+are three different things you need to specify for each job:
+
+* The amount of *primary resource* you require (more information on this below)
+* The *partition* that you want to use - this specifies the nodes that are eligible to run your job
+* The *Quality of Service (QoS)* that you want to use - this specifies the job limits that apply
+
+Each of these aspects are described in more detail below. 
 
 The *primary resources* you request are *compute* resources: either CPU cores on the standard
 compute nodes or GPU cards on the GPU compute nodes. Other node resources: memory on the
@@ -118,7 +125,7 @@ the primary resource that you request.
    (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are 
    assigned is calculated from the amount of primary resource you request.
 
-Resources on standard (CPU) compute nodes
+Primary resources on standard (CPU) compute nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are CPU cores. The maximum amount of memory
@@ -137,7 +144,7 @@ you will be assigned a maximum of 256/36 = 7.1 GB of the memory available on the
    You will not generally have access to the full amount of memory resource on the the node as
    some is retained for running the operating system and other system processes.
 
-Resources on GPU nodes
+Primary resources on GPU nodes
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
@@ -172,9 +179,16 @@ of active partitions on Cirrus.
      - GPUs
      - 2
 
+You can list the active partitions using
 
-Quality of Service
-~~~~~~~~~~~~~~~~~~
+::
+
+   sinfo
+
+Note, you may not have access to all the available partitions.
+
+Quality of Service (QoS)
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 On Cirrus Quality of Service (QoS) is used alongside partitions to improve user experience. The 
 following table has a list of active QoS on Cirrus.
@@ -215,8 +229,6 @@ You can find out the QoS that you can use by running the following command:
 
    Details on the resource limits will be added shortly.
 
-.. TODO: Add in partition and QOS limits once they are known
-
 Troubleshooting
 ---------------
 
@@ -253,7 +265,6 @@ errors and how to fix them.
 * error: --time limit option required
 
   * The time limit of your script is either missing or is too long. Add "--time=minutes" to your submission script.
-
 
 
 Slurm queued reasons
@@ -409,7 +420,8 @@ parallel processes and threads they require.
   - ``--cpus-per-task=<threads per task>`` the number of threads per
     parallel process (e.g. number of OpenMP threads per MPI task for
     hybrid MPI/OpenMP jobs). **Note:** you must also set the ``OMP_NUM_THREADS``
-    environment variable if using OpenMP in your job.
+    environment variable if using OpenMP in your job and usually add the
+    ``--cpu-bind=cores`` option to ``srun``
 
 .. note::
 
