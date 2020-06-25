@@ -120,7 +120,7 @@ Running MATLAB jobs
 -------------------
 
 On Cirrus, MATLAB is intended to be used on the compute nodes within
-PBS job scripts.  Use on the login nodes should be restricted to
+Slurm job scripts.  Use on the login nodes should be restricted to
 setting preferences, accessing help, and launching MDCS jobs.  It is
 recommended that MATLAB is used without a GUI on the compute nodes, as
 the interactive response is slow.
@@ -137,7 +137,7 @@ are 36 cores on a Cirrus compute node), so we only recommend the use
 of MDCS to test the configuration of distributed memory parallel
 computations for eventual use of your own MDCS license.
 
-The *local* cluster should be used within a PBS job script - you
+The *local* cluster should be used within a Slurm job script - you
 submit a job that runs MATLAB and uses the *local* cluster, which is
 the compute node that the job is running on.
 
@@ -147,7 +147,7 @@ computations.  It also make no restriction on its memory use.  These
 features are incompatible with the shared use of nodes on Cirrus.  For
 the *local* cluster, a wrapper script is provided to limit the number
 of cores and amount of memory used, in proportion to the number of
-CPUs selected in the PBS job script.  Please use this wrapper instead
+CPUs selected in the Slurm job script.  Please use this wrapper instead
 of using MATLAB directly.
 
 .. highlight:: bash
@@ -156,20 +156,23 @@ Say you have a job that requires 3 workers, each running 2 threads.
 As such, you should employ 3x2=6 cores.  An example job script for
 this particular case would be ::
 
- #PBS -N Example_MATLAB_Job
+  #SBATCH --job-name=Example_MATLAB_Job
+  #SBATCH --time=0:20:0
+  #SBATCH --nodes=1
+  #SBATCH --tasks-per-node=6
+  #SBATCH --cpus-per-task=1
 
- #PBS -l select=1:ncpus=6
- #PBS -l walltime=00:20:00
  
- # Replace [budget code] below with your project code (e.g. t01)
- #PBS -A [budget code]
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+  # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+  #SBATCH --partition=[partition name]
+  # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+  #SBATCH --qos=[qos name]
+
+  module load matlab
  
- # Change to the directory that the job was submitted from
- cd $PBS_O_WORKDIR
- 
- module load matlab
- 
- matlab_wrapper -nodisplay < /lustre/sw/cse-matlab/examples/testp.m > testp.log
+  matlab_wrapper -nodisplay < /lustre/sw/cse-matlab/examples/testp.m > testp.log
 
 .. highlight:: none
 
@@ -247,13 +250,13 @@ MATLAB 2019 versions
 There has been a change of configuration options for MATLAB from version R2019 and onwards
 that means the `-r` flag has been replaced with the `-batch` flag. To accommodate that a new
 job wrapper script is required to run applications. For these versions of
-MATLAB, if you need to use the `-r` or `-batch` flag replace this line in your PBS script, i.e.::
+MATLAB, if you need to use the `-r` or `-batch` flag replace this line in your Slurm script, i.e.::
 
-  matlab_wrapper -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$PBS_JOBID"')
+  matlab_wrapper -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$SLURM_JOB_ID"')
 
 with::
 
-  matlab_wrapper_2019 -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$PBS_JOBID"')
+  matlab_wrapper_2019 -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$SLURM_JOB_ID"')
 
 and this should allow scripts to run normally.
  
@@ -263,16 +266,12 @@ Running parallel MATLAB jobs using MDCS
 ---------------------------------------
 
 It is possible to use MATLAB on the login node to set up an MDCS
-PBSPro cluster profile and then launch jobs using that profile.
+Slurm cluster profile and then launch jobs using that profile.
 However, this does not give per-job control of the number of cores and
 walltime; these are set once in the profile.
 
-Raymond Norris from MathWorks has provided a configuration script that
-gives a much more flexible MDCS profile and we recommend you use this
-method.  Instructions for using this profile are given below.
-
 This MDCS profile can be used in MATLAB on the login node - the MDCS
-computations are done in PBS jobs launched using the profile.
+computations are done in Slurm jobs launched using the profile.
 
 .. highlight:: matlab
 
@@ -577,7 +576,7 @@ GPUs
 ----
 
 Calculations using GPUs can be done using the :doc:`GPU nodes
-<../user-guide/gpu>`.  This can be done using MATLAB within a PBS job
+<../user-guide/gpu>`.  This can be done using MATLAB within a Slurm job
 script, similar to :ref:`using the local cluster <local>`, or can be
 done using the :ref:`MDCS profile <MDCS>`.  The GPUs are shared unless
 you request exclusive access to the node (4 GPUs), so you may find
