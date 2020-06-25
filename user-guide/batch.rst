@@ -617,7 +617,7 @@ index as the only argument to the executable. Each subjob requests a
 single node and uses all 36 cores on the node by placing 1 MPI 
 process per core and specifies 4 hours maximum runtime per subjob:
 
-::
+.. code-block:: bash
 
     #!/bin/bash
     # Slurm job options (name, compute nodes, job time)
@@ -706,9 +706,9 @@ To submit a request for an interactive job reserving 8 nodes
 (1024 physical cores) for 1 hour you would
 issue the following qsub command from the command line:
 
-::
+.. code-block:: bash
 
-    salloc --exclusive --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=1:0:0 --account=t01
+    salloc --exclusive --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=1:0:0  --partition=standard --qos=standard --account=t01
     
 
 When you submit this job your terminal will display something like:
