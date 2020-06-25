@@ -537,6 +537,14 @@ For example, to run this program on 128 MPI processes you have two options:
 
  - set ``--tasks-per-node=32`` for an even distribution across nodes (this may not always be possible depending on the exact combination of nodes requested and MPI tasks required)
  - set the number of MPI tasks explicitly using ``#SBATCH --ntasks=128``
+ 
+ .. note::
+
+   If you specify ``--ntasks`` explicitly and it is not compatible with the value of ``tasks-per-node`` then you will get a warning message from srun such as ``srun:   
+   Warning: can't honor --ntasks-per-node set to 36``.
+   
+   In this case, srun does the sensible thing and allocates MPI processes as evenly as it can across 
+   nodes. For example, the second option above would result in 32 MPI processes on each of the 4 nodes.
 
 See above for a more detailed discussion of the different ``sbatch`` options
 
