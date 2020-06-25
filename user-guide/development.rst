@@ -51,7 +51,7 @@ available versions of the Intel Compiler type:
     [user@cirrus-login0 ~]$ module avail intel-compilers
  
     --------------------------------------- /lustre/sw/modulefiles ---------------------------------------
-    intel-compilers-16/16.0.2.181 intel-compilers-16/16.0.3.210
+intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117  
 
 If you want more info on any of the modules, you can use the
 ``module help`` command:
@@ -68,41 +68,44 @@ If you want more info on any of the modules, you can use the
     information.
 
 The simple ``module list`` command will give the names of the modules
-and their versions you have presently loaded in your envionment:
+and their versions you have presently loaded in your envionment, e.g.:
 
 ::
 
     [user@cirrus-login0 ~]$ module list
     Currently Loaded Modulefiles:
-    1) mpt/2.22                        3) intel-fc-16/16.0.3.210
-    2) intel-cc-16/16.0.3.210          4) intel-compilers-16/16.0.3.210
+    1) /lustre/sw/modulefiles/epcc/setup-env   5) intel-fc-18/18.0.5.274        
+    2) intel-license                           6) intel-compilers-18/18.05.274  
+    3) gcc/6.3.0(default)                      7) mpt/2.22                      
+    4) intel-cc-18/18.0.5.274                 
+
 
 Loading, unloading and swapping modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To load a module to use ``module add`` or ``module load``. For example,
-to load the intel-compilers-17 into the development environment:
+to load the intel-compilers-18 into the development environment:
 
 ::
 
-    module load intel-compilers-17
+    module load intel-compilers-18
 
 This will load the default version of the intel compilers. If
 you need a specfic version of the module, you can add more information:
 
 ::
 
-    module load intel-compilers-17/17.0.2.174
+    module load intel-compilers-18/18.0.5.274
 
-will load version 17.0.2.174 for you, regardless of the default. If you
+will load version 18.0.2.274 for you, regardless of the default. If you
 want to clean up, ``module remove`` will remove a loaded module:
 
 ::
 
-    module remove intel-compilers-17
+    module remove intel-compilers-18
 
-(or ``module rm intel-compilers-17`` or
-``module unload intel-compilers-17``) will unload what ever version of
+(or ``module rm intel-compilers-18`` or
+``module unload intel-compilers-18``) will unload what ever version of
 intel-compilers-17 (even if it is not the default) you might have
 loaded. There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
@@ -110,11 +113,12 @@ version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using 
 "module swap oldmodule newmodule". 
 
-Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the following command will change to version 16.0.3.210:
+Suppose you have loaded version intel-compilers-18, the following command
+will change to version version 19:
 
 ::
 
-    module swap intel-compilers-16 intel-compilers-16/16.0.2.181
+    module swap intel-compilers-18 intel-compilers-19
 
 Modules provided by Spack
 ~~~~~~~~~~~~~~~~~~~~~~~~~
