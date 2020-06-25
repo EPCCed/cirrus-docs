@@ -397,11 +397,17 @@ top of your job submission script using lines that start with the directive
 
 If you do not specify any options, then the default for each option will
 be applied. As a minimum, all job submissions must specify the budget that
-they wish to charge the job too with the option:
+they wish to charge the job too, the partition they wish to use and the
+QoS they want to use with the options:
 
   - ``--account=<budgetID>`` your budget ID is usually something like
     ``t01`` or ``t01-test``. You can see which budget codes you can 
     charge to in SAFE.
+  - ``--partition=<partition>`` The partition specifies the set of 
+    nodes you want to run on. More information on available partitions
+    is given above.
+  - ``--qos="QoS"`` The QoS specifies the limits to apply to your job. More
+    information on available QoS are given above.
 
 Other common options that are used are:
 
@@ -481,10 +487,10 @@ nodes and 36 threads for 20 minutes would look like:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
 
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -520,10 +526,10 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
     
     # Load the default HPE MPI environment
     module load mpt
@@ -585,10 +591,10 @@ process. This results in all 36 physical cores per node being used.
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
     
     # Load the default HPE MPI environment
     module load mpt
@@ -643,10 +649,10 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
     
     # Load the default HPE MPI environment
     module load mpt
