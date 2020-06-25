@@ -331,7 +331,6 @@ Compilers are then available as
    mpicxx uses g++ by default:
 
    When compiling C++ applications you must also specify that 
-
    ``mpicxx`` should use the ``icpc`` compiler with, for example,
    ``mpicxx -cxx=icpc``. (This is not required for Fortran as the ``mpif90``
    compiler automatically uses ``ifort``.)  If in doubt use ``mpicxx -cxx=icpc -v`` to see
