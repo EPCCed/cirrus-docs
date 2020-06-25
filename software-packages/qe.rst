@@ -28,27 +28,22 @@ For example, the following script will run a QE pw.x job using 4 nodes
 
 ::
 
-   #!/bin/bash --login
-   
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N pw_test
-   #PBS -l select=4:ncpus=36
+   #!/bin/bash
+   #
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=pw_test
+   #SBATCH --nodes=4
+   #SBATCH --tasks-per-node=36
+   #SBATCH --time=0:20:0
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   #SBATCH --exclusive
+
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
    
    # Load QE and MPI modules
-   module load qe
-   module load mpt
+   module load quantum-espresso
 
    # Run using input in test_calc.in
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -ppn 36 -n 144 pw.x test_calc.in
-
+   srun pw.x -i test_cals.in
