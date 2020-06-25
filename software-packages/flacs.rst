@@ -224,35 +224,7 @@ located in the current directory could look like this:
 
 .. note::
 
-  The equivalent SLURM script is pending confirmation. The following
-  will not work.
-
-::
-
-    #!/bin/bash --login
-    #PBS -l select=1:ncpus=1
-    #PBS -N disp2
-    #PBS -J 1-128
-    #PBS -j oe
-    #PBS -l walltime=48:00:00
-    #PBS -q flacs
-    #PBS -V
-
-    cd ${PBS_O_WORKDIR}
-
-    CS_FILES=(`ls -1 cs??????.dat3`)
-    # NR_OF_JOBS=${#CS_FILES[@]}
-    JOB_FIRST=1
-    JOB_LAST=128
-    for (( i=0; i<$(expr ${JOB_LAST} - ${JOB_FIRST}); i++ ));
-    do
-      JOB_IDS[${i}]=${CS_FILES[$(expr $i + ${JOB_FIRST})]:2:6}
-    done
-
-    module load flacs
-    JOB_INDEX=$(( $PBS_ARRAY_INDEX - 1 ))
-
-    `which run_runflacs` ${JOB_IDS[${JOB_INDEX}]}
+  A SLURM script for running an array job is pending confirmation.
 
 Due to the way the job scheduler interprets this script, the number
 of jobs has to be hard-coded in the first (non-bash) part of the job
