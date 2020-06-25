@@ -169,31 +169,32 @@ The process for using an image interactively on the compute nodes is very simila
 using them on the login nodes. The only difference is that you have to submit an interactive
 serial job to get interactive access to the compute node first.
 
-For example, to reserve a full node for you to work on interactively you would use:
+For example, to reserve a full node for you to work on interactively you would use something like:
 
 ::
 
-   [user@cirrus-login0 ~]$ qsub -IVl select=1:ncpus=36,walltime=0:20:0,place=scatter:excl -A t01
-   qsub: waiting for job 234192.indy2-login0 to start
-
+   [user@cirrus-login0 ~]$ salloc --exclusive --nodes=1 --tasks-per-node=36 --cpus-per-task=1 --time=00:20:00 --account=[budget code] 
+   
    ...wait until job starts...
 
-   qsub: job 234192.indy2-login0 ready
+   salloc: Granted job allocation 24236
+   salloc: Waiting for resource configuration
+   salloc: Nodes cn13 are ready for job
 
-   [user@r1i2n13 ~]$
+   [user@cn13 ~]$
 
 Note the prompt has changed to show you are on a compute node. Now you can use the image
-in the same way as on the login node
+in the same way as on the login node.
 
 ::
 
-   [user@r1i2n13 ~]$ module load singularity
-   [user@r1i2n13 ~]$ singularity shell lolcow.simg
+   [user@cn13 ~]$ module load singularity
+   [user@cn13 ~]$ singularity shell lolcow.simg
    Singularity: Invoking an interactive shell within container...
 
    Singularity lolcow.simg:~> exit
    exit
-   [user@r1i2n13 ~]$ exit
+   [user@cn13 ~]$ exit
    [user@cirrus-login0 ~]$
 
 Note we used ``exit`` to leave the interactive image shell and then ``exit`` again to leave the
@@ -214,16 +215,17 @@ An exmaple job submission script to run a serial job that executes the runscript
 
     #!/bin/bash --login
 
-    # PBS job options (name, compute nodes, job time)
-    #PBS -N simg_test
-    #PBS -l select=1:ncpus=1
-    #PBS -l walltime=0:20:0
-
+    # job options (name, compute nodes, job time)
+    #SBATCH --job-name=simg_test
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=36
+    #SBATCH --exclusive
+    #SBATCH --time=0:20:0
+   
     # Replace [budget code] below with your project code (e.g. t01)
-    #PBS -A [budget code]
-
-    # Change to the directory that the job was submitted from
-    cd $PBS_O_WORKDIR
+    #SBATCH --account=[budget code]
+    SBATCH --partition=standard
+    SBATCH --qos=standard
 
     # Load any required modules
     module load singularity
