@@ -733,9 +733,9 @@ When you submit this job your terminal will display something like:
 
 ::
 
-    salloc: Granted job allocation 24236
+    salloc: Granted job allocation 7912
     salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
+    salloc: Nodes r1i7n[1-2] are ready for job
 
 It may take some time for your interactive job to start. Once it
 runs you will enter a standard interactive terminal session.
