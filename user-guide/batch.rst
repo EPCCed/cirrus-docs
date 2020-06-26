@@ -126,7 +126,7 @@ the primary resource that you request.
    assigned is calculated from the amount of primary resource you request.
 
 Primary resources on standard (CPU) compute nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are CPU cores. The maximum amount of memory
 you are allocated is computed as the number of CPU cores you requested multiplied by 1/36th of
@@ -145,7 +145,7 @@ you will be assigned a maximum of 256/36 = 7.1 GB of the memory available on the
    some is retained for running the operating system and other system processes.
 
 Primary resources on GPU nodes
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
 and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
@@ -187,6 +187,7 @@ You can list the active partitions using
 
 Note, you may not have access to all the available partitions.
 
+
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -194,7 +195,7 @@ On Cirrus Quality of Service (QoS) is used alongside partitions to improve user 
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
-   :widths: 30 70
+   :widths: 20 20 20 40
    :header-rows: 1
 
    * - QoS
@@ -216,7 +217,7 @@ following table has a list of active QoS on Cirrus.
    * - gpu
      - GPU QoS
      - 6 hours
-    - max. 2 jobs running per user, max. 4 jobs queued per user
+     - max. 2 jobs running per user, max. 4 jobs queued per user
 
 You can find out the QoS that you can use by running the following command:
 
