@@ -771,6 +771,65 @@ The mechanism for submitting reservations on Cirrus has yet to be specified.
 Serial jobs
 -----------
 
-.. note::
+A simple serial job submission script to submit a job using 1 compute
+nodes and 1 threads for 20 minutes would look like:
 
-   Information on submitting serial jobs to Cirrus will be added shortly.
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=Example_Serial_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=1
+    #SBATCH --ntasks=1
+    #SBATCH --tasks-per-node=1
+    #SBATCH --cpus-per-task=1  # (>1 if multi-threaded tasks)
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
+
+    # Set the number of threads to the CPUs per task
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+    # Launch the serial job
+    #   Using 1 thread
+    srun --cpu-bind=cores ./my_serial_executable.x
+
+You can also submit multiple Serial jobs; using the following script:
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=Example_Multiple_Serial_Jobs
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=3
+    #SBATCH --cpus-per-task=1 # (>1 if multi-threaded tasks)
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
+
+    # Set the number of threads to the CPUs per task
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+    # Launch the serial job
+    #   Using 1 thread
+    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_1.x &
+    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_2.x &
+    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_3.x &
+    wait
+
+
