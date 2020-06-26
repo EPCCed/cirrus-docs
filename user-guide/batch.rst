@@ -492,6 +492,9 @@ nodes and 36 threads for 20 minutes would look like:
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
 
+    # Load any required modules
+    module load mpt
+
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
@@ -794,6 +797,9 @@ nodes and 1 threads for 20 minutes would look like:
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
 
+    # Load any required modules
+    module load mpt
+
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
@@ -821,6 +827,9 @@ You can also submit multiple Serial jobs; using the following script:
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
+
+    # Load any required modules
+    module load mpt
 
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
