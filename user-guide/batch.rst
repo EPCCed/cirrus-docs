@@ -466,49 +466,6 @@ A subset of example job submission scripts are included in full below.
 .. Hint::
    Do not replace ``srun`` with ``mpirun`` in the following examples.
 
-
-Example: job submission script for OpenMP parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A simple OpenMP job submission script to submit a job using 1 compute
-nodes and 36 threads for 20 minutes would look like:
-
-.. code-block:: bash
-
-    #!/bin/bash
-
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=Example_OpenMP_Job
-    #SBATCH --time=0:20:0
-    #SBATCH --exclusive
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=36
-
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # We use the "standard" partition as we are running on CPU nodes
-    #SBATCH --partition=standard
-    # We use the "standard" QoS as our runtime is less than 4 days
-    #SBATCH --qos=standard
-
-    # Load any required modules
-    module load mpt
-
-    # Set the number of threads to the CPUs per task
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-
-    # Launch the parallel job
-    #   Using 36 threads per node
-    #   srun picks up the distribution from the sbatch options
-    srun --cpu-bind=cores ./my_openmp_executable.x
-
-This will run your executable "my\_openmp\_executable.x" in parallel on 36 threads. Slurm will
-allocate 1 node to your job and srun will place 36 threads (one per physical core).
-
-See above for a more detailed discussion of the different ``sbatch`` options
-
-
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -620,6 +577,47 @@ process. This results in all 36 physical cores per node being used.
     #   18 OpenMP threads per MPI process
  
    srun --cpu-bind=cores ./my_mixed_executable.x arg1 arg2
+
+Example: job submission script for OpenMP parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A simple OpenMP job submission script to submit a job using 1 compute
+nodes and 36 threads for 20 minutes would look like:
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=Example_OpenMP_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=1
+    #SBATCH --cpus-per-task=36
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    # We use the "standard" partition as we are running on CPU nodes
+    #SBATCH --partition=standard
+    # We use the "standard" QoS as our runtime is less than 4 days
+    #SBATCH --qos=standard
+
+    # Load any required modules
+    module load mpt
+
+    # Set the number of threads to the CPUs per task
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+    # Launch the parallel job
+    #   Using 36 threads per node
+    #   srun picks up the distribution from the sbatch options
+    srun --cpu-bind=cores ./my_openmp_executable.x
+
+This will run your executable "my\_openmp\_executable.x" in parallel on 36 threads. Slurm will
+allocate 1 node to your job and srun will place 36 threads (one per physical core).
+
+See above for a more detailed discussion of the different ``sbatch`` options
 
 Job arrays
 ----------
@@ -774,8 +772,10 @@ The mechanism for submitting reservations on Cirrus has yet to be specified.
 Serial jobs
 -----------
 
-A simple serial job submission script to submit a job using 1 compute
-nodes and 1 threads for 20 minutes would look like:
+Unlike parallel jobs, serial jobs will generally not need to specify the number of nodes
+and exclusive access (unless they want access to all of the memory on a node. You usually
+only need the ``--ntasks=1`` specifier. For example, a serial job submission script could
+look like:
 
 .. code-block:: bash
 
@@ -784,11 +784,7 @@ nodes and 1 threads for 20 minutes would look like:
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --job-name=Example_Serial_Job
     #SBATCH --time=0:20:0
-    #SBATCH --exclusive
-    #SBATCH --nodes=1
     #SBATCH --ntasks=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=1  # (>1 if multi-threaded tasks)
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
@@ -797,48 +793,20 @@ nodes and 1 threads for 20 minutes would look like:
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
 
-    # Load any required modules
-    module load mpt
-
-    # Set the number of threads to the CPUs per task
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+    # Enforce threading to 1 in case underlying libraries are threaded
+    export OMP_NUM_THREADS=1
 
     # Launch the serial job
     #   Using 1 thread
     srun --cpu-bind=cores ./my_serial_executable.x
 
-You can also submit multiple Serial jobs; using the following script:
+.. note::
 
-.. code-block:: bash
+   Remember that you will be allocated memory based on the number of tasks (i.e. CPU cores)
+   that you request. You will get ~7.1 GB per task/core. If you need more than this for
+   your serial job then you should ask for the number of tasks you need for the required
+   memory (or use the ``--exclusive`` option to get access to all the memory on a node)
+   and launch specifying a single task using ``srun --ntasks=1 --cpu-bind=cores``.
 
-    #!/bin/bash
-
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=Example_Multiple_Serial_Jobs
-    #SBATCH --time=0:20:0
-    #SBATCH --exclusive
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=3
-    #SBATCH --cpus-per-task=1 # (>1 if multi-threaded tasks)
-
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # We use the "standard" partition as we are running on CPU nodes
-    #SBATCH --partition=standard
-    # We use the "standard" QoS as our runtime is less than 4 days
-    #SBATCH --qos=standard
-
-    # Load any required modules
-    module load mpt
-
-    # Set the number of threads to the CPUs per task
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-
-    # Launch the serial job
-    #   Using 1 thread
-    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_1.x &
-    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_2.x &
-    srun --ntasks=1 --cpu-bind=cores ./my_serial_executable_3.x &
-    wait
 
 
