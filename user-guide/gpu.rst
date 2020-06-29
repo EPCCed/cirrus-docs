@@ -53,11 +53,11 @@ CUDA
 `CUDA <https://developer.nvidia.com/cuda-zone>`_ is a parallel computing platform and
 programming model developed by NVIDIA for general computing on graphical processing units (GPUs).
 
-To use the CUDA toolkit on Cirrus, you should load the `cuda` module:
+To use the CUDA toolkit on Cirrus, you should load one of the `cuda` modules, e.g:
 
 ::
 
-   module load cuda
+   module load nvidia/cuda-11.0
 
 Once you have loaded the ``cuda`` module, you can access the CUDA compiler with the ``nvcc`` command.
 
@@ -65,19 +65,18 @@ As well as the CUDA compiler, you will also need a compiler module to support co
 host (CPU) code. The CUDA toolkit supports both GCC and Intel compilers. You should load your
 chosen compiler module before you compile.
 
-.. note:: The ``nvcc`` compiler currently supports versions of GCC up to 6.x and versions of the Intel compilers up to 17.x.
+..  The ``nvcc`` compiler currently supports versions of GCC up to 6.x and versions of the Intel compilers up to 17.x.
 
 Using CUDA with GCC
 ^^^^^^^^^^^^^^^^^^^
 
-By default, ``nvcc`` will use the system version of GCC. We recommend that you load a more
-recent version of GCC than the system default to support the CUDA compiler, e.g.
+When compiling using ``nvcc`` we recommend that you load a recent version of GCC to support the CUDA compiler, e.g.
 
 ::
 
    module load gcc/6.3.0
 
-.. note:: GCC 6.x is the latest version of the GCC compiler supported by ``nvcc``.
+..  GCC 6.x is the latest version of the GCC compiler supported by ``nvcc``.
 
 You can now use ``nvcc`` to compile your source code, e.g.:
 
@@ -93,15 +92,15 @@ You can now use ``nvcc`` to compile your source code, e.g.:
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You should load either the Intel 16 or Intel 17 compilers to use with `nvcc`. We recommend the
-Intel 17 compilers, you also need the ``gcc`` module to provide C++ support:
+You should load either the Intel 18 or Intel 19 compilers to use with `nvcc`.
+
+..  We recommend the Intel 17 compilers, you also need the ``gcc`` module to provide C++ support:
 
 ::
 
-   module load intel-compilers-17
-   module load gcc/6.3.0
+   module load intel-compilers-18
 
-.. note:: Intel 17 is the latest version of the Intel compilers supported by ``nvcc``.
+.. Intel 17 is the latest version of the Intel compilers supported by ``nvcc``.
 
 You can now use ``nvcc -ccbin icpc`` to compile your source code, e.g.:
 
@@ -118,11 +117,10 @@ code.
 Submitting jobs to the GPU nodes
 --------------------------------
 
-Two additional options are needed in GPU job submission scripts over those in standard jobs:
+An additional option is needed in GPU job submission scripts over those in standard jobs:
 
- * ``-q gpu`` This option is required to submit the job to the ``gpu`` queue on Cirrus
- * ``ngpus=N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
-   request needs to be added to your ``select`` statement
+ * ``--gres=gpu:N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
+   request needs to be added to your Slurm script.
 
 .. note:: We generally recommend that you should request 10 CPU cores per GPU accelerator even if you do not need them.
 
@@ -136,23 +134,27 @@ could look like:
 
    #!/bin/bash
    #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=1:ncpus=10:ngpus=1
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=CUDA_Example
+   #SBATCH --time=0:20:0
+   #SBATCH --partition=gpu-skylake
+   #SBATCH --qos=gpu
+   #SBATCH --exclusive
+   #SBATCH --gres=gpu:1
+   #SBATCH --nodes=1
+   #SBATCH --tasks-per-node=1
+   #SBATCH --cpus-per-task=10
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
+     
 
-   cd $PBS_O_WORKDIR
+   # Load the required modules 
+   module load nvidia/cuda-11.0
 
-   ./cuda_test.x
 
-The line ``#PBS -l select=1:ncpus=10:ngpus=1`` requests 1 node, 10 cores on that node and 1 GPU
-accelerator on that node.
+   srun ./cuda_test.x
+
 
 Job submission script using multiple GPUs on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,53 +166,61 @@ could look like:
 
 ::
 
-   #!/bin/bash
-   #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=1:ncpus=40:ngpus=4
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+    #!/bin/bash
+    #
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CUDA_Example
+    #SBATCH --time=0:20:0
+    #SBATCH --partition=gpu-skylake
+    #SBATCH --qos=gpu
+    #SBATCH --exclusive
+    #SBATCH --gres=gpu:4
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=1
+    #SBATCH --cpus-per-task=40
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    
 
-   cd $PBS_O_WORKDIR
+    # Load the required modules 
+    module load nvidia/cuda-11.0
 
-   ./cuda_test.x
 
-The line ``#PBS -l select=1:ncpus=40:ngpus=4`` requests 1 node, 40 cores on that node and 4 GPU
-accelerators on that node (i.e. a full GPU compute node).
+    srun ./cuda_test.x
 
-Job submission script using multiple GPUs on multiple nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+..
+   The line ``#PBS -l select=1:ncpus=40:ngpus=4`` requests 1 node, 40 cores on that node and 4 GPU
+   accelerators on that node (i.e. a full GPU compute node).
 
-.. note:: Remember that there are a maximum of 4 GPU accelerators per node and a maximum of 40 CPU cores per node.
+..
+   Job submission script using multiple GPUs on multiple nodes
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A job script that required 8 GPU accelerators and 80 CPU cores for 20 minutes across 2 nodes
-could look like:
+   .. note:: Remember that there are a maximum of 4 GPU accelerators per node and a maximum of 40 CPU cores per node.
 
-::
+   A job script that required 8 GPU accelerators and 80 CPU cores for 20 minutes across 2 nodes
+   could look like:
 
-   #!/bin/bash
-   #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=2:ncpus=40:ngpus=4
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+   ::
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
-   module load mpt
+      #!/bin/bash
+      #
+      #PBS -N cuda_test
+      #PBS -q gpu
+      #PBS -l select=2:ncpus=40:ngpus=4
+      #PBS -l walltime=0:20:0
+      # Budget: change 't01' to your budget code
+      #PBS -A t01
 
-   cd $PBS_O_WORKDIR
+      # Load the required modules (this assumes you compiled with GCC 6.3.0)
+      module load cuda
+      module load gcc/6.3.0
+      module load mpt
 
-   mpirun -ppn 40 -n 80 ./cuda_test.x
+      cd $PBS_O_WORKDIR
 
-The line ``#PBS -l select=2:ncpus=40:ngpus=4`` requests 2 nodes, 40 cores per node (80 in total)
-and 4 GPU accelerators per node (8 in total).
+      mpirun -ppn 40 -n 80 ./cuda_test.x
+
+   The line ``#PBS -l select=2:ncpus=40:ngpus=4`` requests 2 nodes, 40 cores per node (80 in total)
+   and 4 GPU accelerators per node (8 in total).
