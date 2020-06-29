@@ -117,12 +117,21 @@ code.
 Submitting jobs to the GPU nodes
 --------------------------------
 
-An additional option is needed in GPU job submission scripts over those in standard jobs:
+Instead of requesting nodes and CPU cores as you do for standard jobs, you request 
+the number of GPUs you require and the system automatically allocates the correct
+proportion of tasks (CPU cores) to match the number of GPUs you have requested.
+You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
 
  * ``--gres=gpu:N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
    request needs to be added to your Slurm script.
 
-.. note:: We generally recommend that you should request 10 CPU cores per GPU accelerator even if you do not need them.
+.. note::
+
+   You will be allocated 10 CPU cores and one quarter of the node memory
+   (~9.1 GB) per GPU that you request. If you specify the ``--exclusive`` option,
+   you will be allocated all CPU cores and memory from the node irrespective
+   of how many GPUs you request.
+
 
 Job submission script using single GPU on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,20 +148,14 @@ could look like:
    #SBATCH --time=0:20:0
    #SBATCH --partition=gpu-skylake
    #SBATCH --qos=gpu
-   #SBATCH --exclusive
    #SBATCH --gres=gpu:1
-   #SBATCH --nodes=1
-   #SBATCH --tasks-per-node=1
-   #SBATCH --cpus-per-task=10
 
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
      
-
    # Load the required modules 
    module load nvidia/cuda-11.0
-
-
+   
    srun ./cuda_test.x
 
 
@@ -173,16 +176,11 @@ could look like:
     #SBATCH --time=0:20:0
     #SBATCH --partition=gpu-skylake
     #SBATCH --qos=gpu
-    #SBATCH --exclusive
     #SBATCH --gres=gpu:4
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=40
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
     
-
     # Load the required modules 
     module load nvidia/cuda-11.0
 
@@ -193,34 +191,10 @@ could look like:
    The line ``#PBS -l select=1:ncpus=40:ngpus=4`` requests 1 node, 40 cores on that node and 4 GPU
    accelerators on that node (i.e. a full GPU compute node).
 
-..
-   Job submission script using multiple GPUs on multiple nodes
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. note:: Remember that there are a maximum of 4 GPU accelerators per node and a maximum of 40 CPU cores per node.
+Job submission script using multiple GPUs on multiple nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   A job script that required 8 GPU accelerators and 80 CPU cores for 20 minutes across 2 nodes
-   could look like:
+.. info::
 
-   ::
-
-      #!/bin/bash
-      #
-      #PBS -N cuda_test
-      #PBS -q gpu
-      #PBS -l select=2:ncpus=40:ngpus=4
-      #PBS -l walltime=0:20:0
-      # Budget: change 't01' to your budget code
-      #PBS -A t01
-
-      # Load the required modules (this assumes you compiled with GCC 6.3.0)
-      module load cuda
-      module load gcc/6.3.0
-      module load mpt
-
-      cd $PBS_O_WORKDIR
-
-      mpirun -ppn 40 -n 80 ./cuda_test.x
-
-   The line ``#PBS -l select=2:ncpus=40:ngpus=4`` requests 2 nodes, 40 cores per node (80 in total)
-   and 4 GPU accelerators per node (8 in total).
+   Information on running multi-node GPU jobs will be added shortly.
