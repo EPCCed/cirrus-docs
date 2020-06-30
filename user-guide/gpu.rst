@@ -1,7 +1,7 @@
 Using the Cirrus GPU Nodes
 ==========================
 
-Cirrus has two compute nodes equipped with GPGPU accelerators. This section of the user
+Cirrus has 38 compute nodes equipped with GPGPU accelerators. This section of the user
 guide explains how to compile code and submit jobs to the GPU nodes.
 
 .. note::
@@ -12,14 +12,23 @@ guide explains how to compile code and submit jobs to the GPU nodes.
 Hardware details
 ----------------
 
-The Cirrus GPU compute nodes each contain two 2.4 GHz, 20-core Intel Xeon Gold
-6148 (Skylake) series processers. Each of the cores in these
+36 of the Cirrus GPU compute nodes each contain two 2.5 GHz, 20-core Intel Xeon Gold
+6248 (Cascade Lake) series processors. Each of the cores in these
 processors support 2 hardware threads (Hyperthreads), which are enabled
 by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
 (Volta) GPU accelerators connected to the host processors and each other
-via PCIe.
+via PCIe. These nodes are available in the `gpu-cascade` partition. This
+partition has a total of 144 GPU accelerators and 1440 CPU cores.
 
-The GPU compute nodes on Cirrus have 384 GB of main memory shared between
+Two of the Cirrus GPU compute nodes each contain two 2.4 GHz, 20-core Intel Xeon Gold
+6148 (Skylake) series processors. Each of the cores in these
+processors support 2 hardware threads (Hyperthreads), which are enabled
+by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
+(Volta) GPU accelerators connected to the host processors and each other
+via PCIe. These nodes are available in the `gpu-skylake` partition. This
+partition has a total of 8 GPU accelerators and 80 CPU cores. 
+
+All of the GPU compute nodes on Cirrus have 384 GB of main memory shared between
 the two processors. The memory is arranged in a non-uniform access (NUMA) form:
 each 20-core processor is a single NUMA region with local memory of 192
 GB. Access to the local memory by cores within a NUMA region has a lower
@@ -33,8 +42,6 @@ There are three levels of cache, configured as follows:
 
 Each GPU accelerator has 16 GiB of fast GPU memory.
 
-There are 2 GPU compute nodes on Cirrus giving a total of 80 CPU cores
-and 8 GPU accelerators.
 
 Compiling software for the GPU nodes
 ------------------------------------
@@ -42,7 +49,7 @@ Compiling software for the GPU nodes
 .. note::
 
    As the Cirrus login nodes use Intel Xeon Broadwell processors and the GPU compute nodes
-   are equipped with Intel Xeon Sylake processers additional flags are needed to compile
+   are equipped with Intel Xeon Sylake or Cascade Lake processors, additional flags are needed to compile
    code for the correct processors. These flags are described in the different compiler 
    suites below.
 
@@ -57,7 +64,7 @@ To use the CUDA toolkit on Cirrus, you should load one of the `cuda` modules, e.
 
 ::
 
-   module load nvidia/cuda-11.0
+   module load nvidia/cuda-10.2
 
 Once you have loaded the ``cuda`` module, you can access the CUDA compiler with the ``nvcc`` command.
 
@@ -82,7 +89,7 @@ You can now use ``nvcc`` to compile your source code, e.g.:
 
 ::
 
-   nvcc -o cuda_test.x cuda_test.cu
+   nvcc -march=skylake-avx512 -o cuda_test.x cuda_test.cu
 
 .. note::
 
@@ -106,7 +113,7 @@ You can now use ``nvcc -ccbin icpc`` to compile your source code, e.g.:
 
 ::
 
-   nvcc -ccbin icpc -o cuda_test.x cuda_test.cu
+   nvcc -ccbin icpc -xCore-AVX512 -qopt-zmm-usage=high -o cuda_test.x cuda_test.cu
 
 The ``-ccbin icpc`` tells ``nvcc`` to use the Intel C++ compiler to compile the host (CPU)
 code.
@@ -146,7 +153,7 @@ could look like:
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=CUDA_Example
    #SBATCH --time=0:20:0
-   #SBATCH --partition=gpu-skylake
+   #SBATCH --partition=gpu-cascade
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
 
@@ -154,7 +161,7 @@ could look like:
    #SBATCH --account=[budget code]
      
    # Load the required modules 
-   module load nvidia/cuda-11.0
+   module load nvidia/cuda-10.2
    
    srun ./cuda_test.x
 
@@ -174,7 +181,7 @@ could look like:
     # Slurm job options (name, compute nodes, job time)
     #SBATCH --job-name=CUDA_Example
     #SBATCH --time=0:20:0
-    #SBATCH --partition=gpu-skylake
+    #SBATCH --partition=gpu-cascade
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
 
@@ -182,14 +189,11 @@ could look like:
     #SBATCH --account=[budget code]
     
     # Load the required modules 
-    module load nvidia/cuda-11.0
+    module load nvidia/cuda-10.2
 
 
     srun ./cuda_test.x
 
-..
-   The line ``#PBS -l select=1:ncpus=40:ngpus=4`` requests 1 node, 40 cores on that node and 4 GPU
-   accelerators on that node (i.e. a full GPU compute node).
 
 
 Job submission script using multiple GPUs on multiple nodes
