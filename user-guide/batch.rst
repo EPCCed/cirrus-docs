@@ -416,6 +416,13 @@ Other common options that are used are:
   - ``--job-name=<jobname>`` set a name for the job to help identify it in 
     Slurm command output.
 
+Other not so common options that are used are:
+
+  - ``--switches=max-switches{@max-time-to-wait}`` optimum switches and max time to wait
+    for them. The scheduler will wait indefinitely when attempting to place these jobs. 
+    Users can override this indefinite wait. The scheduler will deliberately place work to 
+    clear space for these jobs, so we don't foresee the indefinite wait nature to be an issue.
+
 In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
 
