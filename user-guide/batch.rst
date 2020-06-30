@@ -494,6 +494,9 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
     # Load the default HPE MPI environment
     module load mpt
 
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
+
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
@@ -567,6 +570,9 @@ process. This results in all 36 physical cores per node being used.
     # Load the default HPE MPI environment
     module load mpt
 
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
+
     # Set the number of threads to 18
     #   There are 18 OpenMP threads per MPI process
     export OMP_NUM_THREADS=18
@@ -605,6 +611,9 @@ nodes and 36 threads for 20 minutes would look like:
 
     # Load any required modules
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -665,6 +674,9 @@ process per core and specifies 4 hours maximum runtime per subjob:
     
     # Load the default HPE MPI environment
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -792,6 +804,9 @@ look like:
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Enforce threading to 1 in case underlying libraries are threaded
     export OMP_NUM_THREADS=1
