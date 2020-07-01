@@ -49,9 +49,9 @@ available versions of the Intel Compiler type:
 ::
 
     [user@cirrus-login0 ~]$ module avail intel-compilers
- 
+    
     --------------------------------------- /lustre/sw/modulefiles ---------------------------------------
-intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117  
+    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117  
 
 If you want more info on any of the modules, you can use the
 ``module help`` command:

@@ -104,34 +104,29 @@ Linux. For example
    cd projects/sim
 
 
-Load the ``flacs`` module to make the application available:
+Load the ``flacs`` module to make the application available. Note that you
+should specify the specfic version you require:
 
 ::
 
-   module load flacs
+   module load flacs/10.9.1
 
+(Use ``module avail flacs`` to see which versions are available.)
 Submit your FLACS jobs using the ``sbatch`` command.
-
-.. note::
-
-  The PBS batch system (with commands qsub, qstat, etc) is now replaced
-  by SLURM. The following commands SLURM (sbatch,squeue,etc) are pending
-  confirmation for FLACS jobs.
 
 For example:
 
 ::
 
-   sbatch --account=xyz --nodes=1 --tasks-per-node=1 --time=6:00:00 -qos=flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101
+   sbatch --account=i123 --tasks-per-node=1 --time=06:00:00 --partition=standard --qos=commercial -- `which run_runflacs` -dir projects/sim 010101
 
-The ``--account=xyz`` option is obligatory and states the account ``xyz``
-that the CPU consumption will be billed to. You can check your
-account in SAFE.
+The ``--account=i123`` option is obligatory and states that account ``i123``
+will be used to record the CPU time consumed by the job, and result in
+billing to the relevant customer. You will need your project account code
+here to replace ``i123``. You can check your account details in SAFE.
 
-The ``---nodes=1`` option specifies the resource allocation for
-the job you are starting (the number of 36-core nodes).
 The parameter ``--tasks-per-node=1`` is the number of cores required. For
-a serial FLACS job you would use ``--nodes=1 --tasks-per-node=1``.
+a serial FLACS job you would use `` --tasks-per-node=1``.
 
 The maximum length of time (i.e. walltime) you want the job to run
 is specified with the ``--time=[hh:mm:ss]`` option. After this
@@ -139,12 +134,9 @@ time, your job will be stopped by the job scheduler. Setting a very
 high walltime limit may lead to your job being given lower priority
 and thus wait longer in the queue. The default walltime is 12 hours.
 
-All Flacs jobs must be submitted to the flacs queue using the option
-``--qos flacs``; the flacs queue ensures FLACS licenses are provisioned
-correctly for the jobs.
-
 After the ``--`` which marks the beginning of the command to run, the
-Flacs executable is given *with its absolute path*.
+Flacs executable is given *with its absolute path*. This is most easily
+obtained by using the shell ``which`` command.
 Having loaded the flacs module (see above) you can find the location
 by 
 
@@ -152,10 +144,13 @@ by
 
    which run_runflacs
 
+Using ``which run_runflacs`` with backticks will substitute the full path
+in the ``sbatch`` submission.
+
 The ``run_runflacs`` command in turn needs two arguments: first, after
 ``-dir``, the directory where to run the job and create the output; if
-it is the current directory then you can pass ``-dir `pwd```.
-Second, the job number of the FLACS scenario.
+it is the current directory then you can pass ``-dir `pwd```;
+second, the job number of the FLACS scenario.
 
 Multithreaded jobs
 ~~~~~~~~~~~~~~~~~~
@@ -163,7 +158,7 @@ Multithreaded flacs simulations can be run on Cirrus with the following job subm
 
 ::
 
-   sbatch --account=xyz --nodes=1 --cpus-per-task=4 --time=6:00:00 -qos=flacs -- /lustre/sw/flacs/10.5.1/FLACS_v10.5/bin/run_runflacs -dir projects/sim 010101 NumThreads=4
+   sbatch --account=i123 --tasks-per-node=1 --cpus-per-task=4 --time=6:00:00 --partition=standard -qos=commercial -- `which run_runflacs` -dir projects/sim 010101 NumThreads=4
 
 It is important to note that when submitting multithreaded flacs simulations
 the ``--cpus-per-task`` option must be used in order for the queue system to
@@ -182,22 +177,17 @@ option to the ``sbatch`` command, with the FLACS job number being part
 of the first ten characters of the name. In this way you can easily
 identify the jobs in the queue (see below).
 
-During testing it has been shown that job submission to the queue runs
-more smoothly when there is a short delay of 5 seconds before subsequent
-``sbatch`` commands.
-
 A script submitting the scenarios 000012, 000023 and 000117 to the queue
 could look like this:
 
 ::
 
    module load flacs/10.9.1
-   sleep 5; sbatch ... --job-name=f-000012 -- `which run_runflacs` -dir `pwd` 000012
-   sleep 5; sbatch ... --job-name=f-000023 -- `which run_runflacs` -dir `pwd` 000023
-   sleep 5; sbatch ... --job-name=f-000117 -- `which run_runflacs` -dir `pwd` 000117
+   sbatch ... --job-name=f-000012 -- `which run_runflacs` -dir `pwd` 000012
+   sbatch ... --job-name=f-000023 -- `which run_runflacs` -dir `pwd` 000023
+   sbatch ... --job-name=f-000117 -- `which run_runflacs` -dir `pwd` 000117
 
 where the ``...`` represents other ``sbatch`` arguments as described above.
-This is also easy to formulate as a loop. 
 
 
 Monitor your jobs
@@ -219,17 +209,71 @@ Running many related scenarios with the Flacs simulator is ideally suited for
 using `job arrays <../user-guide/batch.html#job-arrays>`_, i.e. running the
 simulations as part of a single job.
 
+Note you must determine ahead of time the number of senarios involved.
+This determines the number of array elements, which must be specified
+at the point of job submission. The number of array elements is
+specified by ``--array`` argument to ``sbatch``.
+
 A job script for running a job array with 128 Flacs scenarios that are
 located in the current directory could look like this:
 
-.. note::
+::
+  
+  #!/bin/bash --login
+  
+  # Recall that the resource specification is per element of the array
+  # so this would give four instances of one task (with one thread per
+  # task --cpus-per-task=1).
+  
+  #SBATCH --array=1-128
+  
+  #SBATCH --ntasks=1
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=02:00:00
+  #SBATCH --account=z04
+  
+  #SBATCH --partition=standard
+  #SBATCH --qos=commericial
+  
+  # Abbreviate some SLURM variables for brevity/readability
+  
+  TASK_MIN=${SLURM_ARRAY_TASK_MIN}
+  TASK_MAX=${SLURM_ARRAY_TASK_MAX}
+  TASK_ID=${SLURM_ARRAY_TASK_ID}
+  TASK_COUNT=${SLURM_ARRAY_TASK_COUNT}
+  
+  # Form a list of relevant files, and check the number of array elements
+  # matches the number of cases with 6-digit identifiers.
+  
+  CS_FILES=(`ls -1 cs??????.dat3`)
+  
+  if test "${#CS_FILES[@]}" -ne "${TASK_COUNT}";
+  then
+    printf "Number of files is:       %s\n" "${#CS_FILES[@]}"
+    printf "Number of array tasks is: %s\n" "${TASK_COUNT}"
+    printf "Do not match!\n"
+  fi
+  
+  # All tasks loop through the entire list to find their specific case.
+  
+  for (( jid = $((${TASK_MIN})); jid <= $((${TASK_MAX})); jid++ ));
+  do
+    if test "${TASK_ID}" -eq "${jid}";
+    then
+        # File list index with offset zero
+	file_id=$((${jid} - ${TASK_MIN}))
+	# Form the substring file_id (recall syntax is :offset:length)
+	my_file=${CS_FILES[${file_id}]}
+	my_file_id=${my_file:2:6}
+    fi
+  done
 
-  A SLURM script for running an array job is pending confirmation.
+  printf "Task %d has file %s id %s\n" "${TASK_ID}" "${my_file}" "${my_file_id}"
 
-Due to the way the job scheduler interprets this script, the number
-of jobs has to be hard-coded in the first (non-bash) part of the job
-script and cannot be determined based on the number of scenarios in
-the current directory.
+  module load flacs/10.9.1
+  `which run_runflacs` ${my_file_id}
+
+
 
 
 Transfer data from Cirrus to your local system

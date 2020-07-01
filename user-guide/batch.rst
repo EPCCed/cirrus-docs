@@ -126,7 +126,7 @@ the primary resource that you request.
    assigned is calculated from the amount of primary resource you request.
 
 Primary resources on standard (CPU) compute nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are CPU cores. The maximum amount of memory
 you are allocated is computed as the number of CPU cores you requested multiplied by 1/36th of
@@ -145,7 +145,7 @@ you will be assigned a maximum of 256/36 = 7.1 GB of the memory available on the
    some is retained for running the operating system and other system processes.
 
 Primary resources on GPU nodes
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
 and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
@@ -187,6 +187,7 @@ You can list the active partitions using
 
 Note, you may not have access to all the available partitions.
 
+
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -194,7 +195,7 @@ On Cirrus Quality of Service (QoS) is used alongside partitions to improve user 
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
-   :widths: 30 70
+   :widths: 20 20 20 40
    :header-rows: 1
 
    * - QoS
@@ -216,7 +217,7 @@ following table has a list of active QoS on Cirrus.
    * - gpu
      - GPU QoS
      - 6 hours
-    - max. 2 jobs running per user, max. 4 jobs queued per user
+     - max. 2 jobs running per user, max. 4 jobs queued per user
 
 You can find out the QoS that you can use by running the following command:
 
@@ -731,55 +732,116 @@ or for a longer chain:
    jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
    sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
 
-Interactive Jobs: ``salloc``
-----------------------------
+Interactive Jobs
+----------------
 
 When you are developing or debugging code you often want to run many
 short jobs with a small amount of editing the code between runs. This
-can be achieved by using the login nodes to run MPI but you may want
-to test on the compute nodes (e.g. you may want to test running on 
-multiple nodes across the high performance interconnect). One of the
-best ways to achieve this on Cirrus is to use interactive jobs.
+can be achieved by using the login nodes to run small/short MPI jobs.
+However, you may want to test on the compute nodes (e.g. you may want
+to test running on multiple nodes across the high performance
+interconnect). One way to achieve this on Cirrus is to use an interactive
+jobs.
 
-An interactive job allows you to issue ``srun`` commands directly
+Interactive jobs via SLURM take two slightly different forms. The first
+uses ``srun`` directly to allocate resource to be used interactively;
+the second uses both ``salloc`` and ``srun``.
+
+Using srun
+~~~~~~~~~~
+
+An interactive job via ``srun`` allows you to execute commands directly
 from the command line without using a job submission script, and to
 see the output from your program directly in the terminal.
 
-You use the ``salloc`` command to reserve compute nodes for interactive
-jobs.
-
-To submit a request for an interactive job reserving 8 nodes
-(1024 physical cores) for 1 hour you would
-issue the following qsub command from the command line:
-
-.. code-block:: bash
-
-    salloc --exclusive --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=1:0:0  --partition=standard --qos=standard --account=t01
-    
-
-When you submit this job your terminal will display something like:
+A convenient way to do this is as follows.
 
 ::
 
-    salloc: Granted job allocation 7912
+  [user@cirrus-login1]$ srun --exclusive --nodes=1 --time=00:20:00 --partition=standard --qos=standard --account=z04 --pty /usr/bin/bash --login
+  [user@r1i0n14]$
+
+This requests the exclusive use of one node for the given time (here,
+20 minutes). The ``--pty /usr/bin/bash --login`` requests an interactive
+login shell be started. (Note the prompt has changed.) Interactive
+commands can then be used as normal and will execute on the compute node.
+When no longer required, you can type ``exit`` or CTRL-D to release the
+resources and return control to the front end shell.
+
+::
+
+  [user@r1i0n14]$ exit
+  logout
+  [user@cirrus-login1]$ 
+
+Note that the new interactive shell will reflect the environment of the
+original login shell. If you do not wish this, add the ``--export=none``
+argument to ``srun`` to provide a clean login environment.
+
+Within an interactive job, one can use ``srun`` to launch parallel jobs
+in the normal way, e.g.,
+
+::
+
+  [user@r1i0n14]$ srun -n 2 ./a.out
+
+In this context, one could also use ``mpirun`` directly. Note we are limited
+to the 36 cores of our original ``--nodes=1`` ``srun`` request.
+
+
+Using ``salloc`` with ``srun``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This approach uses the``salloc`` command to reserve compute nodes and
+then ``srun`` to launch relevant work.
+
+To submit a request for a job reserving 2 nodes (72 physical cores) for
+1 hour you would issue the command:
+
+.. code-block:: bash
+
+    [user@cirrus-login1]$ salloc --exclusive --nodes=2 --tasks-per-node=36 --cpus-per-task=1 --time=01:00:00  --partition=standard --qos=standard --account=t01
+    salloc: Granted job allocation 8699
     salloc: Waiting for resource configuration
-    salloc: Nodes r1i7n[1-2] are ready for job
+    salloc: Nodes r1i7n[13-14] are ready for job
+    [user@cirrus-login1]$ 
 
-It may take some time for your interactive job to start. Once it
-runs you will enter a standard interactive terminal session.
-Whilst the interactive session lasts you will be able to run parallel
-jobs on the compute nodes by issuing the ``srun``  command
-directly at your command prompt using the same syntax as you would inside
-a job script. The maximum number of nodes you can use is limited by resources
-requested in the ``salloc`` command.
+Note that this starts a new shell on the login node associated with the
+allocation (the prompt has not changed). The allocation may be released
+by exiting this new shell.
 
-If you know you will be doing a lot of intensive debugging you may
-find it useful to request an interactive session lasting the expected
-length of your working session, say a full day.
+::
 
-Your session will end when you hit the requested walltime. If you
-wish to finish before this you should use the ``exit`` command - this will
-return you to your prompt before you issued the ``salloc`` command.
+  [user@cirrus-login1]$ exit
+  salloc: Relinquishing job allocation 8699
+  [user@cirrus-login1]$ 
+
+While the allocation lasts you will be able to run parallel jobs on the
+compute nodes by issuing the ``srun`` command in the normal way. The
+resources available are those specified in the original ``salloc``
+command. For example, with the above allocation,
+
+::
+
+  $ srun ./mpi-code.out
+
+will run 36 MPI tasks per node on two nodes.
+
+If your allocation reaches its time limit, it will automatically be
+termintated and the associated shell will exit. To check that the
+allocation is still running, use ``squeue``:
+
+::
+
+  [user@cirrus-login1]$ squeue -u user
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON) 
+              8718  standard     bash    user   R       0:07      2 r1i7n[18-19]
+
+Choose a time limit long enough to allow the relevant work to be completed.
+
+The ``salloc`` method may be useful if one wishes to associate operations
+on the login node (e.g., via a GUI) with work in the allocation itself.
+
 
 Reservations
 ------------
