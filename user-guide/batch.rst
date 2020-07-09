@@ -219,8 +219,8 @@ following table has a list of active QoS on Cirrus.
      - max. 10 jobs running per user, max. 20 jobs queued per user, restricted access
    * - gpu
      - GPU QoS
-     - 6 hours
-     - max. 1 jobs running per user, max. 4 jobs queued per user
+     - 4 days
+     - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
 
 You can find out the QoS that you can use by running the following command:
 
