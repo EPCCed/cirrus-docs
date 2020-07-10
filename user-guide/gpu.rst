@@ -178,7 +178,7 @@ Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 On Cirrus, Quality of Service (QoS) is used alongside partitions to improve user experience. The 
-following tableshows the GPU QoS on Cirrus.
+following table shows the GPU QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
    :widths: 20 20 20 40
