@@ -104,6 +104,9 @@ will cancel (if waiting) or stop (if running) the job with ID ``12345``.
 
 Resource Limits
 ---------------
+.. note::
+
+If you have requirements which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements. 
 
 There are different resource limits on Cirrus for different purposes. There 
 are three different things you need to specify for each job:
@@ -232,7 +235,8 @@ You can find out the QoS that you can use by running the following command:
 .. note::
 
    Details on the resource limits will be added shortly.
-
+   
+   
 Troubleshooting
 ---------------
 
