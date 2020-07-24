@@ -54,7 +54,7 @@ usually within a virtual machine on your laptop/workstation); see
 
 .. hint::
 
-  Singularity has not been installed as root, so the following limitations apply:
+  Singularity has not been installed as root on Cirrus, so the following limitations apply:
   
    - All containers will be run from sandbox directories
    - Filesystem image, and SIF-embedded persistent overlays cannot be used
