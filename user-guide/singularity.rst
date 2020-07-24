@@ -61,7 +61,7 @@ usually within a virtual machine on your laptop/workstation); see
    - Encrypted containers cannot be used
    - Fakeroot functionality will rely on external setuid root `newuidmap` and `newgidmap` binaries which may be provided by the distribution
   
-  These are described in more detail in the `Singularity documentation <https://sylabs.io/guides/3.6/admin-guide/user_namespace.html#userns-limitations>`
+  These are described in more detail in the `Singularity documentation <https://sylabs.io/guides/3.6/admin-guide/user_namespace.html#userns-limitations>`_
 
 
 .. _use_image_singularity:
