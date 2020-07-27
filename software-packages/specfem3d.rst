@@ -7,13 +7,18 @@ of conforming mesh of hexahedra (structured or not.) It can, for instance, model
 propagating in sedimentary basins or any other regional geological model following earthquakes.
 It can also be used for non-destructive testing or for ocean acoustics.
 
+Useful Links
+------------
+
+* `SPECFEM3D User Resources <https://geodynamics.org/cig/software/specfem3d/#users/>`__
+* `SPECFEM3D Wiki <https://wiki.geodynamics.org/software:specfem3d:start>`__
 
 Using SPECFEM3D Cartesian on Cirrus
 -----------------------------------
 
 SPECFEM3D Cartesian is freely available to all Cirrus users.
 
-Running parallel SPECFEM3D Catesian jobs
+Running parallel SPECFEM3D Cartesian jobs
 ----------------------------------------
 
 SPECFEM3D can exploit multiple nodes on Cirrus and will generally be run in
