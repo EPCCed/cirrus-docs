@@ -202,29 +202,58 @@ On Cirrus Quality of Service (QoS) is used alongside partitions to improve user 
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
-   :widths: 20 20 20 40
    :header-rows: 1
 
-   * - QoS
-     - Description
-     - Maximum Walltime
-     - Other Limits
+   * - QoS Name
+     - Jobs Running Per User
+     - Jobs Queued Per User
+     - Max Walltime
+     - Max Size
+     - Applies to Partitions
+     - Notes
    * - standard
-     - Standard QoS
+     - Upto 1008 cores
+     - 500
      - 4 days
-     - max. 20 jobs running per user, max. 500 jobs queued per user
+     - 1008 cores (28 nodes/10%)
+     - standard
+     - 
+   * - capability
+     - 1
+     - 4
+     - 24 hours
+     - 228 nodes (8192+ cores/81%) or 144 GPUs
+     - standard, gpu-cascade
+     - 
    * - long
-     - Long QoS
+     - 5
+     - 20
      - 14 days
-     - max. 5 jobs running per user, max. 20 jobs queued per user
+     - 16 nodes
+     - standard
+     - 
    * - highpriority
-     - High Priority QoS
+     - 10
+     - 20
      - 4 days
-     - max. 10 jobs running per user, max. 20 jobs queued per user, restricted access
+     - 140 nodes
+     - 
+     - 
    * - gpu
-     - GPU QoS
+     - Upto 16 GPUs
+     - 50
      - 4 days
-     - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
+     - 16 GPUs (4 nodes ~10%)
+     - gpu-cascade
+     - 
+   * - short
+     - 1
+     - 2
+     - 20 minutes
+     - 2 nodes or 4 GPUs
+     - standard, gpu-cascade
+     - Submit with reservation=shortqos if CPU
+
 
 You can find out the QoS that you can use by running the following command:
 
