@@ -178,7 +178,7 @@ of active partitions on Cirrus.
      - Maximum Job Size (Nodes)
    * - standard
      - CPU nodes with Broadwell processors
-     - 280
+     - 228
    * - gpu-cascade
      - GPU nodes with Cascade Lake processors
      - 36
@@ -237,22 +237,22 @@ following table has a list of active QoS on Cirrus.
      - 20
      - 4 days
      - 140 nodes
-     - 
+     - standard
      - 
    * - gpu
      - Upto 16 GPUs
      - 50
      - 4 days
      - 16 GPUs (4 nodes ~10%)
-     - gpu-cascade
+     - gpu-skylake, gpu-cascade
      - 
    * - short
      - 1
      - 2
      - 20 minutes
      - 2 nodes or 4 GPUs
-     - standard, gpu-cascade
-     - Submit with reservation=shortqos if CPU
+     - standard, gpu-skylake
+     - Submit with reservation=shortqos if standard partition is used
 
 
 You can find out the QoS that you can use by running the following command:
