@@ -139,7 +139,64 @@ You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
    you will be allocated all CPU cores and memory from the node irrespective
    of how many GPUs you request.
 
+Resources on GPU nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
+and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
+the total available (as there are 4 GPU cards per node). So, if you request the full node (4 GPU cards), then you will be
+allocated a maximum of all of the memory (384 GB) available on the node; however, if you request 1 GPU card, then
+you will be assigned a maximum of 384/4 = 96 GB of the memory available on the node.
+
+.. note::
+
+   Using the ``--exclusive`` option in jobs will give you access to all of the CPU cores and the full node memory even
+   if you do not explicitly request all of the GPU cards on the node.
+
+Partitions
+~~~~~~~~~~
+
+On Cirrus, compute nodes are grouped into partitions. You will have to specify a partition
+using the ``--partition`` option in your submission script. The following table has a list 
+of active GPU partitions on Cirrus.
+
+.. list-table:: Cirrus Partitions
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Partition
+     - Description
+     - Maximum Job Size (Nodes)
+   * - gpu-cascade
+     - GPU nodes with Cascade Lake processors
+     - 36
+   * - gpu-skylake
+     - GPU nodes with Skylake processors
+     - 2
+
+Quality of Service (QoS)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+On Cirrus, Quality of Service (QoS) is used alongside partitions to improve user experience. The 
+following table shows the GPU QoS on Cirrus.
+
+.. list-table:: Cirrus QoS
+   :widths: 20 20 20 40
+   :header-rows: 1
+
+   * - QoS
+     - Description
+     - Maximum Walltime
+     - Other Limits
+   * - gpu
+     - GPU QoS
+     - 96 hours
+     - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
+
+.. note::
+
+   If more than a node is required (4GPUs), exclusive mode (``--exclusive``) and all GPUs (``--gres=gpu:4``) options must be included in your submission script.
+   
 Job submission script using single GPU on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -199,6 +256,29 @@ could look like:
 Job submission script using multiple GPUs on multiple nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. info::
+A job script that required 8 GPU accelerators for 20 minutes
+could look like:
 
-   Information on running multi-node GPU jobs will be added shortly.
+::
+
+    #!/bin/bash
+    #
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CUDA_Example
+    #SBATCH --time=0:20:0
+    #SBATCH --partition=gpu-cascade
+    #SBATCH --nodes=2
+    #SBATCH --exclusive
+    #SBATCH --qos=gpu
+    #SBATCH --gres=gpu:4
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    
+    # Load the required modules 
+    module load nvidia/cuda-10.2
+
+
+    srun ./cuda_test.x
+
+

@@ -52,6 +52,18 @@ must be done on a system where you have such access (in practice, this is
 usually within a virtual machine on your laptop/workstation); see
 :ref:`create_image_singularity`.
 
+.. hint::
+
+  Singularity has not been installed as root on Cirrus, so the following limitations apply:
+  
+   - All containers will be run from sandbox directories
+   - Filesystem image, and SIF-embedded persistent overlays cannot be used
+   - Encrypted containers cannot be used
+   - Fakeroot functionality will rely on external setuid root `newuidmap` and `newgidmap` binaries which may be provided by the distribution
+  
+  These are described in more detail in the `Singularity documentation <https://sylabs.io/guides/3.6/admin-guide/user_namespace.html#userns-limitations>`_
+
+
 .. _use_image_singularity:
 
 Using Singularity Images on Cirrus
