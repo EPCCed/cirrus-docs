@@ -597,7 +597,7 @@ process. This results in all 36 physical cores per node being used.
     #!/bin/bash
 
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_MPI_Job
+    #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
@@ -702,7 +702,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     #!/bin/bash
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_Array_Job
+    #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
