@@ -212,43 +212,43 @@ following table has a list of active QoS on Cirrus.
      - Applies to Partitions
      - Notes
    * - standard
-     - 
-     - 500
+     - No limit
+     - 500 jobs
      - 4 days
      - 1008 cores (28 nodes/10%)
      - standard
      - 
    * - capability
-     - 1
-     - 4
+     - 1 job
+     - 4 jobs
      - 24 hours
      - 228 nodes (8192+ cores/81%) or 144 GPUs
      - standard, gpu-cascade
      - 
    * - long
-     - 5
-     - 20
+     - 5 jobs
+     - 20 jobs
      - 14 days
      - 16 nodes
      - standard
      - 
    * - highpriority
-     - 10
-     - 20
+     - 10 jobs
+     - 20 jobs
      - 4 days
      - 140 nodes
      - 
      - 
    * - gpu
-     - Upto 16 GPUs
-     - 50
+     - No limit
+     - 50 jobs
      - 4 days
      - 16 GPUs (4 nodes ~10%)
      - gpu-cascade
      - 
    * - short
-     - 1
-     - 2
+     - 1 job
+     - 2 jobs
      - 20 minutes
      - 2 nodes or 4 GPUs
      - standard, gpu-cascade
