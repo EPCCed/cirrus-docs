@@ -175,15 +175,15 @@ of active partitions on Cirrus.
 
    * - Partition
      - Description
-     - Maximum Job Size (Nodes)
+     - Total nodes available
    * - standard
-     - CPU nodes with Broadwell processors
+     - CPU nodes with 2&times; 36-core Broadwell processors
      - 280
    * - gpu-cascade
-     - GPU nodes with Cascade Lake processors
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Cascade Lake processors
      - 36
    * - gpu-skylake
-     - GPU nodes with Skylake processors
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Skylake processors
      - 2
 
 You can list the active partitions using
@@ -212,7 +212,7 @@ following table has a list of active QoS on Cirrus.
      - Applies to Partitions
      - Notes
    * - standard
-     - Upto 1008 cores
+     - 
      - 500
      - 4 days
      - 1008 cores (28 nodes/10%)
