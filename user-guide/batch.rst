@@ -509,7 +509,7 @@ Example parallel job submission scripts
 A subset of example job submission scripts are included in full below.
 
 .. Hint::
-   Do not replace ``srun`` with ``mpirun`` in the following examples.
+   Do not replace ``srun`` with ``mpirun`` in the following examples. Although this might work under special circustances, it is not guaranteed and therefore not supported.
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
