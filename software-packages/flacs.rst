@@ -233,7 +233,7 @@ located in the current directory could look like this:
   #SBATCH --account=z04
   
   #SBATCH --partition=standard
-  #SBATCH --qos=commericial
+  #SBATCH --qos=commercial
   
   # Abbreviate some SLURM variables for brevity/readability
   
