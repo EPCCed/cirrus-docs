@@ -73,7 +73,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
 
   ::
 
-    #!/bin/bash
+   #!/bin/bash
   
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=CP2K_test
@@ -98,4 +98,4 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    export OMP_NUM_THREADS=2
 
    # Run using input in test.inp
-   srun -cpu-bind=cores cp2k.psmp -i test.inp
+   srun --cpu-bind=cores cp2k.psmp -i test.inp

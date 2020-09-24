@@ -105,6 +105,10 @@ will cancel (if waiting) or stop (if running) the job with ID ``12345``.
 Resource Limits
 ---------------
 
+.. note::
+
+  If you have requirements which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements. 
+
 There are different resource limits on Cirrus for different purposes. There 
 are three different things you need to specify for each job:
 
@@ -171,12 +175,15 @@ of active partitions on Cirrus.
 
    * - Partition
      - Description
-     - Maximum Job Size (Nodes)
+     - Total nodes available
    * - standard
-     - Standard partition
+     - CPU nodes with 2&times; 36-core Broadwell processors
      - 280
+   * - gpu-cascade
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Cascade Lake processors
+     - 36
    * - gpu-skylake
-     - GPUs
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Skylake processors
      - 2
 
 You can list the active partitions using
@@ -195,29 +202,58 @@ On Cirrus Quality of Service (QoS) is used alongside partitions to improve user 
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
-   :widths: 20 20 20 40
    :header-rows: 1
 
-   * - QoS
-     - Description
-     - Maximum Walltime
-     - Other Limits
+   * - QoS Name
+     - Jobs Running Per User
+     - Jobs Queued Per User
+     - Max Walltime
+     - Max Size
+     - Applies to Partitions
+     - Notes
    * - standard
-     - Standard QoS
+     - No limit
+     - 500 jobs
      - 4 days
-     - max. 20 jobs running per user, max. 500 jobs queued per user
+     - 1008 cores (28 nodes/10%)
+     - standard
+     - 
+   * - capability
+     - 1 job
+     - 4 jobs
+     - 24 hours
+     - 228 nodes (8192+ cores/81%) or 144 GPUs
+     - standard, gpu-cascade
+     - 
    * - long
-     - Long QoS
+     - 5 jobs
+     - 20 jobs
      - 14 days
-     - max. 5 jobs running per user, max. 20 jobs queued per user
+     - 16 nodes
+     - standard
+     - 
    * - highpriority
-     - High Priority QoS
+     - 10 jobs
+     - 20 jobs
      - 4 days
-     - max. 10 jobs running per user, max. 20 jobs queued per user, restricted access
+     - 140 nodes
+     - 
+     - 
    * - gpu
-     - GPU QoS
-     - 6 hours
-     - max. 2 jobs running per user, max. 4 jobs queued per user
+     - No limit
+     - 50 jobs
+     - 4 days
+     - 16 GPUs (4 nodes ~10%)
+     - gpu-cascade
+     - 
+   * - short
+     - 1 job
+     - 2 jobs
+     - 20 minutes
+     - 2 nodes or 4 GPUs
+     - standard, gpu-cascade
+     - Submit with reservation=shortqos if CPU
+
 
 You can find out the QoS that you can use by running the following command:
 
@@ -229,7 +265,8 @@ You can find out the QoS that you can use by running the following command:
 .. note::
 
    Details on the resource limits will be added shortly.
-
+   
+   
 Troubleshooting
 ---------------
 
@@ -417,6 +454,13 @@ Other common options that are used are:
   - ``--job-name=<jobname>`` set a name for the job to help identify it in 
     Slurm command output.
 
+Other not so common options that are used are:
+
+  - ``--switches=max-switches{@max-time-to-wait}`` optimum switches and max time to wait
+    for them. The scheduler will wait indefinitely when attempting to place these jobs. 
+    Users can override this indefinite wait. The scheduler will deliberately place work to 
+    clear space for these jobs, so we don't foresee the indefinite wait nature to be an issue.
+
 In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
 
@@ -465,7 +509,7 @@ Example parallel job submission scripts
 A subset of example job submission scripts are included in full below.
 
 .. Hint::
-   Do not replace ``srun`` with ``mpirun`` in the following examples.
+   Do not replace ``srun`` with ``mpirun`` in the following examples. Although this might work under special circustances, it is not guaranteed and therefore not supported.
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -494,6 +538,9 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
     
     # Load the default HPE MPI environment
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -550,7 +597,7 @@ process. This results in all 36 physical cores per node being used.
     #!/bin/bash
 
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_MPI_Job
+    #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
@@ -567,6 +614,9 @@ process. This results in all 36 physical cores per node being used.
     
     # Load the default HPE MPI environment
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 18
     #   There are 18 OpenMP threads per MPI process
@@ -606,6 +656,9 @@ nodes and 36 threads for 20 minutes would look like:
 
     # Load any required modules
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to the CPUs per task
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -649,7 +702,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     #!/bin/bash
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_Array_Job
+    #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
@@ -666,6 +719,9 @@ process per core and specifies 4 hours maximum runtime per subjob:
     
     # Load the default HPE MPI environment
     module load mpt
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -854,6 +910,9 @@ look like:
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
+
+    # Change to the submission directory
+    cd $SLURM_SUBMIT_DIR
 
     # Enforce threading to 1 in case underlying libraries are threaded
     export OMP_NUM_THREADS=1

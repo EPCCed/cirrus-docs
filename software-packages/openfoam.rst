@@ -10,8 +10,6 @@ Available Versions
 
 You can query the versions of OpenFOAM available on Cirrus from the command line with ``module avail openfoam``.
 
-We currently have *OpenFOAM v1706* available on Cirrus.
-
 Useful Links
 ------------
 

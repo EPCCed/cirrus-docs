@@ -227,3 +227,10 @@ find the ``IdentityFile`` option useful if you have to manage multiple SSH key p
 for different systems as this allows you to specify which SSH key to use for each
 system.
 
+.. Note::
+
+There is a known bug with Windows ssh-agent. If you get the error message: ``Warning: 
+agent returned different signature type ssh-rsa (expected rsa-sha2-512)``, you will
+need to either specify the path to your ssh key in the command line (using the ``-i``
+option as described above) or add the path to your SSH config file by using the
+``IdentityFile`` option.

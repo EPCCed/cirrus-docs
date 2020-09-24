@@ -1,7 +1,7 @@
 Using the Cirrus GPU Nodes
 ==========================
 
-Cirrus has two compute nodes equipped with GPGPU accelerators. This section of the user
+Cirrus has 38 compute nodes equipped with GPGPU accelerators. This section of the user
 guide explains how to compile code and submit jobs to the GPU nodes.
 
 .. note::
@@ -12,14 +12,23 @@ guide explains how to compile code and submit jobs to the GPU nodes.
 Hardware details
 ----------------
 
-The Cirrus GPU compute nodes each contain two 2.4 GHz, 20-core Intel Xeon Gold
-6148 (Skylake) series processers. Each of the cores in these
+36 of the Cirrus GPU compute nodes each contain two 2.5 GHz, 20-core Intel Xeon Gold
+6248 (Cascade Lake) series processors. Each of the cores in these
 processors support 2 hardware threads (Hyperthreads), which are enabled
 by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
 (Volta) GPU accelerators connected to the host processors and each other
-via PCIe.
+via PCIe. These nodes are available in the `gpu-cascade` partition. This
+partition has a total of 144 GPU accelerators and 1440 CPU cores.
 
-The GPU compute nodes on Cirrus have 384 GB of main memory shared between
+Two of the Cirrus GPU compute nodes each contain two 2.4 GHz, 20-core Intel Xeon Gold
+6148 (Skylake) series processors. Each of the cores in these
+processors support 2 hardware threads (Hyperthreads), which are enabled
+by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
+(Volta) GPU accelerators connected to the host processors and each other
+via PCIe. These nodes are available in the `gpu-skylake` partition. This
+partition has a total of 8 GPU accelerators and 80 CPU cores. 
+
+All of the GPU compute nodes on Cirrus have 384 GB of main memory shared between
 the two processors. The memory is arranged in a non-uniform access (NUMA) form:
 each 20-core processor is a single NUMA region with local memory of 192
 GB. Access to the local memory by cores within a NUMA region has a lower
@@ -33,8 +42,6 @@ There are three levels of cache, configured as follows:
 
 Each GPU accelerator has 16 GiB of fast GPU memory.
 
-There are 2 GPU compute nodes on Cirrus giving a total of 80 CPU cores
-and 8 GPU accelerators.
 
 Compiling software for the GPU nodes
 ------------------------------------
@@ -42,7 +49,7 @@ Compiling software for the GPU nodes
 .. note::
 
    As the Cirrus login nodes use Intel Xeon Broadwell processors and the GPU compute nodes
-   are equipped with Intel Xeon Sylake processers additional flags are needed to compile
+   are equipped with Intel Xeon Sylake or Cascade Lake processors, additional flags are needed to compile
    code for the correct processors. These flags are described in the different compiler 
    suites below.
 
@@ -53,11 +60,11 @@ CUDA
 `CUDA <https://developer.nvidia.com/cuda-zone>`_ is a parallel computing platform and
 programming model developed by NVIDIA for general computing on graphical processing units (GPUs).
 
-To use the CUDA toolkit on Cirrus, you should load the `cuda` module:
+To use the CUDA toolkit on Cirrus, you should load one of the `cuda` modules, e.g:
 
 ::
 
-   module load cuda
+   module load nvidia/cuda-10.2
 
 Once you have loaded the ``cuda`` module, you can access the CUDA compiler with the ``nvcc`` command.
 
@@ -65,25 +72,24 @@ As well as the CUDA compiler, you will also need a compiler module to support co
 host (CPU) code. The CUDA toolkit supports both GCC and Intel compilers. You should load your
 chosen compiler module before you compile.
 
-.. note:: The ``nvcc`` compiler currently supports versions of GCC up to 6.x and versions of the Intel compilers up to 17.x.
+..  The ``nvcc`` compiler currently supports versions of GCC up to 6.x and versions of the Intel compilers up to 17.x.
 
 Using CUDA with GCC
 ^^^^^^^^^^^^^^^^^^^
 
-By default, ``nvcc`` will use the system version of GCC. We recommend that you load a more
-recent version of GCC than the system default to support the CUDA compiler, e.g.
+When compiling using ``nvcc`` we recommend that you load a recent version of GCC to support the CUDA compiler, e.g.
 
 ::
 
    module load gcc/6.3.0
 
-.. note:: GCC 6.x is the latest version of the GCC compiler supported by ``nvcc``.
+..  GCC 6.x is the latest version of the GCC compiler supported by ``nvcc``.
 
 You can now use ``nvcc`` to compile your source code, e.g.:
 
 ::
 
-   nvcc -o cuda_test.x cuda_test.cu
+   nvcc -march=skylake-avx512 -o cuda_test.x cuda_test.cu
 
 .. note::
 
@@ -93,21 +99,21 @@ You can now use ``nvcc`` to compile your source code, e.g.:
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You should load either the Intel 16 or Intel 17 compilers to use with `nvcc`. We recommend the
-Intel 17 compilers, you also need the ``gcc`` module to provide C++ support:
+You should load either the Intel 18 or Intel 19 compilers to use with `nvcc`.
+
+..  We recommend the Intel 17 compilers, you also need the ``gcc`` module to provide C++ support:
 
 ::
 
-   module load intel-compilers-17
-   module load gcc/6.3.0
+   module load intel-compilers-18
 
-.. note:: Intel 17 is the latest version of the Intel compilers supported by ``nvcc``.
+.. Intel 17 is the latest version of the Intel compilers supported by ``nvcc``.
 
 You can now use ``nvcc -ccbin icpc`` to compile your source code, e.g.:
 
 ::
 
-   nvcc -ccbin icpc -o cuda_test.x cuda_test.cu
+   nvcc -ccbin icpc -xCore-AVX512 -qopt-zmm-usage=high -o cuda_test.x cuda_test.cu
 
 The ``-ccbin icpc`` tells ``nvcc`` to use the Intel C++ compiler to compile the host (CPU)
 code.
@@ -118,14 +124,79 @@ code.
 Submitting jobs to the GPU nodes
 --------------------------------
 
-Two additional options are needed in GPU job submission scripts over those in standard jobs:
+Instead of requesting nodes and CPU cores as you do for standard jobs, you request 
+the number of GPUs you require and the system automatically allocates the correct
+proportion of tasks (CPU cores) to match the number of GPUs you have requested.
+You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
 
- * ``-q gpu`` This option is required to submit the job to the ``gpu`` queue on Cirrus
- * ``ngpus=N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
-   request needs to be added to your ``select`` statement
+ * ``--gres=gpu:N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
+   request needs to be added to your Slurm script.
 
-.. note:: We generally recommend that you should request 10 CPU cores per GPU accelerator even if you do not need them.
+.. note::
 
+   You will be allocated 10 CPU cores and one quarter of the node memory
+   (~9.1 GB) per GPU that you request. If you specify the ``--exclusive`` option,
+   you will be allocated all CPU cores and memory from the node irrespective
+   of how many GPUs you request.
+
+Resources on GPU nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
+and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
+the total available (as there are 4 GPU cards per node). So, if you request the full node (4 GPU cards), then you will be
+allocated a maximum of all of the memory (384 GB) available on the node; however, if you request 1 GPU card, then
+you will be assigned a maximum of 384/4 = 96 GB of the memory available on the node.
+
+.. note::
+
+   Using the ``--exclusive`` option in jobs will give you access to all of the CPU cores and the full node memory even
+   if you do not explicitly request all of the GPU cards on the node.
+
+Partitions
+~~~~~~~~~~
+
+On Cirrus, compute nodes are grouped into partitions. You will have to specify a partition
+using the ``--partition`` option in your submission script. The following table has a list 
+of active GPU partitions on Cirrus.
+
+.. list-table:: Cirrus Partitions
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Partition
+     - Description
+     - Maximum Job Size (Nodes)
+   * - gpu-cascade
+     - GPU nodes with Cascade Lake processors
+     - 36
+   * - gpu-skylake
+     - GPU nodes with Skylake processors
+     - 2
+
+Quality of Service (QoS)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+On Cirrus, Quality of Service (QoS) is used alongside partitions to improve user experience. The 
+following table shows the GPU QoS on Cirrus.
+
+.. list-table:: Cirrus QoS
+   :widths: 20 20 20 40
+   :header-rows: 1
+
+   * - QoS
+     - Description
+     - Maximum Walltime
+     - Other Limits
+   * - gpu
+     - GPU QoS
+     - 96 hours
+     - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
+
+.. note::
+
+   If more than a node is required (4GPUs), exclusive mode (``--exclusive``) and all GPUs (``--gres=gpu:4``) options must be included in your submission script.
+   
 Job submission script using single GPU on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -136,23 +207,21 @@ could look like:
 
    #!/bin/bash
    #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=1:ncpus=10:ngpus=1
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=CUDA_Example
+   #SBATCH --time=0:20:0
+   #SBATCH --partition=gpu-cascade
+   #SBATCH --qos=gpu
+   #SBATCH --gres=gpu:1
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
+     
+   # Load the required modules 
+   module load nvidia/cuda-10.2
+   
+   srun ./cuda_test.x
 
-   cd $PBS_O_WORKDIR
-
-   ./cuda_test.x
-
-The line ``#PBS -l select=1:ncpus=10:ngpus=1`` requests 1 node, 10 cores on that node and 1 GPU
-accelerator on that node.
 
 Job submission script using multiple GPUs on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,53 +233,52 @@ could look like:
 
 ::
 
-   #!/bin/bash
-   #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=1:ncpus=40:ngpus=4
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+    #!/bin/bash
+    #
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CUDA_Example
+    #SBATCH --time=0:20:0
+    #SBATCH --partition=gpu-cascade
+    #SBATCH --qos=gpu
+    #SBATCH --gres=gpu:4
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    
+    # Load the required modules 
+    module load nvidia/cuda-10.2
 
-   cd $PBS_O_WORKDIR
 
-   ./cuda_test.x
+    srun ./cuda_test.x
 
-The line ``#PBS -l select=1:ncpus=40:ngpus=4`` requests 1 node, 40 cores on that node and 4 GPU
-accelerators on that node (i.e. a full GPU compute node).
+
 
 Job submission script using multiple GPUs on multiple nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: Remember that there are a maximum of 4 GPU accelerators per node and a maximum of 40 CPU cores per node.
-
-A job script that required 8 GPU accelerators and 80 CPU cores for 20 minutes across 2 nodes
+A job script that required 8 GPU accelerators for 20 minutes
 could look like:
 
 ::
 
-   #!/bin/bash
-   #
-   #PBS -N cuda_test
-   #PBS -q gpu
-   #PBS -l select=2:ncpus=40:ngpus=4
-   #PBS -l walltime=0:20:0
-   # Budget: change 't01' to your budget code
-   #PBS -A t01
+    #!/bin/bash
+    #
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CUDA_Example
+    #SBATCH --time=0:20:0
+    #SBATCH --partition=gpu-cascade
+    #SBATCH --nodes=2
+    #SBATCH --exclusive
+    #SBATCH --qos=gpu
+    #SBATCH --gres=gpu:4
 
-   # Load the required modules (this assumes you compiled with GCC 6.3.0)
-   module load cuda
-   module load gcc/6.3.0
-   module load mpt
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    
+    # Load the required modules 
+    module load nvidia/cuda-10.2
 
-   cd $PBS_O_WORKDIR
 
-   mpirun -ppn 40 -n 80 ./cuda_test.x
+    srun ./cuda_test.x
 
-The line ``#PBS -l select=2:ncpus=40:ngpus=4`` requests 2 nodes, 40 cores per node (80 in total)
-and 4 GPU accelerators per node (8 in total).
+
