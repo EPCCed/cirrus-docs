@@ -175,15 +175,15 @@ of active partitions on Cirrus.
 
    * - Partition
      - Description
-     - Maximum Job Size (Nodes)
+     - Total nodes available
    * - standard
      - CPU nodes with Broadwell processors
      - 228
    * - gpu-cascade
-     - GPU nodes with Cascade Lake processors
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Cascade Lake processors
      - 36
    * - gpu-skylake
-     - GPU nodes with Skylake processors
+     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Skylake processors
      - 2
 
 You can list the active partitions using
@@ -212,43 +212,43 @@ following table has a list of active QoS on Cirrus.
      - Applies to Partitions
      - Notes
    * - standard
-     - Upto 1008 cores
-     - 500
+     - No limit
+     - 500 jobs
      - 4 days
      - 1008 cores (28 nodes/10%)
      - standard
      - 
    * - capability
-     - 1
-     - 4
+     - 1 job
+     - 4 jobs
      - 24 hours
      - 228 nodes (8192+ cores/81%) or 144 GPUs
      - standard, gpu-cascade
      - 
    * - long
-     - 5
-     - 20
+     - 5 jobs
+     - 20 jobs
      - 14 days
      - 16 nodes
      - standard
      - 
    * - highpriority
-     - 10
-     - 20
+     - 10 jobs
+     - 20 jobs
      - 4 days
      - 140 nodes
      - standard
      - 
    * - gpu
-     - Upto 16 GPUs
-     - 50
+     - No limit
+     - 50 jobs
      - 4 days
      - 16 GPUs (4 nodes ~10%)
      - gpu-skylake, gpu-cascade
      - 
    * - short
-     - 1
-     - 2
+     - 1 job
+     - 2 jobs
      - 20 minutes
      - 2 nodes or 4 GPUs
      - standard, gpu-skylake
@@ -509,7 +509,7 @@ Example parallel job submission scripts
 A subset of example job submission scripts are included in full below.
 
 .. Hint::
-   Do not replace ``srun`` with ``mpirun`` in the following examples.
+   Do not replace ``srun`` with ``mpirun`` in the following examples. Although this might work under special circustances, it is not guaranteed and therefore not supported.
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -597,7 +597,7 @@ process. This results in all 36 physical cores per node being used.
     #!/bin/bash
 
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_MPI_Job
+    #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
@@ -702,7 +702,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     #!/bin/bash
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_Array_Job
+    #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=0:20:0
     #SBATCH --exclusive
     #SBATCH --nodes=4
