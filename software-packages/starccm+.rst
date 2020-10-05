@@ -79,7 +79,7 @@ following script starts the server:
    export SGI_MPI_HOME=$MPI_ROOT
 
    scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
-   starccm+ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
 
 
 The port number "42333" should be free. If it is not free STAR-CCM+
