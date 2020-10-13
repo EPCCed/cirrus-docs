@@ -241,17 +241,17 @@ SSH debugging tips
 If you find ou are unable to connect via SSH there are a number of ways you can
 try and diagnose the issue. Some of these are collected below - if you are
 having difficulties connecting we suggest trying these before contacting the
-ARCHER2 service desk.
+Cirrus service desk.
 
 Can you connect to the login node?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Try the command ``ping -c 3 login.archer2.ac.uk``. If you successfully connect
+Try the command ``ping -c 3 login.cirrus.ac.uk``. If you successfully connect
 to the login node, the output should include:
 
 ::
 
-  --- login.dyn.archer2.ac.uk ping statistics ---
+  --- login.dyn.cirrus.ac.uk ping statistics ---
   3 packets transmitted, 3 received, 0% packet loss, time 38ms
 
 (the ping time '38ms' is not important). If not all packets are received
@@ -265,12 +265,12 @@ If you get the error message ``Permission denied (publickey)`` this can indicate
 a problem with your SSH key. Some things to check:
 
  - Have you uploaded the key to SAFE? Please note that if the same key is
-   reuploaded SAFE will not map the "new" key to ARCHER2. If for some reason
+   reuploaded SAFE will not map the "new" key to cirrus. If for some reason
    this is required, please delete the key first, then reupload.
  - Is ssh using the correct key? You can check which keys are being found and
    offered by ssh using ``ssh -vvv``. If your private key has a non-default name
    you can use the ``-i`` flag to provide it to ssh, i.e. ``ssh -i path/to/key
-   username@login.archer2.ac.uk``.
+   username@login.cirrus.ac.uk``.
  - Are you entering the passphrase correctly? You will be asked for your private
    key's passphrase first. If you enter it incorrectly you will usually be asked
    to enter it again, and usually up to three times in total, after which ssh
@@ -318,8 +318,8 @@ a problem with your SSH key. Some things to check:
 
 ``chmod`` can be used to set permissions on the target in the following way:
 ``chmod <code> <target>``. So for example to set correct permissions on the
-private key file ``id_rsa_ARCHER2`` one would use the command ``chmod 600
-id_rsa_ARCHER2``.
+private key file ``id_rsa_cirrus`` one would use the command ``chmod 600
+id_rsa_cirrus``.
 
 .. note::
   Unix file permissions can be understood in the following way. There are three
@@ -362,7 +362,7 @@ add the ``-vvv`` flag to your SSH command. For example:
 
 ::
 
-  ssh -vvv username@login.archer2.ac.uk
+  ssh -vvv username@login.cirrus.ac.uk
 
 The output is lengthy, but somewhere in there you should see lines similar to
 the following:
