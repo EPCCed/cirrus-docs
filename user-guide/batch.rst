@@ -702,10 +702,11 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     #!/bin/bash
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=Example_Array_Job
-    #SBATCH --time=0:20:0
+
+    #SBATCH --name=Example_Array_Job
+    #SBATCH --time=04:00:00
     #SBATCH --exclusive
-    #SBATCH --nodes=4
+    #SBATCH --nodes=1
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
     #SBATCH --array=0-55
