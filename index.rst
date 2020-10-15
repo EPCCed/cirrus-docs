@@ -68,6 +68,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/qe
    software-packages/starccm+
    software-packages/vasp
+   software-packages/specfem3d
 
 .. toctree::
    :maxdepth: 2
