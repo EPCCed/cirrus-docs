@@ -92,6 +92,26 @@ Cirrus run the following command on your local machine:
 Note that this will preserve soft links as such; the link targets
 are not copied if they are outside the current directory.
 
+
+FLACS license manager
+~~~~~~~~~~~~~~~~~~~~~
+
+In order to use FLACS a valid license is required. To check the availability
+of a license, a license manager is used. To be able to connect to the
+license manager from the batch system, users wishing to use FLACS should
+add the following file as ``~/.hasplm/hasp_104628.ini`` (that is, in their
+home directory)
+
+::
+
+  ; copy this file (vendor is gexcon) to ~/.hasplm/hasp_104628.ini
+  aggressive = 0
+  broadcastsearch = 0
+  serveraddr = cirrus-services1
+  disable_IPv6 = 1
+
+
+
 Submit a FLACS job to the queue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -103,92 +123,91 @@ Linux. For example
 
    cd projects/sim
 
+The usual way to submit work to the queue system is to write a submission
+script, which would be located in the working directory. This is a standard
+bash shell script, a simple example of which is given here:
 
-Load the ``flacs`` module to make the application available. Note that you
-should specify the specfic version you require:
+::
+  
+  #!/bin/bash --login
+  
+  #SBATCH --job-name=test_flacs_1
+  #SBATCH --ntasks=1
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=02:00:00
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+
+  module load flacs/10.9.1
+
+  run_runflacs 012345
+
+The script has a series of special comments (introduced by `#SBATCH`) which
+give information to the queue system to allow the system to allocate space
+for the job and to execute the work. These are discussed in more detail
+below.
+
+The ``flacs`` module is loaded to make the application available. Note that
+you should specify the specfic version you require:
 
 ::
 
    module load flacs/10.9.1
 
-(Use ``module avail flacs`` to see which versions are available.)
-Submit your FLACS jobs using the ``sbatch`` command.
+(Use ``module avail flacs`` to see which versions are available.) The
+appropriate FLACS commands can then be executed in  the usual way.
 
-For example:
+Submit your FLACS jobs using the ``sbatch`` command, e.g.:
 
 ::
-
-   sbatch --account=i123 --tasks-per-node=1 --time=06:00:00 --partition=standard --qos=commercial -- `which run_runflacs` -dir projects/sim 010101
+   
+   $ sbatch --account=i123 script.sh
+   Submitted batch job 157875
 
 The ``--account=i123`` option is obligatory and states that account ``i123``
 will be used to record the CPU time consumed by the job, and result in
 billing to the relevant customer. You will need your project account code
 here to replace ``i123``. You can check your account details in SAFE.
 
-The parameter ``--tasks-per-node=1`` is the number of cores required. For
-a serial FLACS job you would use `` --tasks-per-node=1``.
+The name of the submission script here is ``script.sh``. The queue system
+returns a unique job id (here ``157875``) to identify the job. For example,
+the standard output here will appear in a file named ``slurm-157875.out``
+in the current working directory.
 
-The maximum length of time (i.e. walltime) you want the job to run
-is specified with the ``--time=[hh:mm:ss]`` option. After this
-time, your job will be stopped by the job scheduler. Setting a very
-high walltime limit may lead to your job being given lower priority
-and thus wait longer in the queue. The default walltime is 12 hours.
+Options for FLACS jobs
+~~~~~~~~~~~~~~~~~~~~~~
 
-After the ``--`` which marks the beginning of the command to run, the
-Flacs executable is given *with its absolute path*. This is most easily
-obtained by using the shell ``which`` command.
-Having loaded the flacs module (see above) you can find the location
-by 
+The ``#SBATCH`` lines in the script above set various parameters which
+control execution of the job. The first is ``--job-name`` just provides
+a label which will be associated with the job.
 
-::
+The parameter ``--ntasks=1`` is the number of tasks or processes involved
+in the job. For a serial FLACS job you would use ``--ntasks=1``. The
 
-   which run_runflacs
+The maximum length of time (i.e. wall clock time) you want the job to run
+is specified with the ``--time=hh:mm:ss`` option. After this
+time, your job will be terminated by the job scheduler. The default time
+limit is 12 hours. It is useful to have an estimate of how long your
+job will take to be able to specify the correct limit (which can take some
+experience). Note that shorter jobs can sometimes be scheduled more quickly
+by the system.
 
-Using ``which run_runflacs`` with backticks will substitute the full path
-in the ``sbatch`` submission.
-
-The ``run_runflacs`` command in turn needs two arguments: first, after
-``-dir``, the directory where to run the job and create the output; if
-it is the current directory then you can pass ``-dir `pwd```;
-second, the job number of the FLACS scenario.
-
-Multithreaded jobs
-~~~~~~~~~~~~~~~~~~
-Multithreaded flacs simulations can be run on Cirrus with the following job submission:
+Multithreaded FLACS simulations can be run on Cirrus with the following job
+submission, schematically:
 
 ::
 
-   sbatch --account=i123 --tasks-per-node=1 --cpus-per-task=4 --time=6:00:00 --partition=standard -qos=commercial -- `which run_runflacs` -dir projects/sim 010101 NumThreads=4
+  #SBATCH --ntasks=1
+  #SBATCH --cpus-per-task=4
+  ...
 
-It is important to note that when submitting multithreaded flacs simulations
-the ``--cpus-per-task`` option must be used in order for the queue system to
+  run_runflacs -dir projects/sim 010101 NumThreads=4
+
+When submitting multithreaded FLACS simulations the ``--cpus-per-task`` option
+should be used in order for the queue system to
 allocate the correct resources (here 4 threads running on 4 cores).
 In addition, one must also specify the number of threads used by the
-simulation with the ``NumThreads=x`` option to the run_runflacs.
-
-Submit FLACS jobs from a script
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In your script, change to the directory with the job files and load the flacs
-module as explained above.
-
-When submitting several jobs it is advisable to add the ``--job-name=name``
-option to the ``sbatch`` command, with the FLACS job number being part
-of the first ten characters of the name. In this way you can easily
-identify the jobs in the queue (see below).
-
-A script submitting the scenarios 000012, 000023 and 000117 to the queue
-could look like this:
-
-::
-
-   module load flacs/10.9.1
-   sbatch ... --job-name=f-000012 -- `which run_runflacs` -dir `pwd` 000012
-   sbatch ... --job-name=f-000023 -- `which run_runflacs` -dir `pwd` 000023
-   sbatch ... --job-name=f-000117 -- `which run_runflacs` -dir `pwd` 000117
-
-where the ``...`` represents other ``sbatch`` arguments as described above.
-
+simulation with the ``NumThreads=4`` option to the run_runflacs.
 
 Monitor your jobs
 ~~~~~~~~~~~~~~~~~
@@ -205,7 +224,7 @@ only your jobs use:
 Submitting many FLACS jobs as a job array
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Running many related scenarios with the Flacs simulator is ideally suited for
+Running many related scenarios with the FLACS simulator is ideally suited for
 using `job arrays <../user-guide/batch.html#job-arrays>`_, i.e. running the
 simulations as part of a single job.
 
@@ -214,7 +233,7 @@ This determines the number of array elements, which must be specified
 at the point of job submission. The number of array elements is
 specified by ``--array`` argument to ``sbatch``.
 
-A job script for running a job array with 128 Flacs scenarios that are
+A job script for running a job array with 128 FLACS scenarios that are
 located in the current directory could look like this:
 
 ::
