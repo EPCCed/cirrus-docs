@@ -257,6 +257,7 @@ You should then log into Cirrus, as normal: ``ssh <user>@login.cirrus.ac.uk``, a
 - if it doesn't, create it, and apply appropriate permissions:
 
 ::
+
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 
@@ -264,6 +265,7 @@ chmod 700 ~/.ssh
 - and then create an authorized_keys file, and add the public key from your secondary machine in one go:
 
 ::
+
 cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 rm ~/id_secondary.pub
@@ -280,6 +282,7 @@ If you want to access Cirrus from a machine you already access remotely (e.g. to
 If your local machine is MacOS or Linus, add your Cirrus SSH key to the SSH Agent:
 
 ::
+
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 
@@ -288,12 +291,14 @@ ssh-add ~/.ssh/id_rsa
 You can then use the ``-A`` flag when connecting to your intermediate cluster:
 
 ::
+
 ssh -A <user>@<host>
 
 
 Once on the intermediate cluster, you should be able to SSH to Cirrus directly:
 
 ::
+
 ssh <user>@login.cirrus.ac.uk
 
 
