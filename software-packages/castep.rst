@@ -22,7 +22,9 @@ Using CASTEP on Cirrus
 **CASTEP is only available to users who have a valid CASTEP licence.**
 
 If you have a CASTEP licence and wish to have access to CASTEP on Cirrus
-please contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`__.
+please `submit a request through the SAFE <https://tier2-safe.readthedocs.io/en/latest/safe-guide-users.html#how-to-request-access-to-a-package-group>`__.
+
+.. note:: CASTEP versions 19 and above require a separate licence from CASTEP versions 18 and below so these are treated as two separate access requests.
 
 Running parallel CASTEP jobs
 ----------------------------
@@ -35,28 +37,29 @@ For example, the following script will run a CASTEP job using 4 nodes
 
 ::
 
-   #!/bin/bash --login
+   #!/bin/bash
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N CASTEP_test
-   #PBS -l select=4:ncpus=36
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=CASTEP_Example
+    #SBATCH --time=1:0:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=36
+    #SBATCH --cpus-per-task=1
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load CASTEP and MPI modules
-   module load castep
+   # Load CASTEP version 18 module
+   module load castep/18
 
    # Set OMP_NUM_THREADS=1 to avoid unintentional threading
    export OMP_NUM_THREADS=1
 
    # Run using input in test_calc.in
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 castep.mpi test_calc
+   srun castep.mpi test_calc
 

@@ -37,31 +37,39 @@ this example, "-t504" is employed.
 
 ::
 
-   #!/bin/bash --login
-   
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N ANSYS_test
-   #PBS -l select=14:ncpus=36
-   #PBS -l walltime=23:04:0
-   #PBS -l place=scatter:excl
-   #PBS -k oe    
+    #!/bin/bash
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   module purge
-   module load mpt perfboost
-   module load ansys
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=ANSYS_test
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=36
+    #SBATCH --cpus-per-task=1
 
-   export OMP_NUM_THREADS=1
-   export SGI_MPI_HOME=$MPI_ROOT
-   uniq $PBS_NODEFILE | cut -d . -f 1 > ~/fluent.launcher.host.txt
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
+    
+    # Load Ansys
+    module purge
+    module load ansys/19.0
 
-   cd $PBS_O_WORKDIR
-   ./fluent 3ddp -g -i inputfile.fl \
-     -pinfiniband -alnamd64 -r17.2.0 -t504 -mpi=intel            \
-     -cnf=~/fluent.launcher.host.txt                             \
-     -path/lustre/sw/ansys/v172/fluent/ -ssh  >& outputfile.txt
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    scontrol show hostnames $SLURM_NODELIST > ~/fluent.launcher.host.txt
+
+    # Launch the parallel job
+    ./fluent 3ddp -g -i inputfile.fl \
+      -pinfiniband -alnamd64 -t504 -pib    \
+      -cnf=~/fluent.launcher.host.txt      \
+      -ssh  >& outputfile.txt
 
 Below is the Fluent "inputfile.fl" batch script. Anything that starts
 with a ";" is a comment. This script does the following:

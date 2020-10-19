@@ -33,26 +33,28 @@ For example, the following script will run a NAMD MD job using 4 nodes
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N namd_test
-   #PBS -l select=4:ncpus=36
-   # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=NAMD_Example
+   #SBATCH --time=1:0:0
+   #SBATCH --exclusive
+   #SBATCH --nodes=4
+   #SBATCH --tasks-per-node=36
+   #SBATCH --cpus-per-task=1
+
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
+
+
    # Load NAMD module
    module load namd
 
    # Run using input in input.namd
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   # Note: NAMD uses Intel MPI so mpirun should be used instead of
-   # mpiexec_mpt (which is SGI MPI)
-   mpirun -n 144 -ppn 36 namd2 input.namd
+   srun namd2 input.namd
+   
+
 

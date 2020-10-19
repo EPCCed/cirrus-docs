@@ -33,7 +33,7 @@ home directories to hold temporary files used by Gaussian, e.g.
 
 ::
 
-   mkdir ~/g09tmp
+   mkdir ~/g16tmp
 
 Running serial Gaussian jobs
 ----------------------------
@@ -44,30 +44,31 @@ a Gaussian scratch directory as outlined above).
 
 ::
 
-   #!/bin/bash --login
+   #!/bin/bash
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N G09_test
-   #PBS -l select=1:ncpus=1
-   #PBS -l walltime=0:20:0
+   # job options (name, compute nodes, job time)
+   #SBATCH --job-name=G16_test
+   #SBATCH --ntasks=1
+   #SBATCH --time=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Load Gaussian module
    module load gaussian
 
    # Setup the Gaussian environment
-   source $g09root/g09/bsd/g09.profile
+   source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=$HOME/g09tmp
+   export GAUSS_SCRDIR=$HOME/g16tmp
 
    # Run using input in "test0027.com"
-   g09 test0027
+   g16 test0027
    
 Running parallel Gaussian jobs
 ------------------------------
@@ -82,27 +83,29 @@ For example, the following script will run a Gaussian job using 4 cores.
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N G09_test
-   #PBS -l select=1:ncpus=4
-   #PBS -l walltime=0:20:0
+   # job options (name, compute nodes, job time)
+   #SBATCH --job-name=G16_test
+   #SBATCH --ntasks=1
+   #SBATCH --cpus-per-task=4
+   #SBATCH --time=0:20:0
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Load Gaussian module
    module load gaussian
 
    # Setup the Gaussian environment
-   source $g09root/g09/bsd/g09.profile
+   source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=$HOME/g09tmp
+   export GAUSS_SCRDIR=$HOME/g16tmp
 
    # Run using input in "test0027.com"
    export OMP_NUM_THREADS=4
-   g09 test0027
+   g16 test0027
 

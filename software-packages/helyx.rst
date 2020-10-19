@@ -30,51 +30,54 @@ Running Parallel HELYX Jobs
 ---------------------------
 
 The standard execution of HELYX applications on Cirrus is handled through the command line using a submission
-script to control PBSPro. A basic submission script for running multiple HELYX applications in parallel using
+script to control Slurm. A basic submission script for running multiple HELYX applications in parallel using
 the SGI-MPT (Message Passing Toolkit) module is included below. In this example the applications
 helyxHexMesh and caseSetup are run sequentially in 144 cores.
 
 :: 
 
-   #!/bin/bash --login
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=HELYX_MPI_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --exclusive
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=36
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    #SBATCH --partition=[partition name]
+    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    #SBATCH --qos=[qos name]
+    
+    # Load any required modules
+    module load mpt/2.14
+    module load gcc/6.2.0
+
+    # Load HELYX-Core environment
+    export FOAM_INST_DIR=/lustre/home/y07/helyx/v3.0.2/CORE
+    . /lustre/home/y07/helyx/v3.0.2/CORE/HELYXcore-3.0.2/etc/bashrc
+
+    # Set the number of threads to 1
+    export OMP_NUM_THREADS=1
+
+    # Launch HELYX applications in parallel
+    export myoptions="-parallel"
+    jobs="helyxHexMesh caseSetup"
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N HELYX_MPI_Job
-   #PBS -l select=4:ncpus=36
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=00:20:00
+    for job in `echo $jobs`
+    do
+    
+      case "$job" in
+       *                )   options="$myoptions" ;;
+      esac
    
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+      srun --ntasks=144 $job $myoptions 2>&1 | tee log/$job.$SLURM_JOBID.out
    
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load any required modules
-   module load mpt/2.14
-   module load gcc/6.2.0
-   
-   # Load HELYX-Core environment
-   export FOAM_INST_DIR=/lustre/home/y07/helyx/v3.0.2/CORE
-   . /lustre/home/y07/helyx/v3.0.2/CORE/HELYXcore-3.0.2/etc/bashrc
-   
-   # Set the number of threads to 1
-   export OMP_NUM_THREADS=1
-   
-   # Launch HELYX applications in parallel
-   export myoptions="-parallel"
-   jobs="helyxHexMesh caseSetup"
-   
-   for job in `echo $jobs`
-   do
-   
-   case "$job" in
-      *                )   options="$myoptions" ;;
-   esac
-   
-   mpiexec_mpt -n 144 -ppn 36 $job $myoptions 2>&1 | tee log/$job.$PBS_JOBID.out
-   
-   done
+    done
 
 Alternatively, the user can execute most HELYX applications on Cirrus interactively via the GUI by following these simple steps:
 

@@ -32,18 +32,17 @@ An example Molpro job submission script is shown below.
 
 ::
 
-   #!/bin/bash --login
-   #PBS -N molpro_job
-   #PBS -l select=1:ncpus=36
-   #PBS -l walltime=1:0:0
-   #PBS -l place=scatter:excl
+   #!/bin/bash
+   #SBATCH --job-name=molpro_test
+   #SBATCH --nodes=1
+   #SBATCH --tasks-per-node=36
+   #SBATCH --exclusive
+   #SBATCH --time=0:15:0
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Replace "budget" with your budget code in the line below
-   #PBS -A budget
-   
-   # Move to directory that script was submitted from
-   export PBS_O_WORKDIR=$(readlink -f $PBS_O_WORKDIR)
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=budget
    
    # Load the molpro module 
    module add molpro
@@ -52,10 +51,11 @@ An example Molpro job submission script is shown below.
    #   Replace this with the value of your Molpro licence key
    export MOLPRO_KEY="...your Molpro key..."
    
-   # Make sure temporary files are on the /work filesystem
-   export TMPDIR=$PBS_O_WORKDIR
+   # Make sure temporary files are in your home file space
+   export TMPDIR=$SLURM_SUBMIT_DIR
    
    # Run Molpro using the input my_file.inp
    #    Requested 1 node above = 36 cores
+   #    Note use of "molpro" command rather than usual "srun"
    molpro -n 36 my_file.inp
    

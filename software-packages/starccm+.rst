@@ -24,8 +24,7 @@ All users must provide their own licence for STAR-CCM+. This licence
 can be provided as:
 
 1. FLEXlm licence key to be installed on Cirrus
-2. IP address and port of publicly accesible remote licence (your STAR-CCM+ licence server must use the same ports
-as our Licence Server Gateway: this is achieved by simply setting an environment variable)
+2. IP address and port of publicly accesible remote licence (your STAR-CCM+ licence server must use the same ports as our Licence Server Gateway: this is achieved by simply setting an environment variable)
 3. Power on Demand (PoD) (nothing needs to be provided to Cirrus in this case)
 
 For options 1 and 2, you should contact the `Cirrus Helpdesk <mailto:support@cirrus.ac.uk>`_
@@ -56,28 +55,31 @@ following script starts the server:
 
 ::
 
-   #!/bin/bash --login
-   
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N STAR-CCM_test
-   #PBS -l select=14:ncpus=36
-   #PBS -l walltime=02:00:00
-   #PBS -l place=scatter:excl
-   #PBS -k oe    
+   #!/bin/bash
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=STAR-CCM_test
+   #SBATCH --time=0:20:0
+   #SBATCH --exclusive
+   #SBATCH --nodes=14
+   #SBATCH --tasks-per-node=36
+   #SBATCH --cpus-per-task=1
 
-   # Change to the directory yhat the job was submitted from
-   cd $PBS_O_WORKDIR
-   # Load any required modules
+   # Replace [budget code] below with your budget code (e.g. t01)
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
+
+   # Load the default HPE MPI environment
    module load mpt
    module load starccm+
 
    export SGI_MPI_HOME=$MPI_ROOT
 
-   uniq $PBS_NODEFILE | cut -d . -f 1 > ~/starccm.launcher.host.txt
-   starccm+ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
+   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
 
 
 The port number "42333" should be free. If it is not free STAR-CCM+
@@ -99,21 +101,24 @@ following script starts the server:
 
 ::
 
-   #!/bin/bash --login
-   
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N STAR-CCM_test
-   #PBS -l select=14:ncpus=36
-   #PBS -l walltime=02:00:00
-   #PBS -l place=scatter:excl
-   #PBS -k oe    
+   #!/bin/bash
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=STAR-CCM_test
+   #SBATCH --time=0:20:0
+   #SBATCH --exclusive
+   #SBATCH --nodes=14
+   #SBATCH --tasks-per-node=36
+   #SBATCH --cpus-per-task=1
 
-   # Change to the directory yhat the job was submitted from
-   cd $PBS_O_WORKDIR
-   # Load any required modules
+   # Replace [budget code] below with your budget code (e.g. t01)
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
+
+   # Load the default HPE MPI environment
    module load mpt
    module load starccm+
 
@@ -122,8 +127,8 @@ following script starts the server:
    export LM_LICENSE_FILE=2999@192.168.191.10
    export CDLMD_LICENSE_FILE=2999@192.168.191.10
 
-   uniq $PBS_NODEFILE | cut -d . -f 1 > ~/starccm.launcher.host.txt
-   starccm+ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
+   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
 
 You should replace "<PODkey>" with your PoD licence key.
 

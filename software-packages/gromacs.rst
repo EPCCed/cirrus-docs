@@ -20,12 +20,11 @@ Using GROMACS on Cirrus
 -----------------------
 
 GROMACS is Open Source software and is freely available to all Cirrus users.
-Four versions are available:
+A number of versions are available:
 
 * Serial/shared memory, single precision: gmx
-* Serial/shared memory, double precision: gmx_d
 * Parallel MPI/OpenMP, single precision: gmx_mpi
-* Parallel MPI/OpenMP, double precision: gmx_mpi_d
+* GPU version, single precision: gmx
 
 Running parallel GROMACS jobs: pure MPI
 ---------------------------------------
@@ -33,63 +32,78 @@ Running parallel GROMACS jobs: pure MPI
 GROMACS can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.
 
-For example, the following script will run a GROMACS MD job using 4 nodes
-(144 cores) with pure MPI.
+For example, the following script will run a GROMACS MD job using 2 nodes
+(72 cores) with pure MPI.
 
 ::
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N mdrun_test
-   #PBS -l select=4:ncpus=36
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=gmx_test
+   #SBATCH --nodes=2
+   #SBATCH --tasks-per-node=36
+   #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   #SBATCH --exclusive
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load GROMACS and MPI modules
+   # Load GROMACS module
    module load gromacs
-   module load mpt
 
    # Run using input in test_calc.tpr
-   # Note: '-ppn 36' is required to use all physical cores across
-   # nodes as hyperthreading is enabled by default
-   mpiexec_mpt -n 144 -ppn 36 gmx_mpi mdrun -s test_calc.tpr
+   export OMP_NUM_THREADS=1 
+   srun gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
 ------------------------------------------------
 
-The following script will run a GROMACS MD job using 4 nodes
-(144 cores) with 6 MPI processes per node (24 MPI processes in
+The following script will run a GROMACS MD job using 2 nodes
+(72 cores) with 6 MPI processes per node (12 MPI processes in
 total) and 6 OpenMP threads per MPI process.
 
 ::
 
    #!/bin/bash --login
    
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N mdrun_test
-   #PBS -l select=4:ncpus=36
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=gmx_test
+   #SBATCH --nodes=2
+   #SBATCH --tasks-per-node=6
+   #SBATCH --cpus-per-task=6
+   #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=0:20:0
+   #SBATCH --exclusive
    
    # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
    
    # Load GROMACS and MPI modules
    module load gromacs
-   module load mpt
 
    # Run using input in test_calc.tpr
    export OMP_NUM_THREADS=6
-   mpiexec_mpt -n 24 -ppn 6 omplace -nt 6 gmx_mpi mdrun -s test_calc.tpr
+   srun gmx_mpi mdrun -s test_calc.tpr
+
+GROMACS GPU jobs
+----------------
+
+.. Note:: Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
+   updated as and when GPUs become available again.
+
+
+Information on how to assign different types of calculation to the
+CPU or GPU appears in the GROMACS documentation under
+`Getting good performance from mdrun
+<http://manual.gromacs.org/documentation/current/user-guide/mdrun-performance.html>`__
+
