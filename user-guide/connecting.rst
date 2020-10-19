@@ -248,7 +248,7 @@ Once back on your primary machine, you should copy the public key from your seco
 
 ::
 
-scp id_rsa.pub <user>@login.cirrus.ac.uk:id_secondary.pub
+ scp id_rsa.pub <user>@login.cirrus.ac.uk:id_secondary.pub
 
 
 You should then log into Cirrus, as normal: ``ssh <user>@login.cirrus.ac.uk``, and then:
@@ -258,17 +258,17 @@ You should then log into Cirrus, as normal: ``ssh <user>@login.cirrus.ac.uk``, a
 
 ::
 
-mkdir ~/.ssh
-chmod 700 ~/.ssh
+ mkdir ~/.ssh
+ chmod 700 ~/.ssh
 
 
 - and then create an authorized_keys file, and add the public key from your secondary machine in one go:
 
 ::
 
-cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-rm ~/id_secondary.pub
+ cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
+ chmod 600 ~/.ssh/authorized_keys
+ rm ~/id_secondary.pub
 
 You can then repeat this process for any more local machines you want to access Cirrus from, omitting the `mkdir` and `chmod` lines as the relevant files and directories will already exist with the correct permissions. You don't need to add the public key from your primary key in your `authorized_keys` file, because Cirrus can find this in SAFE.
 
@@ -283,8 +283,8 @@ If your local machine is MacOS or Linus, add your Cirrus SSH key to the SSH Agen
 
 ::
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+ eval "$(ssh-agent -s)"
+ ssh-add ~/.ssh/id_rsa
 
 (If you created your key with a different name, replace ``id_rsa`` in the command with the name of your private key file). You will be prompted for your SSH key's passphrase.
 
@@ -292,14 +292,14 @@ You can then use the ``-A`` flag when connecting to your intermediate cluster:
 
 ::
 
-ssh -A <user>@<host>
+ ssh -A <user>@<host>
 
 
 Once on the intermediate cluster, you should be able to SSH to Cirrus directly:
 
 ::
 
-ssh <user>@login.cirrus.ac.uk
+ ssh <user>@login.cirrus.ac.uk
 
 
 SSH debugging tips
