@@ -235,6 +235,68 @@ system.
   option as described above) or add the path to your SSH config file by using the
   ``IdentityFile`` option.
 
+Accessing Cirrus from more than 1 machine
+-----------------------------------------
+
+It is common for users to want to access Cirrus from more than one local machine (e.g. a desktop linux, and a laptop) - this can be achieved through use of an `~/.ssh/authorized_keys` file on ARCHER to hold the additional keys you generate. Note that if you want to access Archer via another remote service, see the next section, SSH forwarding.
+
+You need to consider one of your local machines as your primary machine - this is the machine you should connect to Cirrus with using the instructions further up this page, adding your public key to SAFE.
+
+On your second local machine, generate a new SSH key pair. Copy the public key to your primary machine (e.g. by email, USB stick, or cloud storage); the default location for this on a Linux or MacOS machine will be `~/.ssh/id_rsa.pub`. If you are a Windows user using MobaXTerm, you should export the public key it generates to OpenSSH format (`Conversions > Export OpenSSH Key`). You should never move the private key off the machine on which it was generated.
+
+Once back on your primary machine, you should copy the public key from your secondary machine to Cirrus using:
+
+```
+scp id_rsa.pub <user>@login.cirrus.ac.uk:id_secondary.pub
+```
+
+You should then log into Cirrus, as normal: `ssh <user>@login.cirrus.ac.uk`, and then:
+
+ - check to see if the `.ssh` directory exists, using `ls -la ~`
+ - if it doesn't, create it, and apply appropriate permissions:
+ 
+         ```
+         mkdir ~/.ssh
+        chmod 700 ~/.ssh
+        ```
+ - and then create an authorized_keys file, and add the public key from your secondary machine in one go:
+ 
+        ```
+        cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+        rm ~/id_secondary.pub
+        ```
+
+You can then repeat this process for any more local machines you want to access Cirrus from, omitting the `mkdir` and `chmod` lines as the relevant files and directories will already exist with the correct permissions. You don't need to add the public key from your primary key in your `authorized_keys` file, because Cirrus can find this in SAFE.
+
+Note that the permissions on the `.ssh` directory must be set to 700 (Owner can read, can write and can execute but group and world do not have access) and on the `authorized_keys` file must be 600 (Owner can read and write but group and world do not have access). Keys will be ignored if this is not the case.
+
+SSH forwarding (to use Cirrus from a second remote machine)
+-----------------------------------------------------------
+
+If you want to access Cirrus from a machine you already access remotely (e.g. to copy data from Cirrus onto a different cluster), you can _forward_ your Cirrus SSH keys so that you don't need to create a new key pair on the intermediate machine.
+
+If your local machine is MacOS or Linus, add your Cirrus SSH key to the SSH Agent:
+
+```
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+```
+
+(If you created your key with a different name, replace `id_rsa` in the command with the name of your private key file). You will be prompted for your SSH key's passphrase.
+
+You can then use the `-A` flag when connecting to your intermediate cluster:
+
+```
+ssh -A <user>@<host>
+```
+
+Once on the intermediate cluster, you should be able to SSH to Cirrus directly:
+
+```
+ssh <user>@login.cirrus.ac.uk
+```
+
 SSH debugging tips
 ------------------
 
