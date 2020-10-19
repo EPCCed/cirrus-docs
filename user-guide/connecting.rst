@@ -252,20 +252,19 @@ scp id_rsa.pub <user>@login.cirrus.ac.uk:id_secondary.pub
 
 You should then log into Cirrus, as normal: `ssh <user>@login.cirrus.ac.uk`, and then:
 
- - check to see if the `.ssh` directory exists, using `ls -la ~`
- - if it doesn't, create it, and apply appropriate permissions:
- 
-         ```
-         mkdir ~/.ssh
-        chmod 700 ~/.ssh
-        ```
- - and then create an authorized_keys file, and add the public key from your secondary machine in one go:
- 
-        ```
-        cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
-        chmod 600 ~/.ssh/authorized_keys
-        rm ~/id_secondary.pub
-        ```
+- check to see if the `.ssh` directory exists, using ```ls -la ~```
+- if it doesn't, create it, and apply appropriate permissions:
+```
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+```
+
+- and then create an authorized_keys file, and add the public key from your secondary machine in one go:
+```
+cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+rm ~/id_secondary.pub
+```
 
 You can then repeat this process for any more local machines you want to access Cirrus from, omitting the `mkdir` and `chmod` lines as the relevant files and directories will already exist with the correct permissions. You don't need to add the public key from your primary key in your `authorized_keys` file, because Cirrus can find this in SAFE.
 
