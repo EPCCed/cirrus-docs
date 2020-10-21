@@ -283,3 +283,15 @@ has been taken:
 
 These should not be used. Use either an Anaconda or a Miniconda version.
 
+Using Jupyter Notebooks on Cirrus
+---------------------------------
+
+It is possible to view and run Jupyter notebooks that are on both login nodes and computer nodes of Cirrus (note: you can test these on the login nodes, but please don’t attempt to run any computationally intensive jobs on them. Jobs get killed once they hit a CPU limit on login nodes).
+ 
+1. As described above, load the ``anaconda`` module on Cirrus (modules aren't automatically available): ``module load anaconda\python3``
+2. If you want to run your Jupyter Notebook on a compute node, you will need to enter an `interactive session <batch.html#interactive-jobs>`_
+3. We can now start Jupyter using ``jupyter notebook –ip=0.0.0.0`` - once it’s started, you will see a URL printed in the terminal window of the form ``http://0.0.0.0:8888?token=<string>`` - we'll need this URL in step 4
+4. Open a new terminal window, and run the following command: ``ssh <username>@login.cirrus.ac.uk -L8888:<node_id>:8888`` where <username> is your username, and <node_id> is the node id we’re currently in (on a login node, this will be ``cirrus-login0``, or similar; on a compute node, it will be a mix of numbers and letters).
+5. Now, if you open a browser window locally, you should now be able to navigate to the URL from step 2, and this should display the Jupyter Notebook server
+
+If you are on a compute node, the Notebook will be available for the length of the interactive session you have requested.
