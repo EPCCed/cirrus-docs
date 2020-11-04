@@ -12,7 +12,7 @@ you will need to load the Allinea Forge module and execute ``forge``:
 
 ::
 
-    module load allinea
+    module load forge
     forge
 
 Debugging runs on the login nodes
