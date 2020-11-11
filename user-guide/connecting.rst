@@ -238,7 +238,7 @@ system.
 Accessing Cirrus from more than 1 machine
 -----------------------------------------
 
-It is common for users to want to access Cirrus from more than one local machine (e.g. a desktop linux, and a laptop) - this can be achieved through use of an ``~/.ssh/authorized_keys`` file on ARCHER to hold the additional keys you generate. Note that if you want to access Archer via another remote service, see the next section, SSH forwarding.
+It is common for users to want to access Cirrus from more than one local machine (e.g. a desktop linux, and a laptop) - this can be achieved through use of an ``~/.ssh/authorized_keys`` file on Cirrus to hold the additional keys you generate. Note that if you want to access Cirrus via another remote service, see the next section, SSH forwarding.
 
 You need to consider one of your local machines as your primary machine - this is the machine you should connect to Cirrus with using the instructions further up this page, adding your public key to SAFE.
 
@@ -270,14 +270,14 @@ You should then log into Cirrus, as normal: ``ssh <user>@login.cirrus.ac.uk``, a
  chmod 600 ~/.ssh/authorized_keys
  rm ~/id_secondary.pub
 
-You can then repeat this process for any more local machines you want to access Cirrus from, omitting the ``mkdir`` and ``chmod`` lines as the relevant files and directories will already exist with the correct permissions. You don't need to add the public key from your primary key in your `authorized_keys` file, because Cirrus can find this in SAFE.
+You can then repeat this process for any more local machines you want to access Cirrus from, omitting the ``mkdir`` and ``chmod`` lines as the relevant files and directories will already exist with the correct permissions. You don't need to add the public key from your primary machine in your `authorized_keys` file, because Cirrus can find this in SAFE.
 
 Note that the permissions on the ``.ssh`` directory must be set to 700 (Owner can read, can write and can execute but group and world do not have access) and on the ``authorized_keys`` file must be 600 (Owner can read and write but group and world do not have access). Keys will be ignored if this is not the case.
 
 SSH forwarding (to use Cirrus from a second remote machine)
 -----------------------------------------------------------
 
-If you want to access Cirrus from a machine you already access remotely (e.g. to copy data from Cirrus onto a different cluster), you can *forward* your Cirrus SSH keys so that you don't need to create a new key pair on the intermediate machine.
+If you want to access Cirrus from a machine you already access remotely (e.g. to copy data from Cirrus onto a different cluster), you can *forward* your local Cirrus SSH keys so that you don't need to create a new key pair on the intermediate machine.
 
 If your local machine is MacOS or Linus, add your Cirrus SSH key to the SSH Agent:
 
