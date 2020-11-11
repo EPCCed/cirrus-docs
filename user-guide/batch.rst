@@ -162,6 +162,11 @@ you will be assigned a maximum of 384/4 = 96 GB of the memory available on the n
    Using the ``--exclusive`` option in jobs will give you access to all of the CPU cores and the full node memory even
    if you do not explicitly request all of the GPU cards on the node.
 
+.. warning::
+
+   In order to run jobs on the GPU nodes your budget must have positive GPU hours *and* core hours associated with it.
+   However, only your GPU hours will be consumed when running these jobs.
+
 Partitions
 ~~~~~~~~~~
 
