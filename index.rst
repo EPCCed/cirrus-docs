@@ -11,7 +11,7 @@ Cirrus is available to industry and academic researchers. For information on how
 to get access to the system please see the `Cirrus website <http://www.cirrus.ac.uk>`_.
 
 The Cirrus facility is based around an SGI ICE XA system. There are 280 standard
-compute nodes adn 2 GPU compute nodes. Each standard compute node has 256 GiB of memory and
+compute nodes and 38 GPU compute nodes. Each standard compute node has 256 GiB of memory and
 contains two 2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each GPU compute node has 384 GiB of 
 memory, contains two 2.4 GHx, 20-core Intel Xeon (Skylake) processors and four NVIDIA Tesla V100-SXM2-16GB
 (Volta) GPU accelerators connected to the host processors and each other via PCIe. All nodes are
@@ -68,6 +68,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/qe
    software-packages/starccm+
    software-packages/vasp
+   software-packages/specfem3d
 
 .. toctree::
    :maxdepth: 2
