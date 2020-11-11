@@ -134,12 +134,12 @@ You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
 .. note::
 
    As there are 4 GPUs per node, each GPU is associated with 1/4 of the
-   resources of the node, i.e., 10/40 physical cores and roughly 9.5/38 GB in
+   resources of the node, i.e., 10/40 physical cores and roughly 91/384 GB in
    main memory.
    Allocations of host resources are made pro-rata by ``sbatch`` on this basis.
 
 For example, if 2 GPUs are requested, ``sbatch`` will allocate 20 cores
-and around 19 GB of host memory (in addition to 2 GPUs). Any attempt to
+and around 190 GB of host memory (in addition to 2 GPUs). Any attempt to
 use more than the allocated resources will result in an error.
 
 This automatic allocation by SLURM for GPU jobs means that the
@@ -162,7 +162,8 @@ exclusive use of two nodes.
 
 .. warning::
 
-   In order to run jobs on the GPU nodes your budget must have positive GPU hours *and* core hours associated with it.
+   In order to run jobs on the GPU nodes your budget must have positive
+   GPU hours *and* positive CPU core hours associated with it.
    However, only your GPU hours will be consumed when running these jobs.
 
 Partitions
