@@ -124,9 +124,8 @@ code.
 Submitting jobs to the GPU nodes
 --------------------------------
 
-Instead of requesting nodes and CPU cores as you do for standard jobs, you request 
-the number of GPUs you require and the system automatically allocates the correct
-proportion of tasks (CPU cores) to match the number of GPUs you have requested.
+To run a GPU job, a SLURM submission needs to specify a GPU partition and
+quality of service, and the number of GPUs required.
 You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
 
  * ``--gres=gpu:N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
@@ -134,24 +133,32 @@ You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
 
 .. note::
 
-   You will be allocated 10 CPU cores and one quarter of the node memory
-   (~9.1 GB) per GPU that you request. If you specify the ``--exclusive`` option,
-   you will be allocated all CPU cores and memory from the node irrespective
-   of how many GPUs you request.
+   As there are 4 GPUs per node, each GPU is associated with 1/4 of the
+   resources of the node, i.e., 10/40 physical cores and roughly 9.5/38 GB in
+   main memory.
+   Allocations of host resources are made pro-rata by ``sbatch`` on this basis.
 
-Resources on GPU nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For example, if 2 GPUs are requested, ``sbatch`` will allocate 20 cores
+and around 19 GB of host memory (in addition to 2 GPUs). Any attempt to
+use more than the allocated resources will result in an error.
 
-The *primary resource* you request on standard compute nodes are GPU cards. The maximum amount of memory
-and CPU cores you are allocated is computed as the number of GPU cards you requested multiplied by 1/4 of
-the total available (as there are 4 GPU cards per node). So, if you request the full node (4 GPU cards), then you will be
-allocated a maximum of all of the memory (384 GB) available on the node; however, if you request 1 GPU card, then
-you will be assigned a maximum of 384/4 = 96 GB of the memory available on the node.
+This automatic allocation by SLURM for GPU jobs means that the
+submission script should not specify options such as ``--ntasks`` and
+``--cpus-per-task`` via ``sbatch``. Such a job submission will be
+rejected.
 
-.. note::
+See below for some examples of how to use host resources and how to
+launch MPI applications.
 
-   Using the ``--exclusive`` option in jobs will give you access to all of the CPU cores and the full node memory even
-   if you do not explicitly request all of the GPU cards on the node.
+If you specify the ``--exclusive`` option, you will automatically be
+allocated all host cores and all memory from the node irrespective
+of how many GPUs you request. This may be needed if the application
+has a large host memory requirement.
+
+If more than one node is required, exclusive mode ``--exclusive`` and
+``--gres=gpu:4`` options must be included in your submission script.
+It is, for example, not possible to request 6 GPUs other than via
+exclusive use of two nodes.
 
 .. warning::
 
@@ -161,7 +168,7 @@ you will be assigned a maximum of 384/4 = 96 GB of the memory available on the n
 Partitions
 ~~~~~~~~~~
 
-On Cirrus, compute nodes are grouped into partitions. You will have to specify a partition
+Compute nodes are grouped into partitions. You will have to specify a partition
 using the ``--partition`` option in your submission script. The following table has a list 
 of active GPU partitions on Cirrus.
 
@@ -182,10 +189,11 @@ of active GPU partitions on Cirrus.
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Cirrus, Quality of Service (QoS) is used alongside partitions to improve user experience. The 
-following table shows the GPU QoS on Cirrus.
+Quality of Service (QoS) is used alongside the partition to control how work
+is allocated to the available resources. There is only one relevant QoS
+for GPU jobs:
 
-.. list-table:: Cirrus QoS
+.. list-table::
    :widths: 20 20 20 40
    :header-rows: 1
 
@@ -198,15 +206,15 @@ following table shows the GPU QoS on Cirrus.
      - 96 hours
      - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
 
-.. note::
 
-   If more than a node is required (4GPUs), exclusive mode (``--exclusive``) and all GPUs (``--gres=gpu:4``) options must be included in your submission script.
+Examples
+--------
    
 Job submission script using single GPU on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A job script that required 1 GPU accelerator and 10 CPU cores for 20 minutes
-could look like:
+A job script that requires 1 GPU accelerator and 10 CPU cores for 20 minutes
+might look like:
 
 ::
 
@@ -226,6 +234,20 @@ could look like:
    module load nvidia/cuda-10.2
    
    srun ./cuda_test.x
+
+This will execute one host process with access to one GPU. If we wish to
+make use of the 10 host cores in this allocation, we could use host
+threads via OpenMP, e.g.,
+
+::
+
+  export OMP_NUM_THREADS=10
+  export OMP_PLACES=cores
+
+  srun --ntasks=1 --cpus-per-task=10 --hint=nomultithread ./cuda_test.x
+
+Note here we have specified the launch configuration directly to ``srun``
+as it is not possible to do it via ``sbatch`` in the GPU partitions.
 
 
 Job submission script using multiple GPUs on a single node
@@ -256,6 +278,13 @@ could look like:
 
     srun ./cuda_test.x
 
+A typical MPI application might assign one device per MPI process, in
+which case we would want 4 MPI tasks in this example. This would be
+specified again directly to ``srun`` via
+
+::
+
+   srun --ntasks=4 ./mpi_cuda_test.x
 
 
 Job submission script using multiple GPUs on multiple nodes
@@ -286,4 +315,20 @@ could look like:
 
     srun ./cuda_test.x
 
+An MPI application with four MPI tasks per node in this case would be
+launched via
 
+::
+
+  srun --ntasks=8 --tasks-per-node=4 ./mpi_cuda_test.x
+
+Again, these options are specified directly to ``srun``, and not ``sbatch``.
+
+
+Attempts to oversubscribe an allocation (10 cores per GPU) will fail, and
+generate an error message, e.g.:
+
+::
+
+  srun: error: Unable to create step for job 234123: More processors requested
+  than permitted
