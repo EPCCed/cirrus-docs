@@ -142,7 +142,7 @@ For example, if 2 GPUs are requested, ``sbatch`` will allocate 20 cores
 and around 19 GB of host memory (in addition to 2 GPUs). Any attempt to
 use more than the allocated resources will result in an error.
 
-This automatic allocation by ``sbatch`` for GPU jobs means that the
+This automatic allocation by SLURM for GPU jobs means that the
 submission script should not specify options such as ``--ntasks`` and
 ``--cpus-per-task`` via ``sbatch``. Such a job submission will be
 rejected.
