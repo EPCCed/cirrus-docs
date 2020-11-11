@@ -160,6 +160,11 @@ If more than one node is required, exclusive mode ``--exclusive`` and
 It is, for example, not possible to request 6 GPUs other than via
 exclusive use of two nodes.
 
+.. warning::
+
+   In order to run jobs on the GPU nodes your budget must have positive GPU hours *and* core hours associated with it.
+   However, only your GPU hours will be consumed when running these jobs.
+
 Partitions
 ~~~~~~~~~~
 
