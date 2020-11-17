@@ -121,6 +121,46 @@ code.
 .. note:: When compiling using Intel compilers for the CPUs on the GPU compute nodes you should add the flag ``-xCore-AVX512 -qopt-zmm-usage=high`` to get the correct instructions for the Skylake processors
 
 
+OpenACC
+~~~~~~~
+
+OpenACC is a directive-based approach to introducing parallelism into
+either C or Fortran codes. A code with OpenACC directives may be
+compiled via:
+
+::
+
+  $ module load nvidia/compilers-20.5
+  $ module load gcc
+  $ nvc program.c
+
+or
+
+::
+
+  $ nvc++ program.cpp
+
+Note that ``nvc`` and ``nvc++`` are distinct from the NVIDIA CUDA compiler
+``nvcc``. They provide a way to compile standard C or C++ programs without
+explicit CUDA content. See ``man nvc`` or ``man nvc++`` for further details.
+
+
+CUDA Fortran
+~~~~~~~~~~~~
+
+CUDA Fortran provides extensions to standard Fortran which allow GPU
+functionality to be used. CUDA Fortran files (with file extension ``.cuf``)
+may be compiled with the NVIDIA Fortran compiler:
+
+::
+
+  $ module load nvidia/compilers-20.5
+  $ module load gcc
+  $ nvfortran program.cuf
+
+See ``man nvfortran`` for further details.
+
+
 Submitting jobs to the GPU nodes
 --------------------------------
 
