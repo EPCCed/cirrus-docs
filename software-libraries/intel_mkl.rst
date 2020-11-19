@@ -20,12 +20,11 @@ Intel Compilers
 BLAS and LAPACK
 ~~~~~~~~~~~~~~~
 
-To use MKL libraries with the Intel compilers you first need to load the Intel
-compiler module and the Intel tools module:
+To use MKL libraries with the Intel compilers you just need to load the Intel
+tools module:
 
 ::
 
-   module load intel-compilers-19
    module load intel-tools-19
 
 To include MKL you specify the ``-mkl`` option on your compile and link lines.
@@ -48,11 +47,10 @@ addition to the compilers and MKL libraries. Here we use Intel MPI via:
 
 ::
 
-   module load intel-compilers-19
    module load intel-tools-19
    module load intel-mpi-19
 
-SCaLAPACK requires the Intel versions of BLACS at link time in addition to
+ScaLAPACK requires the Intel versions of BLACS at link time in addition to
 ScaLAPACK libraries; remember also to use the MPI versions
 of the compilers:
 
@@ -70,12 +68,12 @@ BLAS and LAPACK
 ~~~~~~~~~~~~~~~
 
 To use MKL libraries with the GNU compiler you first need to load the GNU
-compiler module and Intel tools module:
+compiler module and Intel MKL module:
 
 ::
 
    module load gcc
-   module load intel-tools-19
+   module load intel-cmkl-19
 
 To include MKL you need to link explicitly against the MKL libraries.
 For example, to compile a single source file Fortran program with MKL you
@@ -98,13 +96,13 @@ ScaLAPACK
 ~~~~~~~~~
 
 The distributed memory linear algebra routines in ScaLAPACK require MPI in
-addition to the compilers and MKL libraries. On Cirrus, this is usually
+addition to the MKL libraries. On Cirrus, this is usually
 provided by SGI MPT.
 
 ::
 
    module load gcc
-   module load intel-tools-19
+   module load intel-cmkl-19
    module load mpt
 
 Once you have the modules loaded you need to link against two additional
