@@ -59,7 +59,7 @@ Upload public part of key pair to SAFE
 
 You should now upload the public part of your SSH key pair to the SAFE by following the instructions at:
 
-`Login to SAFE <https://www.archer.ac.uk/tier2/>`__. Then:
+`Login to SAFE <https://safe.epcc.ed.ac.uk/>`__. Then:
 
   1. Go to the Menu *Login accounts* and select the Cirrus account you want to add the SSH key to
   2. On the subsequent Login account details page click the *Add Credential* button
@@ -76,7 +76,7 @@ Initial passwords
 ~~~~~~~~~~~~~~~~~
 
 The SAFE web interface is used to provide your initial password for
-logging onto Cirrus (see the `SAFE Documentation <https://tier2-safe.readthedocs.io/>`__
+logging onto Cirrus (see the `SAFE Documentation <https://epcced.github.io/safe-docs/>`__
 for more details on requesting accounts and picking up passwords).
 
 **Note:** you may now change your password on the Cirrus machine itself
