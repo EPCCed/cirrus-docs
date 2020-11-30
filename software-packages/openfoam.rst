@@ -8,7 +8,15 @@ The core technology of OpenFOAM is a flexible set of modules written in C++. The
 Available Versions
 ------------------
 
-You can query the versions of OpenFOAM available on Cirrus from the command line with ``module avail openfoam``.
+OpenFOAM comes in a number of different flavours. The two main releases are
+from https://openfoam.org/ and from https://www.openfoam.com/.
+
+You can query the versions of OpenFOAM are currently available on Cirrus
+from the command line with ``module avail openfoam``.
+
+Versions from https://openfoam.org/ are typically ``v7``, ``v8`` etc, while
+versions from  https://www.openfoam.com/ are e.g., ``v1912`` (release
+December 2019). 
 
 Useful Links
 ------------
@@ -18,16 +26,61 @@ Useful Links
 Using OpenFOAM on Cirrus
 ------------------------
 
-To use OpenFOAM on Cirrus you should first load the OpenFOAM module:
+Any batch script which intends to use OpenFOAM should first load the
+appropriate ``openfoam`` module. You then need to source the
+``etc/bashrc`` file provided by OpenFOAM to set all the relevant
+environment variables. For example, for OpenFOAM v8:
 
 ::
 
    module add openfoam
-   
-After that you need to source the ``etc/bashrc`` file provided by OpenFOAM:
+   source ${FOAM_INSTALL_PATH}/etc/bashrc
+
+You should then be able to use OpenFOAM in the usual way. For
+OpenFOAM version v1912, the relevant command is:
 
 ::
 
-   source $OPENFOAM_CURPATH/etc/bashrc
+   module add openfoam
+   source ${OPENFOAM_CURPATH}/etc/bashrc
 
-You should then be able to use OpenFOAM.  The above commands will also need to be added to any job/batch submission scripts you want to run OpenFOAM from.
+
+
+Example Batch Submisison
+------------------------
+
+The following example batch submission script would run OpenFOAM
+on two nodes, with 36 MPI tasks per node.
+
+::
+
+  #!/bin/bash
+  
+  #SBATCH --nodes=2
+  #SBATCH --ntasks-per-node=36
+  #SBATCH --exclusive
+  #SBATCH --time=00:10:00
+  
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+  
+  # Load the openfoam module and source the bashrc file 
+  
+  module load openfoam/v8.0
+  source ${FOAM_INSTALL_PATH}/etc/bashrc
+  
+  # Compose OpenFOAM work in the ususal way, except that parallel
+  # executables are launched via srun. For example:
+  
+  srun interFoam -parallel
+
+
+A SLURM submission script would usually also contain an account token
+of the form
+
+::
+
+  #SBATCH --account=your_account_here
+
+where the `your_account_here` should be replaced by the relevant token
+for your account. This is available from SAFE with your budget details.
