@@ -275,39 +275,84 @@ You can find out the QoS that you can use by running the following command:
 Troubleshooting
 ---------------
 
+Slurm error handling
+~~~~~~~~~~~~~~~~~~~~
+
+MPI jobs
+^^^^^^^^
+
+Users of MPI codes may wish to ensure termination of all tasks on
+the failure of one individual task by specifying the ``--kill-on-bad-exit``
+argument to ``srun``. E.g.,
+
+.. code-block:: bash
+
+  srun -n 36 --kill-on-bad-exit ./my-mpi-program
+
+This can prevent effective "hanging" of the job until the wall time
+limit is reached.
+
+
+Hardware failures
+^^^^^^^^^^^^^^^^^
+
+Jobs failing owing to hardware problems detected by the system
+are automatically resubmitted by SLURM. In the rare event that
+this happens, it can cause some confusion (e.g., if an application
+attempts to create the same file twice). Automatic resubmission can
+be avoided by specifying the ``--no-requeue`` option to ``sbatch``.
+
+
 Slurm error messages
 ~~~~~~~~~~~~~~~~~~~~
 
-Sometimes Slurm will return an error when a job is submitted. The following is a list of common
-errors and how to fix them.
+An incorrect submission will cause Slurm to return an error.
+Some common problems are listed below, with a suggestion about
+the likely cause:
 
-* error: Unable to allocate resources: Invalid account or account/partition combination specified
-* error: Unable to allocate resources: User's group not permitted to use this partition
 
-  * You must use a valid account, partition and QoS combination.
+* ``sbatch: unrecognized option <text>``
 
-* error: Unable to allocate resources: No partition specified or system default partition
-* error: invalid partition specified: <partition_name>
-* error: Unable to allocate resources: Invalid partition name specified
+  * One of your options is invalid or has a typo. ``man sbatch`` to help.
 
-  * You must use a valid partition. Add "--partition=PARTITION_NAME" to your submission script.
 
-* error: Unable to allocate resources: Invalid qos specification
+* ``error: Batch job submission failed: No partition specified or system default partition``
 
-  * You must use a valid QoS. Add "--qos=QOS_NAME" to your submission script.
+    A ``--partition=`` option is missing. You must specify the partition
+    (see the list above). This is most often ``--partition=standard``.
 
-* Requested partition configuration not available now
+* ``error: invalid partition specified: <partition>``
 
-  * The number of nodes/cores requested is not available.
+    ``error: Batch job submission failed: Invalid partition name specified``
 
-* error: unrecognized option <option>
+    Check the partition exists and check the spelling is correct.
 
-  * One of your options is invalid or has a typo.
 
-* error: Unable to allocate resources: Requested time limit is invalid (missing or exceeds some limit)
-* error: --time limit option required
+*  ``error: Batch job submission failed: Invalid account or account/partition combination specified``
 
-  * The time limit of your script is either missing or is too long. Add "--time=minutes" to your submission script.
+    This probably means an invalid account has been given. Check the
+    ``--account=`` options against valid accounts in SAFE.
+
+* ``error: Batch job submission failed: Invalid qos specification``
+
+    A QoS option is either missing or invalid. Check the script has a
+    ``--qos=`` option and that the option is a valid one from the
+    table above. (Check the spelling of the QoS is correct.)
+
+
+* ``error: Your job has no time specification (--time=)...``
+
+    Add an option of the form ``--time=hours:minutes:seconds`` to the
+    submission script. E.g., ``--time=01:30:00`` gives a time limit of
+    90 minutes.
+
+* ``error: QOSMaxWallDurationPerJobLimit``
+    ``error: Batch job submission failed: Job violates accounting/QOS policy``
+    ``(job submit limit, user's size and/or time limits)``
+  
+    The script has probably specified a time limit which is too long for
+    the corresponding QoS. E.g., the time limit for the short QoS
+    is 20 minutes.
 
 
 Slurm queued reasons
