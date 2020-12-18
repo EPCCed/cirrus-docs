@@ -53,6 +53,25 @@ Compiling software for the GPU nodes
    code for the correct processors. These flags are described in the different compiler 
    suites below.
 
+NVIDIA modules
+~~~~~~~~~~~~~~
+
+NVIDIA software related to the use of the GPU nodes is provided by the
+module system. E.g.,
+
+::
+
+  $ module avail nvidia
+  ---------------------------- /lustre/sw/modulefiles -------------------------
+  nvidia/compilers-20.5      nvidia/cuda-10.1           nvidia/mathlibs-10.2  
+  nvidia/compilers-20.9      nvidia/cuda-10.2(default)  
+  nvidia/compilers-mpi-20.9  nvidia/mathlibs-10.1    
+
+These modules supply, *inter alia*, compilers, CUDA libraries, and CUDA
+maths libraries (``cublas``, ``curand``, and so on). The exact modules
+required will depend on the programming model wanted, and any requirement
+for additional libraries.
+
 
 CUDA
 ~~~~
