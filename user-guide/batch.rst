@@ -982,3 +982,29 @@ look like:
 
 
 
+Temporary files and ``/tmp`` in batch jobs
+------------------------------------------
+
+Applications which normally read and write temporary files from ``/tmp`` may
+require some care in batch jobs on Cirrus. As the size of ``/tmp`` on
+backend nodes is relatively small (< 150 MB), applications should use a
+different location to prevent possible failures. This is relevant for
+both CPU and GPU nodes.
+
+Note also that the default value of the variable ``TMPDIR`` in batch
+jobs is a memory-resident file system location specific to the current
+job (typically in the ``/dev/shm`` directory). Files here reduce the
+available capacity of main memory on the node.
+
+It is recommended that applications with significant temporary file space
+requirement should use a standard ``/lustre/home`` location to ensure
+sufficient space is available. E.g., a submission script might contain:
+
+::
+
+  export TMPDIR=`pwd`
+
+to set the standard temporary directory to the current working directory.
+Applications should not hard-code specific locations such as ``/tmp``.
+Parallel applications should further ensure that there are no collisions
+in temporary file names on separate processes/nodes.
