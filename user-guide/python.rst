@@ -292,7 +292,7 @@ It is possible to view and run Jupyter notebooks that are on both login nodes an
 
     - If you want to run your Jupyter Notebook on a compute node, you will need to enter an `interactive session <batch.html#interactive-jobs>`_ 
 
-2. run ``export JUPYTER_RUNTIME_DIR=pwd``
+2. run ``export JUPYTER_RUNTIME_DIR=$(pwd)``
 
 3. We can now start Jupyter using ``jupyter notebook --ip=0.0.0.0 --no-browser`` - once it’s started, you will see a URL printed in the terminal window of the form ``http://0.0.0.0:8888?token=<string>`` - we'll need this URL in step 5
 
