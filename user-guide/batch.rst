@@ -248,7 +248,7 @@ following table has a list of active QoS on Cirrus.
      - No limit
      - 50 jobs
      - 4 days
-     - 16 GPUs (4 nodes ~10%)
+     - 64 GPUs (16 nodes~40%)
      - gpu-skylake, gpu-cascade
      - 
    * - short
