@@ -37,6 +37,7 @@ command ``cube`` and the file in the *scorep_* directory  ending in *.cubex*
 (or alternatively the whole archive), as seen below:
 
 ::
+
     cube scorep_exp_1/profile.cubex
 
 There is also a  SCORE-P API which code can also be manually annotated with.
