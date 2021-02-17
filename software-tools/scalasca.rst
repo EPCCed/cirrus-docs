@@ -42,4 +42,4 @@ command ``cube`` and the file in the *scorep_* directory  ending in *.cubex*
 
 There is also a  SCORE-P API which code can also be manually annotated with.
 
-More information about Scalasca and its associated toolbox can be found `here <https://apps.fz-juelich.de/scalasca/releases/scalasca/2.3/docs/QuickReference.pdf>`.
+More information about Scalasca and its associated toolbox can be found `here<https://apps.fz-juelich.de/scalasca/releases/scalasca/2.3/docs/QuickReference.pdf>`.
