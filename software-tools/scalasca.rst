@@ -5,6 +5,8 @@ Scalasca is installed on Cirrus, which is an open source performance profiling t
 It is built against the ``mpt`` MPI library and the ``openmpi`` SHMEM library, however 
 requires both modules to be loaded as well as the ``gcc`` module.
 
+::
+
     module load mpt 
     module load openmpi
     module load gcc/6.3.0
@@ -23,6 +25,7 @@ compilation with ``scorep``:
 Then the Scalasca profiling tool can be run using one of the following commands:
 
 ::
+
     scalasca -analyze mpiexec -np 4 main
     scan -s mpiexec -np 4 main
 
