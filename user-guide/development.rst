@@ -367,6 +367,77 @@ Compilers are then available as
    ``mpif90``. If you cannot change this, then use the Intel compilers
    with MPT.
 
+Using Intel MPI
+~~~~~~~~~~~~~~~
+
+Although HPE MPT remains the default MPI library and we recommend
+that first attempts at building code follow that route, you may
+also choose to use Intel MPI if you wish. To use these, load the
+appropriate ``intel-mpi`` module, for example ``intel-mpi-19``:
+
+::
+
+    module load intel-mpi-19
+
+Please note that the name of the wrappers to use when compiling with
+Intel MPI depends on whether you are using the Intel compilers or GCC.
+You should make sure that you or any tools use the correct
+ones when building software.
+
+.. note::
+
+   Although Intel MPI is available on Cirrus, HPE MPT remains the
+   recommended and default MPI library to use when building
+   applications.
+
+.. note::
+
+   Using Intel MPI 18 can cause warnings in
+   your output similar to ``no hfi units are available`` or
+   ``The /dev/hfi1_0 device failed to appear``. These warnings
+   can be safely ignored, or, if you would prefer to prevent 
+   them, you may add the line
+   
+   ::
+   
+       export I_MPI_FABRICS=shm:ofa
+
+   to your job scripts after loading the Intel MPI 18 module.
+
+Using Intel Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After first loading Intel MPI, you should next load the appropriate 
+``intel-compilers`` module (e.g. ``intel-compilers-19``):
+
+::
+
+    module load intel-compilers-19
+    
+Just as with MPT, a ``gcc`` module must be loaded alongside the
+Intel compilers if you intend to compile C++ code. You may then
+use the following MPI compiler wrappers:
+
+* ``mpiifort`` - Fortran with MPI
+* ``mpiicc`` - C with MPI
+* ``mpiicpc`` - C++ with MPI
+
+Using GCC Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After loading Intel MPI, you should next load the
+``gcc`` module you wish to use:
+
+::
+
+    module load gcc
+    
+You may then use these MPI compiler wrappers:
+
+* ``mpif90`` - Fortran with MPI
+* ``mpicc`` - C with MPI
+* ``mpicxx`` - C++ with MPI
+
 Compiler Information and Options
 --------------------------------
 
