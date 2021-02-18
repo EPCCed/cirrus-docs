@@ -132,8 +132,8 @@ following script starts the server:
 
 You should replace "<PODkey>" with your PoD licence key.
 
-Automatically starting a Star-CCM+ simulation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Automatically load and start a Star-CCM+ simulation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can use the "-batch" option to automatically load and start a Star-CCM+ simulation.
 
@@ -171,6 +171,7 @@ Your submission script will look like this (the only difference with the previou
    starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -batch simulation.java -machinefile ~/starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh -port 42333
 
 This script will load the file "simulation.java". You can find instructions on how to write a suitable "simulation.java" `here <https://mdx.plm.automation.siemens.com/star-ccm-plus>`__
+
 The file "simulation.java" must be in the same directory as your Slurm submission script (or you can provide a full path).
 
 Local Star-CCM+ client configuration
