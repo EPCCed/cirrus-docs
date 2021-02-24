@@ -234,6 +234,9 @@ Once you have loaded the module, the compilers are available as:
 * ``icc`` - C
 * ``icpc`` - C++
 
+See the extended section below for further details of available Intel
+compiler versions and tools.
+
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
 
@@ -529,3 +532,37 @@ Use the UNIX command ``ldd exe_file`` to check whether you are using an
 executable that depends on shared libraries. This utility will also
 report the shared libraries this executable will use if it has been
 dynamically linked.
+
+Intel modules and tools
+-----------------------
+
+There are a number of different Intel compiler versions available, and
+there is also a slight difference in the way different versions appear.
+
+A full list is available via ``module avail intel``.
+
+The different available compiler versions are:
+
+* ``intel-*/18.0.5.274`` Intel 2018 Update 4
+* ``intel-*/19.0.0.117`` Intel 2019 Initial release
+* ``intel-19.5/*`` Intel 2019 Update 5
+* ``intel-20.4/*`` Intel 2020 Update 4
+
+We recommend the most up-to-date version in the first instance, unless you
+have particular reasons for preferring an older version.
+
+For a note on Intel compiler version numbers, see this `Intel page 
+<https://software.intel.com/content/www/us/en/develop/articles/intel-compiler-and-composer-update-version-numbers-to-compiler-version-number-mapping.html>`__
+
+The different module names (or parts thereof) indicate:
+
+* ``cc`` C/C++ compilers only
+* ``cmkl`` MKL libraries (see Software Libraries section)
+* ``compilers`` Both C/C++ and Fortran compilers
+* ``fc`` Fortran compiler only
+* ``itac`` Intel Trace Analyze and Collector
+* ``mpi`` Intel MPI
+* ``pxse`` Intel Parallel Studio (all Intel modules)
+* ``tbb`` Thread Building Blocks
+* ``vtune`` VTune profiler
+
