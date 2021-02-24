@@ -557,8 +557,8 @@ For a note on Intel compiler version numbers, see this `Intel page
 The different module names (or parts thereof) indicate:
 
 * ``cc`` C/C++ compilers only
-* ``cmkl`` MKL lilbraries (see Software Libraries section)
-* ``compilers`` Both C/CC++ and Fortran compilers
+* ``cmkl`` MKL libraries (see Software Libraries section)
+* ``compilers`` Both C/C++ and Fortran compilers
 * ``fc`` Fortran compiler only
 * ``itac`` Intel Trace Analyze and Collector
 * ``mpi`` Intel MPI
