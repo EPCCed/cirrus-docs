@@ -209,6 +209,17 @@ allocate the correct resources (here 4 threads running on 4 cores).
 In addition, one must also specify the number of threads used by the
 simulation with the ``NumThreads=4`` option to the run_runflacs.
 
+One can also specify the OpenMP version of FLACS explicitly via, e.g.,
+
+::
+
+  export OMP_NUM_THREADS=20
+  
+  run_runflacs version _omp <run number> NumThreads=20
+
+See the FLACS
+`manual <https://www3.gexcon.com/files/manual/flacs/pdf/flacs-users-manual.pdf>`_ for further details.
+
 Monitor your jobs
 ~~~~~~~~~~~~~~~~~
 
