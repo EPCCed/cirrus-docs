@@ -564,6 +564,5 @@ The different module names (or parts thereof) indicate:
 * ``mpi`` Intel MPI
 * ``pxse`` Intel Parallel Studio (all Intel modules)
 * ``tbb`` Thread Building Blocks
-* ``vtune`` VTune profiler - note that in older versions (``intel-*/18.0.5.274``, ``intel-*/19.0.0.117`` VTune is launched as ``amplxe-gui`` for GUI or
-``amplxe-cl`` for CLI use)
+* ``vtune`` VTune profiler - note that in older versions (``intel-*/18.0.5.274``, ``intel-*/19.0.0.117`` VTune is launched as ``amplxe-gui`` for GUI or ``amplxe-cl`` for CLI use)
 
