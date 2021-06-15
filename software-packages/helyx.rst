@@ -27,7 +27,7 @@ HELYX applications can be run on Cirrus in two ways:
 A complete user’s guide to access HELYX on demand via Cirrus is provided by ENGYS as part of this service.
 
 Running HELYX Jobs in Parallel
----------------------------
+------------------------------
 
 The standard execution of HELYX applications on Cirrus is handled through the command line using a submission
 script to control Slurm. A basic submission script for running multiple HELYX applications in parallel using
