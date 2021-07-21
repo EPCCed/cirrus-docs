@@ -76,6 +76,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :caption: Software Libraries
 
    software-libraries/intel_mkl
+   software-libraries/hdf5
 
 .. toctree::
    :maxdepth: 2
