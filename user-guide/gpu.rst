@@ -108,12 +108,12 @@ You can now use ``nvcc`` to compile your source code, e.g.:
 
 ::
 
-   nvcc -march=skylake-avx512 -o cuda_test.x cuda_test.cu
+   nvcc -Xcompiler -march=skylake-avx512 -o cuda_test.x cuda_test.cu
 
 .. note::
 
    When compiling using GCC for the CPUs on the GPU compute nodes you should add the flag
-   ``-march=skylake-avx512`` to get the correct instructions for the Skylake processors.
+   ``-Xcompiler -march=skylake-avx512`` to get the correct instructions for the Skylake processors.
 
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -250,21 +250,30 @@ Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Quality of Service (QoS) is used alongside the partition to control how work
-is allocated to the available resources. There is only one relevant QoS
+is allocated to the available resources. There are two relevant QoSes
 for GPU jobs:
 
-.. list-table::
-   :widths: 20 20 20 40
+.. list-table:: GPU QoS
    :header-rows: 1
 
-   * - QoS
-     - Description
-     - Maximum Walltime
-     - Other Limits
+   * - QoS Name
+     - Jobs Running Per User
+     - Jobs Queued Per User
+     - Max Walltime
+     - Max Size
+     - GPU Partition
    * - gpu
-     - GPU QoS
-     - 96 hours
-     - max. 16 GPUs per user, max. 10 jobs running per user, max. 50 jobs queued per user
+     - No limit
+     - 128 jobs
+     - 4 days
+     - 64 GPUs
+     - gpu-skylake, gpu-cascade
+   * - short
+     - 1 job
+     - 2 jobs
+     - 20 minutes
+     - 4 GPUs or 2 nodes
+     - gpu-skylake
 
 
 Examples

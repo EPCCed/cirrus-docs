@@ -50,8 +50,9 @@ For example, the following script will run a NAMD MD job using 4 nodes
    #SBATCH --qos=[qos name]
 
 
-   # Load NAMD module
+   # Load NAMD module and set fabric
    module load namd
+   export I_MPI_FABRICS=shm:ofa
 
    # Run using input in input.namd
    srun namd2 input.namd

@@ -288,7 +288,7 @@ Using Jupyter Notebooks on Cirrus
 
 It is possible to view and run Jupyter notebooks that are on both login nodes and compute nodes of Cirrus (note: you can test these on the login nodes, but please don’t attempt to run any computationally intensive jobs on them. Jobs get killed once they hit a CPU limit on login nodes).
  
-1. As described above, load the ``anaconda`` module on Cirrus (modules aren't automatically available): ``module load anaconda\python3``
+1. As described above, load the ``anaconda`` module on Cirrus (modules aren't automatically available): ``module load anaconda/python3``
 
     - If you want to run your Jupyter Notebook on a compute node, you will need to enter an `interactive session <batch.html#interactive-jobs>`_ 
 
@@ -297,6 +297,13 @@ It is possible to view and run Jupyter notebooks that are on both login nodes an
 3. We can now start Jupyter using ``jupyter notebook --ip=0.0.0.0 --no-browser`` - once it’s started, you will see a URL printed in the terminal window of the form ``http://0.0.0.0:8888?token=<string>`` - we'll need this URL in step 5
 
 4. Open a new terminal window, and run the following command: ``ssh <username>@login.cirrus.ac.uk -L8888:<node_id>:8888`` where <username> is your username, and <node_id> is the node id we’re currently on (on a login node, this will be ``cirrus-login0``, or similar; on a compute node, it will be a mix of numbers and letters)
+
+    - nb. if, when you connect in the new terminal, you see a message of the
+      form `channel_setup_fwd_listener_tcpip: cannot listen to port: 8888`,
+      it means port 8888 is already in use.
+      You need to go back to step 3 (kill the existing notebook) and retry
+      with a new explicit port number by adding the ``--port=N`` option.
+      The port number `N` can be, e.g., in the range 5000-65535.
 
 5. Now, if you open a browser window locally, you should now be able to navigate to the URL from step 3, and this should display the Jupyter Notebook server
 

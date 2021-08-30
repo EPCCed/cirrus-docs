@@ -234,6 +234,9 @@ Once you have loaded the module, the compilers are available as:
 * ``icc`` - C
 * ``icpc`` - C++
 
+See the extended section below for further details of available Intel
+compiler versions and tools.
+
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
 
@@ -367,6 +370,77 @@ Compilers are then available as
    ``mpif90``. If you cannot change this, then use the Intel compilers
    with MPT.
 
+Using Intel MPI
+~~~~~~~~~~~~~~~
+
+Although HPE MPT remains the default MPI library and we recommend
+that first attempts at building code follow that route, you may
+also choose to use Intel MPI if you wish. To use these, load the
+appropriate ``intel-mpi`` module, for example ``intel-mpi-19``:
+
+::
+
+    module load intel-mpi-19
+
+Please note that the name of the wrappers to use when compiling with
+Intel MPI depends on whether you are using the Intel compilers or GCC.
+You should make sure that you or any tools use the correct
+ones when building software.
+
+.. note::
+
+   Although Intel MPI is available on Cirrus, HPE MPT remains the
+   recommended and default MPI library to use when building
+   applications.
+
+.. note::
+
+   Using Intel MPI 18 can cause warnings in
+   your output similar to ``no hfi units are available`` or
+   ``The /dev/hfi1_0 device failed to appear``. These warnings
+   can be safely ignored, or, if you would prefer to prevent 
+   them, you may add the line
+   
+   ::
+   
+       export I_MPI_FABRICS=shm:ofa
+
+   to your job scripts after loading the Intel MPI 18 module.
+
+Using Intel Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After first loading Intel MPI, you should next load the appropriate 
+``intel-compilers`` module (e.g. ``intel-compilers-19``):
+
+::
+
+    module load intel-compilers-19
+    
+Just as with MPT, a ``gcc`` module must be loaded alongside the
+Intel compilers if you intend to compile C++ code. You may then
+use the following MPI compiler wrappers:
+
+* ``mpiifort`` - Fortran with MPI
+* ``mpiicc`` - C with MPI
+* ``mpiicpc`` - C++ with MPI
+
+Using GCC Compilers and Intel MPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After loading Intel MPI, you should next load the
+``gcc`` module you wish to use:
+
+::
+
+    module load gcc
+    
+You may then use these MPI compiler wrappers:
+
+* ``mpif90`` - Fortran with MPI
+* ``mpicc`` - C with MPI
+* ``mpicxx`` - C++ with MPI
+
 Compiler Information and Options
 --------------------------------
 
@@ -458,3 +532,37 @@ Use the UNIX command ``ldd exe_file`` to check whether you are using an
 executable that depends on shared libraries. This utility will also
 report the shared libraries this executable will use if it has been
 dynamically linked.
+
+Intel modules and tools
+-----------------------
+
+There are a number of different Intel compiler versions available, and
+there is also a slight difference in the way different versions appear.
+
+A full list is available via ``module avail intel``.
+
+The different available compiler versions are:
+
+* ``intel-*/18.0.5.274`` Intel 2018 Update 4
+* ``intel-*/19.0.0.117`` Intel 2019 Initial release
+* ``intel-19.5/*`` Intel 2019 Update 5
+* ``intel-20.4/*`` Intel 2020 Update 4
+
+We recommend the most up-to-date version in the first instance, unless you
+have particular reasons for preferring an older version.
+
+For a note on Intel compiler version numbers, see this `Intel page 
+<https://software.intel.com/content/www/us/en/develop/articles/intel-compiler-and-composer-update-version-numbers-to-compiler-version-number-mapping.html>`__
+
+The different module names (or parts thereof) indicate:
+
+* ``cc`` C/C++ compilers only
+* ``cmkl`` MKL libraries (see Software Libraries section)
+* ``compilers`` Both C/C++ and Fortran compilers
+* ``fc`` Fortran compiler only
+* ``itac`` Intel Trace Analyze and Collector
+* ``mpi`` Intel MPI
+* ``pxse`` Intel Parallel Studio (all Intel modules)
+* ``tbb`` Thread Building Blocks
+* ``vtune`` VTune profiler - note that in older versions (``intel-*/18.0.5.274``, ``intel-*/19.0.0.117`` VTune is launched as ``amplxe-gui`` for GUI or ``amplxe-cl`` for CLI use)
+

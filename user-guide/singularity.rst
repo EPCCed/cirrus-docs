@@ -179,8 +179,8 @@ other command. If your image contains a *runscript* then you can use ``singulari
 execute the runscript in the job. You can also use ``singularity exec`` to execute arbitrary
 commands (or scripts) within the image.
 
-An exmaple job submission script to run a serial job that executes the runscript within the
-``hello-world.sif`` we built above on Cirrus would be:
+An example job submission script to run a serial job that executes the runscript within the
+``hello-world.sif`` we built above on Cirrus would be as follows.
 
 ::
 
@@ -197,14 +197,18 @@ An exmaple job submission script to run a serial job that executes the runscript
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
 
+    # Tell Singularity to expand the container to a location on the
+    # Lustre FS accessible to the user
+    export SINGULARITY_TMPDIR=$SLURM_SUBMIT_DIR
+    export SINGULARITY_LOCALCACHEDIR=$SLURM_SUBMIT_DIR
+
     # Load any required modules
     module load singularity
 
     # Run the serial executable
     srun --cpu-bind=cores singularity run $HOME/hello-world.sif
 
-You submit this in the usual way and the output would be in the STDOUT/STDERR files in the
-usual way.
+Submit this script in the usual way and the output should appear in the STDOUT/STDERR files.
 
 
 .. _create_image_singularity:

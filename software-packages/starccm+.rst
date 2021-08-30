@@ -78,8 +78,8 @@ following script starts the server:
 
    export SGI_MPI_HOME=$MPI_ROOT
 
-   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
-   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
+   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.$SLURM_JOB_ID.txt
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -server -machinefile ~/starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh -port 42333
 
 
 The port number "42333" should be free. If it is not free STAR-CCM+
@@ -127,10 +127,52 @@ following script starts the server:
    export LM_LICENSE_FILE=2999@192.168.191.10
    export CDLMD_LICENSE_FILE=2999@192.168.191.10
 
-   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.txt
-   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -server -machinefile ~/starccm.launcher.host.txt -np 504 -rsh ssh -port 42333
+   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.$SLURM_JOB_ID.txt
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -server -machinefile ~/starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh -port 42333
 
 You should replace "<PODkey>" with your PoD licence key.
+
+Automatically load and start a Star-CCM+ simulation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can use the "-batch" option to automatically load and start a Star-CCM+ simulation.
+
+Your submission script will look like this (the only difference with the previous examples is the "starccm+" line)
+
+::
+
+   #!/bin/bash
+
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=STAR-CCM_test
+   #SBATCH --time=0:20:0
+   #SBATCH --exclusive
+   #SBATCH --nodes=14
+   #SBATCH --tasks-per-node=36
+   #SBATCH --cpus-per-task=1
+
+   # Replace [budget code] below with your budget code (e.g. t01)
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
+
+   # Load the default HPE MPI environment
+   module load mpt
+   module load starccm+
+
+   export SGI_MPI_HOME=$MPI_ROOT
+   export PATH=$STARCCM_EXE:$PATH
+   export LM_LICENSE_FILE=2999@192.168.191.10
+   export CDLMD_LICENSE_FILE=2999@192.168.191.10
+
+   scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.$SLURM_JOB_ID.txt
+   starccm+ -clientldlibpath /lustre/sw/libnsl/1.3.0/lib/ -ldlibpath /lustre/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 2999@192.168.191.10 -batch simulation.java -machinefile ~/starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh -port 42333
+
+This script will load the file "simulation.java". You can find instructions on how to write a suitable "simulation.java" `here <https://mdx.plm.automation.siemens.com/star-ccm-plus>`__
+
+The file "simulation.java" must be in the same directory as your Slurm submission script (or you can provide a full path).
 
 Local Star-CCM+ client configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
