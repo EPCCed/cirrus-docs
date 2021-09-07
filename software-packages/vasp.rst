@@ -18,10 +18,14 @@ Useful Links
 Using VASP on Cirrus
 --------------------
 
-**VASP is only available to users who have a valid VASP licence.**
+**VASP is only available to users who have a valid VASP licence. VASP 5 and VASP 6 are
+seperate packages on Cirrus and requests for access need to be made separately for the
+two versions via SAFE.**
 
-If you have a VASP licence and wish to have access to VASP on Cirrus
-please contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`__.
+If you have a VASP 5 or VASP 6 licence and wish to have access to VASP on Cirrus
+please request access through SAFE:
+
+* [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group)
 
 Running parallel VASP jobs
 --------------------------
