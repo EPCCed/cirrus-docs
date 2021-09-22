@@ -268,6 +268,12 @@ for GPU jobs:
      - 4 days
      - 64 GPUs
      - gpu-skylake, gpu-cascade
+   * - long
+     - 5 jobs
+     - 20 jobs
+     - 14 days
+     - 8 GPUs
+     - gpu-cascade
    * - short
      - 1 job
      - 2 jobs
