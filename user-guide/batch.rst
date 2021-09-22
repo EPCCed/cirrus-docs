@@ -234,8 +234,8 @@ following table has a list of active QoS on Cirrus.
      - 5 jobs
      - 20 jobs
      - 14 days
-     - 16 nodes
-     - standard
+     - 16 nodes or 8 GPUs
+     - standard, gpu-cascade
      - 
    * - highpriority
      - 10 jobs
