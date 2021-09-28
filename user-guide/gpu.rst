@@ -1,156 +1,117 @@
 Using the Cirrus GPU Nodes
 ==========================
 
-Cirrus has 38 compute nodes equipped with GPGPU accelerators. This section of the user
-guide explains how to compile code and submit jobs to the GPU nodes.
+Cirrus has 38 compute nodes each equipped with 4 NVIDIA V100 (Volta)
+GPU cards. This section of the user guide gives some details of the
+hardware, and goes on to describe how to compile and run standard
+GPU applications.
 
-.. note::
+Those interested specificially in machine learning applications
+(particularly using packages such as PyTorch) may be interested
+in THIS PENDING PAGE.
 
-        The GPU accelerators on Cirrus are only available in TCC (Tesla Compute Cluster)
-        mode and so do not support graphics rendering tasks, only computational tasks.
+The GPU cards on Cirrus do not support graphics rendering tasks
+(they are only available for computational tasks in "compute cluster mode").
+
 
 Hardware details
 ----------------
 
-36 of the Cirrus GPU compute nodes each contain two 2.5 GHz, 20-core Intel Xeon Gold
-6248 (Cascade Lake) series processors. Each of the cores in these
-processors support 2 hardware threads (Hyperthreads), which are enabled
-by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
-(Volta) GPU accelerators connected to the host processors and each other
-via PCIe. These nodes are available in the `gpu-cascade` partition. This
-partition has a total of 144 GPU accelerators and 1440 CPU cores.
+All the GPU nodes on Cirrus contain four V100-SXM2-16GB (Volta) cards. Each
+card has 16GB of high-bandwidth memory (HBM2, often referred to as device
+memory). Maximum
+device memory bandwidth is in the region of 900 GB per second. Each card
+has 5,120 CUDA cores, and 640 "Tensor" cores.
 
-Two of the Cirrus GPU compute nodes each contain two 2.4 GHz, 20-core Intel Xeon Gold
-6148 (Skylake) series processors. Each of the cores in these
-processors support 2 hardware threads (Hyperthreads), which are enabled
-by default. The nodes also each contain four NVIDIA Tesla V100-SXM2-16GB
-(Volta) GPU accelerators connected to the host processors and each other
-via PCIe. These nodes are available in the `gpu-skylake` partition. This
-partition has a total of 8 GPU accelerators and 80 CPU cores. 
+There are two GPU partitions available to SLURM, with slightly different
+host architechures.
 
-All of the GPU compute nodes on Cirrus have 384 GB of main memory shared between
-the two processors. The memory is arranged in a non-uniform access (NUMA) form:
-each 20-core processor is a single NUMA region with local memory of 192
-GB. Access to the local memory by cores within a NUMA region has a lower
-latency and higher bandwidth than accessing memory on the other NUMA region.
+Two nodes have Intel Skylake processors (as detailed elsewhere), while
+the remaining 36 nodes are slightly later Intel Cascadelake archetecture.
+Users concerned with host performance should specific appropriate compilation
+options for the host archecture.
 
-There are three levels of cache, configured as follows:
+In both cases, the host node has two 20-core sockets (2.5 GHz), and a total
+of 384 GB host memory (192 GB per socket). Each core supports two threads
+in hardware.
 
-* L1 Cache 32 KiB Instr., 32 KiB Data (per core)
-* L2 Cache 1 GiB (per core)
-* L3 Cache GiB MB (shared)
-
-Each GPU accelerator has 16 GiB of fast GPU memory.
+For further details of the V100 architecture see, e.g.,
+https://www.nvidia.com/en-gb/data-center/tesla-v100/
 
 
 Compiling software for the GPU nodes
 ------------------------------------
 
-.. note::
-
-   As the Cirrus login nodes use Intel Xeon Broadwell processors and the GPU compute nodes
-   are equipped with Intel Xeon Sylake or Cascade Lake processors, additional flags are needed to compile
-   code for the correct processors. These flags are described in the different compiler 
-   suites below.
-
-NVIDIA modules
+NVIDIA HPC SDK
 ~~~~~~~~~~~~~~
 
-NVIDIA software related to the use of the GPU nodes is provided by the
-module system. E.g.,
+NVIDIA now make regular releases of a unified HPC SDK which provides the
+relevant compilers and libraries needed to build and run GPU programs.
+Versions of the SDK are available via the module system, e.g.:
 
 ::
 
-  $ module avail nvidia
+  $ module avail nvidia/nvhpc
   ---------------------------- /lustre/sw/modulefiles -------------------------
-  nvidia/compilers-20.5      nvidia/cuda-10.1           nvidia/mathlibs-10.2  
-  nvidia/compilers-20.9      nvidia/cuda-10.2(default)  
-  nvidia/compilers-mpi-20.9  nvidia/mathlibs-10.1    
+  nvidia/nvhpc-byo-compiler/21.2  nvidia/nvhpc/21.2(default)  
+  nvidia/nvhpc-nompi/21.2         nvidia/nvhpc/21.2-gnu       
 
-These modules supply, *inter alia*, compilers, CUDA libraries, and CUDA
-maths libraries (``cublas``, ``curand``, and so on). The exact modules
-required will depend on the programming model wanted, and any requirement
-for additional libraries.
+In the first instance, the default ``nvhpc`` module is recommended:
+
+::
+
+  $ module load nvidia/nvhpc
+
+The following sections provide some details of compilation for different
+programming models.
 
 
 CUDA
 ~~~~
 
-`CUDA <https://developer.nvidia.com/cuda-zone>`_ is a parallel computing platform and
-programming model developed by NVIDIA for general computing on graphical processing units (GPUs).
+`CUDA <https://developer.nvidia.com/cuda-zone>`_ is a parallel computing
+platform and programming model developed by NVIDIA for general computing
+on graphical processing units (GPUs).
 
-To use the CUDA toolkit on Cirrus, you should load one of the `cuda` modules, e.g:
+Programs, typically written in C or C++, are compiled with ``nvcc``.
+As well as ``nvcc``, a host compiler is required. By default, a ``gcc``
+module is loaded when ``nvidia/nvhpc`` is loaded.
 
-::
-
-   module load nvidia/cuda-10.2
-
-Once you have loaded the ``cuda`` module, you can access the CUDA compiler with the ``nvcc`` command.
-
-As well as the CUDA compiler, you will also need a compiler module to support compilation of the
-host (CPU) code. The CUDA toolkit supports both GCC and Intel compilers. You should load your
-chosen compiler module before you compile.
-
-..  The ``nvcc`` compiler currently supports versions of GCC up to 6.x and versions of the Intel compilers up to 17.x.
-
-Using CUDA with GCC
-^^^^^^^^^^^^^^^^^^^
-
-When compiling using ``nvcc`` we recommend that you load a recent version of GCC to support the CUDA compiler, e.g.
+Compile your source code in the usual way, e.g.:
 
 ::
 
-   module load gcc/6.3.0
-
-..  GCC 6.x is the latest version of the GCC compiler supported by ``nvcc``.
-
-You can now use ``nvcc`` to compile your source code, e.g.:
-
-::
-
-   nvcc -Xcompiler -march=skylake-avx512 -o cuda_test.x cuda_test.cu
-
-.. note::
-
-   When compiling using GCC for the CPUs on the GPU compute nodes you should add the flag
-   ``-Xcompiler -march=skylake-avx512`` to get the correct instructions for the Skylake processors.
+   nvcc -o cuda_test.x cuda_test.cu
 
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You should load either the Intel 18 or Intel 19 compilers to use with `nvcc`.
-
-..  We recommend the Intel 17 compilers, you also need the ``gcc`` module to provide C++ support:
+You can load either the Intel 18 or Intel 19 compilers to use with ``nvcc``,
+e.g.,
 
 ::
 
+   module unload gcc
    module load intel-compilers-18
 
-.. Intel 17 is the latest version of the Intel compilers supported by ``nvcc``.
-
-You can now use ``nvcc -ccbin icpc`` to compile your source code, e.g.:
+You can now use ``nvcc -ccbin icpc`` to compile your source code with
+the Intel C++ compiler ``icpc``, e.g.:
 
 ::
 
-   nvcc -ccbin icpc -xCore-AVX512 -qopt-zmm-usage=high -o cuda_test.x cuda_test.cu
-
-The ``-ccbin icpc`` tells ``nvcc`` to use the Intel C++ compiler to compile the host (CPU)
-code.
-
-.. note:: When compiling using Intel compilers for the CPUs on the GPU compute nodes you should add the flag ``-xCore-AVX512 -qopt-zmm-usage=high`` to get the correct instructions for the Skylake processors
+   nvcc -ccbin icpc -o cuda_test.x cuda_test.cu
 
 
-OpenACC
-~~~~~~~
+Compiling OpenACC code
+~~~~~~~~~~~~~~~~~~~~~~
 
 OpenACC is a directive-based approach to introducing parallelism into
-either C or Fortran codes. A code with OpenACC directives may be
+either C/C++ or Fortran codes. A code with OpenACC directives may be
 compiled via:
 
 ::
 
-  $ module load nvidia/compilers-20.5
-  $ module load gcc
+  $ module load nvidia/nvhpc
   $ nvc program.c
 
 or
@@ -173,8 +134,7 @@ may be compiled with the NVIDIA Fortran compiler:
 
 ::
 
-  $ module load nvidia/compilers-20.5
-  $ module load gcc
+  $ module load nvidia/nvhpc
   $ nvfortran program.cuf
 
 See ``man nvfortran`` for further details.
@@ -183,18 +143,16 @@ See ``man nvfortran`` for further details.
 Submitting jobs to the GPU nodes
 --------------------------------
 
-To run a GPU job, a SLURM submission needs to specify a GPU partition and
+To run a GPU job, a SLURM submission must specify a GPU partition and
 quality of service, and the number of GPUs required.
-You specify the number of GPUs you want using the ``--gres=gpu:N`` option:
-
- * ``--gres=gpu:N`` (where ``N`` is the number of GPU accelerators you wish to use). This resource 
-   request needs to be added to your Slurm script.
+You specify the number of GPU cards you want using the ``--gres=gpu:N``
+where ``N`` is typically 1, 2 or 4.
 
 .. note::
 
    As there are 4 GPUs per node, each GPU is associated with 1/4 of the
    resources of the node, i.e., 10/40 physical cores and roughly 91/384 GB in
-   main memory.
+   host memory.
    Allocations of host resources are made pro-rata by ``sbatch`` on this basis.
 
 For example, if 2 GPUs are requested, ``sbatch`` will allocate 20 cores
@@ -204,9 +162,7 @@ use more than the allocated resources will result in an error.
 This automatic allocation by SLURM for GPU jobs means that the
 submission script should not specify options such as ``--ntasks`` and
 ``--cpus-per-task`` via ``sbatch``. Such a job submission will be
-rejected.
-
-See below for some examples of how to use host resources and how to
+rejected. See below for some examples of how to use host resources and how to
 launch MPI applications.
 
 If you specify the ``--exclusive`` option, you will automatically be
@@ -227,10 +183,8 @@ exclusive use of two nodes.
 
 Partitions
 ~~~~~~~~~~
-
-Compute nodes are grouped into partitions. You will have to specify a partition
-using the ``--partition`` option in your submission script. The following table has a list 
-of active GPU partitions on Cirrus.
+Your job script must specify a partition. The following table has a list 
+of relevant GPU partitions on Cirrus:
 
 .. list-table:: Cirrus Partitions
    :widths: 30 50 20
@@ -248,10 +202,9 @@ of active GPU partitions on Cirrus.
 
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
+Your job script must specify a QoS relevant for the GPU nodes. Available
+QoS specifications are:
 
-Quality of Service (QoS) is used alongside the partition to control how work
-is allocated to the available resources. There are two relevant QoSes
-for GPU jobs:
 
 .. list-table:: GPU QoS
    :header-rows: 1
@@ -295,18 +248,16 @@ might look like:
 
    #!/bin/bash
    #
-   # Slurm job options (name, compute nodes, job time)
-   #SBATCH --job-name=CUDA_Example
-   #SBATCH --time=0:20:0
    #SBATCH --partition=gpu-cascade
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
+   #SBATCH --time=00:20:00
 
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
      
    # Load the required modules 
-   module load nvidia/cuda-10.2
+   module load nvidia/nvhpc
    
    srun ./cuda_test.x
 
@@ -328,8 +279,6 @@ as it is not possible to do it via ``sbatch`` in the GPU partitions.
 Job submission script using multiple GPUs on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: Remember that there are a maximum of 4 GPU accelerators per node and a maximum of 40 CPU cores per node.
-
 A job script that required 4 GPU accelerators and 40 CPU cores for 20 minutes
 could look like:
 
@@ -337,19 +286,16 @@ could look like:
 
     #!/bin/bash
     #
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=CUDA_Example
-    #SBATCH --time=0:20:0
     #SBATCH --partition=gpu-cascade
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
+    #SBATCH --time=00:20:00
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
     
     # Load the required modules 
-    module load nvidia/cuda-10.2
-
+    module load nvidia/nvhpc
 
     srun ./cuda_test.x
 
@@ -372,21 +318,18 @@ could look like:
 
     #!/bin/bash
     #
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=CUDA_Example
-    #SBATCH --time=0:20:0
     #SBATCH --partition=gpu-cascade
-    #SBATCH --nodes=2
-    #SBATCH --exclusive
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
+    #SBATCH --nodes=2
+    #SBATCH --exclusive
+    #SBATCH --time=00:20:00
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
     
     # Load the required modules 
-    module load nvidia/cuda-10.2
-
+    module load nvidia/nvhpc
 
     srun ./cuda_test.x
 
@@ -407,3 +350,14 @@ generate an error message, e.g.:
 
   srun: error: Unable to create step for job 234123: More processors requested
   than permitted
+
+
+Debugging GPU applications
+--------------------------
+
+CONTENT PENDING
+
+Profiling GPU applications
+--------------------------
+
+CONTENT PENDING
