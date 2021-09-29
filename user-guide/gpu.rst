@@ -355,9 +355,127 @@ generate an error message, e.g.:
 Debugging GPU applications
 --------------------------
 
-CONTENT PENDING
+Applications may be debugged using ``cuda-gdb``. This is an extension
+of ``gdb`` which can be used with CUDA. We assume the reader is
+familiar with ``gdb``.
+
+Compile the application with the ``-g -G`` flags to retain debugging
+information. Obtain an interactive session, e.g.:
+
+::
+
+  $ srun --nodes=1 --partition=gpu-cascade --qos=gpu --gres=gpu:1 \
+         --time=01:00:00 --pty /bin/bash
+
+Load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application
+via
+
+::
+
+  $ module load nvidia/nvhpc
+  $ cuda-gdb ./my-application.x
+  NVIDIA (R) CUDA Debugger
+  ...
+  (cuda-gdb) 
+
+One can also use the help facility from the ``cuda-gdb`` to find details
+of commands available.
+
+Note: it may be necessary to set the temporary directory to somewhere in
+the user space, e.g.,
+
+::
+
+  export TMPDIR=$(pwd)/tmp
+
+
+See https://docs.nvidia.com/cuda/cuda-gdb/index.html
+
 
 Profiling GPU applications
 --------------------------
 
-CONTENT PENDING
+NVIDIA provide two useful tools for profiling performance of applications:
+Nsight Systems and Nsight Compute; the former provides an overview of
+application performance, while the latter provides detailed information
+specifically on GPU kernels.
+
+Using Nsight Systems
+~~~~~~~~~~~~~~~~~~~~
+
+Nsight Systems provides an overview of application performance, and should
+therefore be the starting point for investigation. To run an application,
+compile as normal (including the ``-g`` flag) and then submit to the queue
+system, e.g.,
+
+::
+
+  #!/bin/bash
+  
+  #SBATCH --time=00:10:00
+  #SBATCH --nodes=1
+  #SBATCH --exclusive
+  
+  #SBATCH --partition=gpu-cascade
+  #SBATCH --qos=gpu
+  #SBATCH --gres=gpu:1
+  
+  module load nvidia/nvhpc
+  
+  srun -n 1 nsys profile -o prof1 ./my_application.x
+
+The run should then produce an additional output file called, in this
+case, ``prof1.qdrep``. The recommended way to view the contents
+of this file is to download the NVIDIA Nsight package to your own
+machine (you do not need the entire HPC SDK). Then copy the ``.qdrep``
+file produced on Cirrus so that if can be viewed locally.
+
+Note that a profiling run should probably be of a short duration
+so that the profile information (the ``.qdrep file``) does not become
+prohibitively large.
+
+Details of the download of Nsight Systems and a user guide can be found at
+the links:
+
+https://developer.nvidia.com/nsight-systems
+
+https://docs.nvidia.com/nsight-systems/UserGuide/index.html
+
+
+Using Nsight Compute
+~~~~~~~~~~~~~~~~~~~~
+
+Nsight Compute may be used in a simliar way as Nsight Systems. A job may
+be submitted with, e.g.,
+
+
+::
+
+  #!/bin/bash
+  
+  #SBATCH --time=00:10:00
+  #SBATCH --nodes=1
+  #SBATCH --exclusive
+  
+  #SBATCH --partition=gpu-cascade
+  #SBATCH --qos=gpu
+  #SBATCH --gres=gpu:1
+  
+  module load nvidia/nvhpc
+  
+  srun -n 1 nv-nsight-cu-cli --section SpeedOfLight_RooflineChart \
+                             -o prof2 -f ./my_application.x
+
+In this case, a file ``prof2.ncu-rep`` should be produced. Again, the
+recommended way to view this file is to downloaded the Nsight Compute
+package to your own machine, along with the ``.ncu-rep`` file from Cirrus.
+The ``--section`` option determines the details of which statistics are
+recorded (typically not all hardware counters can be accessed at the
+same time). A common starting point is ``--section MemoryWorkloadAnalysis``.
+Consult the NVIDIA documentation for further details.
+
+Details are available at, e.g.,
+
+https://developer.nvidia.com/nsight-compute
+
+https://docs.nvidia.com/nsight-compute/2021.2/index.html
