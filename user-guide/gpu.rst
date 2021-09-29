@@ -24,12 +24,12 @@ device memory bandwidth is in the region of 900 GB per second. Each card
 has 5,120 CUDA cores, and 640 "Tensor" cores.
 
 There are two GPU partitions available to SLURM, with slightly different
-host architechures.
+host architectures.
 
 Two nodes have Intel Skylake processors (as detailed elsewhere), while
 the remaining 36 nodes are slightly later Intel Cascadelake archetecture.
-Users concerned with host performance should specific appropriate compilation
-options for the host archecture.
+Users concerned with host performance should add appropriate compilation
+options for the specific host architecture.
 
 In both cases, the host node has two 20-core sockets (2.5 GHz), and a total
 of 384 GB host memory (192 GB per socket). Each core supports two threads
@@ -378,7 +378,8 @@ via
   ...
   (cuda-gdb) 
 
-One can also use the help facility from the ``cuda-gdb`` to find details
+Debugging then proceeds as usual.
+One can use the help facility from the ``cuda-gdb`` to find details
 of commands available.
 
 Note: it may be necessary to set the temporary directory to somewhere in
@@ -388,8 +389,9 @@ the user space, e.g.,
 
   export TMPDIR=$(pwd)/tmp
 
+to prevent unexpected internal CUDA driver errors.
 
-See https://docs.nvidia.com/cuda/cuda-gdb/index.html
+For further information on CUDA-GDB see https://docs.nvidia.com/cuda/cuda-gdb/index.html.
 
 
 Profiling GPU applications
