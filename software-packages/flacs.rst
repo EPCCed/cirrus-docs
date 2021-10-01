@@ -21,8 +21,9 @@ FLACS User's Manual), and therefore multi-core hardware is normally best used
 by increasing the number of simulations running in parallel rather than by
 increasing the number of cores per simulation.
 
-Gexcon has two different service offerings on Cirrus: FLACS-Cloud and FLACS-HPC.
-From FLACS v10.7, FLACS-Cloud is the preferable way to exploit the HPC cluster,
+Gexcon has two different service offerings on Cirrus: FLACS-Cloud
+and FLACS-HPC.
+FLACS-Cloud is the preferable way to exploit the HPC cluster,
 directly from the FLACS graphical user interfaces. For users who are familiar
 with accessing remote Linux HPC systems manually, FLACS-HPC may be an option.
 Both services are presented below. 
@@ -138,7 +139,7 @@ bash shell script, a simple example of which is given here:
   #SBATCH --partition=standard
   #SBATCH --qos=standard
 
-  module load flacs/10.9.1
+  module load flacs-cfd/21.2
 
   run_runflacs 012345
 
@@ -152,7 +153,7 @@ you should specify the specfic version you require:
 
 ::
 
-   module load flacs/10.9.1
+   module load flacs-cfd/21.2
 
 (Use ``module avail flacs`` to see which versions are available.) The
 appropriate FLACS commands can then be executed in  the usual way.
@@ -300,7 +301,7 @@ located in the current directory could look like this:
 
   printf "Task %d has file %s id %s\n" "${TASK_ID}" "${my_file}" "${my_file_id}"
 
-  module load flacs/10.9.1
+  module load flacs-cfd/21.2
   `which run_runflacs` ${my_file_id}
 
 
