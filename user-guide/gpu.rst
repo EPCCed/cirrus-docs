@@ -6,9 +6,9 @@ GPU cards. This section of the user guide gives some details of the
 hardware, and goes on to describe how to compile and run standard
 GPU applications.
 
-Those interested specificially in machine learning applications
-(particularly using packages such as PyTorch) may be interested
-in THIS PENDING PAGE.
+.. Those interested specificially in machine learning applications
+.. (particularly using packages such as PyTorch) may be interested
+.. in THIS PENDING PAGE.
 
 The GPU cards on Cirrus do not support graphics rendering tasks
 (they are only available for computational tasks in "compute cluster mode").
