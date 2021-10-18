@@ -186,20 +186,22 @@ The OpenMP API supports multi-platform shared-memory parallel programming in C/C
 Such a code can be compiled with the NVIDIA compilers in a similar manner manner as for OpenACC. To enable this, you must add the `-mp=gpu` flag to your compiler command line, e.g.
 
 ::
-$ module load nvidia/nvhpc
-$ nvc++ -mp=gpu program.cpp
+
+  $ module load nvidia/nvhpc
+  $ nvc++ -mp=gpu program.cpp
 
 You can specify exactly which GPU to target with the `-gpu` flag. Forexample, the Volta cards on Cirrus use the flag `-gpu=cc70`.
 
 During development it can be useful to have the compiler report information about how it is processing OpenMP pragmas. This can be enabled by the `-Minfo=mp` flag. For example:
 
 ::
-nvc -mp=gpu -Minfo=mp testprogram.c
-main:
-24, #omp target teams distribute parallel for thread_limit(128)
-24, Generating Tesla and Multicore code
-Generating "nvkernel_main_F1L88_2" GPU kernel
-26, Loop parallelized across teams and threads(128), schedule(static)
+
+  nvc -mp=gpu -Minfo=mp testprogram.c
+  main:
+  24, #omp target teams distribute parallel for thread_limit(128)
+  24, Generating Tesla and Multicore code
+  Generating "nvkernel_main_F1L88_2" GPU kernel
+  26, Loop parallelized across teams and threads(128), schedule(static)
 
 Submitting jobs to the GPU nodes
 --------------------------------
