@@ -139,6 +139,29 @@ may be compiled with the NVIDIA Fortran compiler:
 
 See ``man nvfortran`` for further details.
 
+OpenMP for GPUs
+~~~~~~~~~~~~~~~
+
+The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran and can offload computation from the host (i.e. CPU) to one or more target devices (such as the GPUs on Cirrus). 
+OpenMP code can be compiled with the NVIDIA compilers in a similar manner to OpenACC. To enable this functionality, you must add the `-mp=gpu` flag to your compiler command line, e.g.
+
+::
+
+  $ module load nvidia/nvhpc
+  $ nvc++ -mp=gpu program.cpp
+
+You can specify exactly which GPU to target with the `-gpu` flag. For example, the Volta cards on Cirrus use the flag `-gpu=cc70`.
+
+During development it can be useful to have the compiler report information about how it is processing OpenMP pragmas. This can be enabled by the `-Minfo=mp` flag. For example:
+
+::
+
+  nvc -mp=gpu -Minfo=mp testprogram.c
+  main:
+  24, #omp target teams distribute parallel for thread_limit(128)
+  24, Generating Tesla and Multicore code
+  Generating "nvkernel_main_F1L88_2" GPU kernel
+  26, Loop parallelized across teams and threads(128), schedule(static)
 
 Submitting jobs to the GPU nodes
 --------------------------------
