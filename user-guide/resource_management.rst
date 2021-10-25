@@ -10,7 +10,7 @@ of changing these permissions to the desired setting. This leads on to
 the sharing of data between users and systems often a vital tool for
 project groups and collaboration.
 
-Finally we cover some guidelines for I/O and data archiving on Cirrus.
+Finally we cover some guidelines for I/O, striping and data archiving on Cirrus.
 
 The Cirrus Administration Web Site (SAFE)
 -----------------------------------------
@@ -170,6 +170,42 @@ Here are some general guidelines
    or if it must be archived for future reference, invest the time and
    effort to standardise on a suitable portable data format, such as
    netCDF or HDF.
+
+File Striping 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+File striping is a method of storing files that can enable better I/O 
+performance. The Lustre parallel filesystem is comprised of separate 
+file servers and disks known as Object Storage Targets (OSTs). Individual 
+files on the Cirrus system are "striped" across these OSTs. By doing so, 
+ideally high performance is achieved by multiple requests accessing 
+different OSTs. 
+
+The following command can be used to see what the default striping value 
+of a given directory is:
+
+::
+
+    lfs getstripe <dir>
+
+Files inherit the striping value of the directory they are in, although 
+the striping value can also be set on the file level. The default value 
+of striping is set at 1 OST, however users can change this setting using:
+
+::
+
+    lfs setstripe <dir>
+
+More information about setting the striping value can be found using:
+
+::
+
+    lfs setstripe --help
+
+A small benchmark is available
+`here <https://github.com/davidhenty/benchio>`__
+which demonstrates how striping works for different types of parallel jobs 
+and file types and which can be run on Cirrus.
 
 Backup policies
 ---------------
