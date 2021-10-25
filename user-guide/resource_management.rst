@@ -10,7 +10,7 @@ of changing these permissions to the desired setting. This leads on to
 the sharing of data between users and systems often a vital tool for
 project groups and collaboration.
 
-Finally we cover some guidelines for I/O, striping and data archiving on Cirrus.
+Finally we cover some guidelines for I/O and data archiving on Cirrus.
 
 The Cirrus Administration Web Site (SAFE)
 -----------------------------------------
