@@ -97,10 +97,41 @@ total) and 6 OpenMP threads per MPI process.
 
 GROMACS GPU jobs
 ----------------
+The following script will run a GROMACS GPU MD job using 1 node
+(40 cores and 4 GPUs). The job is set up to run on `<MPI task count>`
+MPI processes, and `<OMP thread count>` OMP threads -- you will need
+to change these variables when running your script.
 
-.. Note:: Documentation for how to launch GPU GROMACS jobs on Cirrus  will be
-   updated as and when GPUs become available again.
+.. note::
+   Unlike the base version of GROMACS, the GPU version comes with 
+   only MDRUN installed. For any pre- and post-processing, you will 
+   need to use the non-GPU version of GROMACS.
 
+::
+
+   #!/bin/bash --login
+   
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=gmx_test
+   #SBATCH --nodes=1
+   #SBATCH --time=0:25:0
+   #SBATCH --exclusive
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
+   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   #SBATCH --partition=[partition name]
+   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+   #SBATCH --qos=[qos name]
+   #SBATCH --gres=gpu:4
+   
+   # Load GROMACS and MPI modules
+   module load gromacs/2020.2-gpu
+
+   # Run using input in test_calc.tpr
+   export OMP_NUM_THREADS=<OMP thread count>
+   srun --ntasks=<MPI task count> --cpus-per-task=<OMP thread count> \
+        mdrun_mpi -ntomp <OMP thread count> -s test_calc.tpr
 
 Information on how to assign different types of calculation to the
 CPU or GPU appears in the GROMACS documentation under
