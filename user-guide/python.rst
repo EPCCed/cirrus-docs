@@ -286,27 +286,84 @@ These should not be used. Use either an Anaconda or a Miniconda version.
 Using Jupyter Notebooks on Cirrus
 ---------------------------------
 
-It is possible to view and run Jupyter notebooks that are on both login nodes and compute nodes of Cirrus (note: you can test these on the login nodes, but please don’t attempt to run any computationally intensive jobs on them. Jobs get killed once they hit a CPU limit on login nodes).
+It is possible to view and run Jupyter notebooks on both login nodes and compute
+nodes of Cirrus (note: you can test these on the login nodes, but please don’t
+attempt to run any computationally intensive jobs on them. Jobs are killed once
+they hit a CPU limit on login nodes).
  
-1. As described above, load the ``anaconda`` module on Cirrus (modules aren't automatically available): ``module load anaconda/python3``
+1. As described above, load the ``anaconda`` module on Cirrus:
+   ``module load anaconda/python3``
 
-    - If you want to run your Jupyter Notebook on a compute node, you will need to enter an `interactive session <batch.html#interactive-jobs>`_ 
+   - If you want to run your Jupyter Notebook on a compute node, you will need to
+     enter an `interactive session <batch.html#interactive-jobs>`_.
 
-2. run ``export JUPYTER_RUNTIME_DIR=$(pwd)``
+2. Run ``export JUPYTER_RUNTIME_DIR=$(pwd)``.
 
-3. We can now start Jupyter using ``jupyter notebook --ip=0.0.0.0 --no-browser`` - once it’s started, you will see a URL printed in the terminal window of the form ``http://0.0.0.0:8888?token=<string>`` - we'll need this URL in step 5
+3. We can now start Jupyter by running
+   ``jupyter notebook --ip=0.0.0.0 --no-browser`` - once it’s started, you will
+   see lines resembling the following in the ouput, which can be quite long:
 
-4. Open a new terminal window, and run the following command: ``ssh <username>@login.cirrus.ac.uk -L8888:<node_id>:8888`` where <username> is your username, and <node_id> is the node id we’re currently on (on a login node, this will be ``cirrus-login0``, or similar; on a compute node, it will be a mix of numbers and letters)
+  ::
 
-    - nb. if, when you connect in the new terminal, you see a message of the
-      form `channel_setup_fwd_listener_tcpip: cannot listen to port: 8888`,
-      it means port 8888 is already in use.
-      You need to go back to step 3 (kill the existing notebook) and retry
-      with a new explicit port number by adding the ``--port=N`` option.
-      The port number `N` can be, e.g., in the range 5000-65535.
+    Or copy and paste one of these URLs:
+    http://cirrus-login0:8888/?token=<token>
+    or http://127.0.0.1:8888/?token=<token>
 
-5. Now, if you open a browser window locally, you should now be able to navigate to the URL from step 3, and this should display the Jupyter Notebook server
+  You will need the second of these two URLs in step 5.
 
-    - if you haven't selected the correct node id, you will get a connection error
+4. Please skip this step if you are connecting from Windows. If you are
+   connecting from Linux or macOS, open a new terminal window, and run the
+   following command:
+   ``ssh <username>@login.cirrus.ac.uk -L8888:<node_id>:8888`` where <username>
+   is your username, and <node_id> is the node id we’re currently on. On a login
+   node, this will be ``cirrus-login0``, or similar; on a compute node, it will
+   be a mix of numbers and letters such as ``r2i5n5``.
 
-If you are on a compute node, the Notebook will be available for the length of the interactive session you have requested.
+   - N.B. If, when you connect in the new terminal, you see a message of the
+     form `channel_setup_fwd_listener_tcpip: cannot listen to port: 8888`,
+     it means port 8888 is already in use.
+     You need to go back to step 3 (kill the existing notebook) and retry
+     with a new explicit port number by adding the ``--port=N`` option.
+     The port number `N` can be, e.g., in the range 5000-65535. You should
+     then use the same port number in place of 8888 in the following steps.
+
+5. Please skip this step if you are connecting from Linux or macOS. If you are
+   connecting from Windows, you should use MobaXterm to configure an SSH tunnel
+   as follows:
+
+   i. Click on the 'Tunnelling' button above the MobaXterm terminal. Create a
+      new tunnel by clicking on 'New SSH tunnel' in the window that opens.
+
+   ii. In the new window that opens, make sure the 'Local port forwarding' radio
+       button is selected.
+
+   iii. In the 'forwarded port' text box on the left under 'My computer with
+        MobaXterm', enter '8888'.
+
+   iv. In the three text boxes on the bottom right under 'SSH server' enter
+       'login.cirrus.ac.uk', your Cirrus username, and then '22'.
+
+   v. At the top right, under 'Remote server', enter the name of the Cirrus
+      login or compute node that you noted earlier, and '8888'.
+
+   vi. Click on the 'Save' button.
+
+   vii. In the tunnelling window, you will now see a new row for the settings you
+        just entered. If you like, you can give a name to the tunnel in the
+        leftmost column to identify it. Click on the small key icon close to the
+        right for the new connection to tell MobaXterm which SSH private key to
+        use when connecting to Cirrus. You should tell it to use the same
+        ``.ppk`` private key that you normally use when connecting to Cirrus.
+
+   viii. The tunnel should now be configured. Click on the small start button
+         (like a play '>' icon) for the new tunnel to open it. You'll be asked
+         to enter your Cirrus password -- please do so.
+
+6. Now, if you open a browser window locally, you should be able to navigate to
+   the URL from step 3, and this should display the Jupyter Notebook server.
+
+   - Please note if you haven't selected the correct node name in step 4 or 5,
+     you will get a connection error.
+
+If you are on a compute node, the notebook will be available for the length of
+the interactive session you have requested.
