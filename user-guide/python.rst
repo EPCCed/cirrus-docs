@@ -309,7 +309,7 @@ they hit a CPU limit on login nodes).
     http://cirrus-login0:8888/?token=<token>
     or http://127.0.0.1:8888/?token=<token>
 
-  You will need the second of these two URLs in step 5.
+  You will need the second of these two URLs in step 6.
 
 4. Please skip this step if you are connecting from Windows. If you are
    connecting from Linux or macOS, open a new terminal window, and run the
