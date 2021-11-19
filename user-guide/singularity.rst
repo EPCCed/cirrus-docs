@@ -288,8 +288,8 @@ If you are using Linux then you can usually install Singularity directly.
 
 * `Installing Singularity on Linux <https://sylabs.io/guides/3.7/admin-guide/installation.html#installation-on-linux>`_
 
-Singularity Recipes to Access modules on Cirrus
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Accessing Cirrus Modules from Inside a Container
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may want your custom image to be able to access the modules environment on Cirrus so you can make
 use of custom software that you cannot access elsewhere. We demonstrate how to do this for a CentOS 7
@@ -324,7 +324,7 @@ to build the image (remember this command must be run on a system where you have
 
    me@my-system:~> sudo singularity build centos7.sif centos7.def
 
-The resulting image file (``centos7.sif``) can then be copied to Cirrus using scp; such an image has
+The resulting image file (``centos7.sif``) can then be copied to Cirrus using scp; such an image
 already exists on Cirrus and can be found in the ``/lustre/sw/singularity/images`` folder.
 
 When you use that image interactively on Cirrus you must start with a login shell and also
@@ -343,3 +343,37 @@ bind ``/lustre/sw`` so that the container can see all the module files, see belo
    Singularity> exit
    logout
    [user@cirrus-login1 ~]$ 
+
+Altering a Container on Cirrus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A container image file is immutable but it is possible to alter the image if you convert
+the file to a sandbox. The sandbox is essentially a directory on the host system that 
+contains the full container file hierarchy.
+
+You first run the ``singularity build`` command to perform the conversion followed by a
+``shell`` command with the ``--writable`` option. You are now free to change the files
+inside the container sandbox. 
+
+::
+
+   user@cirrus-login1 ~]$ singularity build --sandbox image.sif.sandbox image.sif
+   user@cirrus-login1 ~]$ singularity shell -B /lustre/sw --writable image.sif.sandbox
+   Singularity> 
+
+In the example above, the ``/lustre/sw`` bind path is specified, allowing you to build
+code that links to the Cirrus module libraries.
+
+Finally, once you are finished with the sandbox you can exit and convert back to the
+original image file.
+
+::   
+
+   Singularity> exit
+   exit
+   user@cirrus-login1 ~]$ singularity build --force image.sif image.sif.sandbox
+
+.. note::
+  Altering a container in this way will cause the associated definition file to be out
+  of step with the current image. Care should be taken to keep a record of the commands
+  that were run within the sandbox so that the image can be reproduced.
