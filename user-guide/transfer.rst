@@ -63,7 +63,7 @@ For example, to transfer files to Cirrus:
 
 ::
 
-    scp [options] source user@cirrus.epcc.ed.ac.uk:[destination]
+    scp [options] source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace ``user`` with your Cirrus username in the example
 above.)
@@ -80,7 +80,7 @@ If you want to request a different encryption algorithm add the ``-c
 
 ::
 
-    scp [options] -c arcfour source user@cirrus.epcc.ed.ac.uk:[destination]
+    scp [options] -c arcfour source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace ``user`` with your Cirrus username in the example
 above.)
@@ -101,7 +101,7 @@ To transfer files to Cirrus using ``rsync`` the command should have the form:
 
 ::
 
-    rsync [options] -e ssh source user@cirrus.epcc.ed.ac.uk:[destination]
+    rsync [options] -e ssh source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace ``user`` with your Cirrus username in the example
 above.)
@@ -117,7 +117,7 @@ using a quoted string as the argument of the ``-e`` flag. e.g.
 
 ::
 
-    rsync [options] -e "ssh -c arcfour" source user@cirrus.epcc.ed.ac.uk:[destination]
+    rsync [options] -e "ssh -c arcfour" source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace ``user`` with your Cirrus username in the example
 above.)
