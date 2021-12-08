@@ -22,7 +22,7 @@ There are no backups of any data on the solid state storage so you should ensure
 have copies of critical data elsewhere.
 
 In addition, the solid state storage does not currently have any quotas (user or group)
-enabled so all users are potentially able to access the full 256 GB capacity of the
+enabled so all users are potentially able to access the full 256 TB capacity of the
 storage system. We ask all users to be considerate in their use of this shared storage
 system and to delete any data on the solid state storage as soon as it no longer
 needs to be there.
