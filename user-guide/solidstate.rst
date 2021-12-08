@@ -7,7 +7,7 @@ solid state storage system (also known as RPOOL). This storage system is network
 shared across the login nodes and GPU compute nodes in a similar way to the normal,
 spinning-disk Lustre file system but has different performance characteristics.
 
-The solid state storage has a maximum useable capacity of 256 GB which is shared between
+The solid state storage has a maximum useable capacity of 256 TB which is shared between
 all users.
 
 .. note::
