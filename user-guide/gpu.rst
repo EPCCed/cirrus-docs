@@ -1,42 +1,38 @@
 Using the Cirrus GPU Nodes
 ==========================
 
-Cirrus has 38 compute nodes each equipped with 4 NVIDIA V100 (Volta)
+Cirrus has 38 GPU compute nodes each equipped with 4 NVIDIA V100 (Volta)
 GPU cards. This section of the user guide gives some details of the
-hardware, and goes on to describe how to compile and run standard
-GPU applications.
+hardware; it also covers how to compile and run standard GPU applications.
 
 .. Those interested specificially in machine learning applications
 .. (particularly using packages such as PyTorch) may be interested
 .. in THIS PENDING PAGE.
 
-The GPU cards on Cirrus do not support graphics rendering tasks
-(they are only available for computational tasks in "compute cluster mode").
+The GPU cards on Cirrus do not support graphics rendering tasks; they
+are set to `compute cluster` mode and so only support computational tasks.
 
 
 Hardware details
 ----------------
 
-All the GPU nodes on Cirrus contain four V100-SXM2-16GB (Volta) cards. Each
-card has 16GB of high-bandwidth memory (HBM2, often referred to as device
-memory). Maximum
-device memory bandwidth is in the region of 900 GB per second. Each card
-has 5,120 CUDA cores, and 640 "Tensor" cores.
+All of the Cirrus GPU nodes contain four Tesla V100-SXM2-16GB (Volta) cards.
+Each card has 16GB of high-bandwidth memory, ``HBM``, often referred to as
+device memory. Maximum device memory bandwidth is in the region of 900 GB per second.
+Each card has 5,120 CUDA cores and 640 Tensor cores.
 
-There are two GPU partitions available to SLURM, with slightly different
-host architectures.
+There are two GPU Slurm partitions installed on Cirrus. The first called
+``gpu-skylake`` features two GPU nodes that each have Intel Skylake processors.
+The remaining 36 nodes form the ``gpu-cascade`` partition and have the slightly
+more recent Intel Cascade Lake architecture. Users concerned with host performance
+should add the specific compilation options appropriate for the processor.
 
-Two nodes have Intel Skylake processors (as detailed elsewhere), while
-the remaining 36 nodes are slightly later Intel Cascadelake archetecture.
-Users concerned with host performance should add appropriate compilation
-options for the specific host architecture.
-
-In both cases, the host node has two 20-core sockets (2.5 GHz), and a total
+In both cases, the host node has two 20-core sockets (2.5 GHz) and a total
 of 384 GB host memory (192 GB per socket). Each core supports two threads
 in hardware.
 
-For further details of the V100 architecture see, e.g.,
-https://www.nvidia.com/en-gb/data-center/tesla-v100/
+For further details of the V100 architecture see,
+https://www.nvidia.com/en-gb/data-center/tesla-v100/ .
 
 
 Compiling software for the GPU nodes
@@ -47,16 +43,22 @@ NVIDIA HPC SDK
 
 NVIDIA now make regular releases of a unified HPC SDK which provides the
 relevant compilers and libraries needed to build and run GPU programs.
-Versions of the SDK are available via the module system, e.g.:
+Versions of the SDK are available via the module system.
 
 ::
 
   $ module avail nvidia/nvhpc
   ---------------------------- /lustre/sw/modulefiles -------------------------
-  nvidia/nvhpc-byo-compiler/21.2  nvidia/nvhpc/21.2(default)  
-  nvidia/nvhpc-nompi/21.2         nvidia/nvhpc/21.2-gnu       
+  nvidia/nvhpc-byo-compiler/21.2  nvidia/nvhpc-nompi/21.2  nvidia/nvhpc/21.2(default)  nvidia/nvhpc/21.9  
+  nvidia/nvhpc-byo-compiler/21.9  nvidia/nvhpc-nompi/21.9  nvidia/nvhpc/21.2-gnu 
 
-In the first instance, the default ``nvhpc`` module is recommended:
+In the first instance, the default ``nvhpc`` module (version 21.2) is recommended.
+
+Each release of the NVIDIA HPC SDK includes several different versions of the CUDA toolchain.
+For example, the ``nvidia/nvhpc/21.2`` module comes with CUDA 10.2, 11.0 and 11.2. Of course,
+only one of these CUDA toolchains can be active at any one time and for ``nvhpc/21.2`` this
+is CUDA 11.2, which is the version of CUDA compatible with the underlying GPU kernel-mode
+driver (460.73.01).
 
 ::
 
@@ -75,31 +77,36 @@ on graphical processing units (GPUs).
 
 Programs, typically written in C or C++, are compiled with ``nvcc``.
 As well as ``nvcc``, a host compiler is required. By default, a ``gcc``
-module is loaded when ``nvidia/nvhpc`` is loaded.
+module is added when ``nvidia/nvhpc`` is loaded.
 
-Compile your source code in the usual way, e.g.:
+Compile your source code in the usual way.
 
 ::
 
-   nvcc -o cuda_test.x cuda_test.cu
+   nvcc -arch=sm_70 -o cuda_test.x cuda_test.cu
+
+
+.. note::
+
+   The ``-arch=sm_70`` compile option ensures that the binary produced is compatible
+   with the NVIDIA Volta architecture.
 
 Using CUDA with Intel compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can load either the Intel 18 or Intel 19 compilers to use with ``nvcc``,
-e.g.,
+You can load either the Intel 18 or Intel 19 compilers to use with ``nvcc``.
 
 ::
 
    module unload gcc
-   module load intel-compilers-18
+   module load intel-compilers-19
 
 You can now use ``nvcc -ccbin icpc`` to compile your source code with
-the Intel C++ compiler ``icpc``, e.g.:
+the Intel C++ compiler ``icpc``.
 
 ::
 
-   nvcc -ccbin icpc -o cuda_test.x cuda_test.cu
+   nvcc -arch=sm_70 -ccbin icpc -o cuda_test.x cuda_test.cu
 
 
 Compiling OpenACC code
@@ -107,14 +114,12 @@ Compiling OpenACC code
 
 OpenACC is a directive-based approach to introducing parallelism into
 either C/C++ or Fortran codes. A code with OpenACC directives may be
-compiled via:
+compiled like so.
 
 ::
 
   $ module load nvidia/nvhpc
   $ nvc program.c
-
-or
 
 ::
 
@@ -129,8 +134,8 @@ CUDA Fortran
 ~~~~~~~~~~~~
 
 CUDA Fortran provides extensions to standard Fortran which allow GPU
-functionality to be used. CUDA Fortran files (with file extension ``.cuf``)
-may be compiled with the NVIDIA Fortran compiler:
+functionality. CUDA Fortran files (with file extension ``.cuf``)
+may be compiled with the NVIDIA Fortran compiler.
 
 ::
 
@@ -143,16 +148,16 @@ OpenMP for GPUs
 ~~~~~~~~~~~~~~~
 
 The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran and can offload computation from the host (i.e. CPU) to one or more target devices (such as the GPUs on Cirrus). 
-OpenMP code can be compiled with the NVIDIA compilers in a similar manner to OpenACC. To enable this functionality, you must add the `-mp=gpu` flag to your compiler command line, e.g.
+OpenMP code can be compiled with the NVIDIA compilers in a similar manner to OpenACC. To enable this functionality, you must add ``-mp=gpu`` to your compile command.
 
 ::
 
   $ module load nvidia/nvhpc
   $ nvc++ -mp=gpu program.cpp
 
-You can specify exactly which GPU to target with the `-gpu` flag. For example, the Volta cards on Cirrus use the flag `-gpu=cc70`.
+You can specify exactly which GPU to target with the ``-gpu`` flag. For example, the Volta cards on Cirrus use the flag ``-gpu=cc70``.
 
-During development it can be useful to have the compiler report information about how it is processing OpenMP pragmas. This can be enabled by the `-Minfo=mp` flag. For example:
+During development it can be useful to have the compiler report information about how it is processing OpenMP pragmas. This can be enabled by the use of ``-Minfo=mp``, see below.
 
 ::
 
@@ -167,8 +172,8 @@ Submitting jobs to the GPU nodes
 --------------------------------
 
 To run a GPU job, a SLURM submission must specify a GPU partition and
-quality of service, and the number of GPUs required.
-You specify the number of GPU cards you want using the ``--gres=gpu:N``
+a quality of service (QoS) as well as the number of GPUs required.
+You specify the number of GPU cards you want using the ``--gres=gpu:N`` option,
 where ``N`` is typically 1, 2 or 4.
 
 .. note::
@@ -176,17 +181,17 @@ where ``N`` is typically 1, 2 or 4.
    As there are 4 GPUs per node, each GPU is associated with 1/4 of the
    resources of the node, i.e., 10/40 physical cores and roughly 91/384 GB in
    host memory.
-   Allocations of host resources are made pro-rata by ``sbatch`` on this basis.
 
-For example, if 2 GPUs are requested, ``sbatch`` will allocate 20 cores
-and around 190 GB of host memory (in addition to 2 GPUs). Any attempt to
-use more than the allocated resources will result in an error.
+Allocations of host resources are made pro-rata. For example, if 2 GPUs are
+requested, ``sbatch`` will allocate 20 cores and around 190 GB of host memory
+(in addition to 2 GPUs). Any attempt to use more than the allocated resources
+will result in an error.
 
 This automatic allocation by SLURM for GPU jobs means that the
 submission script should not specify options such as ``--ntasks`` and
-``--cpus-per-task`` via ``sbatch``. Such a job submission will be
-rejected. See below for some examples of how to use host resources and how to
-launch MPI applications.
+``--cpus-per-task``. Such a job submission will be rejected. See below
+for some examples of how to use host resources and how to launch MPI
+applications.
 
 If you specify the ``--exclusive`` option, you will automatically be
 allocated all host cores and all memory from the node irrespective
@@ -207,7 +212,7 @@ exclusive use of two nodes.
 Partitions
 ~~~~~~~~~~
 Your job script must specify a partition. The following table has a list 
-of relevant GPU partitions on Cirrus:
+of relevant GPU partitions on Cirrus.
 
 .. list-table:: Cirrus Partitions
    :widths: 30 50 20
@@ -226,8 +231,7 @@ of relevant GPU partitions on Cirrus:
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Your job script must specify a QoS relevant for the GPU nodes. Available
-QoS specifications are:
-
+QoS specifications are as follows.
 
 .. list-table:: GPU QoS
    :header-rows: 1
@@ -261,11 +265,11 @@ QoS specifications are:
 Examples
 --------
    
-Job submission script using single GPU on a single node
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Job submission script using one GPU on a single node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A job script that requires 1 GPU accelerator and 10 CPU cores for 20 minutes
-might look like:
+would look like the following.
 
 ::
 
@@ -286,7 +290,7 @@ might look like:
 
 This will execute one host process with access to one GPU. If we wish to
 make use of the 10 host cores in this allocation, we could use host
-threads via OpenMP, e.g.,
+threads via OpenMP.
 
 ::
 
@@ -295,15 +299,15 @@ threads via OpenMP, e.g.,
 
   srun --ntasks=1 --cpus-per-task=10 --hint=nomultithread ./cuda_test.x
 
-Note here we have specified the launch configuration directly to ``srun``
-as it is not possible to do it via ``sbatch`` in the GPU partitions.
+The launch configuration is specified directly to ``srun`` because, for the
+GPU partitions, it is not possible to do this via ``sbatch``.
 
 
 Job submission script using multiple GPUs on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A job script that required 4 GPU accelerators and 40 CPU cores for 20 minutes
-could look like:
+A job script that requires 4 GPU accelerators and 40 CPU cores for 20 minutes
+would appear as follows.
 
 ::
 
@@ -323,8 +327,8 @@ could look like:
     srun ./cuda_test.x
 
 A typical MPI application might assign one device per MPI process, in
-which case we would want 4 MPI tasks in this example. This would be
-specified again directly to ``srun`` via
+which case we would want 4 MPI tasks in this example. This would again
+be specified directly to ``srun``.
 
 ::
 
@@ -334,8 +338,7 @@ specified again directly to ``srun`` via
 Job submission script using multiple GPUs on multiple nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A job script that required 8 GPU accelerators for 20 minutes
-could look like:
+See below for a job script that requires 8 GPU accelerators for 20 minutes.
 
 ::
 
@@ -356,18 +359,17 @@ could look like:
 
     srun ./cuda_test.x
 
-An MPI application with four MPI tasks per node in this case would be
-launched via
+An MPI application with four MPI tasks per node would be launched as follows.
 
 ::
 
   srun --ntasks=8 --tasks-per-node=4 ./mpi_cuda_test.x
 
-Again, these options are specified directly to ``srun``, and not ``sbatch``.
-
+Again, these options are specified directly to ``srun`` rather than
+being declared as ``sbatch`` directives.
 
 Attempts to oversubscribe an allocation (10 cores per GPU) will fail, and
-generate an error message, e.g.:
+generate an error message.
 
 ::
 
@@ -382,16 +384,16 @@ Applications may be debugged using ``cuda-gdb``. This is an extension
 of ``gdb`` which can be used with CUDA. We assume the reader is
 familiar with ``gdb``.
 
-Compile the application with the ``-g -G`` flags to retain debugging
-information. Obtain an interactive session, e.g.:
+First, compile the application with the ``-g -G`` flags in order to generate
+debugging information for both host and device code. Then, obtain an interactive
+session like so.
 
 ::
 
   $ srun --nodes=1 --partition=gpu-cascade --qos=gpu --gres=gpu:1 \
-         --time=01:00:00 --pty /bin/bash
+         --time=01:00:00 --account=[budget code] --pty /bin/bash
 
-Load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application
-via
+Next, load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application.
 
 ::
 
@@ -401,20 +403,14 @@ via
   ...
   (cuda-gdb) 
 
-Debugging then proceeds as usual.
-One can use the help facility from the ``cuda-gdb`` to find details
-of commands available.
+Debugging then proceeds as usual. One can use the help facility within ``cuda-gdb``
+to find details on the various debugging commands. Type ``quit`` to end your debug
+session followed by ``exit`` to close the interactive session.
 
-Note: it may be necessary to set the temporary directory to somewhere in
-the user space, e.g.,
+Note, it may be necessary to set the temporary directory to somewhere in the user space
+(e.g., ``export TMPDIR=$(pwd)/tmp``) to prevent unexpected internal CUDA driver errors.
 
-::
-
-  export TMPDIR=$(pwd)/tmp
-
-to prevent unexpected internal CUDA driver errors.
-
-For further information on CUDA-GDB see https://docs.nvidia.com/cuda/cuda-gdb/index.html.
+For further information on CUDA-GDB, see https://docs.nvidia.com/cuda/cuda-gdb/index.html.
 
 
 Profiling GPU applications
@@ -428,10 +424,10 @@ specifically on GPU kernels.
 Using Nsight Systems
 ~~~~~~~~~~~~~~~~~~~~
 
-Nsight Systems provides an overview of application performance, and should
+Nsight Systems provides an overview of application performance and should
 therefore be the starting point for investigation. To run an application,
 compile as normal (including the ``-g`` flag) and then submit to the queue
-system, e.g.,
+system.
 
 ::
 
@@ -439,11 +435,13 @@ system, e.g.,
   
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
-  #SBATCH --exclusive
-  
+  #SBATCH --exclusive  
   #SBATCH --partition=gpu-cascade
   #SBATCH --qos=gpu
   #SBATCH --gres=gpu:1
+
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
   
   module load nvidia/nvhpc
   
@@ -455,24 +453,26 @@ of this file is to download the NVIDIA Nsight package to your own
 machine (you do not need the entire HPC SDK). Then copy the ``.qdrep``
 file produced on Cirrus so that if can be viewed locally.
 
-Note that a profiling run should probably be of a short duration
-so that the profile information (the ``.qdrep file``) does not become
+Note, a profiling run should probably be of a short duration so that the
+profile information (contained in the ``.qdrep`` file) does not become
 prohibitively large.
 
-Details of the download of Nsight Systems and a user guide can be found at
-the links:
+Details of the download of Nsight Systems and a user guide can be found 
+via the links below.
 
 https://developer.nvidia.com/nsight-systems
 
 https://docs.nvidia.com/nsight-systems/UserGuide/index.html
+
+If your code was compiled with the tools provided by ``nvidia/nvhpc/21.2``
+you should download and install Nsight Systems v2020.5.1.85.
 
 
 Using Nsight Compute
 ~~~~~~~~~~~~~~~~~~~~
 
 Nsight Compute may be used in a simliar way as Nsight Systems. A job may
-be submitted with, e.g.,
-
+be submitted like so.
 
 ::
 
@@ -481,26 +481,30 @@ be submitted with, e.g.,
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive
-  
   #SBATCH --partition=gpu-cascade
   #SBATCH --qos=gpu
   #SBATCH --gres=gpu:1
   
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+
   module load nvidia/nvhpc
   
   srun -n 1 nv-nsight-cu-cli --section SpeedOfLight_RooflineChart \
                              -o prof2 -f ./my_application.x
 
-In this case, a file ``prof2.ncu-rep`` should be produced. Again, the
-recommended way to view this file is to downloaded the Nsight Compute
+In this case, a file called ``prof2.ncu-rep`` should be produced. Again, the
+recommended way to view this file is to download the Nsight Compute
 package to your own machine, along with the ``.ncu-rep`` file from Cirrus.
-The ``--section`` option determines the details of which statistics are
-recorded (typically not all hardware counters can be accessed at the
-same time). A common starting point is ``--section MemoryWorkloadAnalysis``.
-Consult the NVIDIA documentation for further details.
+The ``--section`` option determines which statistics are recorded (typically
+not all hardware counters can be accessed at the same time). A common starting
+point is ``--section MemoryWorkloadAnalysis``.
 
-Details are available at, e.g.,
+Consult the NVIDIA documentation for further details.
 
 https://developer.nvidia.com/nsight-compute
 
 https://docs.nvidia.com/nsight-compute/2021.2/index.html
+
+Nsight Compute v2021.3.1.0 has been found to work for codes compiled using
+``nvhpc`` versions 21.2 and 21.9.
