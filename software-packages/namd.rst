@@ -12,7 +12,7 @@ but is also file-compatible with AMBER, CHARMM, and X-PLOR.
 Useful Links
 ------------
 
-* `NAMD User Guide <http://www.ks.uiuc.edu/Research/namd/2.12/ug/>`__
+* `NAMD User Guide <http://www.ks.uiuc.edu/Research/namd/2.14/ug/>`__
 * `NAMD Tutorials <http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd>`__
 
 Using NAMD on Cirrus
@@ -26,36 +26,65 @@ Running parallel NAMD jobs
 NAMD can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.
 
-For example, the following script will run a NAMD MD job using 4 nodes
-(144 cores) with pure MPI.
+For example, the following script will run a NAMD MD job across 2 nodes
+(72 cores) with 2 tasks per node and 18 cores per task, one of which
+is reserved for communications.
 
 ::
-
    #!/bin/bash --login
    
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
-   #SBATCH --time=1:0:0
+   #SBATCH --time=01:00:00
    #SBATCH --exclusive
-   #SBATCH --nodes=4
-   #SBATCH --tasks-per-node=36
-   #SBATCH --cpus-per-task=1
-
-   
-   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --nodes=2
+   #SBATCH --tasks-per-node=2
+   #SBATCH --cpus-per-task=18
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
-   #SBATCH --partition=[partition name]
-   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-   #SBATCH --qos=[qos name]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
+   module load namd/2.14
 
-   # Load NAMD module and set fabric
-   module load namd
-   export I_MPI_FABRICS=shm:ofa
+   export OMP_NUM_THREADS=18
+   export OMP_PLACES=cores
 
-   # Run using input in input.namd
-   srun namd2 input.namd
+   srun namd2 +setcpuaffinity +isomalloc_sync +ppn 17 +pemap 1-17,19-35 +commap 0,18 input.namd
+
+NAMD can also be run without SMP.
+
+::
+   #!/bin/bash --login
    
+   # Slurm job options (name, compute nodes, job time)
+   ...
 
+   module load namd/2.14-nosmp
 
+   export OMP_NUM_THREADS=18
+   export OMP_PLACES=cores
+
+   srun namd2 +setcpuaffinity +isomalloc_sync input.namd
+
+And, finally, there's also a GPU version.
+
+::
+   #!/bin/bash --login
+   
+   # Slurm job options (name, compute nodes, job time)
+   #SBATCH --job-name=NAMD_Example
+   #SBATCH --time=01:00:00
+   #SBATCH --exclusive
+   #SBATCH --nodes=1
+   #SBATCH --account=[budget code]
+   #SBATCH --partition=gpu-cascade
+   #SBATCH --qos=gpu
+   #SBATCH --gres=gpu:4
+
+   module load namd/2.14-gpu
+
+   export OMP_NUM_THREADS=10
+   export OMP_PLACES=cores
+
+   srun --distribution=block:block --hint=nomultithread --ntasks=4 --tasks-per-node=4 --cpus-per-task=10 \ 
+       namd2 +setcpuaffinity +isomalloc_sync +ppn 9 +devices 0,1,2,3 input.namd
