@@ -13,7 +13,7 @@ Useful Links
 ------------
 
 * `NAMD User Guide <http://www.ks.uiuc.edu/Research/namd/2.14/ug/>`__
-* `NAMD Tutorials <http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd>`__
+* `NAMD Tutorials <https://www.ks.uiuc.edu/Training/Tutorials/#namd>`__
 
 Using NAMD on Cirrus
 --------------------
@@ -31,6 +31,7 @@ For example, the following script will run a NAMD MD job across 2 nodes
 is reserved for communications.
 
 ::
+
    #!/bin/bash --login
    
    # Slurm job options (name, compute nodes, job time)
@@ -54,6 +55,7 @@ is reserved for communications.
 NAMD can also be run without SMP.
 
 ::
+
    #!/bin/bash --login
    
    # Slurm job options (name, compute nodes, job time)
@@ -69,6 +71,7 @@ NAMD can also be run without SMP.
 And, finally, there's also a GPU version.
 
 ::
+
    #!/bin/bash --login
    
    # Slurm job options (name, compute nodes, job time)
