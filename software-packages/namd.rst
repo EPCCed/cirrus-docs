@@ -59,12 +59,15 @@ NAMD can also be run without SMP.
    #!/bin/bash --login
    
    # Slurm job options (name, compute nodes, job time)
-   ...
+   #SBATCH --job-name=NAMD_Example
+   #SBATCH --time=01:00:00
+   #SBATCH --exclusive
+   #SBATCH --nodes=2
+   #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
    module load namd/2.14-nosmp
-
-   export OMP_NUM_THREADS=18
-   export OMP_PLACES=cores
 
    srun namd2 +setcpuaffinity +isomalloc_sync input.namd
 
@@ -86,8 +89,8 @@ And, finally, there's also a GPU version.
 
    module load namd/2.14-gpu
 
-   export OMP_NUM_THREADS=10
+   export OMP_NUM_THREADS=40
    export OMP_PLACES=cores
 
-   srun --distribution=block:block --hint=nomultithread --ntasks=4 --tasks-per-node=4 --cpus-per-task=10 \ 
-       namd2 +setcpuaffinity +isomalloc_sync +ppn 9 +devices 0,1,2,3 input.namd
+   srun --distribution=block:block --hint=nomultithread \ 
+       namd2 +setcpuaffinity +isomalloc_sync +ppn ${OMP_NUM_THREADS} +devices ${CUDA_VISIBLE_DEVICES} input.namd
