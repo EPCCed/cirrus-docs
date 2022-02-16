@@ -71,7 +71,8 @@ NAMD can also be run without SMP.
 
    srun namd2 +setcpuaffinity +isomalloc_sync input.namd
 
-And, finally, there's also a GPU version.
+And, finally, there's also a GPU version. The example below runs ten NAMD worker threads
+on one GPU.
 
 ::
 
@@ -80,17 +81,17 @@ And, finally, there's also a GPU version.
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
    #SBATCH --time=01:00:00
-   #SBATCH --exclusive
    #SBATCH --nodes=1
    #SBATCH --account=[budget code]
    #SBATCH --partition=gpu-cascade
    #SBATCH --qos=gpu
-   #SBATCH --gres=gpu:4
+   #SBATCH --gres=gpu:1
 
    module load namd/2.14-gpu
 
-   export OMP_NUM_THREADS=40
+   export OMP_NUM_THREADS=10
    export OMP_PLACES=cores
 
    srun --distribution=block:block --hint=nomultithread \ 
-       namd2 +setcpuaffinity +isomalloc_sync +ppn ${OMP_NUM_THREADS} +devices ${CUDA_VISIBLE_DEVICES} input.namd
+       namd2 +setcpuaffinity +isomalloc_sync +idlepoll \
+           +ppn ${OMP_NUM_THREADS} +devices 0 input.namd
