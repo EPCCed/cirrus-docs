@@ -56,6 +56,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/Ansys
    software-packages/castep
    software-packages/cp2k
+   software-packages/elements
    software-packages/flacs
    software-packages/gaussian
    software-packages/gromacs
@@ -75,6 +76,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :caption: Software Libraries
 
    software-libraries/intel_mkl
+   software-libraries/hdf5
 
 .. toctree::
    :maxdepth: 2

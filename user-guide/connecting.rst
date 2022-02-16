@@ -79,10 +79,32 @@ The SAFE web interface is used to provide your initial password for
 logging onto Cirrus (see the `SAFE Documentation <https://epcced.github.io/safe-docs/>`__
 for more details on requesting accounts and picking up passwords).
 
-**Note:** you may now change your password on the Cirrus machine itself
+Changing passwords
+~~~~~~~~~~~~~~~~~
+
+You may now change your password on the Cirrus machine itself
 using the *passwd* command or when you are prompted the first time you login.
 This change will not be reflected in the SAFE. If you forget your password,
 you should use the SAFE to request a new one-shot password.
+
+.. note::
+
+  When you first log into Cirrus, you will be prompted to change your
+  initial password. This is a three step process:
+  
+  1. When promoted to enter your *ldap password*: Re-enter the password you retrieved from SAFE
+  2. When prompted to enter your new password: type in a new password
+  3. When prompted to re-enter the new password: re-enter the new password
+  
+  Your password has now been changed
+
+Password Expiration
+~~~~~~~~~~~~~~~~~
+
+Passwords on Cirrus will expire after two years. When this happens, you will be required to 
+update your password. This will be done by following the same steps as above.
+ 
+**Note:** You will still be prompted to enter your current password first before changing your password 
 
 SSH Clients
 -----------
@@ -129,16 +151,6 @@ correctly to be able to access Cirrus.
   ``ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk``
   to log in.
 
-.. note::
-
-  When you first log into Cirrus, you will be prompted to change your
-  initial password. This is a three step process:
-  
-  1. When promoted to enter your *ldap password*: Re-enter the password you retrieved from SAFE
-  2. When prompted to enter your new password: type in a new password
-  3. When prompted to re-enter the new password: re-enter the new password
-  
-  Your password has now been changed
 
 To allow remote programs, especially graphical applications to control
 your local display, such as being able to open up a new GUI window (such
