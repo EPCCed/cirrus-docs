@@ -28,12 +28,12 @@ calculations on the system before running production jobs.
 Scratch Directories
 -------------------
 
-Before using Gaussian for the first time, you should create a directory in your
-home directories to hold temporary files used by Gaussian, e.g.
+Before using Gaussian for the first time, you should create a directory on the
+solid state storage to hold temporary files used by Gaussian, e.g.
 
 ::
 
-   mkdir ~/g16tmp
+   mkdir /scratch/space1/${USER}/g16tmp
 
 Running serial Gaussian jobs
 ----------------------------
@@ -65,7 +65,7 @@ a Gaussian scratch directory as outlined above).
    source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=$HOME/g16tmp
+   export GAUSS_SCRDIR=/scratch/space1/${USER}/g16tmp
 
    # Run using input in "test0027.com"
    g16 test0027
@@ -103,7 +103,7 @@ For example, the following script will run a Gaussian job using 4 cores.
    source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=$HOME/g16tmp
+   export GAUSS_SCRDIR=/scratch/space1/${USER}/g16tmp
 
    # Run using input in "test0027.com"
    export OMP_NUM_THREADS=4
