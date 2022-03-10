@@ -60,7 +60,7 @@ Copying data to/from solid-state storage
 
 You can move data to/from the solid-state storage in a number of different ways:
 
-* By copying to/from the Cirrus Lustre file system - either interactively on login nodes or
+* By copying to/from another Cirrus file system - either interactively on login nodes or
   as part of a job submission script
 * By transferring directly to/from an external host via the login nodes
 
@@ -72,16 +72,20 @@ solid state storage is generally the ``cp`` command, e.g.
 
 ::
 
-   cp -r $HOME/data-dir /scratch/space1/t01/auser/
+   cp -r /path/to/data-dir /scratch/space1/t01/auser/
 
-(assuming, of course, that you have setup the ``t01/auser`` subdirectories as described
-above).
+where ``/path/to/data-dir`` shoud be replaced with the path to the data directory you are 
+wanting to copy and assuming, of course, that you have setup the ``t01/auser`` subdirectories 
+as described above).
 
 .. note::
 
-   These commands can also be added to job submission scripts running on the GPU compute
-   nodes to move data as part of the job. If you do this, remember to include the data
-   transfer time in the overall walltime for the job.
+   If you are transferring data from your ``/work`` directory, these commands can also 
+   be added to job submission scripts running on the GPU compute nodes to move data as 
+   part of the job. If you do this, remember to include the data transfer time in the 
+   overall walltime for the job.
+   Data from your ``/home`` directory is not available from the GPU nodes and must 
+   therefore be transferred from a login node.
 
 Remote data transfer
 ~~~~~~~~~~~~~~~~~~~~
