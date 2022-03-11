@@ -50,31 +50,35 @@ Disk quotas
 Disk quotas on Cirrus are managed via
 `SAFE <https://safe.epcc.ed.ac.uk>`__
 
-For live disk usage figures use
+For live disk usage figures on the Ceph ``/home`` file system, use 
+
+For live disk usage figures on the Lustre ``/work`` file system, use
 
 ::
 
-    lfs quota -hu <username> /lustre
+    lfs quota -hu <username> /work
 
-    lfs quota -hg <groupname> /lustre 
+    lfs quota -hg <groupname> /work 
 
 Backup policies
 ---------------
 
-There are currently no backups of data on Cirrus as backing up the whole 
+The ``/home`` file system is fully backed up for disaster recovery purposes. 
+
+The ``/work`` file system is currently not backed up as backing up the whole 
 Lustre file system would adversly affect the performance of write
-access for simulations. The nature of the Lustre parallel file system
+access for simulations. The nature of Lustre parallel file systems
 means that there is data resiliance in the case of failures of individual
 hardware components. However, we strongly advise that you keep copies of
 any critical data on different  systems.
 
-We are currently investigating options for providing backups of critical data.
+The solid-state storage ``/scratch/space1`` file system is not backed up.
 
 File permissions and security
 -----------------------------
 
 By default, each user is a member of the group with the same name as
-[group\_code] in the ``/lustre/home`` directory path, e.g.
+[group\_code] in their ``/home`` and ``/work`` directory paths, e.g.
 ``x01``. This allows the user to share files with only members of that
 group by setting the appropriate group file access permissions. As on
 other UNIX or Linux systems, a user may also be a member of other
@@ -247,7 +251,7 @@ particularly using parallel I/O patterns.
 Lustre
 ~~~~~~
 
-The Cirrus file system use Lustre as a parallel file system
+The Cirrus ``/work`` file system use Lustre as a parallel file system
 technology. The Lustre file system provides POSIX semantics (changes on
 one node are immediately visible on other nodes) and can support very
 high data rates for appropriate I/O patterns.
@@ -255,11 +259,11 @@ high data rates for appropriate I/O patterns.
 Striping
 ~~~~~~~~
 
-One of the main factors leading to the high performance of Lustre file
+One of the main factors leading to the high performance of ``/work`` Lustre file
 systems is the ability to stripe data across multiple Object Storage
 Targets (OSTs) in a round-robin fashion. Files are striped when the data
 is split up in chunks that will then be stored on different OSTs across
-the Lustre system. Striping might improve the I/O performance because it
+the ``/work`` file system. Striping might improve the I/O performance because it
 increases the available bandwidth since multiple processes can read and
 write the same files simultaneously. However striping can also increase
 the overhead. Choosing the right striping configuration is key to obtain
