@@ -2,10 +2,38 @@ Data Transfer Guide
 ===================
 
 This section covers the different ways that you can transfer data 
-to and from Cirrus. In particular, we cover SSH-based methods, 
+to and from Cirrus, and how to transfer backed up data from prior to the 
+March 2022 Cirrus upgrade. In particular, we cover SSH-based methods, 
 e.g., scp, sftp, rsync.
 
 In all cases of data transfer, users should use the Cirrus login nodes.
+
+.. note::
+
+  Prior to the March 2022 Cirrus upgrade,all user date on the ``/lustre/sw``
+  filesystem was archived. Users can access their archived data from the 
+  Cirrus login nodes in the ``/home-archive`` directory. Assuming you are 
+  user ``auser`` from project ``x01``, your pre-rebuild archived data can be
+  found in:
+  
+  ::
+  
+      /home-archive/x01/x01/auser
+  
+  The data in the ``/home-archive`` file system is **read only** meaning that 
+  you will not be able to create, edit, or copy new information to this file 
+  system.
+  
+  To make archived data visible from the compute nodes, you will need to 
+  copy the data from the ``/home-archive`` file system to the ``/work``
+  file system. Assuming again that you are user ``auser`` from project ``x01``
+  and that you were wanting to copy data from ``/home-archive/x01/auser/directory_to_copy``
+  to ``/work/x01/x01/auser/destination_directory``, you would do this by running:
+  
+  ::
+  
+      cp -r /home-archive/x01/auser/directory_to_copy \
+         /work/x01/x01/auser/destination_directory
 
 Before you start
 ----------------
