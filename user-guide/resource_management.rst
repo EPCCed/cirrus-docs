@@ -61,16 +61,14 @@ For live disk usage figures on the Lustre ``/work`` file system, use
 Backup policies
 ---------------
 
-The ``/home`` file system is fully backed up for disaster recovery purposes. 
+The ``/home`` file system is not backed up.
 
-The ``/work`` file system is currently not backed up as backing up the whole 
-Lustre file system would adversly affect the performance of write
-access for simulations. The nature of Lustre parallel file systems
-means that there is data resiliance in the case of failures of individual
-hardware components. However, we strongly advise that you keep copies of
-any critical data on different  systems.
+The ``/work`` file system is not backed up.
 
 The solid-state storage ``/scratch/space1`` file system is not backed up.
+
+We strongly advise that you keep copies of any critical data on on an
+alternative system that is fully backed up.
 
 Sharing data with other Cirrus users
 ------------------------------------
