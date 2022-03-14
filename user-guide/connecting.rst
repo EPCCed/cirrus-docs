@@ -80,7 +80,7 @@ logging onto Cirrus (see the `SAFE Documentation <https://epcced.github.io/safe-
 for more details on requesting accounts and picking up passwords).
 
 Changing passwords
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 You may now change your password on the Cirrus machine itself
 using the *passwd* command or when you are prompted the first time you login.
@@ -99,7 +99,7 @@ you should use the SAFE to request a new one-shot password.
   Your password has now been changed
 
 Password Expiration
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Passwords on Cirrus will expire after two years. When this happens, you will be required to 
 update your password. This will be done by following the same steps as above.

@@ -48,17 +48,32 @@ Versions of the SDK are available via the module system.
 ::
 
   $ module avail nvidia/nvhpc
-  ---------------------------- /lustre/sw/modulefiles -------------------------
-  nvidia/nvhpc-byo-compiler/21.2  nvidia/nvhpc-nompi/21.2  nvidia/nvhpc/21.2(default)  nvidia/nvhpc/21.9  
-  nvidia/nvhpc-byo-compiler/21.9  nvidia/nvhpc-nompi/21.9  nvidia/nvhpc/21.2-gnu 
 
-In the first instance, the default ``nvhpc`` module (version 21.2) is recommended.
+NVIDIA encourage the use of the latest available version, unless there are
+particular reasons to use earlier versions. The default version is therefore
+the latest module version present on the system.
 
-Each release of the NVIDIA HPC SDK includes several different versions of the CUDA toolchain.
-For example, the ``nvidia/nvhpc/21.2`` module comes with CUDA 10.2, 11.0 and 11.2. Of course,
-only one of these CUDA toolchains can be active at any one time and for ``nvhpc/21.2`` this
-is CUDA 11.2, which is the version of CUDA compatible with the underlying GPU kernel-mode
-driver (460.73.01).
+Each release of the NVIDIA HPC SDK may include several different versions of
+the CUDA toolchain. For example, the ``nvidia/nvhpc/21.2`` module comes
+with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA toolchains can be
+active at any one time and for ``nvhpc/21.2`` this is CUDA 11.2.
+
+Here is a list of available HPC SDK versions, and the corresponding
+version of CUDA:
+
+.. list-table::
+   :header-rows: 1
+
+   * - Module
+     - Supported CUDA Version
+   * - ``nvidia/nvhpc/22.2``
+     - CUDA 11.6
+   * - ``nvidia/nvhpc/21.9``
+     - CUDA 11.4
+   * - ``nvidia/nvhpc/21.2``
+     - CUDA 11.2
+
+To load the latest NVIDIA HPC SDK use
 
 ::
 
