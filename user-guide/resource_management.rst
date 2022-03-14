@@ -158,6 +158,9 @@ setting only allows the user access to any file or directory created.
 The user can then selectively enable "group" and/or "other" access to
 particular files or directories if required.
 
+File types
+----------
+
 ASCII (or formatted) files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -306,8 +309,11 @@ Achieving efficient I/O
 -----------------------
 
 This section provides information on getting the best performance out of
-the parallel file system on Cirrus when writing data,
+the ``/work`` parallel file system on Cirrus when writing data,
 particularly using parallel I/O patterns.
+
+You may find that using the :doc:`/user-guide/solidstate` gives better
+performance than ``/work`` for some applications and IO patterns.
 
 Lustre
 ~~~~~~
