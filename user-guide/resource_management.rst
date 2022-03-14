@@ -50,36 +50,101 @@ Disk quotas
 Disk quotas on Cirrus are managed via
 `SAFE <https://safe.epcc.ed.ac.uk>`__
 
-For live disk usage figures use
+For live disk usage figures on the Lustre ``/work`` file system, use
 
 ::
 
-    lfs quota -hu <username> /lustre
+    lfs quota -hu <username> /work
 
-    lfs quota -hg <groupname> /lustre 
+    lfs quota -hg <groupname> /work 
 
 Backup policies
 ---------------
 
-There are currently no backups of data on Cirrus as backing up the whole 
-Lustre file system would adversly affect the performance of write
-access for simulations. The nature of the Lustre parallel file system
-means that there is data resiliance in the case of failures of individual
-hardware components. However, we strongly advise that you keep copies of
-any critical data on different  systems.
+The ``/home`` file system is not backed up.
 
-We are currently investigating options for providing backups of critical data.
+The ``/work`` file system is not backed up.
+
+The solid-state storage ``/scratch/space1`` file system is not backed up.
+
+We strongly advise that you keep copies of any critical data on on an
+alternative system that is fully backed up.
+
+Sharing data with other Cirrus users
+------------------------------------
+
+How you share data with other Cirrus users depends on whether or not they belong 
+to the same project as you. Each project has two shared folders that can be used 
+for sharing data.
+
+Sharing data with Cirrus users in your project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each project has an inner shared folder on the ``/home`` and ``/work`` 
+filesystems:
+
+::
+
+    /home/[project code]/[project code]/shared
+
+    /work/[project code]/[project code]/shared
+
+This folder has read/write permissions for all project members. You can place any 
+data you wish to share with other project members in this directory. For example, 
+if your project code is ``x01`` the inner shared folder on the ``/work`` file system 
+would be located at ``/work/x01/x01/shared``.
+
+Sharing data with all Cirrus users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each project also has an outer shared folder on the ``/home`` and ``/work`` 
+filesystems:
+
+::
+
+    /home/[project code]/shared
+
+    /work/[project code]/shared
+
+It is writable by all project members and readable by any user on the system. You 
+can place any data you wish to share with other Cirrus users who are not members 
+of your project in this directory. For example, if your project code is ``x01`` the 
+outer shared folder on the ``/work`` file system would be located at 
+``/work/x01/shared``.
+
 
 File permissions and security
 -----------------------------
 
-By default, each user is a member of the group with the same name as
-[group\_code] in the ``/lustre/home`` directory path, e.g.
-``x01``. This allows the user to share files with only members of that
-group by setting the appropriate group file access permissions. As on
-other UNIX or Linux systems, a user may also be a member of other
-groups. The list of groups that a user is part of can be determined by
-running the ``groups`` command.
+You should check the permissions of any files that you place in the shared area, 
+especially if those files were created in your own Cirrus account. Files of the 
+latter type are likely to be readable by you only.
+
+The chmod command below shows how to make sure that a file placed in the outer shared 
+folder is also readable by all Cirrus users.
+
+::
+
+    chmod a+r /work/x01/shared/your-shared-file.txt
+
+Similarly, for the inner shared folder, chmod can be called such that read permission 
+is granted to all users within the x01 project.
+
+::
+
+    chmod g+r /work/x01/x01/shared/your-shared-file.txt
+
+If you're sharing a set of files stored within a folder hierarchy the chmod is slightly 
+more complicated.
+
+::
+
+    chmod -R a+Xr /work/x01/shared/my-shared-folder
+    chmod -R g+Xr /work/x01/x01/shared/my-shared-folder
+
+The ``-R`` option ensures that the read permission is enabled recursively and the 
+``+X`` guarantees that the user(s) you're sharing the folder with can access the 
+subdirectories below my-shared-folder.
 
 Default Unix file permissions can be specified by the ``umask`` command.
 The default umask value on Cirrus is 22, which provides "group" and
@@ -92,6 +157,9 @@ the command ``umask 077`` to their ``$HOME/.profile`` file. This umask
 setting only allows the user access to any file or directory created.
 The user can then selectively enable "group" and/or "other" access to
 particular files or directories if required.
+
+File types
+----------
 
 ASCII (or formatted) files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -241,13 +309,16 @@ Achieving efficient I/O
 -----------------------
 
 This section provides information on getting the best performance out of
-the parallel file system on Cirrus when writing data,
+the ``/work`` parallel file system on Cirrus when writing data,
 particularly using parallel I/O patterns.
+
+You may find that using the :doc:`/user-guide/solidstate` gives better
+performance than ``/work`` for some applications and IO patterns.
 
 Lustre
 ~~~~~~
 
-The Cirrus file system use Lustre as a parallel file system
+The Cirrus ``/work`` file system use Lustre as a parallel file system
 technology. The Lustre file system provides POSIX semantics (changes on
 one node are immediately visible on other nodes) and can support very
 high data rates for appropriate I/O patterns.
@@ -255,11 +326,11 @@ high data rates for appropriate I/O patterns.
 Striping
 ~~~~~~~~
 
-One of the main factors leading to the high performance of Lustre file
+One of the main factors leading to the high performance of ``/work`` Lustre file
 systems is the ability to stripe data across multiple Object Storage
 Targets (OSTs) in a round-robin fashion. Files are striped when the data
 is split up in chunks that will then be stored on different OSTs across
-the Lustre system. Striping might improve the I/O performance because it
+the ``/work`` file system. Striping might improve the I/O performance because it
 increases the available bandwidth since multiple processes can read and
 write the same files simultaneously. However striping can also increase
 the overhead. Choosing the right striping configuration is key to obtain
