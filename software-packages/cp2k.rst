@@ -23,10 +23,6 @@ Using CP2K on Cirrus
 CP2K is available through the ``cp2k`` module. MPI only ``cp2k.popt`` and MPI/OpenMP Hybrid
 ``cp2k.psmp`` binaries are available.
 
-.. **IMPORTANT:** Running cp2k in hybrid OpenMP/MPI mode requires some non-standard steps. Please see
-.. the `Running CP2K in OpenMP/MPI Hybrid Mode` section below for further details.
-
-
 
 Running parallel CP2K jobs - MPI Only
 -------------------------------------
@@ -80,7 +76,6 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    #SBATCH --time=0:20:0
    #SBATCH --exclusive
    #SBATCH --nodes=8
-   #SBATCH --tasks=144
    #SBATCH --tasks-per-node=18
    #SBATCH --cpus-per-task=2
 
@@ -98,4 +93,4 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
    export OMP_NUM_THREADS=2
 
    # Run using input in test.inp
-   srun --cpu-bind=cores cp2k.psmp -i test.inp
+   srun cp2k.psmp -i test.inp
