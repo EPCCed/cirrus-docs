@@ -1,19 +1,14 @@
 Solid state storage
 ===================
 
-In addition to the Lustre file-system, the Cirrus login and GPU compute nodes
-(``gpu-cascade`` and ``gpu-skylake`` partitions) have access to a shared, high-performance,
-solid state storage system (also known as RPOOL). This storage system is network mounted and
-shared across the login nodes and GPU compute nodes in a similar way to the normal,
-spinning-disk Lustre file system but has different performance characteristics.
+In addition to the Lustre file system, the Cirrus login and compute nodes have access to a
+shared, high-performance, solid state storage system (also known as RPOOL). This storage
+system is network mounted and shared across the login nodes and GPU compute nodes in a
+similar way to the normal, spinning-disk Lustre file system but has different performanc
+characteristics.
 
 The solid state storage has a maximum useable capacity of 256 TB which is shared between
 all users.
-
-.. note::
-
-   The shared, solid-state storage is not available on the CPU compute nodes (``standard``
-   partition).
 
 Backups, quotas and data longevity
 ----------------------------------
@@ -35,7 +30,7 @@ Accessing the solid-state storage
 ---------------------------------
 
 You access the solid-state storage at ``/scratch/space1`` on both the login nodes and
-on the GPU compute nodes (``gpu-cascade`` and ``gpu-skylake`` partitions).
+on the compute nodes.
 
 Everybody has access to be able to create directories and add data so we suggest
 that you create a directory for your project and/or user to avoid clashes with files
@@ -67,24 +62,25 @@ You can move data to/from the solid-state storage in a number of different ways:
 Local data transfer
 ~~~~~~~~~~~~~~~~~~~
 
-The most efficient tool for copying to/from the Cirrus Lustre file system to the 
-solid state storage is generally the ``cp`` command, e.g. 
+The most efficient tool for copying to/from the Cirrus file systems (`/home`, `/work`) to
+the solid state storage is generally the ``cp`` command, e.g. 
 
 ::
 
    cp -r /path/to/data-dir /scratch/space1/t01/auser/
 
-where ``/path/to/data-dir`` shoud be replaced with the path to the data directory you are 
+where ``/path/to/data-dir`` should be replaced with the path to the data directory you are 
 wanting to copy and assuming, of course, that you have setup the ``t01/auser`` subdirectories 
 as described above).
 
 .. note::
 
    If you are transferring data from your ``/work`` directory, these commands can also 
-   be added to job submission scripts running on the GPU compute nodes to move data as 
+   be added to job submission scripts running on the compute nodes to move data as 
    part of the job. If you do this, remember to include the data transfer time in the 
    overall walltime for the job.
-   Data from your ``/home`` directory is not available from the GPU nodes and must 
+   
+   Data from your ``/home`` directory is not available from the compute nodes and must 
    therefore be transferred from a login node.
 
 Remote data transfer
