@@ -18,7 +18,7 @@ In all cases of data transfer, users should use the Cirrus login nodes.
   
   ::
   
-      /home-archive/x01/x01/auser
+      /home-archive/x01/auser
   
   The data in the ``/home-archive`` file system is **read only** meaning that 
   you will not be able to create, edit, or copy new information to this file 
@@ -34,6 +34,9 @@ In all cases of data transfer, users should use the Cirrus login nodes.
   
       cp -r /home-archive/x01/auser/directory_to_copy \
          /work/x01/x01/auser/destination_directory
+         
+  Note that the project code appears once in the path for the old home archive and 
+  twice in the path on the new /work file system.
 
 Before you start
 ----------------
