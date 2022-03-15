@@ -13,16 +13,16 @@ Cirrus file systems and storage
 The Cirrus service, like many HPC systems, has a complex structure. There are
 a number of different data storage types available to users:
 
- - Home file system
- - Work file systems
- - Solid state storage
+- Home file system
+- Work file systems
+- Solid state storage
 
 Each type of storage has different characteristics and policies, and is suitable for different types of use.
 
 There are also two different types of node available to users:
 
- - Login nodes
- - Compute nodes
+- Login nodes
+- Compute nodes
 
 Each type of node sees a different combination of the storage types. The following table shows which storage
 options are avalable on different node types:
@@ -77,9 +77,9 @@ There are currently no backups of any data on the work file system.
 
 Ideally, the work file system should only contain data that is:
 
- - actively in use;
- - recently generated and in the process of being saved elsewhere; or
- - being made ready for up-coming work.
+- actively in use;
+- recently generated and in the process of being saved elsewhere; or
+- being made ready for up-coming work.
 
 In practice it may be convenient to keep copies of datasets on the work file system that you know will be needed at a
 later date. However, make sure that important data is always backed up elsewhere and that your work would not be
@@ -96,9 +96,9 @@ can split this quota up between groups of users if they wish.
 You can view any work file system quotas that apply to your account by logging into SAFE and navigating to the page
 for your Cirrus login account.
 
- - `Log into SAFE <https://safe.epcc.ed.ac.uk>`_
- - Use the "Login accounts" menu and select your Cirrus login account
- - The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`_
+2. Use the "Login accounts" menu and select your Cirrus login account
+3. The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
   quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
   quota.)
   
