@@ -1,50 +1,190 @@
-Data Transfer Guide
-===================
+Data Management and Transfer
+============================
 
-This section covers the different ways that you can transfer data 
-to and from Cirrus, and how to transfer backed up data from prior to the 
-March 2022 Cirrus upgrade. In particular, we cover SSH-based methods, 
-e.g., scp, sftp, rsync.
+This section covers the storage and file systems available on the system; the
+different ways that you can transfer data to and from Cirrus; and how to
+transfer backed up data from prior to the March 2022 Cirrus upgrade.
 
 In all cases of data transfer, users should use the Cirrus login nodes.
 
-.. note::
+Cirrus file systems and storage
+-------------------------------
 
-  Prior to the March 2022 Cirrus upgrade,all user date on the ``/lustre/sw``
-  filesystem was archived. Users can access their archived data from the 
-  Cirrus login nodes in the ``/home-archive`` directory. Assuming you are 
-  user ``auser`` from project ``x01``, your pre-rebuild archived data can be
-  found in:
+The Cirrus service, like many HPC systems, has a complex structure. There are
+a number of different data storage types available to users:
+
+* Home file system
+* Work file systems
+* Solid state storage
+
+Each type of storage has different characteristics and policies, and is suitable for different types of use.
+
+There are also two different types of node available to users:
+
+* Login nodes
+* Compute nodes
+
+Each type of node sees a different combination of the storage types. The following table shows which storage
+options are avalable on different node types:
+
++-------------+-------------+---------------+-------------+
+| Storage     | Login nodes | Compute nodes | Notes       |
++-------------+-------------+---------------+-------------+
+| Home        | yes         | no            | No backup   |
++-------------+-------------+---------------+-------------+
+| Work        | yes         | yes           | No backup   |
++-------------+-------------+---------------+-------------+
+| Solid state | yes         | yes           | No backup   |
++-------------+-------------+---------------+-------------+
+
+Home file system
+~~~~~~~~~~~~~~~~
+
+Every project has an allocation on the home file system and your project's space can always be accessed via the
+path ``/home/[project-code]``. The home file system is approximately 1.5 PB in size and is implemented using the
+Ceph technology. This means that this storage is not particularly high performance but are well suited to standard
+operations like compilation and file editing. This file systems is visible from the Cirrus login nodes.
+
+There are currently no backups of any data on the home file system.
+
+Quotas on home file system
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All projects are assigned a quota on the home file system. The project PI or manager can split this quota up between
+groups of users if they wish.
+
+You can view any home file system quotas that apply to your account by logging into SAFE and navigating to the page
+for your Cirrus login account.
+
+* [Log into SAFE](https://safe.epcc.ed.ac.uk)
+* Use the "Login accounts" menu and select your Cirrus login account
+* The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
+  quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
+  quota.)
+
+Quota and usage data on SAFE is updated twice daily so may not be exactly up to date with the situation on the
+system itself.
+
+Work file system
+~~~~~~~~~~~~~~~~
+
+Every project has an allocation on the work file system and your project's space can always be accessed via the
+path ``/work/[project-code]``. The work file system is approximately 400 TB in size and is implemented using the
+Lustre parallel file system technology. They are designed to support data in large files. The performance for data
+stored in large numbers of small files is probably not going to be as good.
+
+There are currently no backups of any data on the work file system.
+
+Ideally, the work file system should only contain data that is:
+
+* actively in use;
+* recently generated and in the process of being saved elsewhere; or
+* being made ready for up-coming work.
+
+In practice it may be convenient to keep copies of datasets on the work file system that you know will be needed at a
+later date. However, make sure that important data is always backed up elsewhere and that your work would not be
+significantly impacted if the data on the work file system was lost.
+
+If you have data on the work file system that you are not going to need in the future please delete it.
+
+Quotas on the work file system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As for the home file system, all projects are assigned a quota on the work file system. The project PI or manager
+can split this quota up between groups of users if they wish.
+
+You can view any work file system quotas that apply to your account by logging into SAFE and navigating to the page
+for your Cirrus login account.
+
+* [Log into SAFE](https://safe.epcc.ed.ac.uk)
+* Use the "Login accounts" menu and select your Cirrus login account
+* The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
+  quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
+  quota.)
   
-  ::
-  
-      /home-archive/x01/auser
-  
-  The data in the ``/home-archive`` file system is **read only** meaning that 
-  you will not be able to create, edit, or copy new information to this file 
-  system.
-  
-  To make archived data visible from the compute nodes, you will need to 
-  copy the data from the ``/home-archive`` file system to the ``/work``
-  file system. Assuming again that you are user ``auser`` from project ``x01``
-  and that you were wanting to copy data from ``/home-archive/x01/auser/directory_to_copy``
-  to ``/work/x01/x01/auser/destination_directory``, you would do this by running:
-  
-  ::
-  
-      cp -r /home-archive/x01/auser/directory_to_copy \
-         /work/x01/x01/auser/destination_directory
-         
-  Note that the project code appears once in the path for the old home archive and 
-  twice in the path on the new /work file system.
+
+Quota and usage data on SAFE is updated twice daily so may not be exactly up to date with the situation on the system
+itself.
+
+You can also examine up to date quotas and usage on the Cirrus system itself using the ``lfs quota`` command. To do this:
+
+Change directory to the work directory where you want to check the quota. For example, if I wanted to check the quota
+for user ``auser`` in project ``t01`` then I would:
+
+:: 
+
+  [auser@cirrus-login1 auser]$ cd /work/t01/t01/auser
+
+  [auser@cirrus-login1 auser]$ lfs quota -hu auser .
+  Disk quotas for usr auser (uid 68826):
+       Filesystem    used   quota   limit   grace   files   quota   limit   grace
+                .  5.915G      0k      0k       -   51652       0       0       -
+  uid 68826 is using default block quota setting
+  uid 68826 is using default file quota setting
+
+the quota and limit of 0k here indicate that no user quota is set for this user.
+
+To check your project (group) quota, you would use the command:
+
+::
+
+   [auser@cirrus-login1 auser]$ lfs quota -hg t01 .
+   Disk quotas for grp t01 (gid 37733):
+        Filesystem    used   quota   limit   grace   files   quota   limit   grace
+              .  958.3G      0k  13.57T       - 1427052       0       0       -
+   gid 37733 is using default file quota setting
+   
+the limit of ``13.57T`` indicates the quota for the group.
+
+Solid state storage
+~~~~~~~~~~~~~~~~~~~
+
+More information on using the solid state storage can be found in the
+:doc:`/user-guide/solidstate` section of the user guide.
+
+The solid state storage is not backed up.
+
+Accessing Cirrus data from before March 2022
+--------------------------------------------
+
+Prior to the March 2022 Cirrus upgrade,all user date on the ``/lustre/sw``
+filesystem was archived. Users can access their archived data from the 
+Cirrus login nodes in the ``/home-archive`` directory. Assuming you are 
+user ``auser`` from project ``x01``, your pre-rebuild archived data can be
+found in:
+
+::
+
+    /home-archive/x01/auser
+
+The data in the ``/home-archive`` file system is **read only** meaning that 
+you will not be able to create, edit, or copy new information to this file 
+system.
+
+To make archived data visible from the compute nodes, you will need to 
+copy the data from the ``/home-archive`` file system to the ``/work``
+file system. Assuming again that you are user ``auser`` from project ``x01``
+and that you were wanting to copy data from ``/home-archive/x01/auser/directory_to_copy``
+to ``/work/x01/x01/auser/destination_directory``, you would do this by running:
+
+::
+
+    cp -r /home-archive/x01/auser/directory_to_copy \
+       /work/x01/x01/auser/destination_directory
+
+Note that the project code appears once in the path for the old home archive and 
+twice in the path on the new /work file system.
+
+Data transfer
+-------------
 
 Before you start
-----------------
+~~~~~~~~~~~~~~~~
 
 Read Harry Mangalam's guide on `How to transfer large amounts of data via network <https://hjmangalam.wordpress.com/2009/09/14/how-to-transfer-large-amounts-of-data-via-network/>`_.  This tells you *all* you want to know about transferring data.
 
 Data Transfer via SSH
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 The easiest way of transferring data to/from Cirrus is to use one of
 the standard programs based on the SSH protocol such as ``scp``,
