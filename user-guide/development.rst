@@ -123,94 +123,94 @@ will change to version 19:
 
     module swap intel-compilers-18 intel-compilers-19
 
-Modules provided by Spack
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Modules provided by Spack
+.. ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of modules available to users should cover most common use cases on Cirrus.
+.. .. note:: The majority of users will not need to use the modules provided by Spack. The standard set of modules available to users should cover most common use cases on Cirrus.
 
-The Spack package manager provides many more modules (particularly for libraries and 
-dependencies) than are visible by default to users. If you wish to see or use the
-modules provided by Spack, then you must first load the ``spack`` module:
+.. The Spack package manager provides many more modules (particularly for libraries and 
+.. dependencies) than are visible by default to users. If you wish to see or use the
+.. modules provided by Spack, then you must first load the ``spack`` module:
 
-::
+.. ::
 
-   module load spack
+..    module load spack
 
-Once this module is loaded, the ``module avail`` command will list the additional
-modules that have been installed using Spack.
+.. Once this module is loaded, the ``module avail`` command will list the additional
+.. modules that have been installed using Spack.
 
-Care must be taken when using modules provided by Spack as they behave differently
-from standard Linux modules.
+.. Care must be taken when using modules provided by Spack as they behave differently
+.. from standard Linux modules.
 
-The `Spack <http://spack.readthedocs.io>`__ package management tool is used
-to manage much of the software and libraries installed on Cirrus. Spack allows
-us to automatically resolve dependencies and have multiple versions of tested
-software installed simultaneously without them interfering with each other.
+.. The `Spack <http://spack.readthedocs.io>`__ package management tool is used
+.. to manage much of the software and libraries installed on Cirrus. Spack allows
+.. us to automatically resolve dependencies and have multiple versions of tested
+.. software installed simultaneously without them interfering with each other.
 
-To achieve this, Spack makes use of RPATH to hardcode the paths of dependencies
-into libraries. This means that when you load a module for a particular library
-you do not need to load any further modules for dependencies of that library.
+.. To achieve this, Spack makes use of RPATH to hardcode the paths of dependencies
+.. into libraries. This means that when you load a module for a particular library
+.. you do not need to load any further modules for dependencies of that library.
 
-For example, the *boost* toolkit depends on the MPI, zlib and bzip2 libraries:
+.. For example, the *boost* toolkit depends on the MPI, zlib and bzip2 libraries:
 
-::
+.. ::
 
-    boost@1.64.0
-        ^bzip2@1.0.6
-        ^mpich@2.14
-        ^zlib@1.2.10
+..     boost@1.64.0
+..         ^bzip2@1.0.6
+..         ^mpich@2.14
+..         ^zlib@1.2.10
 
-Spack arranges things so that if you load the boost module:
+.. Spack arranges things so that if you load the boost module:
 
-::
+.. ::
 
-    module load boost-1.64.0-gcc-6.2.0-pftxg46
+..     module load boost-1.64.0-gcc-6.2.0-pftxg46
 
-then you do not also need to load the bzip2, mpt and zlib modules.
+.. then you do not also need to load the bzip2, mpt and zlib modules.
 
-This, however, can lead to behaviour that is unexpected for modules. For example,
-on Cirrus there are two versions of zlib available: 1.2.8 and 1.2.10. You may
-imagine that you can use boost with zlib 1.2.8 with the following commands:
+.. This, however, can lead to behaviour that is unexpected for modules. For example,
+.. on Cirrus there are two versions of zlib available: 1.2.8 and 1.2.10. You may
+.. imagine that you can use boost with zlib 1.2.8 with the following commands:
 
-::
+.. ::
 
-    module load zlib-1.2.8-gcc-6.2.0-epathtp
-    module load boost-1.64.0-gcc-6.2.0-pftxg46
+..     module load zlib-1.2.8-gcc-6.2.0-epathtp
+..     module load boost-1.64.0-gcc-6.2.0-pftxg46
 
-**but this will not work**. boost will **still** use zlib 1.2.10 as the path
-to this is hrdcoded into boost itself via RPATH. If you wish to use the 
-older version of zlib then you must load it and then compile boost yourself.
+.. **but this will not work**. boost will **still** use zlib 1.2.10 as the path
+.. to this is hrdcoded into boost itself via RPATH. If you wish to use the 
+.. older version of zlib then you must load it and then compile boost yourself.
 
-If you wish to see what versions of libraries are hardcoded into a particular
-Spack module then you must use Spack commands, e.g.
+.. If you wish to see what versions of libraries are hardcoded into a particular
+.. Spack module then you must use Spack commands, e.g.
 
-::
+.. ::
 
-    [auser@cirrus-login0 ~]$ module load spack
-    [auser@cirrus-login0 ~]$ module avail boost
+..     [auser@cirrus-login0 ~]$ module load spack
+..     [auser@cirrus-login0 ~]$ module avail boost
 
-    ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
-    boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
-
-
-    [auser@cirrus-login0 ~]$ spack find -dl boost
-    ==> 2 installed packages.
-    -- linux-centos7-x86_64 / gcc@6.2.0 -----------------------------
-    pftxg46    boost@1.64.0
-    545wezu        ^bzip2@1.0.6
-    kskvysh        ^mpich@2.14
-    4og3my2        ^zlib@1.2.10
+..     ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
+..     boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
 
 
-    -- linux-centos7-x86_64 / intel@17.0.2 --------------------------
-    fl25xqn    boost@1.63.0
-    nq2yt4x        ^bzip2@1.0.6
-    jbjvxs7        ^zlib@1.2.10
+..     [auser@cirrus-login0 ~]$ spack find -dl boost
+..     ==> 2 installed packages.
+..     -- linux-centos7-x86_64 / gcc@6.2.0 -----------------------------
+..     pftxg46    boost@1.64.0
+..     545wezu        ^bzip2@1.0.6
+..     kskvysh        ^mpich@2.14
+..     4og3my2        ^zlib@1.2.10
 
-This shows their are two boost modules installed (one for the Intel compilers
-and one for the GCC compilers), they both depend on zlib 1.0.6 and bzip2 1.2.10
-and the GCC version also depends on MPI 2.14 (HPE MPT 2.14). The paths for these
-dependencies are hardcoded into the boost RPATH.
+
+..     -- linux-centos7-x86_64 / intel@17.0.2 --------------------------
+..     fl25xqn    boost@1.63.0
+..     nq2yt4x        ^bzip2@1.0.6
+..     jbjvxs7        ^zlib@1.2.10
+
+.. This shows their are two boost modules installed (one for the Intel compilers
+.. and one for the GCC compilers), they both depend on zlib 1.0.6 and bzip2 1.2.10
+.. and the GCC version also depends on MPI 2.14 (HPE MPT 2.14). The paths for these
+.. dependencies are hardcoded into the boost RPATH.
 
 
 Available Compiler Suites
