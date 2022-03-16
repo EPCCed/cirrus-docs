@@ -60,12 +60,14 @@ If you want more info on any of the modules, you can use the
 
     [user@cirrus-login0 ~]$ module help mpt
 
-    ----------- Module Specific Help for 'mpt/2.14' -------------------
+    -------------------------------------------------------------------
+    Module Specific Help for /usr/share/Modules/modulefiles/mpt/2.25:
 
     The HPE Message Passing Toolkit (MPT) is an optimized MPI
     implementation for HPE systems and clusters.  See the
     MPI(1) man page and the MPT User's Guide for more
     information.
+    -------------------------------------------------------------------
 
 The simple ``module list`` command will give the names of the modules
 and their versions you have presently loaded in your envionment, e.g.:
@@ -74,10 +76,11 @@ and their versions you have presently loaded in your envionment, e.g.:
 
     [user@cirrus-login0 ~]$ module list
     Currently Loaded Modulefiles:
-    1) /lustre/sw/modulefiles/epcc/setup-env   5) intel-fc-18/18.0.5.274        
-    2) intel-license                           6) intel-compilers-18/18.05.274  
-    3) gcc/6.3.0(default)                      7) mpt/2.22                      
-    4) intel-cc-18/18.0.5.274                 
+    1) git/2.35.1(default)                      6) gcc/8.2.0(default)
+    2) singularity/3.7.2(default)               7) intel-cc-18/18.0.5.274
+    3) epcc/utils                               8) intel-fc-18/18.0.5.274
+    4) /scratch/sw/modulefiles/epcc/setup-env   9) intel-compilers-18/18.05.274
+    5) intel-license                           10) mpt/2.25
 
 
 Loading, unloading and swapping modules
@@ -106,108 +109,108 @@ want to clean up, ``module remove`` will remove a loaded module:
 
 (or ``module rm intel-compilers-18`` or
 ``module unload intel-compilers-18``) will unload what ever version of
-intel-compilers-17 (even if it is not the default) you might have
+intel-compilers-18 (even if it is not the default) you might have
 loaded. There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
 version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using 
 "module swap oldmodule newmodule". 
 
-Suppose you have loaded version intel-compilers-18, the following command
-will change to version version 19:
+Suppose you have loaded version 18 of the Intel compilers; the following command
+will change to version 19:
 
 ::
 
     module swap intel-compilers-18 intel-compilers-19
 
-Modules provided by Spack
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Modules provided by Spack
+.. ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of modules available to users should cover most common use cases on Cirrus.
+.. .. note:: The majority of users will not need to use the modules provided by Spack. The standard set of modules available to users should cover most common use cases on Cirrus.
 
-The Spack package manager provides many more modules (particularly for libraries and 
-dependencies) than are visible by default to users. If you wish to see or use the
-modules provided by Spack, then you must first load the ``spack`` module:
+.. The Spack package manager provides many more modules (particularly for libraries and 
+.. dependencies) than are visible by default to users. If you wish to see or use the
+.. modules provided by Spack, then you must first load the ``spack`` module:
 
-::
+.. ::
 
-   module load spack
+..    module load spack
 
-Once this module is loaded, the ``module avail`` command will list the additional
-modules that have been installed using Spack.
+.. Once this module is loaded, the ``module avail`` command will list the additional
+.. modules that have been installed using Spack.
 
-Care must be taken when using modules provided by Spack as they behave differently
-from standard Linux modules.
+.. Care must be taken when using modules provided by Spack as they behave differently
+.. from standard Linux modules.
 
-The `Spack <http://spack.readthedocs.io>`__ package management tool is used
-to manage much of the software and libraries installed on Cirrus. Spack allows
-us to automatically resolve dependencies and have multiple versions of tested
-software installed simultaneously without them interfering with each other.
+.. The `Spack <http://spack.readthedocs.io>`__ package management tool is used
+.. to manage much of the software and libraries installed on Cirrus. Spack allows
+.. us to automatically resolve dependencies and have multiple versions of tested
+.. software installed simultaneously without them interfering with each other.
 
-To achieve this, Spack makes use of RPATH to hardcode the paths of dependencies
-into libraries. This means that when you load a module for a particular library
-you do not need to load any further modules for dependencies of that library.
+.. To achieve this, Spack makes use of RPATH to hardcode the paths of dependencies
+.. into libraries. This means that when you load a module for a particular library
+.. you do not need to load any further modules for dependencies of that library.
 
-For example, the *boost* toolkit depends on the MPI, zlib and bzip2 libraries:
+.. For example, the *boost* toolkit depends on the MPI, zlib and bzip2 libraries:
 
-::
+.. ::
 
-    boost@1.64.0
-        ^bzip2@1.0.6
-        ^mpich@2.14
-        ^zlib@1.2.10
+..     boost@1.64.0
+..         ^bzip2@1.0.6
+..         ^mpich@2.14
+..         ^zlib@1.2.10
 
-Spack arranges things so that if you load the boost module:
+.. Spack arranges things so that if you load the boost module:
 
-::
+.. ::
 
-    module load boost-1.64.0-gcc-6.2.0-pftxg46
+..     module load boost-1.64.0-gcc-6.2.0-pftxg46
 
-then you do not also need to load the bzip2, mpt and zlib modules.
+.. then you do not also need to load the bzip2, mpt and zlib modules.
 
-This, however, can lead to behaviour that is unexpected for modules. For example,
-on Cirrus there are two versions of zlib available: 1.2.8 and 1.2.10. You may
-imagine that you can use boost with zlib 1.2.8 with the following commands:
+.. This, however, can lead to behaviour that is unexpected for modules. For example,
+.. on Cirrus there are two versions of zlib available: 1.2.8 and 1.2.10. You may
+.. imagine that you can use boost with zlib 1.2.8 with the following commands:
 
-::
+.. ::
 
-    module load zlib-1.2.8-gcc-6.2.0-epathtp
-    module load boost-1.64.0-gcc-6.2.0-pftxg46
+..     module load zlib-1.2.8-gcc-6.2.0-epathtp
+..     module load boost-1.64.0-gcc-6.2.0-pftxg46
 
-**but this will not work**. boost will **still** use zlib 1.2.10 as the path
-to this is hrdcoded into boost itself via RPATH. If you wish to use the 
-older version of zlib then you must load it and then compile boost yourself.
+.. **but this will not work**. boost will **still** use zlib 1.2.10 as the path
+.. to this is hrdcoded into boost itself via RPATH. If you wish to use the 
+.. older version of zlib then you must load it and then compile boost yourself.
 
-If you wish to see what versions of libraries are hardcoded into a particular
-Spack module then you must use Spack commands, e.g.
+.. If you wish to see what versions of libraries are hardcoded into a particular
+.. Spack module then you must use Spack commands, e.g.
 
-::
+.. ::
 
-    [auser@cirrus-login0 ~]$ module load spack
-    [auser@cirrus-login0 ~]$ module avail boost
+..     [auser@cirrus-login0 ~]$ module load spack
+..     [auser@cirrus-login0 ~]$ module avail boost
 
-    ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
-    boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
-
-
-    [auser@cirrus-login0 ~]$ spack find -dl boost
-    ==> 2 installed packages.
-    -- linux-centos7-x86_64 / gcc@6.2.0 -----------------------------
-    pftxg46    boost@1.64.0
-    545wezu        ^bzip2@1.0.6
-    kskvysh        ^mpich@2.14
-    4og3my2        ^zlib@1.2.10
+..     ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
+..     boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
 
 
-    -- linux-centos7-x86_64 / intel@17.0.2 --------------------------
-    fl25xqn    boost@1.63.0
-    nq2yt4x        ^bzip2@1.0.6
-    jbjvxs7        ^zlib@1.2.10
+..     [auser@cirrus-login0 ~]$ spack find -dl boost
+..     ==> 2 installed packages.
+..     -- linux-centos7-x86_64 / gcc@6.2.0 -----------------------------
+..     pftxg46    boost@1.64.0
+..     545wezu        ^bzip2@1.0.6
+..     kskvysh        ^mpich@2.14
+..     4og3my2        ^zlib@1.2.10
 
-This shows their are two boost modules installed (one for the Intel compilers
-and one for the GCC compilers), they both depend on zlib 1.0.6 and bzip2 1.2.10
-and the GCC version also depends on MPI 2.14 (HPE MPT 2.14). The paths for these
-dependencies are hardocoded into the boost RPATH.
+
+..     -- linux-centos7-x86_64 / intel@17.0.2 --------------------------
+..     fl25xqn    boost@1.63.0
+..     nq2yt4x        ^bzip2@1.0.6
+..     jbjvxs7        ^zlib@1.2.10
+
+.. This shows their are two boost modules installed (one for the Intel compilers
+.. and one for the GCC compilers), they both depend on zlib 1.0.6 and bzip2 1.2.10
+.. and the GCC version also depends on MPI 2.14 (HPE MPT 2.14). The paths for these
+.. dependencies are hardcoded into the boost RPATH.
 
 
 Available Compiler Suites
@@ -222,7 +225,9 @@ Available Compiler Suites
 Intel Compiler Suite
 ~~~~~~~~~~~~~~~~~~~~
 
-The Intel compiler suite is accessed by loading the ``intel-compilers-*`` module. For example:
+The Intel compiler suite is accessed by loading the ``intel-compilers-*`` and
+``intel-*/compilers`` modules, where ``*`` references the version. For example,
+to load the 2019 release, you would run:
 
 ::
 
@@ -240,11 +245,12 @@ compiler versions and tools.
 GCC Compiler Suite
 ~~~~~~~~~~~~~~~~~~
 
-The GCC compiler suite is accessed by loading the ``gcc`` module. For example:
+The GCC compiler suite is accessed by loading the ``gcc/*`` modules, where
+``*`` again is the version. For example, to load version 8.2.0 you would run:
 
 ::
 
-    module load gcc
+    module load gcc/8.2.0
 
 Once you have loaded the module, the compilers are available as:
 
@@ -296,17 +302,14 @@ compile your code.
 Using Intel Compilers and HPE MPT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Once you have loaded the MPT module you should next load the appropriate 
-``intel-compilers`` module (e.g. ``intel-compilers-19``):
+Once you have loaded the MPT module you should next load the Intel compilers
+module you intend to use (e.g. ``intel-compilers-19``):
 
 ::
 
     module load intel-compilers-19
 
-Remember, if you are compiling C++ code, then you will also need to load the ``gcc`` module
-for the C++ 11 headers to be available.
-
-Compilers are then available as
+The compiler wrappers are then available as
 
 * ``mpif90`` - Fortran with MPI
 * ``mpicc`` - C with MPI
@@ -314,36 +317,23 @@ Compilers are then available as
 
 .. note::
 
-   mpicc uses gcc by default:
+    The MPT compiler wrappers use GCC by default rather than the Intel compilers:
 
    When compiling C applications you must also specify that 
    ``mpicc`` should use the ``icc`` compiler with, for example,
-   ``mpicc -cc=icc``. (This is not required for Fortran as the ``mpif90``
-   compiler automatically uses ``ifort``.)  If in doubt use ``mpicc -cc=icc -v`` to see
+   ``mpicc -cc=icc``. Similarly, when compiling C++ applications
+   you must also specify that ``mpicxx`` should use the ``icpc`` compiler
+   with, for example, ``mpicxx -cxx=icpc``. (This is not required for
+   Fortran as the ``mpif90`` compiler automatically uses ``ifort``.)  If
+   in doubt use ``mpicc -cc=icc -v`` or ``mpicxx -cxx=icpc -v`` to see
    which compiler is actually being called.
 
-   Alternatively, you can set the environment variable ``MPICC_CC=icc`` to 
-   ensure the correct base compiler is used:
+   Alternatively, you can set the environment variables ``MPICC_CC=icc`` and/or
+   ``MPICXX=icpc`` to  ensure the correct base compiler is used:
 
    ::
 
       export MPICC_CC=icc
-
-.. note::
-
-   mpicxx uses g++ by default:
-
-   When compiling C++ applications you must also specify that 
-   ``mpicxx`` should use the ``icpc`` compiler with, for example,
-   ``mpicxx -cxx=icpc``. (This is not required for Fortran as the ``mpif90``
-   compiler automatically uses ``ifort``.)  If in doubt use ``mpicxx -cxx=icpc -v`` to see
-   which compiler is actually being called.
-
-   Alternatively, you can set the environment variable ``MPICXX_CXX=icpc`` to 
-   ensure the correct base compiler is used:
-
-   ::
-
       export MPICXX_CXX=icpc
 
 Using GCC Compilers and HPE MPT
@@ -407,6 +397,12 @@ ones when building software.
 
    to your job scripts after loading the Intel MPI 18 module.
 
+.. note::
+
+    When using Intel MPI 18, you should always launch MPI tasks
+    with ``srun``, the supported method on Cirrus. Launches
+    with ``mpirun`` or ``mpiexec`` will likely fail.
+
 Using Intel Compilers and Intel MPI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -417,9 +413,7 @@ After first loading Intel MPI, you should next load the appropriate
 
     module load intel-compilers-19
     
-Just as with MPT, a ``gcc`` module must be loaded alongside the
-Intel compilers if you intend to compile C++ code. You may then
-use the following MPI compiler wrappers:
+You may then use the following MPI compiler wrappers:
 
 * ``mpiifort`` - Fortran with MPI
 * ``mpiicc`` - C with MPI

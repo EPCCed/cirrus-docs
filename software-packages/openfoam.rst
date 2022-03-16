@@ -15,8 +15,8 @@ You can query the versions of OpenFOAM are currently available on Cirrus
 from the command line with ``module avail openfoam``.
 
 Versions from https://openfoam.org/ are typically ``v7``, ``v8`` etc, while
-versions from  https://www.openfoam.com/ are e.g., ``v1912`` (release
-December 2019). 
+versions from  https://www.openfoam.com/ are e.g., ``v2006`` (released
+June 2020).
 
 Useful Links
 ------------
@@ -33,15 +33,15 @@ environment variables. For example, for OpenFOAM v8:
 
 ::
 
-   module add openfoam
+   module add openfoam/v8.0
    source ${FOAM_INSTALL_PATH}/etc/bashrc
 
 You should then be able to use OpenFOAM in the usual way. For
-OpenFOAM version v1912, the relevant command is:
+OpenFOAM version v2006, the relevant command is:
 
 ::
 
-   module add openfoam
+   module add openfoam/v2006
    source ${OPENFOAM_CURPATH}/etc/bashrc
 
 
@@ -55,23 +55,23 @@ on two nodes, with 36 MPI tasks per node.
 ::
 
   #!/bin/bash
-  
+
   #SBATCH --nodes=2
   #SBATCH --ntasks-per-node=36
   #SBATCH --exclusive
   #SBATCH --time=00:10:00
-  
+
   #SBATCH --partition=standard
   #SBATCH --qos=standard
-  
-  # Load the openfoam module and source the bashrc file 
-  
+
+  # Load the openfoam module and source the bashrc file
+
   module load openfoam/v8.0
   source ${FOAM_INSTALL_PATH}/etc/bashrc
-  
+
   # Compose OpenFOAM work in the ususal way, except that parallel
   # executables are launched via srun. For example:
-  
+
   srun interFoam -parallel
 
 

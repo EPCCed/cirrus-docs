@@ -22,7 +22,8 @@ device memory. Maximum device memory bandwidth is in the region of 900 GB per se
 Each card has 5,120 CUDA cores and 640 Tensor cores.
 
 There are two GPU Slurm partitions installed on Cirrus. The first called
-``gpu-skylake`` features two GPU nodes that each have Intel Skylake processors.
+``gpu-skylake`` features two GPU nodes that each have Intel Skylake processors. These
+nodes are only available for short testing/development jobs via the ``short`` QoS.
 The remaining 36 nodes form the ``gpu-cascade`` partition and have the slightly
 more recent Intel Cascade Lake architecture. Users concerned with host performance
 should add the specific compilation options appropriate for the processor.
@@ -48,17 +49,32 @@ Versions of the SDK are available via the module system.
 ::
 
   $ module avail nvidia/nvhpc
-  ---------------------------- /lustre/sw/modulefiles -------------------------
-  nvidia/nvhpc-byo-compiler/21.2  nvidia/nvhpc-nompi/21.2  nvidia/nvhpc/21.2(default)  nvidia/nvhpc/21.9  
-  nvidia/nvhpc-byo-compiler/21.9  nvidia/nvhpc-nompi/21.9  nvidia/nvhpc/21.2-gnu 
 
-In the first instance, the default ``nvhpc`` module (version 21.2) is recommended.
+NVIDIA encourage the use of the latest available version, unless there are
+particular reasons to use earlier versions. The default version is therefore
+the latest module version present on the system.
 
-Each release of the NVIDIA HPC SDK includes several different versions of the CUDA toolchain.
-For example, the ``nvidia/nvhpc/21.2`` module comes with CUDA 10.2, 11.0 and 11.2. Of course,
-only one of these CUDA toolchains can be active at any one time and for ``nvhpc/21.2`` this
-is CUDA 11.2, which is the version of CUDA compatible with the underlying GPU kernel-mode
-driver (460.73.01).
+Each release of the NVIDIA HPC SDK may include several different versions of
+the CUDA toolchain. For example, the ``nvidia/nvhpc/21.2`` module comes
+with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA toolchains can be
+active at any one time and for ``nvhpc/21.2`` this is CUDA 11.2.
+
+Here is a list of available HPC SDK versions, and the corresponding
+version of CUDA:
+
+.. list-table::
+   :header-rows: 1
+
+   * - Module
+     - Supported CUDA Version
+   * - ``nvidia/nvhpc/22.2``
+     - CUDA 11.6
+   * - ``nvidia/nvhpc/21.9``
+     - CUDA 11.4
+   * - ``nvidia/nvhpc/21.2``
+     - CUDA 11.2
+
+To load the latest NVIDIA HPC SDK use
 
 ::
 
@@ -247,7 +263,7 @@ QoS specifications are as follows.
      - 128 jobs
      - 4 days
      - 64 GPUs
-     - gpu-skylake, gpu-cascade
+     - gpu-cascade
    * - long
      - 5 jobs
      - 20 jobs
@@ -390,8 +406,8 @@ session like so.
 
 ::
 
-  $ srun --nodes=1 --partition=gpu-cascade --qos=gpu --gres=gpu:1 \
-         --time=01:00:00 --account=[budget code] --pty /bin/bash
+  $ srun --nodes=1 --partition=gpu-skylake --qos=short --gres=gpu:1 \
+         --time=0:20:0 --account=[budget code] --pty /bin/bash
 
 Next, load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application.
 
@@ -426,8 +442,7 @@ Using Nsight Systems
 
 Nsight Systems provides an overview of application performance and should
 therefore be the starting point for investigation. To run an application,
-compile as normal (including the ``-g`` flag) and then submit to the queue
-system.
+compile as normal (including the ``-g`` flag) and then submit a batch job.
 
 ::
 
@@ -436,8 +451,8 @@ system.
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive  
-  #SBATCH --partition=gpu-cascade
-  #SBATCH --qos=gpu
+  #SBATCH --partition=gpu-skylake
+  #SBATCH --qos=short
   #SBATCH --gres=gpu:1
 
   # Replace [budget code] below with your project code (e.g. t01)
@@ -471,7 +486,7 @@ you should download and install Nsight Systems v2020.5.1.85.
 Using Nsight Compute
 ~~~~~~~~~~~~~~~~~~~~
 
-Nsight Compute may be used in a simliar way as Nsight Systems. A job may
+Nsight Compute may be used in a similar way as Nsight Systems. A job may
 be submitted like so.
 
 ::
@@ -481,8 +496,8 @@ be submitted like so.
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive
-  #SBATCH --partition=gpu-cascade
-  #SBATCH --qos=gpu
+  #SBATCH --partition=gpu-skylake
+  #SBATCH --qos=short
   #SBATCH --gres=gpu:1
   
   # Replace [budget code] below with your project code (e.g. t01)

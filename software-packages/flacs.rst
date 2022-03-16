@@ -80,7 +80,7 @@ Upload your data to Cirrus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Transfer your data to Cirrus by following the instructions at
-:doc:`../user-guide/transfer`.
+:doc:`../user-guide/data`.
 
 For example, to copy the scenario definition files from the current
 directory to the folder ``project_folder`` in your home directory on
@@ -311,7 +311,7 @@ Transfer data from Cirrus to your local system
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After your simulations are finished, transfer the data back from Cirrus
-following the instructions at :doc:`../user-guide/transfer`.
+following the instructions at :doc:`../user-guide/data`.
 
 For example, to copy the result files from the directory ``project_folder``
 in your home directory on Cirrus to the folder ``/tmp`` on your local

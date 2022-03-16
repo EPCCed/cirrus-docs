@@ -2,9 +2,8 @@ Using Python
 ============
 
 Python on Cirrus is provided by the `Anaconda <https://www.continuum.io/>`__
-distribution. Both Python 3 and Python 2 versions of the distributions are
-available; however, we recommend using Python 3 as support for Python 2 officially
-ended on 1 January 2020.
+distribution. The Python 3 version of the distribution is
+available.
 
 The central installation provides many of the most common packges used for
 scientific computation and data analysis.
@@ -29,13 +28,7 @@ to use the Anaconda distributions you should use:
 
     module load anaconda/python3
 
-for Python 3 (v3.6.6), or:
-
-::
-
-    module load anaconda/python2
-
-for Python 2 (v2.7.16).
+for Python 3 (v3.9.7).
 
 You can verify the current version of Python with:
 
@@ -43,7 +36,7 @@ You can verify the current version of Python with:
 
    [user@cirrus-login1 ~]$ module load anaconda/python3
    [user@cirrus-login1 ~]$ python3 --version
-   Python 3.6.6 :: Anaconda, Inc.
+   Python 3.9.7 :: Anaconda, Inc.
 
 Full details on the Anaconda distributions can be found on the Continuum website at:
 
@@ -58,18 +51,21 @@ You can list the packages currently available in the distribution you have loade
 
    [user@cirrus-login1 ~]$ module load anaconda
    [user@cirrus-login1 ~]$ conda list
-   # packages in environment at /lustre/sw/anaconda/anaconda3-5.1.0:
+   # packages in environment at /scratch/sw/anaconda/anaconda3-2021.11:
    #
    # Name                    Version                   Build  Channel
-   _ipyw_jlab_nb_ext_conf    0.1.0            py36he11e457_0  
-   _libgcc_mutex             0.1                        main
-   alabaster                 0.7.10           py36h306e16b_0  
-   anaconda                  5.1.0                    py36_2  
-   anaconda-client           1.6.9                    py36_0  
-   anaconda-navigator        1.7.0                    py36_0  
-   anaconda-project          0.8.2            py36h44fb852_0  
-   asn1crypto                0.24.0                   py36_0  
-   astroid                   1.6.1                    py36_0  
+   _ipyw_jlab_nb_ext_conf    0.1.0            py39h06a4308_0  
+   _libgcc_mutex             0.1                        main  
+   _openmp_mutex             4.5                       1_gnu  
+   alabaster                 0.7.12             pyhd3eb1b0_0  
+   anaconda                  2021.11                  py39_0  
+   anaconda-client           1.9.0            py39h06a4308_0  
+   anaconda-navigator        2.1.1                    py39_0  
+   anaconda-project          0.10.1             pyhd3eb1b0_0  
+   anyio                     2.2.0            py39h06a4308_1  
+   appdirs                   1.4.4              pyhd3eb1b0_0  
+   argh                      0.26.2           py39h06a4308_0  
+   argon2-cffi               20.1.0           py39h27cfd23_1  
    ...
 
 
@@ -119,18 +115,19 @@ include the license agreement to which you must answer `yes`.
   [no] >>> yes
 
 The installer will prompt for the install location, the default
-being your home directory, which can be selected by simply hitting return.
+being your home directory, to install in /scratch or /work please
+change the install location here.
 
 ::
 
   Miniconda3 will now be installed into this location:
-  /lustre/home/t01/user/miniconda3
+  /home/t01/t01/user/miniconda3
 
   - Press ENTER to confirm the location
   - Press CTRL-C to abort the installation
   - Or specify a different location below
 
-  [/lustre/home/t01/user/miniconda3] >>>
+  [/home/t01/t01/user/miniconda3] >>> /work/t01/t01/user/miniconda3
 
 The final question will be about initialization. If you wish to use only
 Miniconda and no other python environments (such as the central Anaconda
@@ -146,7 +143,7 @@ suggest answering `no`.
   You have chosen to not have conda modify your shell scripts at all.
   To activate conda's base environment in your current shell session:
   
-  eval "$(/lustre/home/t01/user/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
+  eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
   
   To install conda's shell functions for easier access, first activate, then:
   
@@ -168,7 +165,7 @@ ways.
 
 ::
 
-  $ eval "$(/lustre/home/t01/user/miniconda3/bin/conda shell.bash hook)"
+  $ eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.bash hook)"
 
 * Add the shell ``eval`` command to a script, which can then be invoked
   when required, e.g., ``source ~/miniconda-init.sh``.
@@ -190,7 +187,7 @@ instead be activated in the usual way.
 
   [user@cirrus-login1 ~]$ conda activate
   (base) [user@cirrus-login1 ~]$ conda list
-  # packages in environment at /lustre/home/t01/user/miniconda3:
+  # packages in environment at /work/t01/t01/user/miniconda3:
   #
   # Name                    Version                   Build  Channel
   _libgcc_mutex             0.1                        main  
@@ -225,7 +222,7 @@ you can then add whatever packages you wish to the installation using the
    ...
    
    [user@cirrus-login0 ~]$ conda list
-   # packages in environment at /lustre/home/t01/user/miniconda3:
+   # packages in environment at /work/t01/t01/user/miniconda3:
    #
    # Name                    Version                   Build  Channel
    _libgcc_mutex             0.1                 conda_forge    conda-forge
@@ -293,7 +290,7 @@ has been taken.
 ::
 
   [user@cirrus-login1]$ which python2
-  /usr/bin/python2
+
   [user@cirrus-login1]$ which python3
   /usr/bin/python3
 
