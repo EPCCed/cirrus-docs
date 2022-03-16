@@ -28,12 +28,21 @@ calculations on the system before running production jobs.
 Scratch Directories
 -------------------
 
-Before using Gaussian for the first time, you should create a directory on the
-solid state storage to hold temporary files used by Gaussian, e.g.
+You will typically add lines to your job submission script to create 
+a scratch directory on the solid state storage for temporary Gaussian
+files. e.g.:
 
 ::
 
-   mkdir /scratch/space1/${USER}/g16tmp
+   export GAUSS_SCRDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
+   mkdir -p $GAUSS_SCRDIR
+  
+You should also add a line at the end of your job script to remove the scratch
+directory. e.g.:
+
+::
+
+   rm -r $GAUSS_SCRDIR
 
 Running serial Gaussian jobs
 ----------------------------
@@ -65,10 +74,14 @@ a Gaussian scratch directory as outlined above).
    source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=/scratch/space1/${USER}/g16tmp
+   export GAUSS_SCRDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
+   mkdir -p $GAUSS_SCRDIR
 
    # Run using input in "test0027.com"
    g16 test0027
+   
+   # Remove the temporary scratch directory
+   rm -r $GAUSS_SCRDIR
    
 Running parallel Gaussian jobs
 ------------------------------
@@ -103,9 +116,13 @@ For example, the following script will run a Gaussian job using 4 cores.
    source $g16root/g16/bsd/g16.profile
 
    # Location of the scratch directory
-   export GAUSS_SCRDIR=/scratch/space1/${USER}/g16tmp
+   export GAUSS_SCRDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
+   mkdir -p $GAUSS_SCRDIR
 
    # Run using input in "test0027.com"
    export OMP_NUM_THREADS=4
    g16 test0027
+   
+   # Remove the temporary scratch directory
+   rm -r $GAUSS_SCRDIR
 
