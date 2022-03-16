@@ -9,7 +9,7 @@ requires both modules to be loaded as well as the ``gcc`` module.
 
     module load mpt 
     module load openmpi
-    module load gcc/6.3.0
+    module load gcc/8.2.0
     module load scalasca/2.5 
 
 
