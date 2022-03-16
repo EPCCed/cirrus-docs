@@ -107,7 +107,8 @@ Resource Limits
 
 .. note::
 
-  If you have requirements which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements. 
+  If you have requirements which do not fit within the current QoS, please contact the
+  Service Desk and we can discuss how to accommodate your requirements. 
 
 There are different resource limits on Cirrus for different purposes. There 
 are three different things you need to specify for each job:
@@ -175,21 +176,25 @@ using the ``--partition`` option in your submission script. The following table 
 of active partitions on Cirrus.
 
 .. list-table:: Cirrus Partitions
-   :widths: 30 50 20
+   :widths: 10 50 20 20
    :header-rows: 1
 
    * - Partition
      - Description
      - Total nodes available
+     - Notes
    * - standard
-     - CPU nodes with Broadwell processors
-     - 228
+     - CPU nodes with 2x 18-core Intel Broadwell processors
+     - 280
+     -
    * - gpu-cascade
-     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Cascade Lake processors
+     - GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors
      - 36
+     -
    * - gpu-skylake
-     - GPU nodes with 4&times; Nvidia V100 GPU and 2&times; 20-core Skylake processors
+     - GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Skylake processors
      - 2
+     - Only available for short test/development jobs
 
 You can list the active partitions using
 
@@ -197,13 +202,15 @@ You can list the active partitions using
 
    sinfo
 
-Note, you may not have access to all the available partitions.
+.. note::
+
+   you may not have access to all the available partitions.
 
 
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Cirrus Quality of Service (QoS) is used alongside partitions to improve user experience. The 
+On Cirrus Quality of Service (QoS) is used alongside partitions to set resource limits. The 
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
@@ -220,7 +227,7 @@ following table has a list of active QoS on Cirrus.
      - No limit
      - 500 jobs
      - 4 days
-     - 1008 cores (28 nodes/10%)
+     - 2520 cores (70 nodes/25%)
      - standard
      - 
    * - capability
@@ -248,7 +255,7 @@ following table has a list of active QoS on Cirrus.
      - No limit
      - 128 jobs
      - 4 days
-     - 64 GPUs (16 nodes~40%)
+     - 64 GPUs (16 nodes/40%)
      - gpu-skylake, gpu-cascade
      - 
    * - short
@@ -256,8 +263,8 @@ following table has a list of active QoS on Cirrus.
      - 2 jobs
      - 20 minutes
      - 2 nodes or 4 GPUs
-     - standard, gpu-skylake
-     - Submit with reservation=shortqos if standard partition is used
+     - standard, gpu-skylake, gpu-cascade
+     - 
 
 
 You can find out the QoS that you can use by running the following command:
@@ -265,11 +272,6 @@ You can find out the QoS that you can use by running the following command:
 :: 
 
   sacctmgr show assoc user=$USER cluster=cirrus format=cluster,account,user,qos%50
-
-
-.. note::
-
-   Details on the resource limits will be added shortly.
    
    
 Troubleshooting
@@ -293,14 +295,11 @@ This can prevent effective "hanging" of the job until the wall time
 limit is reached.
 
 
-Hardware failures
-^^^^^^^^^^^^^^^^^
+Automatic resubmission
+^^^^^^^^^^^^^^^^^^^^^^
 
-Jobs failing owing to hardware problems detected by the system
-are automatically resubmitted by SLURM. In the rare event that
-this happens, it can cause some confusion (e.g., if an application
-attempts to create the same file twice). Automatic resubmission can
-be avoided by specifying the ``--no-requeue`` option to ``sbatch``.
+Jobs that fail are not automatically resubmitted by Slurm on Cirrus. Automatic
+resubmission can be enabled for a job by specifying the ``--requeue`` option to ``sbatch``.
 
 
 Slurm error messages
@@ -934,9 +933,48 @@ on the login node (e.g., via a GUI) with work in the allocation itself.
 Reservations
 ------------
 
-The mechanism for submitting reservations on Cirrus has yet to be specified.
+Reservations are available on Cirrus. These allow users to reserve a number of nodes for a
+specified length of time starting at a particular time on the system.
 
-.. TODO: Add information on how to submit reservations
+Reservations require justification. They will only be approved if the request could not be
+fulfilled with the standard queues. For example, you require a job/jobs to run at a
+particular time e.g. for a demonstration or course.
+
+.. note::
+
+   Reservation requests must be submitted at least 120 hours in advance of the reservation
+   start time. We cannot guarantee to meet all reservation requests due to potential
+   conflicts with other demands on the service but will do our best to meet all requests.
+
+Reservations will be charged at 1.5 times the usual rate and our policy is that they will be
+charged the full rate for the entire reservation at the time of booking, whether or not you
+use the nodes for the full time. In addition, you will not be refunded the compute time if
+you fail to use them due to a job crash unless this crash is due to a system failure.
+
+To request a reservation please contact the `Cirrus Service Desk <mailto:support@cirrus.ac.uk>`_.
+You need to provide the following:
+
+- The start time and date of the reservation.
+- The end time and date of the reservation.
+- The project code for the reservation.
+- The number of nodes/cores/GPU required.
+- Your justification for the reservation -- this must be provided or the request will be rejected.
+
+
+Your request will be checked by the Cirrus User Administration team and, if approved, you will
+be provided a reservation ID which can be used on the system. To submit jobs to a reservation,
+you need to add ``--reservation=<reservation ID>`` and ``--qos=reservation`` options to your job
+submission script or Slurm job submission command.
+
+.. note::
+
+   You must have at least 1 CPUh - and 1 GPUh for reservations on GPU nodes - to be able to 
+   submit jobs to reservations.
+
+.. tip::
+
+   You can submit jobs to a reservation as soon as the reservation has been set up; jobs will
+   remain queued until the reservation starts.
 
 Serial jobs
 -----------
@@ -980,8 +1018,6 @@ look like:
    memory (or use the ``--exclusive`` option to get access to all the memory on a node)
    and launch specifying a single task using ``srun --ntasks=1 --cpu-bind=cores``.
 
-
-
 Temporary files and ``/tmp`` in batch jobs
 ------------------------------------------
 
@@ -997,14 +1033,25 @@ job (typically in the ``/dev/shm`` directory). Files here reduce the
 available capacity of main memory on the node.
 
 It is recommended that applications with significant temporary file space
-requirement should use a standard ``/lustre/home`` location to ensure
-sufficient space is available. E.g., a submission script might contain:
+requirement should use the :doc:`/user-guide/solidstate`.
+E.g., a submission script might contain:
 
 ::
 
-  export TMPDIR=`pwd`
+  export TMPDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
+  mkdir -p $TMPDIR
 
-to set the standard temporary directory to the current working directory.
-Applications should not hard-code specific locations such as ``/tmp``.
-Parallel applications should further ensure that there are no collisions
-in temporary file names on separate processes/nodes.
+to set the standard temporary directory to a unique location in the 
+solid state storage. You will also probably want to add a line to clean up the
+temporary directory at the end of your job script, e.g.
+
+::
+
+   rm -r $TMPDIR
+
+
+.. tip::
+
+   Applications should not hard-code specific locations such as ``/tmp``.
+   Parallel applications should further ensure that there are no collisions
+   in temporary file names on separate processes/nodes.

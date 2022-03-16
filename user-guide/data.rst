@@ -59,8 +59,8 @@ for your Cirrus login account.
 1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`_
 2. Use the "Login accounts" menu and select your Cirrus login account
 3. The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
-  quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
-  quota.)
+   quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
+   quota.)
 
 Quota and usage data on SAFE is updated twice daily so may not be exactly up to date with the situation on the
 system itself.
@@ -90,6 +90,12 @@ If you have data on the work file system that you are not going to need in the f
 Quotas on the work file system
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. tip::
+
+   The capacity of the home file system is much larger than the work file system
+   so you should store most data on home and only move data to work that you need
+   for current running work.
+
 As for the home file system, all projects are assigned a quota on the work file system. The project PI or manager
 can split this quota up between groups of users if they wish.
 
@@ -99,8 +105,8 @@ for your Cirrus login account.
 1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`_
 2. Use the "Login accounts" menu and select your Cirrus login account
 3. The "Login account details" table lists any user or group quotas that are linked with your account. (If there is no
-  quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
-  quota.)
+   quota shown for a row then you have an unlimited quota for that item, but you may still may be limited by another
+   quota.)
   
 
 Quota and usage data on SAFE is updated twice daily so may not be exactly up to date with the situation on the system
@@ -162,18 +168,23 @@ you will not be able to create, edit, or copy new information to this file
 system.
 
 To make archived data visible from the compute nodes, you will need to 
-copy the data from the ``/home-archive`` file system to the ``/work``
+copy the data from the ``/home-archive`` file system to the ``/home``
 file system. Assuming again that you are user ``auser`` from project ``x01``
 and that you were wanting to copy data from ``/home-archive/x01/auser/directory_to_copy``
-to ``/work/x01/x01/auser/destination_directory``, you would do this by running:
+to ``/home/x01/x01/auser/destination_directory``, you would do this by running:
 
 ::
 
     cp -r /home-archive/x01/auser/directory_to_copy \
-       /work/x01/x01/auser/destination_directory
+       /home/x01/x01/auser/destination_directory
 
 Note that the project code appears once in the path for the old home archive and 
-twice in the path on the new /work file system.
+twice in the path on the new /home file system.
+
+.. note::
+
+   The capacity of the home file system is much larger than the work file system
+   so you should move data to home rather than work.
 
 Data transfer
 -------------
