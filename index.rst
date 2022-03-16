@@ -38,7 +38,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
    user-guide/introduction
    user-guide/connecting
-   user-guide/transfer
+   user-guide/data
    user-guide/resource_management
    user-guide/development
    user-guide/batch
