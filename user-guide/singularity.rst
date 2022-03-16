@@ -115,10 +115,17 @@ Interactive use on the compute nodes
 
 The process for using an image interactively on the compute nodes is very similar to that for
 using them on the login nodes. The only difference is that you first have to submit an interactive
-serial job to get interactive access to the compute node first.
+serial job to get interactive access to the compute node.
 
-For example, to reserve a full node for you to work on interactively you would issue an ``salloc``
-command, see below.
+First though, move to a suitable location on ``/work`` and re-pull the ``hello-world`` image. This step
+is necessary as the compute nodes do not have access to the ``/home`` file system.
+
+::
+
+   [user@cirrus-login1 ~]$ cd ${HOME/home/work}
+   [user@cirrus-login1 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
+
+Now reserve a full node to work on interactively by issuing an ``salloc`` command, see below.
 
 ::
 
@@ -133,14 +140,13 @@ command, see below.
    salloc: Nodes r1i0n8 are ready for job
    [user@cirrus-login1 ~]$ ssh r1i0n8
 
-   [user@r1i0n8 ~]$
-
-Note the prompt has changed to show you are on a compute node. Now you can use the image
-in the same way you did on the login node.
+Note the prompt has changed to show you are on a compute node. Once you are logged in to
+the compute node (you may need to submit your account password), move to a suitable location
+on ``/work`` as before. You can now use the ``hello-world`` image in the same way you did on the login node. 
 
 ::
 
-   [user@r1i0n8 ~]$ module load singularity
+   [user@r1i0n8 ~]$ cd ${HOME/home/work}
    [user@r1i0n8 ~]$ singularity shell hello-world.sif
    Singularity> exit
    exit
@@ -150,6 +156,7 @@ in the same way you did on the login node.
    [user@cirrus-login1 ~]$ exit
    exit
    salloc: Relinquishing job allocation 14507
+   salloc: Job allocation 14507 has been revoked.
    [user@cirrus-login1 ~]$
 
 Note we used ``exit`` to leave the interactive container shell and then called ``exit`` twice
@@ -185,7 +192,7 @@ An example job submission script to run a serial job that executes the runscript
     module load singularity
 
     # Run the serial executable
-    srun --cpu-bind=cores singularity run ${HOME}/hello-world.sif
+    srun --cpu-bind=cores singularity run ${HOME/home/work}/hello-world.sif
 
 Submit this script using the ``sbatch`` command and once the job has finished, you should see
 ``RaawwWWWWWRRRR!! Avocado!`` in the Slurm output file.
@@ -219,7 +226,7 @@ command now contains an additional ``singularity`` clause.
     module load singularity
 
     # The host bind paths for the Singularity container.
-    BIND_ARGS=/lustre/sw,/opt/hpe,/etc/libibverbs.d,/path/to/input/files
+    BIND_ARGS=/scratch/sw,/opt/hpe,/etc/libibverbs.d,/path/to/input/files
     
     # The file containing environment variable settings that will allow
     # the container to find libraries on the host, e.g., LD_LIBRARY_PATH . 
@@ -251,9 +258,9 @@ that allow the containerized application to find the required MPI libraries.
 Otherwise, if the image follows the `Hybrid model <https://sylabs.io/guides/3.7/user-guide/mpi.html#hybrid-model>`_ and so contains its own MPI
 implementation, you instead need to be sure that the containerized MPI is compatible
 with the host MPI, the one loaded in the submission script. In the example above, the host
-MPI is HPE MPT 2.22, but you could also use OpenMPI (with ``mpirun``), either by loading a
+MPI is HPE MPT 2.25, but you could also use OpenMPI (with ``mpirun``), either by loading a
 suitable ``openmpi`` module or by referencing the paths to an OpenMPI installation that
-was built locally (i.e., within your Cirrus home folder).
+was built locally (i.e., within your Cirrus work folder).
 
 
 .. _create_image_singularity:
@@ -325,20 +332,20 @@ to build the image (remember this command must be run on a system where you have
    me@my-system:~> sudo singularity build centos7.sif centos7.def
 
 The resulting image file (``centos7.sif``) can then be copied to Cirrus using scp; such an image
-already exists on Cirrus and can be found in the ``/lustre/sw/singularity/images`` folder.
+already exists on Cirrus and can be found in the ``/scratch/sw/singularity/images`` folder.
 
 When you use that image interactively on Cirrus you must start with a login shell and also
-bind ``/lustre/sw`` so that the container can see all the module files, see below.
+bind ``/scratch/sw`` so that the container can see all the module files, see below.
 
 ::
 
    [user@cirrus-login1 ~]$ module load singularity
-   [user@cirrus-login1 ~]$ singularity exec -B /lustre/sw \
-     /lustre/sw/singularity/images/centos7.sif \
+   [user@cirrus-login1 ~]$ singularity exec -B /scratch/sw \
+     /scratch/sw/singularity/images/centos7.sif \
        /bin/bash --login
    Singularity> module avail intel-compilers
 
-   ------------------------- /lustre/sw/modulefiles ---------------------
+   ------------------------- /scratch/sw/modulefiles ---------------------
    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117
    Singularity> exit
    logout
@@ -358,10 +365,10 @@ inside the container sandbox.
 ::
 
    user@cirrus-login1 ~]$ singularity build --sandbox image.sif.sandbox image.sif
-   user@cirrus-login1 ~]$ singularity shell -B /lustre/sw --writable image.sif.sandbox
+   user@cirrus-login1 ~]$ singularity shell -B /scratch/sw --writable image.sif.sandbox
    Singularity> 
 
-In the example above, the ``/lustre/sw`` bind path is specified, allowing you to build
+In the example above, the ``/scratch/sw`` bind path is specified, allowing you to build
 code that links to the Cirrus module libraries.
 
 Finally, once you are finished with the sandbox you can exit and convert back to the
