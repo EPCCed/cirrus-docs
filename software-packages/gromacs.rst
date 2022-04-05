@@ -126,7 +126,7 @@ to change these variables when running your script.
    #SBATCH --gres=gpu:4
    
    # Load GROMACS and MPI modules
-   module load gromacs/2020.2-gpu
+   module load gromacs/2021.5+gpu
 
    # Run using input in test_calc.tpr
    export OMP_NUM_THREADS=<OMP thread count>
