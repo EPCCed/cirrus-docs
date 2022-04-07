@@ -25,7 +25,7 @@ two versions via SAFE.**
 If you have a VASP 5 or VASP 6 licence and wish to have access to VASP on Cirrus
 please request access through SAFE:
 
-* `How to request access to package groups <https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group>`__
+* `How to request access to package groups <https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features>`__
 
 Running parallel VASP jobs
 --------------------------
