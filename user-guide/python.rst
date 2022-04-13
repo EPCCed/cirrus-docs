@@ -2,8 +2,7 @@ Using Python
 ============
 
 Python on Cirrus is provided by the `Anaconda <https://www.continuum.io/>`__
-distribution. The Python 3 version of the distribution is
-available.
+distribution. The Python 3 version of the distribution is available.
 
 The central installation provides many of the most common packges used for
 scientific computation and data analysis.
@@ -17,6 +16,7 @@ An alternative way to provide your own packages (and to make them available more
 generally to other people in your project and beyond) would be to use a Singularity
 container, see the :doc:`singularity` chapter of this User Guide for more information
 on this topic.
+
 
 Accessing the Cirrus Anaconda Modules
 -------------------------------------
@@ -68,7 +68,6 @@ You can list the packages currently available in the distribution you have loade
    argon2-cffi               20.1.0           py39h27cfd23_1  
    ...
 
-
 Adding packages to the Anaconda distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -77,15 +76,228 @@ If you wish to have additional packages, we recommend installing your
 own local version of Miniconda and adding the packages you need. This
 approach is described in the next section.
 
-Custom Environments
--------------------
+
+Accessing the Cirrus Miniconda3 Modules
+---------------------------------------
+
+There are a number of Miniconda3 modules available on Cirrus that support
+Python-based parallel codes. In fact, each module provides a suite of packages
+pertinent to parallel processing and numerical analysis, e.g., dask, ipyparallel,
+jupyter, matplotlib, numpy, pandas and scipy.
+
+mpi4py for CPU
+~~~~~~~~~~~~~~
+
+For example, the ``mpi4py/3.1.3-mpt`` module provides mpi4py 3.1.3 linked with HPE MPT 2.22.
+
+The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
+across two compute nodes.
+
+.. code-block:: python
+
+    #!/usr/bin/env python
+
+    """
+    Parallel Numpy Array Broadcast 
+    """
+
+    from mpi4py import MPI
+    import numpy as np
+    import sys
+
+    comm = MPI.COMM_WORLD
+
+    size = comm.Get_size()
+    rank = comm.Get_rank()
+    name = MPI.Get_processor_name()
+
+    arraySize = 100
+    if rank == 0:
+        data = np.arange(arraySize, dtype='i')
+    else:
+        data = np.empty(arraySize, dtype='i')
+
+    comm.Bcast(data, root=0)
+
+    if rank == 0:
+        sys.stdout.write(
+            "Rank %d of %d (%s) has broadcast %d integers.\n"
+            % (rank, size, name, arraySize))
+    else:
+        sys.stdout.write(
+            "Rank %d of %d (%s) has received %d integers.\n"
+            % (rank, size, name, arraySize))
+
+        arrayBad = False
+        for i in range(100):
+            if data[i] != i:
+                arrayBad = True
+                break
+
+        if arrayBad:
+            sys.stdout.write(
+                "Error, rank %d array is not as expected.\n"
+                % (rank))
+
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=broadcast
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    #SBATCH --account=[budget code]
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=36
+    #SBATCH --cpus-per-task=1
+
+    module load mpi4py/3.1.3-mpt
+
+    srun numpy-broadcast.py
+
+Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples. 
+
+There's an alternative mpi4py module that links to OpenMPI 4.1.0 called ``mpi4py/3.1.3-ompi``.
+However, the use of this module requires some changes to the Python and Slurm scripts. 
+
+.. code-block:: python
+
+    #!/usr/bin/env python
+
+    """
+    Parallel Numpy Array Broadcast 
+    """
+
+    import mpi4py.rc
+    mpi4py.rc.initialize = False
+
+    from mpi4py import MPI
+    import numpy as np
+    import sys
+
+    MPI.Init()
+
+    comm = MPI.COMM_WORLD
+
+    # Python script is as shown above for the HPE MPT case.
+    ...
+
+    MPI.Finalize()
+
+Firstly, we need to turn off the automatic MPI initialization that would otherwise happen as
+a result of ``from mpi4py import MPI``: this is the purpose of ``mpi4py.rc.initialize = False``.
+The MPI init is then invoked explicitly by calling ``MPI.Init()``.
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --job-name=broadcast
+    ...
+
+    module load mpi4py/3.1.3-ompi
+
+    export OMPI_MCA_mca_base_component_show_load_errors=0
+
+    srun numpy-broadcast.py
+
+And the Slurm submission script is much the same as earlier except for an `OpenMPI MCA <https://www.open-mpi.org/faq/?category=tuning#mca-def>`_
+setting that prevents false errors from being recorded in the output file.
+
+mpi4py for GPU
+~~~~~~~~~~~~~~
+
+There's also an mpi4py module (again using OpenMPI) that is tailored for CUDA 11.6 on the Cirrus
+GPU nodes, ``mpi4py/3.1.3-ompi-gpu``. We show below an example that features an MPI reduction
+peformed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
+
+.. code-block:: python
+
+    #!/usr/bin/env python
+  
+    """
+    Reduce-to-all CuPy Arrays 
+    """
+
+    import mpi4py.rc
+    mpi4py.rc.initialize = False
+
+    from mpi4py import MPI
+    import cupy as cp
+    import sys
+
+    MPI.Init()
+
+    comm = MPI.COMM_WORLD
+
+    size = comm.Get_size()
+    rank = comm.Get_rank()
+    name = MPI.Get_processor_name()
+
+    sendbuf = cp.arange(10, dtype='i')
+    recvbuf = cp.empty_like(sendbuf)
+    assert hasattr(sendbuf, '__cuda_array_interface__')
+    assert hasattr(recvbuf, '__cuda_array_interface__')
+    cp.cuda.get_current_stream().synchronize()
+    comm.Allreduce(sendbuf, recvbuf)
+
+    assert cp.allclose(recvbuf, sendbuf*size)
+
+    sys.stdout.write(
+        "%d (%s): recvbuf = %s\n"
+        % (rank, name, str(recvbuf)))
+
+    MPI.Finalize()
+
+.. code-block:: bash
+
+    #!/bin/bash
+  
+    #SBATCH --job-name=allreduce
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --partition=gpu-cascade
+    #SBATCH --qos=gpu
+    #SBATCH --account=[budget code]
+    #SBATCH --nodes=2
+    #SBATCH --gres=gpu:4
+
+    module load mpi4py/3.1.3-ompi-gpu
+
+    export OMPI_MCA_mca_base_component_show_load_errors=0
+
+    srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=1 cupy-allreduce.py
+
+Machine Learning frameworks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are several more mpi4py-based modules that also target the Cirrus GPU nodes. These include two machine
+learning frameworks, ``pytorch/1.11.0-gpu`` and ``tensorflow/2.8.0-gpu``. Both modules are Python virtual environments
+based on ``mpi4py/1.3.1-ompi-gpu``. The MPI comms is handled by the `Horovod <https://horovod.readthedocs.io/en/stable/>`__ 0.24.2
+package along with the `NVIDIA Collective Communications Library <https://developer.nvidia.com/nccl>`__ v2.11.4.
+
+A full package list for these environments can be obtained by loading the module of interest and then
+running ``pip list``.
+
+Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.24.2_cirrus_gpu.md>`__ .
+
+More detail on the Cirrus GPU nodes can be found at https://cirrus.readthedocs.io/en/main/user-guide/gpu.html .
+
+
+Custom Miniconda3 Environments
+------------------------------
 
 To setup a custom Python environment including packages that are not in the
 central installation, the simplest method is to install Miniconda locally within
-your home directory.
+your project area on Cirrus.
 
-Installing Miniconda
-~~~~~~~~~~~~~~~~~~~~
+Installing Miniconda3
+~~~~~~~~~~~~~~~~~~~~~
 
 First, you should download Miniconda. You can use ``wget`` to do this.
 
@@ -115,8 +327,9 @@ include the license agreement to which you must answer `yes`.
   [no] >>> yes
 
 The installer will prompt for the install location, the default
-being your home directory, to install in /scratch or /work please
-change the install location here.
+being your home directory, to install in ``/scratch`` or ``/work`` please
+change the install location here. Remember, the Cirrus compute nodes
+do not have access to ``/home``.
 
 ::
 
@@ -202,8 +415,8 @@ instead be activated in the usual way.
   (base) [user@cirrus-login1 ~]$  conda deactivate
   [user@cirrus-login1 ~]$ 
 
-Installing packages into Miniconda
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installing packages into Miniconda3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once you have installed Miniconda and setup your environment to access it,
 you can then add whatever packages you wish to the installation using the
@@ -295,6 +508,7 @@ has been taken.
   /usr/bin/python3
 
 These should not be used. Use either an Anaconda or a Miniconda version.
+
 
 Using JupyterLab on Cirrus
 --------------------------
