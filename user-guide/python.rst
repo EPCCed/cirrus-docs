@@ -564,33 +564,21 @@ you can start from a login node prompt.
    connecting from Windows, you should use MobaXterm to configure an SSH tunnel
    as follows.
 
-   5.1. Click on the ``Tunnelling`` button above the MobaXterm terminal. Create a
-        new tunnel by clicking on ``New SSH tunnel`` in the window that opens.
+   5.1. Click on the ``Tunnelling`` button above the MobaXterm terminal. Create a new tunnel by clicking on ``New SSH tunnel`` in the window that opens.
 
-   5.2. In the new window that opens, make sure the ``Local port forwarding`` radio
-        button is selected.
+   5.2. In the new window that opens, make sure the ``Local port forwarding`` radio button is selected.
 
-   5.3. In the ``forwarded port`` text box on the left under ``My computer with
-        MobaXterm``, enter the port number indicated in the Jupyter server output.
+   5.3. In the ``forwarded port`` text box on the left under ``My computer with MobaXterm``, enter the port number indicated in the Jupyter server output.
 
-   5.4. In the three text boxes on the bottom right under ``SSH server`` enter
-        ``login.cirrus.ac.uk``, your Cirrus username, and then ``22``.
+   5.4. In the three text boxes on the bottom right under ``SSH server`` enter ``login.cirrus.ac.uk``, your Cirrus username, and then ``22``.
 
-   5.5. At the top right, under ``Remote server``, enter the name of the Cirrus
-        login or compute node that you noted earlier followed by the port number (e.g. `8888`).
+   5.5. At the top right, under ``Remote server``, enter the name of the Cirrus login or compute node that you noted earlier followed by the port number (e.g. `8888`).
 
    5.6. Click on the ``Save`` button.
 
-   5.7. In the tunnelling window, you will now see a new row for the settings you
-        just entered. If you like, you can give a name to the tunnel in the
-        leftmost column to identify it. Click on the small key icon close to the
-        right for the new connection to tell MobaXterm which SSH private key to
-        use when connecting to Cirrus. You should tell it to use the same
-        ``.ppk`` private key that you normally use.
+   5.7. In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it. Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to Cirrus. You should tell it to use the same ``.ppk`` private key that you normally use.
 
-   5.8. The tunnel should now be configured. Click on the small start button
-        (like a play ``>`` icon) for the new tunnel to open it. You'll be asked
-        to enter your Cirrus password -- please do so.
+   5.8. The tunnel should now be configured. Click on the small start button (like a play ``>`` icon) for the new tunnel to open it. You'll be asked to enter your Cirrus password -- please do so.
 
 6. Now, if you open a browser window on your local machine, you should be able to
    navigate to the URL from step 3, and this should display the JupyterLab server.
