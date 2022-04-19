@@ -580,6 +580,7 @@ you can start from a login node prompt.
 
    5.8. The tunnel should now be configured. Click on the small start button (like a play ``>`` icon) for the new tunnel to open it. You'll be asked to enter your Cirrus password -- please do so.
 
+
 6. Now, if you open a browser window on your local machine, you should be able to
    navigate to the URL from step 3, and this should display the JupyterLab server.
 
