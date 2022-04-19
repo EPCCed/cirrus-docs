@@ -600,3 +600,9 @@ you can start from a login node prompt.
 
 If you are on a compute node, the JupyterLab server will be available for the length of
 the interactive session you have requested.
+
+You can also run Jupyter sessions using the centrally-installed `Miniconda3 modules <https://cirrus.readthedocs.io/en/main/user-guide/python.html#accessing-the-cirrus-miniconda3-modules>`__ available
+on Cirrus. For example, the following link provides instructions for how to setup a Jupyter server
+on a GPU node.
+
+https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel
