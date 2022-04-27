@@ -15,8 +15,7 @@ compute nodes and 38 GPU compute nodes. Each standard compute node has 256 GiB o
 contains two 2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each GPU compute node has 384 GiB of 
 memory, contains two 2.4 GHx, 20-core Intel Xeon (Cascade Lake) processors and four NVIDIA Tesla V100-SXM2-16GB
 (Volta) GPU accelerators connected to the host processors and each other via PCIe. All nodes are
-connected using a single Infiniband fabric and access the shared, 406 TiB Lustre file system.
-
+connected using a single Infiniband fabric.
 This documentation covers:
 
 * Cirrus User Guide: general information on how to use Cirrus
@@ -45,7 +44,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/singularity
    user-guide/python
    user-guide/gpu
-   user-guide/object_store
    user-guide/solidstate
    user-guide/reading
 
