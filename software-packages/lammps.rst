@@ -58,4 +58,4 @@ Compiling LAMMPS on Cirrus
 
 Compile instructions for LAMMPS on Cirrus can be found on GitHub:
 
-* `Cirrus LAMMPS compile instructions <https://github.com/EPCCed/cirrus-packages/tree/master/LAMMPS>`_
+* `Cirrus LAMMPS compile instructions <https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS>`_
