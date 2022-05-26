@@ -45,18 +45,16 @@ sequentially using 4 nodes (144 cores).
 
 ::
 
-  #!/bin/bash
+  #!/bin/bash --login
 
   # Slurm job options (name, compute nodes, job time)
-  #SBATCH --job-name=ELEMENTS_parallel
-  #SBATCH --time=2:30:0
+  #SBATCH --job-name=Test
+  #SBATCH --time=1:00:00
   #SBATCH --exclusive
   #SBATCH --nodes=4
-  #SBATCH --tasks-per-node=36
+  #SBATCH --ntasks-per-node=36
   #SBATCH --cpus-per-task=1
-
-  # Set the number of threads to 1
-  export OMP_NUM_THREADS=1
+  #SBATCH --output=test.out
 
   # Replace [budget code] below with your budget code (e.g. t01)
   #SBATCH --account=t01
@@ -64,16 +62,16 @@ sequentially using 4 nodes (144 cores).
   # Replace [partition name] below with your partition name (e.g. standard)
   #SBATCH --partition=standard
 
+
   # Replace [QoS name] below with your QoS name (e.g. commercial)
   #SBATCH --qos=commercial
 
-  # Load the default HPC MPI environment
-  module load mpt/2.22
-  module load gcc/8.2.0
+  # Load any required modules
+  module load gcc
+  module load mpt
 
-  # Load the HELYX-Core environment (select version as needed, e.g. 3.3.2)
-  . /lustre/home/y07/elements/v3.3.2/CORE/HELYXcore-3.3.2/platforms/linux64Gcc82
-  DPInt32Opt.shrc
+  # Load the HELYX-Core environment v3.5.0 (select version as needed, e.g. 3.5.0)
+  source /scratch/sw/elements/v3.5.0/CORE/HELYXcore-3.5.0/platforms/activeBuild.shrc
 
   # Launch ELEMENTS applications in parallel
   export myoptions="-parallel"
@@ -90,6 +88,7 @@ sequentially using 4 nodes (144 cores).
 
   done
 
+
 Alternatively, the user can execute most ELEMENTS applications on Cirrus
 interactively via the GUI by following these simple steps:
 
@@ -100,7 +99,7 @@ interactively via the GUI by following these simple steps:
    execution.
 3. Use the GUI in the local machine to access the remote file system in Cirrus
    to load a geometry, create a computational grid, set up a simulation, solve
-   the flow, and post-process the result using the HPC resources available in
+   the flow, and post-process the results using the HPC resources available in
    the cluster. The Slurm scheduling associated with every ELEMENTS job is
    handled automatically by the client-server.
 4. Visualise the remote data from your local machine, perform changes to the
