@@ -1,8 +1,8 @@
 HELYX®
 ======
 
-HELYX is a comprehensive, general-purpose computational fluid dynamics (CFD) software
-package for engineering analysis and design optimisation developed by ENGYS. The package
+HELYX is a comprehensive, general-purpose, computational fluid dynamics (CFD) software 
+package for engineering analysis and design optimisation developed by ENGYS. The package 
 features an advanced open-source CFD simulation engine and a client-server GUI to provide
 a flexible and cost-effective HPC solver platform for enterprise applications.
 
@@ -36,35 +36,35 @@ the SGI-MPT (Message Passing Toolkit) module is included below. In this example 
 
 :: 
 
-    #!/bin/bash
+    #!/bin/bash --login
 
     # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=HELYX_parallel
-    #SBATCH --time=2:30:0
+    #SBATCH --job-name=Test
+    #SBATCH --time=1:00:00
     #SBATCH --exclusive
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=36
+    #SBATCH --ntasks-per-node=36
     #SBATCH --cpus-per-task=1
-
-    # Set the number of threads to 1
-    export OMP_NUM_THREADS=1
-
+    #SBATCH --output=test.out
+ 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=t01
-
+ 
     # Replace [partition name] below with your partition name (e.g. standard)
     #SBATCH --partition=standard
 
     # Replace [QoS name] below with your QoS name (e.g. commercial)
     #SBATCH --qos=commercial
+ 
+    # Load any required modules
+    module load gcc
+    module load mpt
 
-    # Load the default HPC MPI environment
-    module load mpt/2.22
-    module load gcc/8.2.0
-
-    # Load the HELYX-Core environment (select version as needed, e.g. 3.3.2)
-    . /lustre/home/y07/helyx/v3.3.2/CORE/HELYXcore-3.3.2/platforms/linux64Gcc82
-    DPInt32Opt.shrc
+    # Load the HELYX-Core environment v3.5.0 (select version as needed, e.g. 3.5.0)
+    source /scratch/sw/helyx/v3.5.0/CORE/HELYXcore-3.5.0/platforms/activeBuild.shrc
+ 
+    # Set the number of threads to 1
+    export OMP_NUM_THREADS=1
 
     # Launch HELYX applications in parallel
     export myoptions="-parallel"
@@ -80,6 +80,7 @@ the SGI-MPT (Message Passing Toolkit) module is included below. In this example 
        srun $job $myoptions 2>&1 | tee log/$job.$SLURM_JOB_ID.out
 
     done
+
 
 Alternatively, the user can execute most HELYX applications on Cirrus 
 interactively via the GUI by following these simple steps:
