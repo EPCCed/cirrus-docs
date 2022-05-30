@@ -100,8 +100,12 @@ you need a specfic version of the module, you can add more information:
 
     module load intel-compilers-18/18.0.5.274
 
-will load version 18.0.2.274 for you, regardless of the default. If you
-want to clean up, ``module remove`` will remove a loaded module:
+will load version 18.0.2.274 for you, regardless of the default.
+
+If a module loading file cannot be accessed within 10 seconds, a warning message will appear:
+``Warning: Module system not loaded``.
+
+If you want to clean up, ``module remove`` will remove a loaded module:
 
 ::
 
