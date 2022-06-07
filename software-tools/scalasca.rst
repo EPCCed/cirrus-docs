@@ -2,45 +2,58 @@ Profiling using Scalasca
 ===========================
 
 Scalasca is installed on Cirrus, which is an open source performance profiling tool.
-It is built against the ``mpt`` MPI library and the ``openmpi`` SHMEM library, however 
-requires both modules to be loaded as well as the ``gcc`` module.
+Two versions are provided, using GCC 8.2.0 and the Intel 19 compilers; both use the
+HPE MPT library to provide MPI and SHMEM. An important distinction is that the GCC+MPT 
+installation cannot be used to profile Fortran code as MPT does not provide GCC
+Fortran module files. To profile Fortran code, please use the Intel+MPT installation.
+
+Loading the one of the modules will autoload the correct compiler and MPI library:
 
 ::
 
-    module load mpt 
-    module load openmpi
-    module load gcc/8.2.0
-    module load scalasca/2.5 
+    module load scalasca/2.6-gcc8-mpt225
 
-
-The profiler is run with the ``scalasca`` command, however requires the code to be 
-compiled first with the SCORE-P instrumentation wrapper tool. This is done by prepending 
-compilation with ``scorep``:
+or
 
 ::
 
-    scorep mpicc -c main.c
-    scorep mpif90 -openmp main.f90
-    
-Then the Scalasca profiling tool can be run using one of the following commands:
+    module load scalasca/2.6-intel19-mpt225
+
+Once loaded, the profiler may be run with the ``scalasca`` or ``scan`` commands, but
+the code must first be compiled first with the Score-P instrumentation wrapper tool.
+This is done by prepending the compilation commands with ``scorep``, e.g.:
 
 ::
 
-    scalasca -analyze mpiexec -np 4 main
-    scan -s mpiexec -np 4 main
+    scorep mpicc -c main.c -o main
+    scorep mpif90 -openmp main.f90 -o main
 
+Advanced users may also wish to make use of the Score-P API. This allows you to manually
+define function and region entry and exit points.
 
-This will create a folder in the current directory starting  with *scorep_*.
+You can then profile the execution during a Slurm job by prepending your ``srun`` commands
+with one of the equivalent commands ``scalasca -analyze`` or ``scan -s``:
 
-There is also an associated GUI called Cube, which can be opened with the 
-command ``cube`` and the file in the *scorep_* directory  ending in *.cubex* 
-(or alternatively the whole archive), as seen below:
+::
+
+    scalasca -analyze srun ./main
+    scan -s srun ./main
+
+You will see some output from Scalasca to stdout during the run. Included in that output
+will be the name of an experiment archive directory, starting with *scorep_*, which will
+be created in the working directory. If you want, you can set the name of the directory
+by exporting the ``SCOREP_EXPERIMENT_DIRECTORY`` environment variable in your job script.
+
+There is an associated GUI called Cube which can be used to process and examine the
+experiment results, allowing you to understand your code's performance. This has been made
+available via a Singularity container. To start it, run the command ``cube`` followed by
+the file in the experiment archive directory ending in *.cubex*  (or alternatively the whole
+archive), as seen below:
 
 ::
 
     cube scorep_exp_1/profile.cubex
 
-There is also a  SCORE-P API which code can also be manually annotated with.
-
-More information about Scalasca and its associated toolbox can be found `here <https://apps.fz-juelich.de/scalasca/releases/scalasca/2.3/docs/QuickReference.pdf>`__.  
-
+The Scalasca quick reference guide found `here <https://apps.fz-juelich.de/scalasca/releases/scalasca/2.6/docs/QuickReference.pdf>`__
+provides a good overview of the toolset's use, from instrumentation and use of the API to
+analysis with Cube.
