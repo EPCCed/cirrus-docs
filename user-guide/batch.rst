@@ -621,7 +621,26 @@ For example, to run this program on 128 MPI processes you have two options:
    In this case, srun does the sensible thing and allocates MPI processes as evenly as it can across 
    nodes. For example, the second option above would result in 32 MPI processes on each of the 4 nodes.
 
-See above for a more detailed discussion of the different ``sbatch`` options
+See above for a more detailed discussion of the different ``sbatch`` options.
+
+Note on MPT task placement
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, ``mpt`` will distribute processss to physical cores (cores 0-17
+on socket 0, and cores 18-35 on socket 1) in a cyclic fashion. That
+is, rank 0 would be placed on core 0, task 1 on core 18, rank 2 on
+core 1, and so on (in a single-node job). This may be undesirable. Block,
+rather than cyclic, distribution can be obtained with
+
+.. code-block:: bash
+
+   #SBATCH --distribution=block:block
+
+The ``block:block`` here refers to the distribution on both nodes and
+sockets. This will distribute rank 0 for core 0, rank 1 to core 1,
+rank 2 to core 2, and so on.
+
+
 
 Example: job submission script for MPI+OpenMP (mixed mode) parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
