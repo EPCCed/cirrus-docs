@@ -7,7 +7,7 @@ system is network mounted and shared across the login nodes and GPU compute node
 similar way to the normal, spinning-disk Lustre file system but has different performanc
 characteristics.
 
-The solid state storage has a maximum useable capacity of 256 TB which is shared between
+The solid state storage has a maximum usable capacity of 256 TB which is shared between
 all users.
 
 Backups, quotas and data longevity

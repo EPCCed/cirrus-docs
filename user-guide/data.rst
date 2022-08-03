@@ -25,7 +25,7 @@ There are also two different types of node available to users:
 - Compute nodes
 
 Each type of node sees a different combination of the storage types. The following table shows which storage
-options are avalable on different node types:
+options are available on different node types:
 
 +-------------+-------------+---------------+-------------+
 | Storage     | Login nodes | Compute nodes | Notes       |

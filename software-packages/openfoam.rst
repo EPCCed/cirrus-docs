@@ -69,7 +69,7 @@ on two nodes, with 36 MPI tasks per node.
   module load openfoam/v8.0
   source ${FOAM_INSTALL_PATH}/etc/bashrc
 
-  # Compose OpenFOAM work in the ususal way, except that parallel
+  # Compose OpenFOAM work in the usual way, except that parallel
   # executables are launched via srun. For example:
 
   srun interFoam -parallel

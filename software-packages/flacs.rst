@@ -149,7 +149,7 @@ for the job and to execute the work. These are discussed in more detail
 below.
 
 The ``flacs`` module is loaded to make the application available. Note that
-you should specify the specfic version you require:
+you should specify the specific version you require:
 
 ::
 
@@ -240,7 +240,7 @@ Running many related scenarios with the FLACS simulator is ideally suited for
 using `job arrays <../user-guide/batch.html#job-arrays>`_, i.e. running the
 simulations as part of a single job.
 
-Note you must determine ahead of time the number of senarios involved.
+Note you must determine ahead of time the number of scenarios involved.
 This determines the number of array elements, which must be specified
 at the point of job submission. The number of array elements is
 specified by ``--array`` argument to ``sbatch``.

@@ -467,7 +467,7 @@ job's working directory once your job starts running.
 
   This file is plain text and can contain useful information to help debugging
   if a job is not working as expected. The Cirrus Service Desk team will often
-  ask you to provide the contents of this file if oyu contact them for help 
+  ask you to provide the contents of this file if you contact them for help 
   with issues.
 
 Specifying resources in job scripts
@@ -558,7 +558,7 @@ Example parallel job submission scripts
 A subset of example job submission scripts are included in full below.
 
 .. Hint::
-   Do not replace ``srun`` with ``mpirun`` in the following examples. Although this might work under special circustances, it is not guaranteed and therefore not supported.
+   Do not replace ``srun`` with ``mpirun`` in the following examples. Although this might work under special circumstances, it is not guaranteed and therefore not supported.
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

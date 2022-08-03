@@ -4,7 +4,7 @@ Using Python
 Python on Cirrus is provided by the `Anaconda <https://www.continuum.io/>`__
 distribution. The Python 3 version of the distribution is available.
 
-The central installation provides many of the most common packges used for
+The central installation provides many of the most common packages used for
 scientific computation and data analysis.
 
 If the packages you require are not included in the central Anaconda Python
@@ -214,7 +214,7 @@ mpi4py for GPU
 
 There's also an mpi4py module (again using OpenMPI) that is tailored for CUDA 11.6 on the Cirrus
 GPU nodes, ``mpi4py/3.1.3-ompi-gpu``. We show below an example that features an MPI reduction
-peformed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
+performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
 
 .. code-block:: python
 
@@ -528,7 +528,7 @@ you can start from a login node prompt.
 2. Run ``export JUPYTER_RUNTIME_DIR=$(pwd)``.
 
 3. Start the JupyterLab server by running ``jupyter lab --ip=0.0.0.0 --no-browser``
-   - once it’s started, you will see some lines resembling the following ouput.
+   - once it’s started, you will see some lines resembling the following output.
 
    ::
 

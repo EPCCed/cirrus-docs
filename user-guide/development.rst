@@ -70,7 +70,7 @@ If you want more info on any of the modules, you can use the
     -------------------------------------------------------------------
 
 The simple ``module list`` command will give the names of the modules
-and their versions you have presently loaded in your envionment, e.g.:
+and their versions you have presently loaded in your environment, e.g.:
 
 ::
 
@@ -94,7 +94,7 @@ to load the intel-compilers-18 into the development environment:
     module load intel-compilers-18
 
 This will load the default version of the intel compilers. If
-you need a specfic version of the module, you can add more information:
+you need a specific version of the module, you can add more information:
 
 ::
 
@@ -517,7 +517,7 @@ libraries (i.e. all of the object code of referenced libraries are contained in 
 executable file).  This has the advantage
 that once an executable is created, whenever it is run in the future, it
 will always use the same object code (within the limit of changing runtime 
-environemnt). However, executables compiled with static libraries have
+environment). However, executables compiled with static libraries have
 the potential disadvantage that when multiple instances are running
 simultaneously multiple copies of the libraries used are held in memory.
 This can lead to large amounts of memory being used to hold the

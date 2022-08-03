@@ -308,7 +308,7 @@ For the Cirrus modules to be available in your Singularity container you need to
 In addition, when you use the container you must invoke access as a login shell to have access to the
 module commands.
 
-Below, is an example Singularity definiton file that builds a CentOS 7 image with access to TCL modules
+Below, is an example Singularity definition file that builds a CentOS 7 image with access to TCL modules
 already installed on Cirrus.
 
 ::

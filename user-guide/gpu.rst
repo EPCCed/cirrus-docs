@@ -5,7 +5,7 @@ Cirrus has 38 GPU compute nodes each equipped with 4 NVIDIA V100 (Volta)
 GPU cards. This section of the user guide gives some details of the
 hardware; it also covers how to compile and run standard GPU applications.
 
-.. Those interested specificially in machine learning applications
+.. Those interested specifically in machine learning applications
 .. (particularly using packages such as PyTorch) may be interested
 .. in THIS PENDING PAGE.
 

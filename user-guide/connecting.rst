@@ -145,7 +145,7 @@ correctly to be able to access Cirrus.
 
   If your SSH key pair is not stored in the default location (usually
   ``~/.ssh/id_rsa``) on your local system, you may need to specify the
-  path to the private part of the key wih the ``-i`` option to ``ssh``.
+  path to the private part of the key with the ``-i`` option to ``ssh``.
   For example, if your key is in a file called ``keys/id_rsa_cirrus``
   you would use the command
   ``ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk``

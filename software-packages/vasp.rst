@@ -19,7 +19,7 @@ Using VASP on Cirrus
 --------------------
 
 **VASP is only available to users who have a valid VASP licence. VASP 5 and VASP 6 are
-seperate packages on Cirrus and requests for access need to be made separately for the
+separate packages on Cirrus and requests for access need to be made separately for the
 two versions via SAFE.**
 
 If you have a VASP 5 or VASP 6 licence and wish to have access to VASP on Cirrus
