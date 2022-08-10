@@ -21,7 +21,7 @@ Cirrus and to enable your access please contact the Cirrus helpdesk.
 
 The standard mode of using Hyperworks on Cirrus is to use the installation
 of the Desktop application on your local workstation or laptop to set
-up your model/simulation. Once this has been doen you would transsfer the
+up your model/simulation. Once this has been done you would transsfer the
 required files over to Cirrus using SSH and then launch the appropriate
 Solver program (OptiStruct, RADIOSS, MotionSolve).
 
@@ -128,7 +128,7 @@ There are four different parallelisation schemes for SPMD OptStruct that are
 selected by different flags:
 
 * Load decomposition (master/slave): ``-mpimode`` flag
-* Domain decompostion: ``-ddmmode`` flag
+* Domain decomposition: ``-ddmmode`` flag
 * Multi-model optimisation: ``-mmomode`` flag
 * Failsafe topology optimisation: ``-fsomode`` flag
 
@@ -166,7 +166,7 @@ Example OptiStruct SPMD job submission script:
    #   using threading.
    export OMP_NUM_THREADS=1
 
-   # Run the OptStruct SPMD Solver (domain decompostion mode)
+   # Run the OptStruct SPMD Solver (domain decomposition mode)
    #   Use 72 cores, 36 on each node (i.e. all physical cores)
    #   srun picks up the distribution from the sbatch options
    srun --ntasks=72 $ALTAIR_HOME/hwsolvers/optistruct/bin/linux64/optistruct_14.0.211_linux64_impi box.fem -ddmmode

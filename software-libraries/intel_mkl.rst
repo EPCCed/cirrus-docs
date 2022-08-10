@@ -120,7 +120,7 @@ ILP vs LP interface layer
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most applications will use 32-bit (4-byte) integers. This means the MKL
-32-bit integer inteface should be selected (which gives the ``_lp64``
+32-bit integer interface should be selected (which gives the ``_lp64``
 extensions seen in the examples above).
 
 For applications which require, e.g., very large array indices
