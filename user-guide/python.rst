@@ -88,7 +88,7 @@ jupyter, matplotlib, numpy, pandas and scipy.
 mpi4py for CPU
 ~~~~~~~~~~~~~~
 
-For example, the ``mpi4py/3.1.3-mpt`` module provides mpi4py 3.1.3 linked with HPE MPT 2.22.
+For example, the ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 
 The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
 across two compute nodes.
@@ -101,9 +101,14 @@ across two compute nodes.
     Parallel Numpy Array Broadcast 
     """
 
+    import mpi4py.rc
+    mpi4py.rc.initialize = False
+
     from mpi4py import MPI
     import numpy as np
     import sys
+
+    MPI.Init()
 
     comm = MPI.COMM_WORLD
 
@@ -139,6 +144,11 @@ across two compute nodes.
                 "Error, rank %d array is not as expected.\n"
                 % (rank))
 
+    MPI.Finalize()
+
+The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
+that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
+by calling ``MPI.Init()``.
 
 .. code-block:: bash
 
@@ -155,65 +165,23 @@ across two compute nodes.
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
 
-    module load mpi4py/3.1.3-mpt
-
-    srun numpy-broadcast.py
-
-Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples. 
-
-There's an alternative mpi4py module that links to OpenMPI 4.1.0 called ``mpi4py/3.1.3-ompi``.
-However, the use of this module requires some changes to the Python and Slurm scripts. 
-
-.. code-block:: python
-
-    #!/usr/bin/env python
-
-    """
-    Parallel Numpy Array Broadcast 
-    """
-
-    import mpi4py.rc
-    mpi4py.rc.initialize = False
-
-    from mpi4py import MPI
-    import numpy as np
-    import sys
-
-    MPI.Init()
-
-    comm = MPI.COMM_WORLD
-
-    # Python script is as shown above for the HPE MPT case.
-    ...
-
-    MPI.Finalize()
-
-Firstly, we need to turn off the automatic MPI initialization that would otherwise happen as
-a result of ``from mpi4py import MPI``: this is the purpose of ``mpi4py.rc.initialize = False``.
-The MPI init is then invoked explicitly by calling ``MPI.Init()``.
-
-.. code-block:: bash
-
-    #!/bin/bash
-
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=broadcast
-    ...
-
-    module load mpi4py/3.1.3-ompi
+    module load python/3.9.13
 
     export OMPI_MCA_mca_base_component_show_load_errors=0
 
     srun numpy-broadcast.py
 
-And the Slurm submission script is much the same as earlier except for an `OpenMPI MCA <https://www.open-mpi.org/faq/?category=tuning#mca-def>`_
+The Slurm submission script contains an `OpenMPI MCA <https://www.open-mpi.org/faq/?category=tuning#mca-def>`_
 setting that prevents false errors from being recorded in the output file.
+
+Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples. 
+
 
 mpi4py for GPU
 ~~~~~~~~~~~~~~
 
-There's also an mpi4py module (again using OpenMPI) that is tailored for CUDA 11.6 on the Cirrus
-GPU nodes, ``mpi4py/3.1.3-ompi-gpu``. We show below an example that features an MPI reduction
+There's also an mpi4py module (again using OpenMPI 4.1.4) that is tailored for CUDA 11.6 on the Cirrus
+GPU nodes, ``python/3.9.12-gpu``. We show below an example that features an MPI reduction
 performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
 
 .. code-block:: python
@@ -267,7 +235,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     #SBATCH --nodes=2
     #SBATCH --gres=gpu:4
 
-    module load mpi4py/3.1.3-ompi-gpu
+    module load python/3.9.12-gpu
 
     export OMPI_MCA_mca_base_component_show_load_errors=0
 
@@ -276,15 +244,21 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 Machine Learning frameworks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are several more mpi4py-based modules that also target the Cirrus GPU nodes. These include two machine
-learning frameworks, ``pytorch/1.11.0-gpu`` and ``tensorflow/2.8.0-gpu``. Both modules are Python virtual environments
-based on ``mpi4py/1.3.1-ompi-gpu``. The MPI comms is handled by the `Horovod <https://horovod.readthedocs.io/en/stable/>`__ 0.24.2
+There are several more Python-based modules that also target the Cirrus GPU nodes. These include two machine
+learning frameworks, ``pytorch/1.12.1-gpu`` and ``tensorflow/2.9.1-gpu``. Both modules are Python virtual environments
+that extend ``python/3.9.12-gpu``. The MPI comms is handled by the `Horovod <https://horovod.readthedocs.io/en/stable/>`__ 0.25.0
 package along with the `NVIDIA Collective Communications Library <https://developer.nvidia.com/nccl>`__ v2.11.4.
 
 A full package list for these environments can be obtained by loading the module of interest and then
 running ``pip list``.
 
-Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.24.2_cirrus_gpu.md>`__ .
+.. note::
+
+  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
+  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
+  that export command will ensure the pip cache is located off ``/work``.
+
+Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md>`__ .
 
 More detail on the Cirrus GPU nodes can be found at https://cirrus.readthedocs.io/en/main/user-guide/gpu.html .
 
