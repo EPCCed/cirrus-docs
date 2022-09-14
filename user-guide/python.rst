@@ -237,9 +237,16 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
     module load python/3.9.12-gpu
 
+    export CUPY_CACHE_DIR=${HOME/home/work}/.cupy/kernel_cache
+
+    export OMPI_MCA_mpi_warn_on_fork=0
     export OMPI_MCA_mca_base_component_show_load_errors=0
 
     srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=1 cupy-allreduce.py
+
+By default, the CuPy cache will be located within the user's home directory.
+And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
+``CUPY_CACHE_DIR`` such that the cache is on the ``/work`` file system instead.
 
 Machine Learning frameworks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
