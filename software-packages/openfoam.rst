@@ -14,8 +14,8 @@ from https://openfoam.org/ and from https://www.openfoam.com/.
 You can query the versions of OpenFOAM are currently available on Cirrus
 from the command line with ``module avail openfoam``.
 
-Versions from https://openfoam.org/ are typically ``v7``, ``v8`` etc, while
-versions from  https://www.openfoam.com/ are e.g., ``v2006`` (released
+Versions from https://openfoam.org/ are typically ``v8`` etc, while
+versions from  https://www.openfoam.com/ are typically ``v2006`` (released
 June 2020).
 
 Useful Links
@@ -29,22 +29,15 @@ Using OpenFOAM on Cirrus
 Any batch script which intends to use OpenFOAM should first load the
 appropriate ``openfoam`` module. You then need to source the
 ``etc/bashrc`` file provided by OpenFOAM to set all the relevant
-environment variables. For example, for OpenFOAM v8:
+environment variables. The relevant command is printed to screen when
+the module is loaded. For example, for OpenFOAM v8:
 
 ::
 
    module add openfoam/v8.0
    source ${FOAM_INSTALL_PATH}/etc/bashrc
 
-You should then be able to use OpenFOAM in the usual way. For
-OpenFOAM version v2006, the relevant command is:
-
-::
-
-   module add openfoam/v2006
-   source ${OPENFOAM_CURPATH}/etc/bashrc
-
-
+You should then be able to use OpenFOAM in the usual way.
 
 Example Batch Submisison
 ------------------------
