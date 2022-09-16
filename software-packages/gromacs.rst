@@ -126,12 +126,12 @@ to change these variables when running your script.
    #SBATCH --gres=gpu:4
    
    # Load GROMACS and MPI modules
-   module load gromacs/2021.5+gpu
+   module load gromacs/2022.1-gpu
 
    # Run using input in test_calc.tpr
    export OMP_NUM_THREADS=<OMP thread count>
    srun --ntasks=<MPI task count> --cpus-per-task=<OMP thread count> \
-        mdrun_mpi -ntomp <OMP thread count> -s test_calc.tpr
+        gmx_mpi mdrun -ntomp <OMP thread count> -s test_calc.tpr
 
 Information on how to assign different types of calculation to the
 CPU or GPU appears in the GROMACS documentation under
