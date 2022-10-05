@@ -181,7 +181,7 @@ mpi4py for GPU
 ~~~~~~~~~~~~~~
 
 There's also an mpi4py module (again using OpenMPI 4.1.4) that is tailored for CUDA 11.6 on the Cirrus
-GPU nodes, ``python/3.9.12-gpu``. We show below an example that features an MPI reduction
+GPU nodes, ``python/3.9.13-gpu``. We show below an example that features an MPI reduction
 performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
 
 .. code-block:: python
@@ -235,7 +235,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     #SBATCH --nodes=2
     #SBATCH --gres=gpu:4
 
-    module load python/3.9.12-gpu
+    module load python/3.9.13-gpu
 
     export CUPY_CACHE_DIR=${HOME/home/work}/.cupy/kernel_cache
 
@@ -253,7 +253,7 @@ Machine Learning frameworks
 
 There are several more Python-based modules that also target the Cirrus GPU nodes. These include two machine
 learning frameworks, ``pytorch/1.12.1-gpu`` and ``tensorflow/2.9.1-gpu``. Both modules are Python virtual environments
-that extend ``python/3.9.12-gpu``. The MPI comms is handled by the `Horovod <https://horovod.readthedocs.io/en/stable/>`__ 0.25.0
+that extend ``python/3.9.13-gpu``. The MPI comms is handled by the `Horovod <https://horovod.readthedocs.io/en/stable/>`__ 0.25.0
 package along with the `NVIDIA Collective Communications Library <https://developer.nvidia.com/nccl>`__ v2.11.4.
 
 A full package list for these environments can be obtained by loading the module of interest and then
