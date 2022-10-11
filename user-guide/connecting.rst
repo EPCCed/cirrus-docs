@@ -6,6 +6,11 @@ directly from a command line terminal or using an SSH client. In
 addition data can be transferred to and from the Cirrus system using
 ``scp`` from the command line or by using a file transfer client.
 
+Before following the process below, we assume you have set up an account on Cirrus through 
+the EPCC SAFE. Documentation on how to do this can be found at:
+ 
+   `SAFE Guide for Users <https://epcced.github.io/safe-docs/safe-for-users/>`__
+
 This section covers the basic connection methods.
 
 Access credentials
