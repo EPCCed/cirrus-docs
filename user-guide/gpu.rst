@@ -523,3 +523,60 @@ https://docs.nvidia.com/nsight-compute/2021.2/index.html
 
 Nsight Compute v2021.3.1.0 has been found to work for codes compiled using
 ``nvhpc`` versions 21.2 and 21.9.
+
+
+Compiling and using GPU-aware MPI
+---------------------------------
+
+For applications using message passing via MPI, considerable improvements
+in performance may be available by allowing device memory references in
+MPI calls. This allows replacement of relevant host device transfers by
+direct communication within a node via NVLink. Between nodes, MPI
+communication will remain limited by network latency and bandwidth.
+
+A version of OpenMPI with both CUDA-aware MPI support and SLURM support
+is available via
+
+::
+
+   $ module load openmpi/4.1.4-cuda-11.6
+   $ module load nvidia/nvhpc-nompi/22.2
+
+The location of the MPI include files and libraries must then be
+specified explicitly, e.g.,
+
+::
+
+   $ nvcc -I${MPI_HOME}/include my_program.cu -L${MPI_HOME}/lib -lmpi
+
+This will produce an executable in the usual way.
+
+
+Run time
+~~~~~~~~
+
+A batch script to use such an exectable might be:
+
+::
+
+   #!/bin/bash
+   
+   #SBATCH --time=00:20:00
+
+   #SBATCH --nodes=1
+   #SBATCH --partition=gpu-cascade
+   #SBATCH --qos=gpu
+   #SBATCH --gres=gpu:4
+
+   module load openmpi/4.1.2-cuda-11.6  
+
+   export OMP_NUM_THREADS=1
+
+   # Note the addition
+   export OMPI_MCA_pml=ob1
+
+   srun --ntasks=4 --cpus-per-task=10 --hint=nomultithread ./my_program
+
+Note the addtion of the environment varaible ``OMPI_MCA_pml=ob1`` is
+required for correct operation. As before, MPI and placement options
+should be directly specified to ``srun`` and not via ``SBATCH`` directives. 
