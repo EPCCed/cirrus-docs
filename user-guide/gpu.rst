@@ -555,7 +555,7 @@ This will produce an executable in the usual way.
 Run time
 ~~~~~~~~
 
-A batch script to use such an exectable might be:
+A batch script to use such an executable might be:
 
 ::
 
@@ -577,6 +577,6 @@ A batch script to use such an exectable might be:
 
    srun --ntasks=4 --cpus-per-task=10 --hint=nomultithread ./my_program
 
-Note the addtion of the environment varaible ``OMPI_MCA_pml=ob1`` is
+Note the addition of the environment variable ``OMPI_MCA_pml=ob1`` is
 required for correct operation. As before, MPI and placement options
 should be directly specified to ``srun`` and not via ``SBATCH`` directives. 
