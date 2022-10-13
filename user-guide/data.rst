@@ -65,6 +65,44 @@ for your Cirrus login account.
 Quota and usage data on SAFE is updated twice daily so may not be exactly up to date with the situation on the
 system itself.
 
+From the command line
+"""""""""""""""""""""
+
+Some useful information on the current contents of directories on
+the ``/home`` file system
+is available from the command line by using the Ceph command ``getfattr``.
+This is to be preferred over standard Unix commands such as ``du`` for
+reasons of efficiency.
+
+For example, the number of entries (files plus directories) in a home
+directory can be queried via
+
+::
+
+   $ cd
+   $ getfattr -n ceph.dir.entries .
+   # file: .
+   ceph.dir.entries="33"
+
+The corresponding attribute ``rentries`` gives the recursive total in
+all subdirectories, that is, the total number of files and directories:
+
+::
+
+   $ getfattr -n ceph.dir.rentries .
+   # file: .
+   ceph.dir.rentries="1619179"
+
+Other useful attributes (all prefixed with ``ceph.dir.``) include ``files``
+which is the number of ordinary files, ``subdirs`` the number of
+subdirectories, and ``bytes`` the total number of bytes used. All these
+have a corresponding recursive version, respectively: ``rfiles``,
+``rsubdirs``, and ``rbytes``.
+
+A full path name can be specified if required.
+
+
+
 Work file system
 ~~~~~~~~~~~~~~~~
 
