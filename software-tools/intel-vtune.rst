@@ -27,6 +27,7 @@ which defines which set of hardware counters are monitered in a
 given run. As not all counters are available at the same time, a
 number of different collections are available. A different one
 may be relevant if interested in different aspects of performance.
+Some standard options are:
 
 ``vtune -collect=performance-snapshot`` may be used to product a
 text summary of performance (typically to standard output),
@@ -71,8 +72,8 @@ We assume the application involves OpenMP threads, but no MPI.
 
    vtune -collect=memory-access -r results-memory ./my_application
 
-Profiling will generate a certain amount of addition text information to
-standard output. Detailed profiling data will be stored in
+Profiling will generate a certain amount of additional text information;
+this appears on standard output. Detailed profiling data will be stored in
 various files in a sub-directory, the name of which can be specified
 using the ``-r`` option.
 
@@ -80,9 +81,10 @@ Notes
 
 * Older Intel compilers use ``amplxe-cl`` instead of ``vtune`` as the
   command for collection. Some existing features still reflect this
-  older name.
+  older name. Older versions do not offer the "performance-snapshot"
+  collection option.
 
-* Extra time should be allowed the the wall clock time limit to allow
+* Extra time should be allowed in the wall clock time limit to allow
   for processing of the profiling data by ``vtune`` at the end of the
   run. In general, a short run of the application (a few minutes at
   most) should be tried first.
@@ -102,12 +104,45 @@ Notes
 
   This can be safely ignored, as
   a working result will still be obtained. It is possible to increase the limit
-  via the ``-data-limit`` options (500 MB is the default). However, larger
+  via the ``-data-limit`` option (500 MB is the default). However, larger
   data files can take an extremely long time to process in the report stage
   at the end of the run, and so the option is not recommended.
 
 * For Intel 20.4, the ``--collect=hostspots`` option has been observed to
   be problematic. We suggest it is not used.
+
+
+Profiling an MPI code
+^^^^^^^^^^^^^^^^^^^^^
+
+Intel VTune can also be used to profile MPI codes. It is recommended that
+the relavant Intel MPI module is used for compilation. The following
+example uses Intel 18 with the older ``amplxe-cl`` command:
+
+::
+
+   #!/bin/bash 
+   
+   #SBATCH --time=00:10:00
+   #SBATCH --nodes=2
+   #SBATCH --exclusive
+
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
+
+   export OMP_NUM_THREADS=18
+
+   module load intel-mpi-18
+   module load intel-compilers-18
+   module load intel-vtune-18
+
+   mpirun -np 4 -ppn 2 amplxe-cl -collect hotspots -r vtune-hotspots \
+          ./my_application
+
+
+Note that the Intel MPI launcher ``mpirun`` is used, and this precedes
+the VTune command. The example runs a total of 4 MPI tasks (``-np 4``)
+with two tasks per node (``-ppn 2``). Each task runs 18 OpenMP threads.
 
 
 Viewing the results
@@ -120,6 +155,7 @@ The latest version is available via
 ::
 
     $ module load oneapi
+    $ module load vtune/latest
     $ vtune-gui
 
 From the GUI, navigate to the appropriate results file to load the
