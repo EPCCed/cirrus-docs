@@ -83,4 +83,5 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
 
    software-tools/ddt
    software-tools/scalasca
+   software-tools/intel-vtune
 
