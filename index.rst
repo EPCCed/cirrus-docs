@@ -62,7 +62,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/helyx
    software-packages/lammps
    software-packages/MATLAB
-   software-packages/molpro
    software-packages/namd
    software-packages/openfoam
    software-packages/qe
