@@ -46,12 +46,11 @@ e.g.
 
 ::
 
-   [auser@cirrus-login3 ~]$ sinfo 
+   [auser@cirrus-login3 ~]$ sinfo
 
-  PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-  standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33] 
-  gpu-skylake    up   infinite      2   idle r2i3n[0-1] 
-  gpu-cascade    up   infinite     36   idle r2i4n[0-8],r2i5n[0-8],r2i6n[0-8],r2i7n[0-8] 
+  PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
+  standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33]
+  gpu            up   infinite     36   idle r2i4n[0-8],r2i5n[0-8],r2i6n[0-8],r2i7n[0-8]
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,8 +75,8 @@ known to the scheduler. For example:
 ::
 
   [auser@cirrus-login3 ~]$ squeue
-            JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON) 
-            1554  comp-cse CASTEP_a  auser  R       0:03      2 r2i0n[18-19] 
+            JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+            1554  comp-cse CASTEP_a  auser  R       0:03      2 r2i0n[18-19]
 
 will list all jobs on Cirrus.
 
@@ -91,8 +90,8 @@ to just your jobs by adding the ``-u $USER`` option:
 ``scancel``: deleting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``scancel`` is used to delete a jobs from the scheduler. If the job is waiting 
-to run it is simply cancelled, if it is a running job then it is stopped 
+``scancel`` is used to delete a jobs from the scheduler. If the job is waiting
+to run it is simply cancelled, if it is a running job then it is stopped
 immediately. You need to provide the job ID of the job you wish to cancel/stop.
 For example:
 
@@ -108,16 +107,16 @@ Resource Limits
 .. note::
 
   If you have requirements which do not fit within the current QoS, please contact the
-  Service Desk and we can discuss how to accommodate your requirements. 
+  Service Desk and we can discuss how to accommodate your requirements.
 
-There are different resource limits on Cirrus for different purposes. There 
+There are different resource limits on Cirrus for different purposes. There
 are three different things you need to specify for each job:
 
 * The amount of *primary resource* you require (more information on this below)
 * The *partition* that you want to use - this specifies the nodes that are eligible to run your job
 * The *Quality of Service (QoS)* that you want to use - this specifies the job limits that apply
 
-Each of these aspects are described in more detail below. 
+Each of these aspects are described in more detail below.
 
 The *primary resources* you request are *compute* resources: either CPU cores on the standard
 compute nodes or GPU cards on the GPU compute nodes. Other node resources: memory on the
@@ -127,7 +126,7 @@ the primary resource that you request.
 .. warning::
 
    On Cirrus, you cannot specify the memory for a job using the ``--mem`` options to Slurm
-   (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are 
+   (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are
    assigned is calculated from the amount of primary resource you request.
 
 Primary resources on standard (CPU) compute nodes
@@ -172,7 +171,7 @@ Partitions
 ~~~~~~~~~~
 
 On Cirrus, compute nodes are grouped into partitions. You will have to specify a partition
-using the ``--partition`` option in your submission script. The following table has a list 
+using the ``--partition`` option in your submission script. The following table has a list
 of active partitions on Cirrus.
 
 .. list-table:: Cirrus Partitions
@@ -185,16 +184,12 @@ of active partitions on Cirrus.
      - Notes
    * - standard
      - CPU nodes with 2x 18-core Intel Broadwell processors
-     - 280
+     - 352
      -
-   * - gpu-cascade
+   * - gpu
      - GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors
      - 36
      -
-   * - gpu-skylake
-     - GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Skylake processors
-     - 2
-     - Only available for short test/development jobs
 
 You can list the active partitions using
 
@@ -210,7 +205,7 @@ You can list the active partitions using
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Cirrus Quality of Service (QoS) is used alongside partitions to set resource limits. The 
+On Cirrus Quality of Service (QoS) is used alongside partitions to set resource limits. The
 following table has a list of active QoS on Cirrus.
 
 .. list-table:: Cirrus QoS
@@ -227,53 +222,60 @@ following table has a list of active QoS on Cirrus.
      - No limit
      - 500 jobs
      - 4 days
-     - 2520 cores (70 nodes/25%)
+     - 88 nodes (3168 cores/25%)
      - standard
-     - 
-   * - capability
+     -
+   * - largescale
      - 1 job
      - 4 jobs
      - 24 hours
-     - 228 nodes (8192+ cores/81%) or 144 GPUs
-     - standard, gpu-cascade
-     - 
+     - 228 nodes (8192+ cores/65%) or 144 GPUs
+     - standard, gpu
+     -
    * - long
      - 5 jobs
      - 20 jobs
      - 14 days
      - 16 nodes or 8 GPUs
-     - standard, gpu-cascade
-     - 
+     - standard, gpu
+     -
    * - highpriority
      - 10 jobs
      - 20 jobs
      - 4 days
      - 140 nodes
      - standard
-     - 
+     -
    * - gpu
      - No limit
      - 128 jobs
      - 4 days
      - 64 GPUs (16 nodes/40%)
-     - gpu-skylake, gpu-cascade
-     - 
+     - gpu
+     -
    * - short
      - 1 job
      - 2 jobs
      - 20 minutes
      - 2 nodes or 4 GPUs
-     - standard, gpu-skylake, gpu-cascade
-     - 
+     - standard, gpu
+     -
+   * - lowpriority
+     - No limit
+     - 100 jobs
+     - 2 days
+     - 36 nodes (1296 cores/10%) or 16 GPUs
+     - standard, gpu
+     -
 
 
 You can find out the QoS that you can use by running the following command:
 
-:: 
+::
 
   sacctmgr show assoc user=$USER cluster=cirrus format=cluster,account,user,qos%50
-   
-   
+
+
 Troubleshooting
 ---------------
 
@@ -348,7 +350,7 @@ the likely cause:
 * ``error: QOSMaxWallDurationPerJobLimit``
     ``error: Batch job submission failed: Job violates accounting/QOS policy``
     ``(job submit limit, user's size and/or time limits)``
-  
+
     The script has probably specified a time limit which is too long for
     the corresponding QoS. E.g., the time limit for the short QoS
     is 20 minutes.
@@ -412,47 +414,47 @@ For a full list of see `Job State Codes <https://slurm.schedmd.com/squeue.html#l
    * - Reason
      - Description
    * - Priority
-     - One or more higher priority jobs exist for this partition or advanced reservation. 
+     - One or more higher priority jobs exist for this partition or advanced reservation.
    * - Resources
-     - The job is waiting for resources to become available. 
+     - The job is waiting for resources to become available.
    * - BadConstraints
-     - The job's constraints can not be satisfied. 
+     - The job's constraints can not be satisfied.
    * - BeginTime
-     - The job's earliest start time has not yet been reached. 
+     - The job's earliest start time has not yet been reached.
    * - Dependency
-     - This job is waiting for a dependent job to complete. 
+     - This job is waiting for a dependent job to complete.
    * - Licenses
-     - The job is waiting for a license. 
+     - The job is waiting for a license.
    * - WaitingForScheduling
-     - No reason has been set for this job yet. Waiting for the scheduler to determine the appropriate reason. 
+     - No reason has been set for this job yet. Waiting for the scheduler to determine the appropriate reason.
    * - Prolog
-     - Its PrologSlurmctld program is still running. 
+     - Its PrologSlurmctld program is still running.
    * - JobHeldAdmin
-     - The job is held by a system administrator. 
+     - The job is held by a system administrator.
    * - JobHeldUser
-     - The job is held by the user. 
+     - The job is held by the user.
    * - JobLaunchFailure
-     - The job could not be launched. This may be due to a file system problem, invalid program name, etc. 
+     - The job could not be launched. This may be due to a file system problem, invalid program name, etc.
    * - NonZeroExitCode
-     - The job terminated with a non-zero exit code. 
+     - The job terminated with a non-zero exit code.
    * - InvalidAccount
      - The job's account is invalid.
    * - InvalidQOS
-     - The job's QOS is invalid. 
+     - The job's QOS is invalid.
    * - QOSUsageThreshold
-     - Required QOS threshold has been breached. 
+     - Required QOS threshold has been breached.
    * - QOSJobLimit
-     - The job's QOS has reached its maximum job count. 
+     - The job's QOS has reached its maximum job count.
    * - QOSResourceLimit
-     - The job's QOS has reached some resource limit. 
+     - The job's QOS has reached some resource limit.
    * - QOSTimeLimit
-     - The job's QOS has reached its time limit. 
+     - The job's QOS has reached its time limit.
    * - NodeDown
-     - A node required by the job is down. 
+     - A node required by the job is down.
    * - TimeLimit
-     - The job exhausted its time limit. 
+     - The job exhausted its time limit.
    * - ReqNodeNotAvail
-     - Some node specifically required by the job is not currently available. The node may currently be in use, reserved for another job, in an advanced reservation, DOWN, DRAINED, or not responding. Nodes which are DOWN, DRAINED, or not responding will be identified as part of the job's "reason" field as "UnavailableNodes". Such nodes will typically require the intervention of a system administrator to make available. 
+     - Some node specifically required by the job is not currently available. The node may currently be in use, reserved for another job, in an advanced reservation, DOWN, DRAINED, or not responding. Nodes which are DOWN, DRAINED, or not responding will be identified as part of the job's "reason" field as "UnavailableNodes". Such nodes will typically require the intervention of a system administrator to make available.
 
 For a full list of see `Job Reasons <https://slurm.schedmd.com/squeue.html#lbAF>`__
 
@@ -467,7 +469,7 @@ job's working directory once your job starts running.
 
   This file is plain text and can contain useful information to help debugging
   if a job is not working as expected. The Cirrus Service Desk team will often
-  ask you to provide the contents of this file if you contact them for help 
+  ask you to provide the contents of this file if you contact them for help
   with issues.
 
 Specifying resources in job scripts
@@ -475,11 +477,11 @@ Specifying resources in job scripts
 
 You specify the resources you require for your job using directives at the
 top of your job submission script using lines that start with the directive
-``#SBATCH``. 
+``#SBATCH``.
 
 .. note::
 
-  Options provided using ``#SBATCH`` directives can also be specified as 
+  Options provided using ``#SBATCH`` directives can also be specified as
   command line options to ``srun``.
 
 If you do not specify any options, then the default for each option will
@@ -488,9 +490,9 @@ they wish to charge the job too, the partition they wish to use and the
 QoS they want to use with the options:
 
   - ``--account=<budgetID>`` your budget ID is usually something like
-    ``t01`` or ``t01-test``. You can see which budget codes you can 
+    ``t01`` or ``t01-test``. You can see which budget codes you can
     charge to in SAFE.
-  - ``--partition=<partition>`` The partition specifies the set of 
+  - ``--partition=<partition>`` The partition specifies the set of
     nodes you want to run on. More information on available partitions
     is given above.
   - ``--qos="QoS"`` The QoS specifies the limits to apply to your job. More
@@ -500,14 +502,14 @@ Other common options that are used are:
 
   - ``--time=<hh:mm:ss>`` the maximum walltime for your job. *e.g.* For a 6.5 hour
     walltime, you would use ``--time=6:30:0``.
-  - ``--job-name=<jobname>`` set a name for the job to help identify it in 
+  - ``--job-name=<jobname>`` set a name for the job to help identify it in
     Slurm command output.
 
 Other not so common options that are used are:
 
   - ``--switches=max-switches{@max-time-to-wait}`` optimum switches and max time to wait
-    for them. The scheduler will wait indefinitely when attempting to place these jobs. 
-    Users can override this indefinite wait. The scheduler will deliberately place work to 
+    for them. The scheduler will wait indefinitely when attempting to place these jobs.
+    Users can override this indefinite wait. The scheduler will deliberately place work to
     clear space for these jobs, so we don't foresee the indefinite wait nature to be an issue.
 
 In addition, parallel jobs will also need to specify how many nodes,
@@ -538,12 +540,12 @@ compute nodes. As well as launching the executable, ``srun`` also allows you
 to specify the distribution and placement (or *pinning*) of the parallel
 processes and threads.
 
-If you are running MPI jobs that do not also use OpenMP threading, then you 
-should use ``srun`` with no additional options. ``srun`` will use the 
-specification of nodes and tasks from your job script, ``sbatch`` or 
-``salloc`` command to launch the correct number of parallel tasks. 
+If you are running MPI jobs that do not also use OpenMP threading, then you
+should use ``srun`` with no additional options. ``srun`` will use the
+specification of nodes and tasks from your job script, ``sbatch`` or
+``salloc`` command to launch the correct number of parallel tasks.
 
-If you are using OpenMP threads then you will generally add the 
+If you are using OpenMP threads then you will generally add the
 ``--cpu-bind=cores`` option to ``srun`` to bind threads to cores to obtain
 the best performance.
 
@@ -584,7 +586,7 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
-    
+
     # Load the default HPE MPI environment
     module load mpt
 
@@ -592,7 +594,7 @@ nodes and 36 MPI ranks per node for 20 minutes would look like:
     cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
+    #   This prevents any threaded system libraries from automatically
     #   using threading.
     export OMP_NUM_THREADS=1
 
@@ -612,13 +614,13 @@ For example, to run this program on 128 MPI processes you have two options:
 
  - set ``--tasks-per-node=32`` for an even distribution across nodes (this may not always be possible depending on the exact combination of nodes requested and MPI tasks required)
  - set the number of MPI tasks explicitly using ``#SBATCH --ntasks=128``
- 
+
  .. note::
 
-   If you specify ``--ntasks`` explicitly and it is not compatible with the value of ``tasks-per-node`` then you will get a warning message from srun such as ``srun:   
+   If you specify ``--ntasks`` explicitly and it is not compatible with the value of ``tasks-per-node`` then you will get a warning message from srun such as ``srun:
    Warning: can't honor --ntasks-per-node set to 36``.
-   
-   In this case, srun does the sensible thing and allocates MPI processes as evenly as it can across 
+
+   In this case, srun does the sensible thing and allocates MPI processes as evenly as it can across
    nodes. For example, the second option above would result in 32 MPI processes on each of the 4 nodes.
 
 See above for a more detailed discussion of the different ``sbatch`` options.
@@ -655,9 +657,9 @@ In the example below, we are using 4 nodes for 6 hours. There are 8 MPI
 processes in total (2 MPI processes per node) and 18 OpenMP threads per MPI
 process. This results in all 36 physical cores per node being used.
 
-.. note:: 
+.. note::
 
-   the use of the ``--cpu-bind=cores`` option to generate the correct 
+   the use of the ``--cpu-bind=cores`` option to generate the correct
    affinity settings.
 
 .. code-block:: bash
@@ -679,7 +681,7 @@ process. This results in all 36 physical cores per node being used.
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
-    
+
     # Load the default HPE MPI environment
     module load mpt
 
@@ -694,7 +696,7 @@ process. This results in all 36 physical cores per node being used.
     #   Using 8 MPI processes
     #   2 MPI processes per node
     #   18 OpenMP threads per MPI process
- 
+
    srun --cpu-bind=cores ./my_mixed_executable.x arg1 arg2
 
 Example: job submission script for OpenMP parallel job
@@ -763,7 +765,7 @@ Job script for a job array
 
 As an example, the following script runs 56 subjobs, with the subjob
 index as the only argument to the executable. Each subjob requests a
-single node and uses all 36 cores on the node by placing 1 MPI 
+single node and uses all 36 cores on the node by placing 1 MPI
 process per core and specifies 4 hours maximum runtime per subjob:
 
 .. code-block:: bash
@@ -785,7 +787,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --partition=standard
     # We use the "standard" QoS as our runtime is less than 4 days
     #SBATCH --qos=standard
-    
+
     # Load the default HPE MPI environment
     module load mpt
 
@@ -793,7 +795,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     cd $SLURM_SUBMIT_DIR
 
     # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
+    #   This prevents any threaded system libraries from automatically
     #   using threading.
     export OMP_NUM_THREADS=1
 
@@ -819,7 +821,7 @@ simulations requiring multiple steps.
 .. note::
 
    The ``--parsable`` option to ``sbatch`` can simplify working with job dependencies.
-   It returns the job ID in a format that can be used as the input to other 
+   It returns the job ID in a format that can be used as the input to other
    commands.
 
 For example:
@@ -878,7 +880,7 @@ resources and return control to the front end shell.
 
   [user@r1i0n14]$ exit
   logout
-  [user@cirrus-login1]$ 
+  [user@cirrus-login1]$
 
 Note that the new interactive shell will reflect the environment of the
 original login shell. If you do not wish this, add the ``--export=none``
@@ -910,7 +912,7 @@ To submit a request for a job reserving 2 nodes (72 physical cores) for
     salloc: Granted job allocation 8699
     salloc: Waiting for resource configuration
     salloc: Nodes r1i7n[13-14] are ready for job
-    [user@cirrus-login1]$ 
+    [user@cirrus-login1]$
 
 Note that this starts a new shell on the login node associated with the
 allocation (the prompt has not changed). The allocation may be released
@@ -920,7 +922,7 @@ by exiting this new shell.
 
   [user@cirrus-login1]$ exit
   salloc: Relinquishing job allocation 8699
-  [user@cirrus-login1]$ 
+  [user@cirrus-login1]$
 
 While the allocation lasts you will be able to run parallel jobs on the
 compute nodes by issuing the ``srun`` command in the normal way. The
@@ -940,7 +942,7 @@ allocation is still running, use ``squeue``:
 ::
 
   [user@cirrus-login1]$ squeue -u user
-             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON) 
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
               8718  standard     bash    user   R       0:07      2 r1i7n[18-19]
 
 Choose a time limit long enough to allow the relevant work to be completed.
@@ -970,15 +972,20 @@ charged the full rate for the entire reservation at the time of booking, whether
 use the nodes for the full time. In addition, you will not be refunded the compute time if
 you fail to use them due to a job crash unless this crash is due to a system failure.
 
-To request a reservation please contact the `Cirrus Service Desk <mailto:support@cirrus.ac.uk>`_.
-You need to provide the following:
+To request a reservation you complete a form on SAFE:
 
-- The start time and date of the reservation.
-- The end time and date of the reservation.
-- The project code for the reservation.
-- The number of nodes/cores/GPU required.
-- Your justification for the reservation -- this must be provided or the request will be rejected.
+ 1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
+ 2. Under the "Login accounts" menu, choose the "Request reservation" option
 
+On the first page, you need to provide the following:
+
+ - The start time and date of the reservation.
+ - The end time and date of the reservation.
+ - Your justification for the reservation -- this must be provided or the request will be rejected.
+ - The number of nodes required.
+
+On the second page, you will need to specify which username you wish the reservation to be charged against
+and, once the username has been selected, the budget you want to charge the reservation to.
 
 Your request will be checked by the Cirrus User Administration team and, if approved, you will
 be provided a reservation ID which can be used on the system. To submit jobs to a reservation,
@@ -987,7 +994,7 @@ submission script or Slurm job submission command.
 
 .. note::
 
-   You must have at least 1 CPUh - and 1 GPUh for reservations on GPU nodes - to be able to 
+   You must have at least 1 CPUh - and 1 GPUh for reservations on GPU nodes - to be able to
    submit jobs to reservations.
 
 .. tip::
@@ -1060,7 +1067,7 @@ E.g., a submission script might contain:
   export TMPDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
   mkdir -p $TMPDIR
 
-to set the standard temporary directory to a unique location in the 
+to set the standard temporary directory to a unique location in the
 solid state storage. You will also probably want to add a line to clean up the
 temporary directory at the end of your job script, e.g.
 
