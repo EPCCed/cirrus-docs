@@ -38,7 +38,7 @@ For example, the following script will run a GROMACS MD job using 2 nodes
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=gmx_test
    #SBATCH --nodes=2
@@ -46,19 +46,19 @@ For example, the following script will run a GROMACS MD job using 2 nodes
    #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
    #SBATCH --exclusive
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-   
+
    # Load GROMACS module
    module load gromacs
 
    # Run using input in test_calc.tpr
-   export OMP_NUM_THREADS=1 
+   export OMP_NUM_THREADS=1
    srun gmx_mpi mdrun -s test_calc.tpr
 
 Running parallel GROMACS jobs: hybrid MPI/OpenMP
@@ -71,7 +71,7 @@ total) and 6 OpenMP threads per MPI process.
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=gmx_test
    #SBATCH --nodes=2
@@ -80,14 +80,14 @@ total) and 6 OpenMP threads per MPI process.
    #SBATCH --time=0:25:0
    # Make sure you are not sharing nodes with other users
    #SBATCH --exclusive
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-   
+
    # Load GROMACS and MPI modules
    module load gromacs
 
@@ -103,28 +103,28 @@ MPI processes, and `<OMP thread count>` OMP threads -- you will need
 to change these variables when running your script.
 
 .. note::
-   Unlike the base version of GROMACS, the GPU version comes with 
-   only MDRUN installed. For any pre- and post-processing, you will 
+   Unlike the base version of GROMACS, the GPU version comes with
+   only MDRUN installed. For any pre- and post-processing, you will
    need to use the non-GPU version of GROMACS.
 
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=gmx_test
    #SBATCH --nodes=1
    #SBATCH --time=0:25:0
    #SBATCH --exclusive
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
    #SBATCH --gres=gpu:4
-   
+
    # Load GROMACS and MPI modules
    module load gromacs/2022.1-gpu
 
@@ -137,4 +137,3 @@ Information on how to assign different types of calculation to the
 CPU or GPU appears in the GROMACS documentation under
 `Getting good performance from mdrun
 <http://manual.gromacs.org/documentation/current/user-guide/mdrun-performance.html>`__
-

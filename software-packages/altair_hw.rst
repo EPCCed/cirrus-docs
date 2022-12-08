@@ -25,14 +25,14 @@ up your model/simulation. Once this has been done you would transsfer the
 required files over to Cirrus using SSH and then launch the appropriate
 Solver program (OptiStruct, RADIOSS, MotionSolve).
 
-Once the Solver has finished you can transfer the output back to your 
+Once the Solver has finished you can transfer the output back to your
 local system for visualisation and analysis in the Hyperworks Desktop.
 
 Running serial Hyperworks jobs
 ------------------------------
 
 Each of the Hyperworks Solvers can be run in serial on Cirrus in a similar
-way. You should construct a batch submission script with the command to 
+way. You should construct a batch submission script with the command to
 launch your chosen Solver with the correct command line options.
 
 For example, here is a job script to run a serial RADIOSS job on Cirrus:
@@ -51,7 +51,7 @@ For example, here is a job script to run a serial RADIOSS job on Cirrus:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -71,7 +71,7 @@ Running parallel Hyperworks jobs
 --------------------------------
 
 Only the OptiStruct Solver currently supports parallel execution. OptiStruct
-supports a number of parallel execution modes of which two can be used on 
+supports a number of parallel execution modes of which two can be used on
 Cirrus:
 
 * Shared memory (SMP) mode uses multiple cores within a single node
@@ -81,9 +81,9 @@ Cirrus:
 OptiStruct SMP
 ~~~~~~~~~~~~~~
 
-* `OptiStruct SMP documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?shared_memory_parallelization.htm>`__ 
+* `OptiStruct SMP documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?shared_memory_parallelization.htm>`__
 
-You can use up to 36 physical cores (or 72 virtual cores using HyperThreading) 
+You can use up to 36 physical cores (or 72 virtual cores using HyperThreading)
 for OptiStruct SMP mode as these are the maximum numbers available on each
 Cirrus compute node.
 
@@ -106,7 +106,7 @@ use the following job script:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -124,7 +124,7 @@ OptiStruct SPMD (MPI)
 
 * `OptiStruct SPMD documentation <http://www.altairhyperworks.com/hwhelp/Altair/hw14.0/help/hwsolvers/hwsolvers.htm?optistruct_spmd.htm>`__
 
-There are four different parallelisation schemes for SPMD OptStruct that are 
+There are four different parallelisation schemes for SPMD OptStruct that are
 selected by different flags:
 
 * Load decomposition (master/slave): ``-mpimode`` flag
@@ -152,17 +152,17 @@ Example OptiStruct SPMD job submission script:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-    
+
    # Load Hyperworks module and Intel MPI
    module load altair-hwsolvers/14.0.210
    module load intel-mpi-17
 
    # Set the number of threads to 1
-   #   This prevents any threaded system libraries from automatically 
+   #   This prevents any threaded system libraries from automatically
    #   using threading.
    export OMP_NUM_THREADS=1
 
@@ -170,4 +170,3 @@ Example OptiStruct SPMD job submission script:
    #   Use 72 cores, 36 on each node (i.e. all physical cores)
    #   srun picks up the distribution from the sbatch options
    srun --ntasks=72 $ALTAIR_HOME/hwsolvers/optistruct/bin/linux64/optistruct_14.0.211_linux64_impi box.fem -ddmmode
-

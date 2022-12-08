@@ -40,12 +40,12 @@ For example, the following script will run a CP2K job using 4 nodes (144 cores):
      #SBATCH --time=0:20:0
      #SBATCH --exclusive
      #SBATCH --nodes=4
-     #SBATCH --tasks-per-node=36 
+     #SBATCH --tasks-per-node=36
      #SBATCH --cpus-per-task=1
 
      # Replace [budget code] below with your budget code (e.g. t01)
      #SBATCH --account=[budget code]
-     # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+     # Replace [partition name] below with your partition name (e.g. standard,gpu)
      #SBATCH --partition=[partition name]
      # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
      #SBATCH --qos=[qos name]
@@ -70,7 +70,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
   ::
 
    #!/bin/bash
-  
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=CP2K_test
    #SBATCH --time=0:20:0
@@ -81,7 +81,7 @@ For example, the following script will run a CP2K job using 8 nodes, with 2 Open
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]

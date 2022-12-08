@@ -31,7 +31,7 @@ For example, the following script will run a SPECFEM3D job using 4 nodes
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=SPECFEM3D_Example
    #SBATCH --time=1:0:0
@@ -40,10 +40,10 @@ For example, the following script will run a SPECFEM3D job using 4 nodes
    #SBATCH --tasks-per-node=36
    #SBATCH --cpus-per-task=1
 
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -54,6 +54,3 @@ For example, the following script will run a SPECFEM3D job using 4 nodes
 
    # Run using input in input.namd
    srun xspecfem3D
-   
-
-

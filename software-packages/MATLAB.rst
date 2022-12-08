@@ -162,23 +162,23 @@ this particular case would be ::
   #SBATCH --tasks-per-node=6
   #SBATCH --cpus-per-task=1
 
- 
+
   # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code]
-  # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+  # Replace [partition name] below with your partition name (e.g. standard,gpu)
   #SBATCH --partition=[partition name]
   # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
   #SBATCH --qos=[qos name]
 
   module load matlab
- 
+
   matlab_wrapper -nodisplay < /lustre/sw/cse-matlab/examples/testp.m > testp.log
 
 .. highlight:: none
 
 Note, for MATLAB versions R2019 and later, the `matlab_wrapper_2019` script may be required
 (see 2019 section below).
-	       
+
 This would run the *testp.m* script, without a display, and exit when
 *testp.m* has finished.  6 CPUs are selected, which correspond to 6
 cores, and the following limits would be set initially ::
@@ -194,7 +194,7 @@ cores, and the following limits would be set initially ::
 .. highlight:: matlab
 
 The *testp.m* program sets *NumWorkers* to 3 and *NumThreads* to 2 ::
- 
+
  cirrus_cluster = parcluster('local');
  ncores = cirrus_cluster.NumWorkers * cirrus_cluster.NumThreads;
  cirrus_cluster.NumWorkers = 3;
@@ -207,16 +207,16 @@ The *testp.m* program sets *NumWorkers* to 3 and *NumThreads* to 2 ::
  end
  saveProfile(cirrus_cluster);
  clear cirrus_cluster;
- 
- 
+
+
  n = 3;
  A = 3000;
- 
+
  a=zeros(A,A,n);
  b=1:n;
- 
+
  parpool;
- 
+
  tic
  parfor i = 1:n
      a(:,:,i) = rand(A);
@@ -259,7 +259,7 @@ with::
   matlab_wrapper_2019 -nodisplay -nodesktop -batch "main_simulated_data_FINAL_clean("$ind","$gamma","$rw",'"$SLURM_JOB_ID"')
 
 and this should allow scripts to run normally.
- 
+
 .. _MDCS:
 
 Running parallel MATLAB jobs using MDCS
@@ -475,7 +475,7 @@ retrieve the results later, keep track of the job ID.
 NOTE:  For some applications, there will be a diminishing return when
 allocating too many workers, as the overhead may exceed computation
 time. ::
-  
+
 
  % Get a handle to the cluster.
  c = parcluster('cirrus');
@@ -491,7 +491,7 @@ time. ::
  4
 
 ::
-   
+
  % Clear workspace, as though you have quit MATLAB.
  clear j
 

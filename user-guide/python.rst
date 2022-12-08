@@ -54,18 +54,18 @@ You can list the packages currently available in the distribution you have loade
    # packages in environment at /scratch/sw/anaconda/anaconda3-2021.11:
    #
    # Name                    Version                   Build  Channel
-   _ipyw_jlab_nb_ext_conf    0.1.0            py39h06a4308_0  
-   _libgcc_mutex             0.1                        main  
-   _openmp_mutex             4.5                       1_gnu  
-   alabaster                 0.7.12             pyhd3eb1b0_0  
-   anaconda                  2021.11                  py39_0  
-   anaconda-client           1.9.0            py39h06a4308_0  
-   anaconda-navigator        2.1.1                    py39_0  
-   anaconda-project          0.10.1             pyhd3eb1b0_0  
-   anyio                     2.2.0            py39h06a4308_1  
-   appdirs                   1.4.4              pyhd3eb1b0_0  
-   argh                      0.26.2           py39h06a4308_0  
-   argon2-cffi               20.1.0           py39h27cfd23_1  
+   _ipyw_jlab_nb_ext_conf    0.1.0            py39h06a4308_0
+   _libgcc_mutex             0.1                        main
+   _openmp_mutex             4.5                       1_gnu
+   alabaster                 0.7.12             pyhd3eb1b0_0
+   anaconda                  2021.11                  py39_0
+   anaconda-client           1.9.0            py39h06a4308_0
+   anaconda-navigator        2.1.1                    py39_0
+   anaconda-project          0.10.1             pyhd3eb1b0_0
+   anyio                     2.2.0            py39h06a4308_1
+   appdirs                   1.4.4              pyhd3eb1b0_0
+   argh                      0.26.2           py39h06a4308_0
+   argon2-cffi               20.1.0           py39h27cfd23_1
    ...
 
 Adding packages to the Anaconda distribution
@@ -98,7 +98,7 @@ across two compute nodes.
     #!/usr/bin/env python
 
     """
-    Parallel Numpy Array Broadcast 
+    Parallel Numpy Array Broadcast
     """
 
     import mpi4py.rc
@@ -174,7 +174,7 @@ by calling ``MPI.Init()``.
 The Slurm submission script contains an `OpenMPI MCA <https://www.open-mpi.org/faq/?category=tuning#mca-def>`_
 setting that prevents false errors from being recorded in the output file.
 
-Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples. 
+Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples.
 
 
 mpi4py for GPU
@@ -187,9 +187,9 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 .. code-block:: python
 
     #!/usr/bin/env python
-  
+
     """
-    Reduce-to-all CuPy Arrays 
+    Reduce-to-all CuPy Arrays
     """
 
     import mpi4py.rc
@@ -225,11 +225,11 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 .. code-block:: bash
 
     #!/bin/bash
-  
+
     #SBATCH --job-name=allreduce
     #SBATCH --time=00:20:00
     #SBATCH --exclusive
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --account=[budget code]
     #SBATCH --nodes=2
@@ -296,7 +296,7 @@ Once you have downloaded the installer, you can run it via ``bash``.
 
 ::
 
-   [user@cirrus-login1 ~]$ bash Miniconda3-latest-Linux-x86_64.sh 
+   [user@cirrus-login1 ~]$ bash Miniconda3-latest-Linux-x86_64.sh
 
 
 Note that the installer will prompt you for a number of choices which
@@ -333,21 +333,21 @@ suggest answering `no`.
   Do you wish the installer to initialize Miniconda3
   by running conda init? [yes|no]
   [no] >>> no
-  
+
   You have chosen to not have conda modify your shell scripts at all.
   To activate conda's base environment in your current shell session:
-  
-  eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
-  
+
+  eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)"
+
   To install conda's shell functions for easier access, first activate, then:
-  
+
   conda init
-  
-  If you'd prefer that conda's base environment not be activated on startup, 
-     set the auto_activate_base parameter to false: 
-  
+
+  If you'd prefer that conda's base environment not be activated on startup,
+     set the auto_activate_base parameter to false:
+
   conda config --set auto_activate_base false
-  
+
   Thank you for installing Miniconda3!
 
 
@@ -384,17 +384,17 @@ instead be activated in the usual way.
   # packages in environment at /work/t01/t01/user/miniconda3:
   #
   # Name                    Version                   Build  Channel
-  _libgcc_mutex             0.1                        main  
-  _openmp_mutex             4.5                       1_gnu  
-  brotlipy                  0.7.0         py39h27cfd23_1003  
-  ca-certificates           2021.7.5             h06a4308_1  
-  certifi                   2021.5.30        py39h06a4308_0  
-  cffi                      1.14.6           py39h400218f_0  
-  chardet                   4.0.0         py39h06a4308_1003  
+  _libgcc_mutex             0.1                        main
+  _openmp_mutex             4.5                       1_gnu
+  brotlipy                  0.7.0         py39h27cfd23_1003
+  ca-certificates           2021.7.5             h06a4308_1
+  certifi                   2021.5.30        py39h06a4308_0
+  cffi                      1.14.6           py39h400218f_0
+  chardet                   4.0.0         py39h06a4308_1003
   conda                     4.10.3           py39h06a4308_0
   ...
   (base) [user@cirrus-login1 ~]$  conda deactivate
-  [user@cirrus-login1 ~]$ 
+  [user@cirrus-login1 ~]$
 
 Installing packages into Miniconda3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -408,29 +408,29 @@ you can then add whatever packages you wish to the installation using the
    [user@cirrus-login1 ~]$ conda install numpy
    Collecting package metadata (current_repodata.json): done
    Solving environment: done
-   
+
    ... package details omitted ...
-   
+
    Proceed ([y]/n)? y
 
    ...
-   
+
    [user@cirrus-login0 ~]$ conda list
    # packages in environment at /work/t01/t01/user/miniconda3:
    #
    # Name                    Version                   Build  Channel
    _libgcc_mutex             0.1                 conda_forge    conda-forge
    _openmp_mutex             4.5                      1_llvm    conda-forge
-   blas                      1.0                         mkl  
-   brotlipy                  0.7.0         py39h27cfd23_1003  
+   blas                      1.0                         mkl
+   brotlipy                  0.7.0         py39h27cfd23_1003
    ca-certificates           2021.10.8            ha878542_0    conda-forge
    cairo                     1.16.0            ha00ac49_1009    conda-forge
    certifi                   2021.10.8        py39hf3d152e_1    conda-forge
    cffi                      1.15.0           py39h4bc2ebd_0    conda-forge
-   chardet                   4.0.0         py39h06a4308_1003  
+   chardet                   4.0.0         py39h06a4308_1003
    conda                     4.10.3           py39hf3d152e_3    conda-forge
-   conda-package-handling    1.7.3            py39h27cfd23_1  
-   cryptography              3.4.7            py39hd23ed53_0  
+   conda-package-handling    1.7.3            py39h27cfd23_1
+   cryptography              3.4.7            py39hd23ed53_0
    font-ttf-dejavu-sans-mono 2.37                 hab24e00_0    conda-forge
    font-ttf-inconsolata      3.000                h77eed37_0    conda-forge
    font-ttf-source-code-pro  2.038                h77eed37_0    conda-forge
@@ -441,8 +441,8 @@ you can then add whatever packages you wish to the installation using the
    freetype                  2.10.4               h0708190_1    conda-forge
    gettext                   0.19.8.1          h73d1719_1008    conda-forge
    icu                       69.1                 h9c3ff4c_0    conda-forge
-   idna                      2.10               pyhd3eb1b0_0  
-   intel-openmp              2021.4.0          h06a4308_3561  
+   idna                      2.10               pyhd3eb1b0_0
+   intel-openmp              2021.4.0          h06a4308_3561
    ld_impl_linux-64          2.36.1               hea4e1c9_2    conda-forge
    libffi                    3.4.2                h9c3ff4c_4    conda-forge
    libgcc-ng                 11.2.0              h1d223b6_11    conda-forge
@@ -456,12 +456,12 @@ you can then add whatever packages you wish to the installation using the
    libxml2                   2.9.12               h885dcf4_1    conda-forge
    libzlib                   1.2.11            h36c2ea0_1013    conda-forge
    llvm-openmp               12.0.1               h4bd325d_1    conda-forge
-   mkl                       2021.4.0           h06a4308_640  
-   mkl-service               2.4.0            py39h7f8727e_0  
-   mkl_fft                   1.3.1            py39hd3c417c_0  
-   mkl_random                1.2.2            py39h51133e4_0  
-   ncurses                   6.2                  he6710b0_1  
-   numpy                     1.21.2           py39h20f2e39_0  
+   mkl                       2021.4.0           h06a4308_640
+   mkl-service               2.4.0            py39h7f8727e_0
+   mkl_fft                   1.3.1            py39hd3c417c_0
+   mkl_random                1.2.2            py39h51133e4_0
+   ncurses                   6.2                  he6710b0_1
+   numpy                     1.21.2           py39h20f2e39_0
    numpy-base                1.21.2           py39h79a1101_0
    ...
 
@@ -472,7 +472,7 @@ module.
 
 ::
 
-   [user@cirrus-login1 ~]$ conda install -c conda-forge pygobject 
+   [user@cirrus-login1 ~]$ conda install -c conda-forge pygobject
 
 
 Note on Default Python
@@ -502,7 +502,7 @@ be killed should they reach the login node CPU limit).
 If you want to run your JupyterLab on a compute node, you will need to
 enter an `interactive session <batch.html#interactive-jobs>`_; otherwise
 you can start from a login node prompt.
- 
+
 1. As described above, load the Anaconda module on Cirrus using
    ``module load anaconda/python3``.
 
@@ -524,7 +524,7 @@ you can start from a login node prompt.
    following command.
 
    ::
-     
+
      ssh <username>@login.cirrus.ac.uk -L<port_number>:<node_id>:<port_number>
 
    where <username> is your username, <port_number> is as shown in the URL from

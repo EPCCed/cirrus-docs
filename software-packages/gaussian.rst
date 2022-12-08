@@ -28,7 +28,7 @@ calculations on the system before running production jobs.
 Scratch Directories
 -------------------
 
-You will typically add lines to your job submission script to create 
+You will typically add lines to your job submission script to create
 a scratch directory on the solid state storage for temporary Gaussian
 files. e.g.:
 
@@ -36,7 +36,7 @@ files. e.g.:
 
    export GAUSS_SCRDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
    mkdir -p $GAUSS_SCRDIR
-  
+
 You should also add a line at the end of your job script to remove the scratch
 directory. e.g.:
 
@@ -54,19 +54,19 @@ a Gaussian scratch directory as outlined above).
 ::
 
    #!/bin/bash
-   
+
    # job options (name, compute nodes, job time)
    #SBATCH --job-name=G16_test
    #SBATCH --ntasks=1
    #SBATCH --time=0:20:0
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-   
+
    # Load Gaussian module
    module load gaussian
 
@@ -79,10 +79,10 @@ a Gaussian scratch directory as outlined above).
 
    # Run using input in "test0027.com"
    g16 test0027
-   
+
    # Remove the temporary scratch directory
    rm -r $GAUSS_SCRDIR
-   
+
 Running parallel Gaussian jobs
 ------------------------------
 
@@ -95,20 +95,20 @@ For example, the following script will run a Gaussian job using 4 cores.
 ::
 
    #!/bin/bash --login
-   
+
    # job options (name, compute nodes, job time)
    #SBATCH --job-name=G16_test
    #SBATCH --ntasks=1
    #SBATCH --cpus-per-task=4
    #SBATCH --time=0:20:0
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-   
+
    # Load Gaussian module
    module load gaussian
 
@@ -122,7 +122,6 @@ For example, the following script will run a Gaussian job using 4 cores.
    # Run using input in "test0027.com"
    export OMP_NUM_THREADS=4
    g16 test0027
-   
+
    # Remove the temporary scratch directory
    rm -r $GAUSS_SCRDIR
-

@@ -49,17 +49,17 @@ this example, "-t504" is employed.
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+    # Replace [partition name] below with your partition name (e.g. standard,gpu)
     #SBATCH --partition=[partition name]
     # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
     #SBATCH --qos=[qos name]
-    
+
     # Load Ansys
     module purge
     module load ansys/19.0
 
     # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
+    #   This prevents any threaded system libraries from automatically
     #   using threading.
     export OMP_NUM_THREADS=1
 

@@ -20,7 +20,7 @@ Useful Links
 Licensing
 ---------
 
-All users must provide their own licence for STAR-CCM+. Currently we only support Power on Demand (PoD) licenses 
+All users must provide their own licence for STAR-CCM+. Currently we only support Power on Demand (PoD) licenses
 
 For queries about other types of license options please contact the `Cirrus Helpdesk <mailto:support@cirrus.ac.uk>`_
 with the relevant details.
@@ -31,24 +31,24 @@ Using STAR-CCM+ on Cirrus: Interactive remote GUI Mode
 A fast and responsive way of running with a GUI is to install
 STAR-CCM+ on your local Windows(7 or 10) or Linux workstation. You can
 then start your local STAR-CCM+ and connect to Cirrus in order to
-submit new jobs or query the status of running jobs. 
+submit new jobs or query the status of running jobs.
 
 You will need to setup passwordless SSH connections to Cirrus.
 
 .. Jobs using FLEXlm licence server on Cirrus
 .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. 
+..
 .. Before you can use the FLEXlm server on Cirrus, you must provide us with
 .. your licence key to install on Cirrus (see above).
-.. 
+..
 .. You can then start the STAR-CCM+ server on the compute nodes. The
 .. following script starts the server:
-.. 
-.. 
+..
+..
 .. ::
-.. 
+..
 ..    #!/bin/bash
-.. 
+..
 ..    # Slurm job options (name, compute nodes, job time)
 ..    #SBATCH --job-name=STAR-CCM_test
 ..    #SBATCH --time=0:20:0
@@ -56,32 +56,32 @@ You will need to setup passwordless SSH connections to Cirrus.
 ..    #SBATCH --nodes=14
 ..    #SBATCH --tasks-per-node=36
 ..    #SBATCH --cpus-per-task=1
-.. 
+..
 ..    # Replace [budget code] below with your budget code (e.g. t01)
 ..    #SBATCH --account=[budget code]
-..    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+..    # Replace [partition name] below with your partition name (e.g. standard,gpu)
 ..    #SBATCH --partition=[partition name]
 ..    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
 ..    #SBATCH --qos=[qos name]
-.. 
+..
 ..    # Load the default HPE MPI environment
 ..    module load mpt
 ..    module load starccm+
-.. 
+..
 ..    export SGI_MPI_HOME=$MPI_ROOT
-.. 
+..
 ..    scontrol show hostnames $SLURM_NODELIST > ~/starccm.launcher.host.$SLURM_JOB_ID.txt
 ..    starccm+ -clientldlibpath /scratch/sw/libnsl/1.3.0/lib/ -ldlibpath /scratch/sw/libnsl/1.3.0/lib/ -server -machinefile ~/starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh -port 42333
-.. 
-.. 
+..
+..
 .. The port number "42333" should be free. If it is not free STAR-CCM+
 .. will return with an error. You must then try to use another random
 .. port in the 42XXX range. You can then use the 'qstat' command to find
 .. out the first node of your application.
-.. 
+..
 .. Jobs using remote licence server
 .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. 
+..
 .. The documentation for this option is currently under construction.
 
 Jobs using Power on Demand (PoD) licences
@@ -105,7 +105,7 @@ following script starts the server:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -120,7 +120,7 @@ following script starts the server:
    export CDLMD_LICENSE_FILE=48001@192.168.191.10
 
    scontrol show hostnames $SLURM_NODELIST > ./starccm.launcher.host.$SLURM_JOB_ID.txt
-   starccm+ -clientldlibpath /scratch/sw/libnsl/1.3.0/lib/ -ldlibpath /scratch/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 48001@192.168.191.10 -server -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh 
+   starccm+ -clientldlibpath /scratch/sw/libnsl/1.3.0/lib/ -ldlibpath /scratch/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 48001@192.168.191.10 -server -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh
 
 You should replace "<PODkey>" with your PoD licence key.
 
@@ -145,7 +145,7 @@ Your submission script will look like this (the only difference with the previou
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -185,4 +185,3 @@ Select the "Connect through SSH tunnel" option and use:
 Your local STAR-CCM+ client should now be connected to the remote
 server. You should be able to run a new simulation or interact with an
 existing one.
-

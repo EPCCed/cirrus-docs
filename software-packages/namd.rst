@@ -7,7 +7,7 @@ high-performance simulation of large biomolecular systems. Based on Charm++
 parallel objects, NAMD scales to hundreds of cores for typical simulations
 and beyond 500,000 cores for the largest simulations. NAMD uses the popular
 molecular graphics program VMD for simulation setup and trajectory analysis,
-but is also file-compatible with AMBER, CHARMM, and X-PLOR. 
+but is also file-compatible with AMBER, CHARMM, and X-PLOR.
 
 Useful Links
 ------------
@@ -33,7 +33,7 @@ is reserved for communications.
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
    #SBATCH --time=01:00:00
@@ -57,7 +57,7 @@ NAMD can also be run without SMP.
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
    #SBATCH --time=01:00:00
@@ -77,13 +77,13 @@ on one GPU.
 ::
 
    #!/bin/bash --login
-   
+
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
    #SBATCH --time=01:00:00
    #SBATCH --nodes=1
    #SBATCH --account=[budget code]
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
 
@@ -92,6 +92,6 @@ on one GPU.
    export OMP_NUM_THREADS=10
    export OMP_PLACES=cores
 
-   srun --distribution=block:block --hint=nomultithread \ 
+   srun --distribution=block:block --hint=nomultithread \
        namd2 +setcpuaffinity +isomalloc_sync +idlepoll \
            +ppn ${OMP_NUM_THREADS} +devices 0 input.namd

@@ -49,7 +49,7 @@ All 5.4.* executables include the additional MD algorithms accessed via the ``MD
 
 You can access the LDA and PBE pseudopotentials for VASP on Cirrus at:
 
-:: 
+::
 
    /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/pot
 
@@ -58,21 +58,21 @@ The following script will run a VASP job using 4 nodes (144 cores).
 ::
 
    #!/bin/bash
-   
+
    # job options (name, compute nodes, job time)
    #SBATCH --job-name=VASP_test
    #SBATCH --nodes=4
    #SBATCH --tasks-per-node=36
    #SBATCH --exclusive
    #SBATCH --time=0:20:0
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
-   
+
    # Load VASP version 5 module
    module load vasp/5
 
@@ -81,4 +81,3 @@ The following script will run a VASP job using 4 nodes (144 cores).
 
    # Run standard VASP executable
    srun vasp_std
-

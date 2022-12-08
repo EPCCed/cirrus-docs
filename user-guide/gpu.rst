@@ -21,16 +21,11 @@ Each card has 16GB of high-bandwidth memory, ``HBM``, often referred to as
 device memory. Maximum device memory bandwidth is in the region of 900 GB per second.
 Each card has 5,120 CUDA cores and 640 Tensor cores.
 
-There are two GPU Slurm partitions installed on Cirrus. The first called
-``gpu-skylake`` features two GPU nodes that each have Intel Skylake processors. These
-nodes are only available for short testing/development jobs via the ``short`` QoS.
-The remaining 36 nodes form the ``gpu-cascade`` partition and have the slightly
-more recent Intel Cascade Lake architecture. Users concerned with host performance
-should add the specific compilation options appropriate for the processor.
-
-In both cases, the host node has two 20-core sockets (2.5 GHz) and a total
-of 384 GB host memory (192 GB per socket). Each core supports two threads
-in hardware.
+There is a ``gpu`` Slurm partition installed on Cirrus. This has 36 nodes with
+two 20-core (2.5 GHz) Intel Cascade Lake processors with a total of 384 GB host
+memory (192 GB per socket). Each core supports two threads in hardware. Users
+concerned with host performance should add the specific compilation options
+appropriate for the processor.
 
 For further details of the V100 architecture see,
 https://www.nvidia.com/en-gb/data-center/tesla-v100/ .
@@ -163,7 +158,7 @@ See ``man nvfortran`` for further details.
 OpenMP for GPUs
 ~~~~~~~~~~~~~~~
 
-The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran and can offload computation from the host (i.e. CPU) to one or more target devices (such as the GPUs on Cirrus). 
+The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran and can offload computation from the host (i.e. CPU) to one or more target devices (such as the GPUs on Cirrus).
 OpenMP code can be compiled with the NVIDIA compilers in a similar manner to OpenACC. To enable this functionality, you must add ``-mp=gpu`` to your compile command.
 
 ::
@@ -187,7 +182,7 @@ During development it can be useful to have the compiler report information abou
 Submitting jobs to the GPU nodes
 --------------------------------
 
-To run a GPU job, a SLURM submission must specify a GPU partition and
+To run a GPU job, a SLURM submission must specify the GPU partition and
 a quality of service (QoS) as well as the number of GPUs required.
 You specify the number of GPU cards you want using the ``--gres=gpu:N`` option,
 where ``N`` is typically 1, 2 or 4.
@@ -225,24 +220,6 @@ exclusive use of two nodes.
    GPU hours *and* positive CPU core hours associated with it.
    However, only your GPU hours will be consumed when running these jobs.
 
-Partitions
-~~~~~~~~~~
-Your job script must specify a partition. The following table has a list 
-of relevant GPU partitions on Cirrus.
-
-.. list-table:: Cirrus Partitions
-   :widths: 30 50 20
-   :header-rows: 1
-
-   * - Partition
-     - Description
-     - Maximum Job Size (Nodes)
-   * - gpu-cascade
-     - GPU nodes with Cascade Lake processors
-     - 36
-   * - gpu-skylake
-     - GPU nodes with Skylake processors
-     - 2
 
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -257,30 +234,26 @@ QoS specifications are as follows.
      - Jobs Queued Per User
      - Max Walltime
      - Max Size
-     - GPU Partition
    * - gpu
      - No limit
      - 128 jobs
      - 4 days
      - 64 GPUs
-     - gpu-cascade
    * - long
      - 5 jobs
      - 20 jobs
      - 14 days
      - 8 GPUs
-     - gpu-cascade
    * - short
      - 1 job
      - 2 jobs
      - 20 minutes
      - 4 GPUs or 2 nodes
-     - gpu-skylake
 
 
 Examples
 --------
-   
+
 Job submission script using one GPU on a single node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -291,17 +264,17 @@ would look like the following.
 
    #!/bin/bash
    #
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
    #SBATCH --time=00:20:00
 
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-     
-   # Load the required modules 
+
+   # Load the required modules
    module load nvidia/nvhpc
-   
+
    srun ./cuda_test.x
 
 This will execute one host process with access to one GPU. If we wish to
@@ -329,15 +302,15 @@ would appear as follows.
 
     #!/bin/bash
     #
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
     #SBATCH --time=00:20:00
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    
-    # Load the required modules 
+
+    # Load the required modules
     module load nvidia/nvhpc
 
     srun ./cuda_test.x
@@ -360,7 +333,7 @@ See below for a job script that requires 8 GPU accelerators for 20 minutes.
 
     #!/bin/bash
     #
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
     #SBATCH --nodes=2
@@ -369,8 +342,8 @@ See below for a job script that requires 8 GPU accelerators for 20 minutes.
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    
-    # Load the required modules 
+
+    # Load the required modules
     module load nvidia/nvhpc
 
     srun ./cuda_test.x
@@ -406,7 +379,7 @@ session like so.
 
 ::
 
-  $ srun --nodes=1 --partition=gpu-skylake --qos=short --gres=gpu:1 \
+  $ srun --nodes=1 --partition=gpu --qos=short --gres=gpu:1 \
          --time=0:20:0 --account=[budget code] --pty /bin/bash
 
 Next, load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application.
@@ -417,7 +390,7 @@ Next, load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application
   $ cuda-gdb ./my-application.x
   NVIDIA (R) CUDA Debugger
   ...
-  (cuda-gdb) 
+  (cuda-gdb)
 
 Debugging then proceeds as usual. One can use the help facility within ``cuda-gdb``
 to find details on the various debugging commands. Type ``quit`` to end your debug
@@ -447,19 +420,19 @@ compile as normal (including the ``-g`` flag) and then submit a batch job.
 ::
 
   #!/bin/bash
-  
+
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
-  #SBATCH --exclusive  
-  #SBATCH --partition=gpu-skylake
+  #SBATCH --exclusive
+  #SBATCH --partition=gpu
   #SBATCH --qos=short
   #SBATCH --gres=gpu:1
 
   # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code]
-  
+
   module load nvidia/nvhpc
-  
+
   srun -n 1 nsys profile -o prof1 ./my_application.x
 
 The run should then produce an additional output file called, in this
@@ -472,7 +445,7 @@ Note, a profiling run should probably be of a short duration so that the
 profile information (contained in the ``.qdrep`` file) does not become
 prohibitively large.
 
-Details of the download of Nsight Systems and a user guide can be found 
+Details of the download of Nsight Systems and a user guide can be found
 via the links below.
 
 https://developer.nvidia.com/nsight-systems
@@ -492,19 +465,19 @@ be submitted like so.
 ::
 
   #!/bin/bash
-  
+
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive
-  #SBATCH --partition=gpu-skylake
+  #SBATCH --partition=gpu
   #SBATCH --qos=short
   #SBATCH --gres=gpu:1
-  
+
   # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code]
 
   module load nvidia/nvhpc
-  
+
   srun -n 1 nv-nsight-cu-cli --section SpeedOfLight_RooflineChart \
                              -o prof2 -f ./my_application.x
 
@@ -560,15 +533,15 @@ A batch script to use such an executable might be:
 ::
 
    #!/bin/bash
-   
+
    #SBATCH --time=00:20:00
 
    #SBATCH --nodes=1
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:4
 
-   module load openmpi/4.1.2-cuda-11.6  
+   module load openmpi/4.1.2-cuda-11.6
 
    export OMP_NUM_THREADS=1
 
@@ -579,4 +552,4 @@ A batch script to use such an executable might be:
 
 Note the addition of the environment variable ``OMPI_MCA_pml=ob1`` is
 required for correct operation. As before, MPI and placement options
-should be directly specified to ``srun`` and not via ``SBATCH`` directives. 
+should be directly specified to ``srun`` and not via ``SBATCH`` directives.
