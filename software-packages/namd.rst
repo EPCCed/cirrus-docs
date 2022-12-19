@@ -83,7 +83,7 @@ on one GPU.
    #SBATCH --time=01:00:00
    #SBATCH --nodes=1
    #SBATCH --account=[budget code]
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
 

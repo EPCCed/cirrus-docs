@@ -51,7 +51,7 @@ For example, here is a job script to run a serial RADIOSS job on Cirrus:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -106,7 +106,7 @@ use the following job script:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -152,7 +152,7 @@ Example OptiStruct SPMD job submission script:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]

@@ -229,7 +229,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     #SBATCH --job-name=allreduce
     #SBATCH --time=00:20:00
     #SBATCH --exclusive
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --account=[budget code]
     #SBATCH --nodes=2

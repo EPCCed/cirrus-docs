@@ -17,20 +17,17 @@ Hardware details
 ----------------
 
 All of the Cirrus GPU nodes contain four Tesla V100-SXM2-16GB (Volta) cards.
-Each card has 16GB of high-bandwidth memory, ``HBM``, often referred to as
+Each card has 16 GB of high-bandwidth memory, ``HBM``, often referred to as
 device memory. Maximum device memory bandwidth is in the region of 900 GB per second.
 Each card has 5,120 CUDA cores and 640 Tensor cores.
 
-There are two GPU Slurm partitions installed on Cirrus. The first called
-``gpu-skylake`` features two GPU nodes that each have Intel Skylake processors. These
-nodes are only available for short testing/development jobs via the ``short`` QoS.
-The remaining 36 nodes form the ``gpu-cascade`` partition and have the slightly
-more recent Intel Cascade Lake architecture. Users concerned with host performance
-should add the specific compilation options appropriate for the processor.
+There is one GPU Slurm partition installed on Cirrus called simply ``gpu``.
+The 36 nodes in this partition have the Intel Cascade Lake architecture.
+Users concerned with host performance should add the specific compilation options
+appropriate for the processor.
 
-In both cases, the host node has two 20-core sockets (2.5 GHz) and a total
-of 384 GB host memory (192 GB per socket). Each core supports two threads
-in hardware.
+The Cascade Lake nodes have two 20-core sockets (2.5 GHz) and a total of 384 GB
+host memory (192 GB per socket). Each core supports two threads in hardware.
 
 For further details of the V100 architecture see,
 https://www.nvidia.com/en-gb/data-center/tesla-v100/ .
@@ -228,7 +225,7 @@ exclusive use of two nodes.
 Partitions
 ~~~~~~~~~~
 Your job script must specify a partition. The following table has a list 
-of relevant GPU partitions on Cirrus.
+of relevant GPU partition(s) on Cirrus.
 
 .. list-table:: Cirrus Partitions
    :widths: 30 50 20
@@ -237,12 +234,9 @@ of relevant GPU partitions on Cirrus.
    * - Partition
      - Description
      - Maximum Job Size (Nodes)
-   * - gpu-cascade
+   * - gpu
      - GPU nodes with Cascade Lake processors
      - 36
-   * - gpu-skylake
-     - GPU nodes with Skylake processors
-     - 2
 
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -257,26 +251,37 @@ QoS specifications are as follows.
      - Jobs Queued Per User
      - Max Walltime
      - Max Size
-     - GPU Partition
+     - Partition
    * - gpu
      - No limit
      - 128 jobs
      - 4 days
      - 64 GPUs
-     - gpu-cascade
+     - gpu
    * - long
      - 5 jobs
      - 20 jobs
      - 14 days
      - 8 GPUs
-     - gpu-cascade
+     - gpu
    * - short
      - 1 job
      - 2 jobs
      - 20 minutes
-     - 4 GPUs or 2 nodes
-     - gpu-skylake
-
+     - 4 GPUs
+     - gpu
+   * - lowpriority
+     - No limit
+     - 100 jobs
+     - 2 days
+     - 16 GPUs
+     - gpu
+   * - largescale
+     - 1 job
+     - 4 jobs
+     - 24 hours
+     - 144 GPUs
+     - gpu
 
 Examples
 --------
@@ -291,7 +296,7 @@ would look like the following.
 
    #!/bin/bash
    #
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:1
    #SBATCH --time=00:20:00
@@ -329,7 +334,7 @@ would appear as follows.
 
     #!/bin/bash
     #
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
     #SBATCH --time=00:20:00
@@ -360,7 +365,7 @@ See below for a job script that requires 8 GPU accelerators for 20 minutes.
 
     #!/bin/bash
     #
-    #SBATCH --partition=gpu-cascade
+    #SBATCH --partition=gpu
     #SBATCH --qos=gpu
     #SBATCH --gres=gpu:4
     #SBATCH --nodes=2
@@ -406,7 +411,7 @@ session like so.
 
 ::
 
-  $ srun --nodes=1 --partition=gpu-skylake --qos=short --gres=gpu:1 \
+  $ srun --nodes=1 --partition=gpu --qos=short --gres=gpu:1 \
          --time=0:20:0 --account=[budget code] --pty /bin/bash
 
 Next, load the NVIDIA HPC SDK module and start ``cuda-gdb`` for your application.
@@ -451,7 +456,7 @@ compile as normal (including the ``-g`` flag) and then submit a batch job.
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive  
-  #SBATCH --partition=gpu-skylake
+  #SBATCH --partition=gpu
   #SBATCH --qos=short
   #SBATCH --gres=gpu:1
 
@@ -496,7 +501,7 @@ be submitted like so.
   #SBATCH --time=00:10:00
   #SBATCH --nodes=1
   #SBATCH --exclusive
-  #SBATCH --partition=gpu-skylake
+  #SBATCH --partition=gpu
   #SBATCH --qos=short
   #SBATCH --gres=gpu:1
   
@@ -564,7 +569,7 @@ A batch script to use such an executable might be:
    #SBATCH --time=00:20:00
 
    #SBATCH --nodes=1
-   #SBATCH --partition=gpu-cascade
+   #SBATCH --partition=gpu
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:4
 

@@ -59,7 +59,7 @@ You will need to setup passwordless SSH connections to Cirrus.
 .. 
 ..    # Replace [budget code] below with your budget code (e.g. t01)
 ..    #SBATCH --account=[budget code]
-..    # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+..    # Replace [partition name] below with your partition name (e.g. standard,gpu)
 ..    #SBATCH --partition=[partition name]
 ..    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
 ..    #SBATCH --qos=[qos name]
@@ -105,7 +105,7 @@ following script starts the server:
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
@@ -145,7 +145,7 @@ Your submission script will look like this (the only difference with the previou
 
    # Replace [budget code] below with your budget code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
