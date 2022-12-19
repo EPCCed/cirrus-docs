@@ -68,7 +68,7 @@ The following script will run a VASP job using 4 nodes (144 cores).
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   # Replace [partition name] below with your partition name (e.g. standard,gpu-skylake)
+   # Replace [partition name] below with your partition name (e.g. standard,gpu)
    #SBATCH --partition=[partition name]
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
