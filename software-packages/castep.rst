@@ -61,5 +61,5 @@ For example, the following script will run a CASTEP job using 4 nodes
    export OMP_NUM_THREADS=1
 
    # Run using input in test_calc.in
-   srun castep.mpi test_calc
+   srun --distribution=block:block castep.mpi test_calc
 
