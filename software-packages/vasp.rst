@@ -80,5 +80,5 @@ The following script will run a VASP job using 4 nodes (144 cores).
    export OMP_NUM_THREADS=1
 
    # Run standard VASP executable
-   srun vasp_std
+   srun --distribution=blok:block vasp_std
 
