@@ -540,22 +540,38 @@ direct communication within a node via NVLink. Between nodes, MPI
 communication will remain limited by network latency and bandwidth.
 
 A version of OpenMPI with both CUDA-aware MPI support and SLURM support
-is available via
+is available:
 
 ::
 
-   $ module load openmpi/4.1.4-cuda-11.6
+   $ module load openmpi/4.1.4-cuda-11.6-nvfortran
    $ module load nvidia/nvhpc-nompi/22.2
+   
+The command you use to compile depends on whether you are compiling C/C++ or
+Fortran.
 
-The location of the MPI include files and libraries must then be
+Compiling C/C++
+~~~~~~~~~~~~~~~
+
+The location of the MPI include files and libraries must be
 specified explicitly, e.g.,
 
 ::
 
-   $ nvcc -I${MPI_HOME}/include my_program.cu -L${MPI_HOME}/lib -lmpi
+   $ nvcc -I${MPI_HOME}/include  -L${MPI_HOME}/lib -lmpi -o my_program.x my_program.cu
 
 This will produce an executable in the usual way.
 
+Compiling Fotran
+~~~~~~~~~~~~~~~~
+
+Use the ``mpif90`` compiler wrapper to compile Fortran code for GPU. e.g.
+
+::
+
+   $ mpif90 -o my_program.x my_program.f90
+   
+This will produce an executable in the usual way.
 
 Run time
 ~~~~~~~~
@@ -573,7 +589,8 @@ A batch script to use such an executable might be:
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:4
 
-   module load openmpi/4.1.2-cuda-11.6  
+   module load openmpi/4.1.2-cuda-11.6-nvfortran
+   module load nvidia/nvhpc-nompi/22.2
 
    export OMP_NUM_THREADS=1
 
