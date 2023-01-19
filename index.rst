@@ -64,6 +64,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    software-packages/MATLAB
    software-packages/namd
    software-packages/openfoam
+   software-packages/orca
    software-packages/qe
    software-packages/starccm+
    software-packages/vasp
