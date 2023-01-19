@@ -54,7 +54,7 @@ the latest module version present on the system.
 Each release of the NVIDIA HPC SDK may include several different versions of
 the CUDA toolchain. For example, the ``nvidia/nvhpc/21.2`` module comes
 with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA toolchains can be
-active at any one time and for ``nvhpc/21.2`` this is CUDA 11.2.
+active at any one time and for ``nvhpc/22.11`` this is CUDA 11.8.
 
 Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:
@@ -64,12 +64,10 @@ version of CUDA:
 
    * - Module
      - Supported CUDA Version
+   * - ``nvidia/nvhpc/22.11``
+     - CUDA 11.8
    * - ``nvidia/nvhpc/22.2``
      - CUDA 11.6
-   * - ``nvidia/nvhpc/21.9``
-     - CUDA 11.4
-   * - ``nvidia/nvhpc/21.2``
-     - CUDA 11.2
 
 To load the latest NVIDIA HPC SDK use
 
@@ -544,8 +542,8 @@ is available via
 
 ::
 
-   $ module load openmpi/4.1.4-cuda-11.6
-   $ module load nvidia/nvhpc-nompi/22.2
+   $ module load openmpi/4.1.4-cuda-11.8
+   $ module load nvidia/nvhpc-nompi/22.11
 
 The location of the MPI include files and libraries must then be
 specified explicitly, e.g.,
@@ -573,7 +571,7 @@ A batch script to use such an executable might be:
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:4
 
-   module load openmpi/4.1.2-cuda-11.6  
+   module load openmpi/4.1.2-cuda-11.8
 
    export OMP_NUM_THREADS=1
 
