@@ -549,8 +549,8 @@ and for Fortran use
 
 ::
    
-   $ module load openmpi/4.1.4-cuda-11.6-nvfortran
-   $ module load nvidia/nvhpc-nompi/22.2
+   $ module load openmpi/4.1.4-cuda-11.8
+   $ module load nvidia/nvhpc-nompi/22.11
    
 The command you use to compile depends on whether you are compiling C/C++ or
 Fortran.
