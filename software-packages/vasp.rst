@@ -18,6 +18,8 @@ Useful Links
 Using VASP on Cirrus
 --------------------
 
+CPU and GPU versions of VASP are available on Cirrus
+
 **VASP is only available to users who have a valid VASP licence. VASP 5 and VASP 6 are
 separate packages on Cirrus and requests for access need to be made separately for the
 two versions via SAFE.**
@@ -27,31 +29,27 @@ please request access through SAFE:
 
 * `How to request access to package groups <https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features>`__
 
-Running parallel VASP jobs
---------------------------
-
-VASP can exploit multiple nodes on Cirrus and will generally be run in
-exclusive mode over more than one node.
-
-To access VASP you should load the ``vasp`` module in your job submission scripts:
+Once your access has been enabled, you access the VASP software using the ``vasp`` modules
+in your job submission script. You can see which versions of VASP are currently available
+on Cirrus with 
 
 ::
 
-   module add vasp
-
+   module avail vasp
+   
 Once loaded, the executables are called:
 
 * vasp_std - Multiple k-point version
 * vasp_gam - GAMMA-point only version
 * vasp_ncl - Non-collinear version
 
-All 5.4.* executables include the additional MD algorithms accessed via the ``MDALGO`` keyword.
+All executables include the additional MD algorithms accessed via the ``MDALGO`` keyword.
 
-You can access the LDA and PBE pseudopotentials for VASP on Cirrus at:
+Running parallel VASP jobs - CPU
+--------------------------------
 
-:: 
-
-   /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/pot
+The CPU version of VASP can exploit multiple nodes on Cirrus and will generally be run in
+exclusive mode over more than one node.
 
 The following script will run a VASP job using 4 nodes (144 cores).
 
@@ -60,7 +58,7 @@ The following script will run a VASP job using 4 nodes (144 cores).
    #!/bin/bash
    
    # job options (name, compute nodes, job time)
-   #SBATCH --job-name=VASP_test
+   #SBATCH --job-name=VASP_CPU_test
    #SBATCH --nodes=4
    #SBATCH --tasks-per-node=36
    #SBATCH --exclusive
@@ -73,12 +71,45 @@ The following script will run a VASP job using 4 nodes (144 cores).
    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
    #SBATCH --qos=[qos name]
    
-   # Load VASP version 5 module
-   module load vasp/5
+   # Load VASP version 6 module
+   module load vasp/6
+
+   # Set number of OpenMP threads to 1
+   export OMP_NUM_THREADS=1
+   
+   # Run standard VASP executable
+   srun --hint=nomultithread --distribution=block:block vasp_std
+   
+Running parallel VASP jobs - GPU
+--------------------------------
+
+The GPU version of VASP can exploit multiple GPU across multiple nodes, you should
+benchmark your system to ensure you understand how many GPU can be used in parallel
+for your calculations.
+
+The following script will run a VASP job using 2 GPU on 1 node.
+
+::
+
+   #!/bin/bash
+   
+   # job options (name, compute nodes, job time)
+   #SBATCH --job-name=VASP_GPU_test
+   #SBATCH --nodes=1
+   #SBATCH --gres=gpu:2
+   #SBATCH --time=0:20:0
+   
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
+   #SBATCH --partition=gpu
+   #SBATCH --qos=gpu
+   
+   # Load VASP version 6 module
+   module load vasp/6/6.3.2-gpu-nvhpc22
 
    # Set number of OpenMP threads to 1
    export OMP_NUM_THREADS=1
 
-   # Run standard VASP executable
-   srun --distribution=blok:block vasp_std
+   # Run standard VASP executable with 1 MPI process per GPU
+   srun --ntasks=2 --cpus-per-task=10 --hint=nomultithread --distribution=block:block vasp_std
 
