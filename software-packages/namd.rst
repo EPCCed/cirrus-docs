@@ -27,7 +27,7 @@ NAMD can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.
 
 For example, the following script will run a NAMD MD job across 2 nodes
-(72 cores) with 2 tasks per node and 18 cores per task, one of which
+(72 cores) with 2 processes/tasks per node and 18 cores per process, one of which
 is reserved for communications.
 
 ::
@@ -47,10 +47,7 @@ is reserved for communications.
 
    module load namd/2.14
 
-   export OMP_NUM_THREADS=18
-   export OMP_PLACES=cores
-
-   srun namd2 +setcpuaffinity +isomalloc_sync +ppn 17 +pemap 1-17,19-35 +commap 0,18 input.namd
+   srun namd2 +setcpuaffinity +ppn 17 +pemap 1-17,19-35 +commap 0,18 input.namd
 
 NAMD can also be run without SMP.
 
@@ -69,10 +66,10 @@ NAMD can also be run without SMP.
 
    module load namd/2.14-nosmp
 
-   srun namd2 +setcpuaffinity +isomalloc_sync input.namd
+   srun namd2 +setcpuaffinity input.namd
 
-And, finally, there's also a GPU version. The example below runs ten NAMD worker threads
-on one GPU.
+And, finally, there's also a GPU version. The example below uses 8 GPUs across two GPU nodes,
+running one process per GPU and 9 worker threads per process (+ 1 comms thread).
 
 ::
 
@@ -81,17 +78,14 @@ on one GPU.
    # Slurm job options (name, compute nodes, job time)
    #SBATCH --job-name=NAMD_Example
    #SBATCH --time=01:00:00
-   #SBATCH --nodes=1
+   #SBATCH --nodes=2
    #SBATCH --account=[budget code]
    #SBATCH --partition=gpu
    #SBATCH --qos=gpu
-   #SBATCH --gres=gpu:1
+   #SBATCH --gres=gpu:2
 
-   module load namd/2.14-gpu
+   module load namd/2022.07.21-gpu
 
-   export OMP_NUM_THREADS=10
-   export OMP_PLACES=cores
-
-   srun --distribution=block:block --hint=nomultithread \ 
-       namd2 +setcpuaffinity +isomalloc_sync +idlepoll \
-           +ppn ${OMP_NUM_THREADS} +devices 0 input.namd
+   srun --hint=nomultithread --ntasks=8 --tasks-per-node=4 \ 
+       namd2 +ppn 9 +setcpuaffinity +pemap 1-9,11-19,21-29,31-39 +commap 0,10,20,30 \
+             +devices 0,1,2,3 input.namd
