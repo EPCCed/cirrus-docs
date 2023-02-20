@@ -42,9 +42,12 @@ box -- when running on the compute nodes, you must set the MPI implementation to
 One is provided for you at
 ``/mnt/lustre/indy2lfs/sw/arm/forge/latest/templates/cirrus.qtf`` which you should copy
 and modify to suit your needs. You will need to load any modules required for
-your code and perform any other necessary setup, and can add extra sbatch
-options such as the ``--gres`` parameter if you wish to run on the GPU nodes --
-in short, whatever is needed for your code to run in a normal batch job.
+your code and perform any other necessary setup, such as providing extra sbatch
+options, i.e., whatever is needed for your code to run in a normal batch job.
+
+.. note::
+  The current Arm Forge licence permits use on the Cirrus CPU nodes only.
+  The licence does not permit use of DDT/MAP for codes that run on the Cirrus GPUs.
 
 Back in the DDT run window, you can click on *Parameters* in the same queue pane
 to set the partition and QoS to use, the account to which the job should be
