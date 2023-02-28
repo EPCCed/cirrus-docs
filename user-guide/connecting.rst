@@ -481,3 +481,20 @@ unable to connect, consider the suggestions under *Password* above.
 
 The equivalent information can be obtained in PuTTY or MobaXterm by enabling
 all logging in settings.
+
+Default shell environment
+-------------------------
+
+Usually, when a new login shell is created, the commands on ``$HOME/.bashrc`` are executed.
+This tipically includes setting user-defined alias, changing environment variables, and, in the case of an HPC system, loading modules.
+
+Cirrus does not currently read the ``$HOME/.bashrc`` file, but it does read the ``$HOME/.bash_profile`` file, so, if you wish to read a ``$HOME/.bashrc`` file, you can add the following to your ``$HOME/.bash_profile`` file (or create one, if it doesn't exist):
+
+::
+
+  # $HOME/.bash_profile
+  # load $HOME/.bashrc, if it exists
+  if [ -f $HOME/.bashrc ]; then
+          . $HOME/.bashrc
+  fi
+
