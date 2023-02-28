@@ -50,8 +50,8 @@ available versions of the Intel Compiler type:
 
     [user@cirrus-login0 ~]$ module avail intel-compilers
     
-    --------------------------------------- /lustre/sw/modulefiles ---------------------------------------
-    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117  
+    --------------------------------- /mnt/lustre/indy2lfs/sw/modulefiles --------------------------------
+    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117
 
 If you want more info on any of the modules, you can use the
 ``module help`` command:
@@ -76,11 +76,11 @@ and their versions you have presently loaded in your environment, e.g.:
 
     [user@cirrus-login0 ~]$ module list
     Currently Loaded Modulefiles:
-    1) git/2.35.1(default)                      6) gcc/8.2.0(default)
-    2) singularity/3.7.2(default)               7) intel-cc-18/18.0.5.274
-    3) epcc/utils                               8) intel-fc-18/18.0.5.274
-    4) /scratch/sw/modulefiles/epcc/setup-env   9) intel-compilers-18/18.05.274
-    5) intel-license                           10) mpt/2.25
+    1) git/2.35.1(default)                                  6) gcc/8.2.0(default)
+    2) singularity/3.7.2(default)                           7) intel-cc-18/18.0.5.274
+    3) epcc/utils                                           8) intel-fc-18/18.0.5.274
+    4) /mnt/lustre/indy2lfs/sw/modulefiles/epcc/setup-env   9) intel-compilers-18/18.05.274
+    5) intel-license                                       10) mpt/2.25
 
 
 Loading, unloading and swapping modules
