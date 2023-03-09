@@ -986,6 +986,7 @@ On the first page, you need to provide the following:
 
 On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
+(The selected username will be charged for the reservation but the reservation can be used by all members of the selected budget.)
 
 Your request will be checked by the Cirrus User Administration team and, if approved, you will
 be provided a reservation ID which can be used on the system. To submit jobs to a reservation,
