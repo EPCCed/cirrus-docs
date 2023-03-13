@@ -265,12 +265,12 @@ overlap transfers of files from different directories.
 
 In addition, you should consider the following when transferring data.
 
-* Only transfer those files that are required. Consider which data you
+- Only transfer those files that are required. Consider which data you
   really need to keep.
-* Combine lots of small files into a single *tar* archive, to reduce the
+- Combine lots of small files into a single *tar* archive, to reduce the
   overheads associated in initiating many separate data transfers (over
   SSH each file counts as an individual transfer).
-* Compress data before sending it, e.g. using gzip.
+- Compress data before sending it, e.g. using gzip.
 
 scp command
 ~~~~~~~~~~~
