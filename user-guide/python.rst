@@ -553,7 +553,7 @@ These instructions are split into five sections.
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a custom environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
-``tensorflow`` or ``pytorch`` &mdash; just run ``module avail`` to see which versions are available. This means you would avoid
+``tensorflow`` or ``pytorch`` — just run ``module avail`` to see which versions are available. This means you would avoid
 having to install ML packages within your local area.
 
 Each of those ML modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension
