@@ -273,12 +273,17 @@ More detail on the Cirrus GPU nodes can be found at https://cirrus.readthedocs.i
 Custom Miniconda3 Environments
 ------------------------------
 
-To setup a custom Python environment including packages that are not in the
-central installation, the simplest method is to install Miniconda locally within
-your project area on Cirrus.
+To setup a custom Python environment, one that provides packages that are not part of a centrally-installed environment, there are two approaches to take.
 
-Installing Miniconda3
-~~~~~~~~~~~~~~~~~~~~~
+Either [install Miniconda from scratch](https://cirrus.readthedocs.io/en/main/user-guide/python.html#installing-miniconda3-from-scratch), or,
+[extend a centrally-installed Miniconda environment](https://cirrus.readthedocs.io/en/main/user-guide/python.html#extend-centrally-installed-miniconda3-environment).
+
+The latter option may be best if you intend to run your custom environment in parallel across multiple CPU/GPU nodes.
+This is because the centrally-installed python modules provide packages such as mpi4py that have been built specifically for the Cirrus system.
+
+
+Installing Miniconda3 from scratch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, you should download Miniconda. You can use ``wget`` to do this.
 
@@ -473,6 +478,85 @@ module.
 ::
 
    [user@cirrus-login1 ~]$ conda install -c conda-forge pygobject 
+
+
+
+Extending a centrally-installed Miniconda3 environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Bash commands for extending a centrally-installed Python environment can be found via the following link.
+
+[https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/python/build_custom_pyenv_cirrus.md](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/python/build_custom_pyenv_cirrus.md)
+
+These instructions are split into five sections.
+
+
+1. Set the basic parameters
+
+   Here, you specify the name of the custom environment, where it is to be installed
+   and the version of the Python module that provides the centrally-installed packages.
+   If you intend to run the custom environment on the compute nodes, the install location
+   should be somewhere within the top-level work area, `${HOME/home/work}`; this is necessary
+   because the compute nodes do not have access to `/home`.
+
+
+2. Initialise environment variables and create install folders
+
+   The first set of instructions in this section initialise variables that will be used for the deactivate script.
+   Next, the install folder is created and the Python module is loaded.
+   The `PYTHONUSERBASE` variable is set such that any subsequent package installs will copy files to the
+   local custom environment, i.e., to a location where the user has write access.
+   Lastly, a number of paths to hidden config/cache folders are specified in order to ensure that all temporary files
+   are also written to the local custom environment and do not clutter areas elsewhere such as `${HOME}` and `${HOME/home/work}`.
+   (And of course `${HOME}` would not be accessible from the compute nodes.)
+
+
+3. Install package(s)
+
+   As the heading suggests, this is the part where you enter `pip install` commands for those packages that
+   do not exist within the environment provided by the centrally-installed Python module. There are several ways
+   to install Python packages, the most obvious being `pip install --user <name of package>`.
+
+   Please note, the `--user` option is important as it ensures that packages are installed to the location indicated by `PYTHONUSERBASE`.
+   You could also specify the name of `whl` wheel file instead of a package name. Alternatively, you might first clone a github repo that
+   contains the package source, and then run `pip install --user .` after moving into the repo folder. For other packages, you might make
+   use of a `setup.py` script to perform a build.
+
+::
+  
+   python setup.py build
+   python setup.py install --prefix=${PYTHONUSERBASE}
+   python setup.py clean --all
+   
+
+4. Create activation script
+   
+   Once you've finished installing packages, you will need to have the means to activate your local custom environment
+   from subsequent login sessions or from batch jobs submitted to the compute nodes. And so, the commands listed in this
+   section create a Bash file called `activate` that can be sourced when the environment needs to be activated.
+
+::
+  
+   source ${INSTALL_PRFX}/${PYPKG_LABEL}/${PYPKG_VERSION}/python/${PYTHON_MODULE_VERSION}/bin/activate
+
+   This can be done either from a login node or from within a Slurm submission script. The meaning of the expansion
+   variables given in the source command argument can be deduced from script linked above.
+
+
+5. Create deactivation script
+
+   If you've activated your custom environment from a login node (in order to install some extra packages perhaps) and you
+   now wish to do some other work, you can clear your login shell of any links to the custom environment by sourcing the
+   deactivate script.
+
+
+Lastly, the environment being extended does not have to come from one of the centrally-installed `python` modules.
+You could just as easily create a custom environment based on one of the Machine Learning (ML) modules, e.g., `horovod`,
+`tensorflow` or `pytorch` --- just run `module avail` to see which versions are available. This means you would avoid
+having to install ML packages within your local area.
+
+Each of those ML modules is based on a `python` module. For example, `tensorflow/2.11.0-gpu` is itself an extension
+of `python/3.10.8-gpu` (and so the `MINICONDA3_PYTHON_VERSION` environment variable will be set to `3.10.8`).
 
 
 Note on Default Python
