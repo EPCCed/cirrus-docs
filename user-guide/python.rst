@@ -27,7 +27,7 @@ across two compute nodes.
 
 .. raw:: html
 
-   <details><summary>numpy-broadcast.py</summary>
+    <details><summary><b>numpy-broadcast.py</b></summary>
 
 .. code-block:: python
 
@@ -91,6 +91,10 @@ The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off th
 that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
 by calling ``MPI.Init()``.
 
+.. raw:: html
+
+    <details><summary><b>broadcast-submit.ll</b></summary>
+
 .. code-block:: bash
 
     #!/bin/bash
@@ -112,6 +116,10 @@ by calling ``MPI.Init()``.
 
     srun numpy-broadcast.py
 
+.. raw:: html
+
+    </details>
+
 .. note::
 
   The Slurm submission script above sets a ``OMPI_MCA`` environment variable before launching the job.
@@ -125,6 +133,10 @@ mpi4py for GPU
 There's also an mpi4py module (again using OpenMPI 4.1.4) that is tailored for CUDA 11.6 on the Cirrus
 GPU nodes, ``python/3.9.13-gpu``. We show below an example that features an MPI reduction
 performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (``cupy-allreduce.py``).
+
+.. raw:: html
+
+    <details><summary><b>cupy-allreduce.py</b></summary>
 
 .. code-block:: python
 
@@ -164,6 +176,14 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
     MPI.Finalize()
 
+.. raw:: html
+
+    </details>
+
+.. raw:: html
+
+    <details><summary><b>allreduce-submit.ll</b></summary>
+
 .. code-block:: bash
 
     #!/bin/bash
@@ -185,6 +205,10 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     export OMPI_MCA_mca_base_component_show_load_errors=0
 
     srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=1 cupy-allreduce.py
+
+.. raw:: html
+
+    </details>
 
 By default, the CuPy cache will be located within the user's home directory.
 And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
