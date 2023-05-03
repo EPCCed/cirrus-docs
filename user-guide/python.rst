@@ -4,16 +4,16 @@ Using Python
 Python on Cirrus is provided by a number of `Miniconda <https://conda.io/miniconda.html>`__ modules and one `Anaconda <https://www.continuum.io>`__ module.
 (Miniconda being a small bootstrap version of Anaconda).
 
-The Anaconda module is called `anaconda/python3` and is suitable for running serial applications.
+The Anaconda module is called ``anaconda/python3`` and is suitable for running serial applications.
 
-You can list the Miniconda modules by running `module avail python` on a login node. Those module versions that have the `gpu` suffix are
-suitable for use on the `Cirrus GPU nodes <https://cirrus.readthedocs.io/en/main/user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., `pyfr`, `horovod`,
-`tensorflow` and `pytorch` - simply run `module help <module name>` for further info.
+You can list the Miniconda modules by running ``module avail python`` on a login node. Those module versions that have the ``gpu`` suffix are
+suitable for use on the `Cirrus GPU nodes <https://cirrus.readthedocs.io/en/main/user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
+``tensorflow`` and ``pytorch`` - simply run ``module help <module name>`` for further info.
 
 In summary, the Miniconda modules support Python-based parallel codes, i.e., each such `python` module provides a suite of packages
-pertinent to parallel processing and numerical analysis such as `dask`, `ipyparallel`, `jupyter`, `matplotlib`, `numpy`, `pandas` and `scipy`.
+pertinent to parallel processing and numerical analysis such as ``dask``, ``ipyparallel``, ``jupyter``, ``matplotlib``, ``numpy``, ``pandas`` and ``scipy``.
 
-All the packages provided by a module can be obtained by running `pip list`. We now give some examples that show how the `python`
+All the packages provided by a module can be obtained by running ``pip list``. We now give some examples that show how the ``python``
 modules can be used on the Cirrus CPU/GPU nodes.
 
 
@@ -214,17 +214,17 @@ Extending a centrally-installed Miniconda3 environment
 
 This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
 By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
-some packages such as `mpi4py` must be built specifically for the Cirrus system and so are best provided centrally.
+some packages such as ``mpi4py`` must be built specifically for the Cirrus system and so are best provided centrally.
 
-The first action to take is to decide which `python` module to extend, e.g., `python/3.9.13-gpu` (you can run
-`module avail python` to list all the available `python` modules).
+The first action to take is to decide which ``python`` module to extend, e.g., ``python/3.9.13-gpu`` (you can run
+``module avail python`` to list all the available ``python`` modules).
 
 .. code-block:: bash
 
     [auser@cirrus-login1 auser]$ module load python/3.9.13-gpu
 
-Loading the python module above will set a number of environment variables such as `MINICONDA3_PYTHON_VERSION` and
-`MINICONDA3_PYTHON_LABEL`. This can be confirmed by looking at the output from `module show python/3.9.13-gpu`.
+Loading the python module above will set a number of environment variables such as ``MINICONDA3_PYTHON_VERSION`` and
+``MINICONDA3_PYTHON_LABEL``. This can be confirmed by looking at the output from ``module show python/3.9.13-gpu``.
 
 .. code-block:: bash
 
@@ -236,10 +236,10 @@ Loading the python module above will set a number of environment variables such 
     ...
     setenv	MINICONDA3_BIN_PATH /mnt/lustre/indy2lfs/sw/miniconda3/4.12.0-py39-gpu/bin
 
-The *local* packages will be installed using `pip`. Now, as the `/home` file system is not available on the compute nodes,
-you will need to modify the default install location that `pip` uses to point to a location on `/work`. To do this, you set
-the `PYTHONUSERBASE` environment variable to point to the location on `/work` where you intend to install your local virtual
-Python environment, which we are calling `myvenv` for purposes of illustration.
+The *local* packages will be installed using ``pip``. Now, as the ``/home`` file system is not available on the compute nodes,
+you will need to modify the default install location that ``pip`` uses to point to a location on ``/work``. To do this, you set
+the ``PYTHONUSERBASE`` environment variable to point to the location on ``/work`` where you intend to install your local virtual
+Python environment, which we are calling ``myvenv`` for purposes of illustration.
 
 .. code-block:: bash
 
@@ -247,50 +247,50 @@ Python environment, which we are calling `myvenv` for purposes of illustration.
 
 You will also need to ensure that:
 
-1. the location of executables installed by `pip` are available on the command line by modifying the `PATH` environment variable;
-2. any packages you install are available to Python by modifying the `PYTHONPATH` environment variable.
+1. the location of executables installed by ``pip`` are available on the command line by modifying the ``PATH`` environment variable;
+2. any packages you install are available to Python by modifying the ``PYTHONPATH`` environment variable.
 
-You can do this in the following way (once you have set `PYTHONUSERBASE` as described above).
+You can do this in the following way (once you have set ``PYTHONUSERBASE`` as described above).
 
 .. code-block:: bash
 
     export PATH=${PYTHONUSERBASE}/bin:${PATH}
     export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
 
-Once, you have done this, you can use `pip` to add packages on top of the centrally-installed Miniconda environment.
+Once, you have done this, you can use ``pip`` to add packages on top of the centrally-installed Miniconda environment.
 
 .. code-block:: bash
 
     pip install --user <package_name>
 
-The `--user` flag ensures that packages are installed in the directory specified by `PYTHONUSERBASE`.
+The ``--user`` flag ensures that packages are installed in the directory specified by ``PYTHONUSERBASE``.
 
-However, before you start installing packages, we recommend that you first install `virtualenv` (or `pipenv` if you prefer).
+However, before you start installing packages, we recommend that you first install ``virtualenv`` (or ``pipenv`` if you prefer).
 We will walk you through how to create and manage a virtual environment, but for further information, see `Pipenv and Virtual Environments <https://docs.python-guide.org/dev/virtualenvs/>`__.
 
 .. code-block:: bash
 
     pip install --user virtualenv
 
-Next, you point `virtualenv` at the location where your local environment is to be installed.
+Next, you point ``virtualenv`` at the location where your local environment is to be installed.
 
 .. code-block:: bash
 
     virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
     echo -e "module -s load python/3.9.13-gpu\n\n$(cat ${PYTHONUSERBASE}/bin/activate)" > ${PYTHONUSERBASE}/bin/activate
 
-The `virtualenv` command creates an activate script for your local environment. The second command prepends a module load statement
+The ``virtualenv`` command creates an activate script for your local environment. The second command prepends a module load statement
 to that same activate script. This ensures that the centrally-installed module is always loaded in subsequent login sessions or
 job submissions.
 
-You're now ready to `activate` your environment.
+You're now ready to *activate* your environment.
 
 .. code-block:: bash
 
     source /work/x01/x01/auser/myvenv/bin/activate
 
-Once your environment is activated you will be able to install packages as usual using `pip install <package name>`. Note, it is no longer necessary to use the `--user` option
-as activating the virtual environment ensures that all packages are installed within `/work/x01/x01/auser/myvenv`. (The activation can be undone by running `deactivate` at
+Once your environment is activated you will be able to install packages as usual using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
+as activating the virtual environment ensures that all packages are installed within ``/work/x01/x01/auser/myvenv``. (The activation can be undone by running ``deactivate`` at
 the command prompt.)
 
 These additional packages will only be available from the local environment that you have just activated. So, when running code that requires these packages you must first activate the environment,
