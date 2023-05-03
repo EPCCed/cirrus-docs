@@ -10,7 +10,7 @@ You can list the Miniconda modules by running ``module avail python`` on a login
 suitable for use on the `Cirrus GPU nodes <https://cirrus.readthedocs.io/en/main/user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
 ``tensorflow`` and ``pytorch`` - simply run ``module help <module name>`` for further info.
 
-In summary, the Miniconda modules support Python-based parallel codes, i.e., each such `python` module provides a suite of packages
+The Miniconda modules support Python-based parallel codes, i.e., each such ``python`` module provides a suite of packages
 pertinent to parallel processing and numerical analysis such as ``dask``, ``ipyparallel``, ``jupyter``, ``matplotlib``, ``numpy``, ``pandas`` and ``scipy``.
 
 All the packages provided by a module can be obtained by running ``pip list``. We now give some examples that show how the ``python``
@@ -105,9 +105,9 @@ by calling ``MPI.Init()``.
 
 .. note::
 
-  The Slurm submission script above sets a `OMPI_MCA` environment variable before launching the job.
+  The Slurm submission script above sets a ``OMPI_MCA`` environment variable before launching the job.
   That particular variable suppresses warnings written to the job output file; it can of course be removed.
-  Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all `OMPI_MCA` variables.
+  Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
 
 
 mpi4py for GPU
@@ -181,7 +181,7 @@ By default, the CuPy cache will be located within the user's home directory.
 And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
 ``CUPY_CACHE_DIR`` such that the cache is on the ``/work`` file system instead.
 
-Again, the submission script is the place to set `OMPI_MCA` variables - the two
+Again, the submission script is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
 
 https://www.open-mpi.org/faq/?category=tuning#mca-def
@@ -279,7 +279,7 @@ Next, you point ``virtualenv`` at the location where your local environment is t
     virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
     echo -e "module -s load python/3.9.13-gpu\n\n$(cat ${PYTHONUSERBASE}/bin/activate)" > ${PYTHONUSERBASE}/bin/activate
 
-The ``virtualenv`` command creates an activate script for your local environment. The second command prepends a module load statement
+The ``virtualenv`` command creates an activate script for your local environment. The second command prepends a ``module load`` statement
 to that same activate script. This ensures that the centrally-installed module is always loaded in subsequent login sessions or
 job submissions.
 
@@ -290,20 +290,18 @@ You're now ready to *activate* your environment.
     source /work/x01/x01/auser/myvenv/bin/activate
 
 Once your environment is activated you will be able to install packages as usual using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all packages are installed within ``/work/x01/x01/auser/myvenv``. (The activation can be undone by running ``deactivate`` at
+as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. (The activation can be undone by running ``deactivate`` at
 the command prompt.)
 
 These additional packages will only be available from the local environment that you have just activated. So, when running code that requires these packages you must first activate the environment,
-by adding the above `source ... activate` command to any submission scripts.
+by adding the above ``source ... activate`` command to any submission scripts.
 
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
-``tensorflow`` or ``pytorch``. This means you would avoid having to install ML packages within your local area.
-
-Each of those ML modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension
-of ``python/3.10.8-gpu`` (and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
-
+``tensorflow`` or ``pytorch``. This means you would avoid having to install ML packages within your local area. Each of those ML
+modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``
+(and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
 
 
 Using JupyterLab on Cirrus
