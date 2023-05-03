@@ -1,94 +1,26 @@
 Using Python
 ============
 
-Python on Cirrus is provided by the `Anaconda <https://www.continuum.io/>`__
-distribution. The Python 3 version of the distribution is available.
+Python on Cirrus is provided by a number of `Miniconda <https://conda.io/miniconda.html>`__ modules and one `Anaconda <https://www.continuum.io>`__ module.
+(Miniconda being a small bootstrap version of Anaconda).
 
-The central installation provides many of the most common packages used for
-scientific computation and data analysis.
+The Anaconda module is called `anaconda/python3` and is suitable for running serial applications.
 
-If the packages you require are not included in the central Anaconda Python
-distribution, then the simplest way to make these available is often to install
-your own version of `Miniconda <https://conda.io/miniconda.html>`__  and add the
-packages you need. We provide  instructions on how to do this below.
+You can list the Miniconda modules by running `module avail python` on a login node. Those module versions that have the `gpu` suffix are
+suitable for use on the `Cirrus GPU nodes <https://cirrus.readthedocs.io/en/main/user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., `pyfr`, `horovod`,
+`tensorflow` and `pytorch` - simply run `module help <module name>` for further info.
 
-An alternative way to provide your own packages (and to make them available more
-generally to other people in your project and beyond) would be to use a Singularity
-container, see the :doc:`singularity` chapter of this User Guide for more information
-on this topic.
+In summary, the Miniconda modules support Python-based parallel codes, i.e., each such `python` module provides a suite of packages
+pertinent to parallel processing and numerical analysis such as `dask`, `ipyparallel`, `jupyter`, `matplotlib`, `numpy`, `pandas` and `scipy`.
 
+All the packages provided by a module can be obtained by running `pip list`. We now give some examples that show how the `python`
+modules can be used on the Cirrus CPU/GPU nodes.
 
-Accessing the Cirrus Anaconda Modules
--------------------------------------
-
-Users have the standard system Python available by default. To setup your environment
-to use the Anaconda distributions you should use:
-
-::
-
-    module load anaconda/python3
-
-for Python 3 (v3.9.7).
-
-You can verify the current version of Python with:
-
-::
-
-   [user@cirrus-login1 ~]$ module load anaconda/python3
-   [user@cirrus-login1 ~]$ python3 --version
-   Python 3.9.7 :: Anaconda, Inc.
-
-Full details on the Anaconda distributions can be found on the Continuum website at:
-
-* http://docs.continuum.io/anaconda/index.html
-
-Packages included in Anaconda distributions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can list the packages currently available in the distribution you have loaded with the command conda list:
-
-::
-
-   [user@cirrus-login1 ~]$ module load anaconda
-   [user@cirrus-login1 ~]$ conda list
-   # packages in environment at /scratch/sw/anaconda/anaconda3-2021.11:
-   #
-   # Name                    Version                   Build  Channel
-   _ipyw_jlab_nb_ext_conf    0.1.0            py39h06a4308_0  
-   _libgcc_mutex             0.1                        main  
-   _openmp_mutex             4.5                       1_gnu  
-   alabaster                 0.7.12             pyhd3eb1b0_0  
-   anaconda                  2021.11                  py39_0  
-   anaconda-client           1.9.0            py39h06a4308_0  
-   anaconda-navigator        2.1.1                    py39_0  
-   anaconda-project          0.10.1             pyhd3eb1b0_0  
-   anyio                     2.2.0            py39h06a4308_1  
-   appdirs                   1.4.4              pyhd3eb1b0_0  
-   argh                      0.26.2           py39h06a4308_0  
-   argon2-cffi               20.1.0           py39h27cfd23_1  
-   ...
-
-Adding packages to the Anaconda distribution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Packages cannot be added to the central Anaconda distribution by users.
-If you wish to have additional packages, we recommend installing your
-own local version of Miniconda and adding the packages you need. This
-approach is described in the next section.
-
-
-Accessing the Cirrus Miniconda3 Modules
----------------------------------------
-
-There are a number of Miniconda3 modules available on Cirrus that support
-Python-based parallel codes. In fact, each module provides a suite of packages
-pertinent to parallel processing and numerical analysis, e.g., dask, ipyparallel,
-jupyter, matplotlib, numpy, pandas and scipy.
 
 mpi4py for CPU
-~~~~~~~~~~~~~~
+--------------
 
-For example, the ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
+The ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 
 The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
 across two compute nodes.
@@ -171,14 +103,15 @@ by calling ``MPI.Init()``.
 
     srun numpy-broadcast.py
 
-The Slurm submission script contains an `OpenMPI MCA <https://www.open-mpi.org/faq/?category=tuning#mca-def>`_
-setting that prevents false errors from being recorded in the output file.
+.. note::
 
-Please see the `mpi4py online docs <https://mpi4py.readthedocs.io/en/stable/tutorial.html>`__ for more coding examples. 
+  The Slurm submission script above sets a `OMPI_MCA` environment variable before launching the job.
+  That particular variable suppresses warnings written to the job output file; it can of course be removed.
+  Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all `OMPI_MCA` variables.
 
 
 mpi4py for GPU
-~~~~~~~~~~~~~~
+--------------
 
 There's also an mpi4py module (again using OpenMPI 4.1.4) that is tailored for CUDA 11.6 on the Cirrus
 GPU nodes, ``python/3.9.13-gpu``. We show below an example that features an MPI reduction
@@ -248,8 +181,14 @@ By default, the CuPy cache will be located within the user's home directory.
 And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
 ``CUPY_CACHE_DIR`` such that the cache is on the ``/work`` file system instead.
 
+Again, the submission script is the place to set `OMPI_MCA` variables - the two
+shown are optional, see the link below for further details.
+
+https://www.open-mpi.org/faq/?category=tuning#mca-def
+
+
 Machine Learning frameworks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 There are several more Python-based modules that also target the Cirrus GPU nodes. These include two machine
 learning frameworks, ``pytorch/1.12.1-gpu`` and ``tensorflow/2.9.1-gpu``. Both modules are Python virtual environments
@@ -270,309 +209,101 @@ Please click on the link indicated to see examples of how to use the `PyTorch an
 More detail on the Cirrus GPU nodes can be found at https://cirrus.readthedocs.io/en/main/user-guide/gpu.html .
 
 
-Custom Miniconda3 Environments
-------------------------------
-
-To setup a custom Python environment, one that provides packages that are not part of a centrally-installed environment, there are two possible approaches.
-
-Either `install Miniconda from scratch <https://cirrus.readthedocs.io/en/main/user-guide/python.html#installing-miniconda3-from-scratch>`__, or,
-`extend a centrally-installed Miniconda environment <https://cirrus.readthedocs.io/en/main/user-guide/python.html#extend-centrally-installed-miniconda3-environment>`__.
-
-The latter option may be best if you intend to run your custom environment in parallel across multiple CPU/GPU nodes.
-This is because the centrally-installed python modules provide packages such as mpi4py that have been built specifically for the Cirrus system.
-
-
-Installing Miniconda3 from scratch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-First, you should download Miniconda. You can use ``wget`` to do this.
-
-::
-
-   [user@cirrus-login1 ~]$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-
-You can find links to the various miniconda versions on the Miniconda website.
-
-* https://conda.io/miniconda.html
-
-For Cirrus, you should use the Linux 64-bit installer.
-
-Once you have downloaded the installer, you can run it via ``bash``.
-
-::
-
-   [user@cirrus-login1 ~]$ bash Miniconda3-latest-Linux-x86_64.sh 
-
-
-Note that the installer will prompt you for a number of choices which
-include the license agreement to which you must answer `yes`.
-
-::
-
-  Do you accept the license terms? [yes|no]
-  [no] >>> yes
-
-The installer will prompt for the install location, the default
-being your home directory, to install in ``/scratch`` or ``/work`` please
-change the install location here. Remember, the Cirrus compute nodes
-do not have access to ``/home``.
-
-::
-
-  Miniconda3 will now be installed into this location:
-  /home/t01/t01/user/miniconda3
-
-  - Press ENTER to confirm the location
-  - Press CTRL-C to abort the installation
-  - Or specify a different location below
-
-  [/home/t01/t01/user/miniconda3] >>> /work/t01/t01/user/miniconda3
-
-The final question will be about initialization. If you wish to use only
-Miniconda and no other python environments (such as the central Anaconda
-modules), you may want to answer `yes` at this point, otherwise we would
-suggest answering `no`.
-
-::
-
-  Do you wish the installer to initialize Miniconda3
-  by running conda init? [yes|no]
-  [no] >>> no
-  
-  You have chosen to not have conda modify your shell scripts at all.
-  To activate conda's base environment in your current shell session:
-  
-  eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
-  
-  To install conda's shell functions for easier access, first activate, then:
-  
-  conda init
-  
-  If you'd prefer that conda's base environment not be activated on startup, 
-     set the auto_activate_base parameter to false: 
-  
-  conda config --set auto_activate_base false
-  
-  Thank you for installing Miniconda3!
-
-
-If you have answered `no`, the instructions above should be followed
-to activate the base conda environment. This can be done in a number of
-ways.
-
-* Perform the shell ``eval`` command manually as required.
-
-::
-
-  $ eval "$(/work/t01/t01/user/miniconda3/bin/conda shell.bash hook)"
-
-* Add the shell ``eval`` command to a script, which can then be invoked
-  when required, e.g., ``source ~/miniconda-init.sh``.
-
-Answering `yes` to the initialization question will mean that the shell
-command is effectively injected into your ``.bashrc`` file, and will be
-executed whenever you login to your Cirrus account. In this case, you may
-at a later date wish to issue a command that prevents the conda base
-environment from being activated at login.
-
-::
-
-  $ conda config --set auto_activate_base false
-
-If not activated automatically at login, the conda base environment can
-instead be activated in the usual way.
-
-::
-
-  [user@cirrus-login1 ~]$ conda activate
-  (base) [user@cirrus-login1 ~]$ conda list
-  # packages in environment at /work/t01/t01/user/miniconda3:
-  #
-  # Name                    Version                   Build  Channel
-  _libgcc_mutex             0.1                        main  
-  _openmp_mutex             4.5                       1_gnu  
-  brotlipy                  0.7.0         py39h27cfd23_1003  
-  ca-certificates           2021.7.5             h06a4308_1  
-  certifi                   2021.5.30        py39h06a4308_0  
-  cffi                      1.14.6           py39h400218f_0  
-  chardet                   4.0.0         py39h06a4308_1003  
-  conda                     4.10.3           py39h06a4308_0
-  ...
-  (base) [user@cirrus-login1 ~]$  conda deactivate
-  [user@cirrus-login1 ~]$ 
-
-Installing packages into Miniconda3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Once you have installed Miniconda and setup your environment to access it,
-you can then add whatever packages you wish to the installation using the
-``conda install ...`` command, see below for two examples.
-
-::
-
-   [user@cirrus-login1 ~]$ conda install numpy
-   Collecting package metadata (current_repodata.json): done
-   Solving environment: done
-   
-   ... package details omitted ...
-   
-   Proceed ([y]/n)? y
-
-   ...
-   
-   [user@cirrus-login0 ~]$ conda list
-   # packages in environment at /work/t01/t01/user/miniconda3:
-   #
-   # Name                    Version                   Build  Channel
-   _libgcc_mutex             0.1                 conda_forge    conda-forge
-   _openmp_mutex             4.5                      1_llvm    conda-forge
-   blas                      1.0                         mkl  
-   brotlipy                  0.7.0         py39h27cfd23_1003  
-   ca-certificates           2021.10.8            ha878542_0    conda-forge
-   cairo                     1.16.0            ha00ac49_1009    conda-forge
-   certifi                   2021.10.8        py39hf3d152e_1    conda-forge
-   cffi                      1.15.0           py39h4bc2ebd_0    conda-forge
-   chardet                   4.0.0         py39h06a4308_1003  
-   conda                     4.10.3           py39hf3d152e_3    conda-forge
-   conda-package-handling    1.7.3            py39h27cfd23_1  
-   cryptography              3.4.7            py39hd23ed53_0  
-   font-ttf-dejavu-sans-mono 2.37                 hab24e00_0    conda-forge
-   font-ttf-inconsolata      3.000                h77eed37_0    conda-forge
-   font-ttf-source-code-pro  2.038                h77eed37_0    conda-forge
-   font-ttf-ubuntu           0.83                 hab24e00_0    conda-forge
-   fontconfig                2.13.1            hba837de_1005    conda-forge
-   fonts-conda-ecosystem     1                             0    conda-forge
-   fonts-conda-forge         1                             0    conda-forge
-   freetype                  2.10.4               h0708190_1    conda-forge
-   gettext                   0.19.8.1          h73d1719_1008    conda-forge
-   icu                       69.1                 h9c3ff4c_0    conda-forge
-   idna                      2.10               pyhd3eb1b0_0  
-   intel-openmp              2021.4.0          h06a4308_3561  
-   ld_impl_linux-64          2.36.1               hea4e1c9_2    conda-forge
-   libffi                    3.4.2                h9c3ff4c_4    conda-forge
-   libgcc-ng                 11.2.0              h1d223b6_11    conda-forge
-   libgirepository           1.70.0               hb520f89_1    conda-forge
-   libglib                   2.70.0               h174f98d_1    conda-forge
-   libiconv                  1.16                 h516909a_0    conda-forge
-   libpng                    1.6.37               h21135ba_2    conda-forge
-   libstdcxx-ng              11.2.0              he4da1e4_11    conda-forge
-   libuuid                   2.32.1            h7f98852_1000    conda-forge
-   libxcb                    1.13              h7f98852_1003    conda-forge
-   libxml2                   2.9.12               h885dcf4_1    conda-forge
-   libzlib                   1.2.11            h36c2ea0_1013    conda-forge
-   llvm-openmp               12.0.1               h4bd325d_1    conda-forge
-   mkl                       2021.4.0           h06a4308_640  
-   mkl-service               2.4.0            py39h7f8727e_0  
-   mkl_fft                   1.3.1            py39hd3c417c_0  
-   mkl_random                1.2.2            py39h51133e4_0  
-   ncurses                   6.2                  he6710b0_1  
-   numpy                     1.21.2           py39h20f2e39_0  
-   numpy-base                1.21.2           py39h79a1101_0
-   ...
-
-
-For some package installations it may also be necessary to specify a channel
-such as conda-forge. For example, the following command installs the pygobject
-module.
-
-::
-
-   [user@cirrus-login1 ~]$ conda install -c conda-forge pygobject 
-
-
-
 Extending a centrally-installed Miniconda3 environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------
 
-The Bash commands for extending a centrally-installed Python environment can be found via the following link.
+This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
+By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
+some packages such as `mpi4py` must be built specifically for the Cirrus system and so are best provided centrally.
 
-* https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/python/build_custom_pyenv_cirrus.md
+The first action to take is to decide which `python` module to extend, e.g., `python/3.9.13-gpu` (you can run
+`module avail python` to list all the available `python` modules).
 
-These instructions are split into five sections.
+.. code-block:: bash
 
+    [auser@cirrus-login1 auser]$ module load python/3.9.13-gpu
 
-1. **Set the basic parameters**
+Loading the python module above will set a number of environment variables such as `MINICONDA3_PYTHON_VERSION` and
+`MINICONDA3_PYTHON_LABEL`. This can be confirmed by looking at the output from `module show python/3.9.13-gpu`.
 
-   Here, you specify the name of the custom environment, where it is to be installed
-   and the version of the Python module that provides the centrally-installed packages.
-   If you intend to run the custom environment on the compute nodes, the install location
-   should be somewhere within the top-level work area, ``${HOME/home/work}``; this is necessary
-   because the compute nodes do not have access to ``/home``.
+.. code-block:: bash
 
+    /mnt/lustre/indy2lfs/sw/modulefiles/python/3.9.13-gpu:
 
-2. **Initialise environment variables and create install folders**
+    conflict	python
+    setenv	MINICONDA3_PYTHON_VERSION 3.9.13
+    setenv      MINICONDA3_PYTHON_LABEL python3.9
+    ...
+    setenv	MINICONDA3_BIN_PATH /mnt/lustre/indy2lfs/sw/miniconda3/4.12.0-py39-gpu/bin
 
-   The first set of instructions in this section initialise variables that will be used for the deactivate script.
-   Next, the install folder is created and the Python module is loaded.
-   The ``PYTHONUSERBASE`` variable is set such that any subsequent package installs will copy files to the
-   local custom environment, i.e., to a location where the user has write access.
-   Lastly, a number of paths to hidden config/cache folders are specified in order to ensure that all temporary files
-   are also written to the local custom environment and do not clutter areas elsewhere such as ``${HOME}`` and ``${HOME/home/work}``.
-   (And of course ``${HOME}`` would not be accessible from the compute nodes.)
+The *local* packages will be installed using `pip`. Now, as the `/home` file system is not available on the compute nodes,
+you will need to modify the default install location that `pip` uses to point to a location on `/work`. To do this, you set
+the `PYTHONUSERBASE` environment variable to point to the location on `/work` where you intend to install your local virtual
+Python environment, which we are calling `myvenv` for purposes of illustration.
 
+.. code-block:: bash
 
-3. **Install package(s)**
+    export PYTHONUSERBASE=/work/x01/x01/auser/myvenv
 
-   As the heading suggests, this is the part where you enter ``pip install`` commands for those packages that do not exist
-   within the environment provided by the centrally-installed Python module. There are several ways to install Python packages,
-   the most obvious being ``pip install --user <name of package>``. Please note, the ``--user`` option is important as it ensures
-   that packages are installed to the location indicated by ``PYTHONUSERBASE``.
-   
-   You could also specify the name of a ``whl`` wheel file instead of a package name. Alternatively, you might first clone a github repo that
-   contains the package source, and then run ``pip install --user .`` after moving into the repo folder. For other packages, you might make
-   use of a ``setup.py`` script to perform a build.
+You will also need to ensure that:
 
-   ::
-  
-      python setup.py build
-      python setup.py install --prefix=${PYTHONUSERBASE}
-      python setup.py clean --all
-   
+1. the location of executables installed by `pip` are available on the command line by modifying the `PATH` environment variable;
+2. any packages you install are available to Python by modifying the `PYTHONPATH` environment variable.
 
-4. **Create activation script**
-   
-   Once you've finished installing packages, you will need to have the means to activate your local custom environment
-   from subsequent login sessions or from batch jobs submitted to the compute nodes. And so, the commands listed in this
-   section create a Bash file called ``activate`` that can be sourced whenever the environment needs to be activated.
+You can do this in the following way (once you have set `PYTHONUSERBASE` as described above).
 
-   ::
-   
-      source ${INSTALL_PRFX}/${PYPKG_LABEL}/${PYPKG_VERSION}/python/${PYTHON_MODULE_VERSION}/bin/activate
+.. code-block:: bash
 
+    export PATH=${PYTHONUSERBASE}/bin:${PATH}
+    export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
 
-   This can be done either from a login node or from within a Slurm submission script. The meaning of the expansion
-   variables given in the source command argument can be deduced from the script linked above.
+Once, you have done this, you can use `pip` to add packages on top of the centrally-installed Miniconda environment.
 
+.. code-block:: bash
 
-5. **Create deactivation script**
+    pip install --user <package_name>
 
-   If you've activated your custom environment from a login node (in order to install some extra packages perhaps) and you
-   now wish to do some other work, you can clear your login shell of any links to the custom environment by sourcing the
-   deactivate script.
+The `--user` flag ensures that packages are installed in the directory specified by `PYTHONUSERBASE`.
+
+However, before you start installing packages, we recommend that you first install `virtualenv` (or `pipenv` if you prefer).
+We will walk you through how to create and manage a virtual environment, but for further information, see `Pipenv and Virtual Environments <https://docs.python-guide.org/dev/virtualenvs/>`__.
+
+.. code-block:: bash
+
+    pip install --user virtualenv
+
+Next, you point `virtualenv` at the location where your local environment is to be installed.
+
+.. code-block:: bash
+
+    virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
+    echo -e "module -s load python/3.9.13-gpu\n\n$(cat ${PYTHONUSERBASE}/bin/activate)" > ${PYTHONUSERBASE}/bin/activate
+
+The `virtualenv` command creates an activate script for your local environment. The second command prepends a module load statement
+to that same activate script. This ensures that the centrally-installed module is always loaded in subsequent login sessions or
+job submissions.
+
+You're now ready to `activate` your environment.
+
+.. code-block:: bash
+
+    source /work/x01/x01/auser/myvenv/bin/activate
+
+Once your environment is activated you will be able to install packages as usual using `pip install <package name>`. Note, it is no longer necessary to use the `--user` option
+as activating the virtual environment ensures that all packages are installed within `/work/x01/x01/auser/myvenv`. (The activation can be undone by running `deactivate` at
+the command prompt.)
+
+These additional packages will only be available from the local environment that you have just activated. So, when running code that requires these packages you must first activate the environment,
+by adding the above `source ... activate` command to any submission scripts.
 
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
-You could just as easily create a custom environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
+You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
 ``tensorflow`` or ``pytorch``. This means you would avoid having to install ML packages within your local area.
 
 Each of those ML modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension
 of ``python/3.10.8-gpu`` (and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
 
-
-Note on Default Python
-----------------------
-
-System versions of python occur in the default PATH if no action
-has been taken.
-
-::
-
-  [user@cirrus-login1]$ which python2
-
-  [user@cirrus-login1]$ which python3
-  /usr/bin/python3
-
-These should not be used. Use either an Anaconda or a Miniconda version.
 
 
 Using JupyterLab on Cirrus
@@ -655,7 +386,7 @@ you can start from a login node prompt.
 If you are on a compute node, the JupyterLab server will be available for the length of
 the interactive session you have requested.
 
-You can also run Jupyter sessions using the centrally-installed `Miniconda3 modules <https://cirrus.readthedocs.io/en/main/user-guide/python.html#accessing-the-cirrus-miniconda3-modules>`__ available
+You can also run Jupyter sessions using the centrally-installed Miniconda3 modules available
 on Cirrus. For example, the following link provides instructions for how to setup a Jupyter server
 on a GPU node.
 
