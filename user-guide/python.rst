@@ -277,11 +277,11 @@ Next, you point ``virtualenv`` at the location where your local environment is t
 .. code-block:: bash
 
     virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
-    echo -e "module -s load python/3.9.13-gpu\n\n$(cat ${PYTHONUSERBASE}/bin/activate)" > ${PYTHONUSERBASE}/bin/activate
 
-The ``virtualenv`` command creates an activate script for your local environment. The second command prepends a ``module load`` statement
-to that same activate script. This ensures that the centrally-installed module is always loaded in subsequent login sessions or
-job submissions.
+    gen-venv-activate ${PYTHONUSERBASE}
+
+The ``virtualenv`` command creates an activate script for your local environment. The second command, ``gen-venv-activate`` amends that script such
+that the centrally-installed ``python`` module is always loaded in subsequent login sessions or job submissions.
 
 You're now ready to *activate* your environment.
 
