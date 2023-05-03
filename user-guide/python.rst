@@ -25,7 +25,10 @@ The ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
 across two compute nodes.
 
-<details>
+.. raw:: html
+
+   <details>
+
 .. code-block:: python
 
     #!/usr/bin/env python
@@ -78,7 +81,11 @@ across two compute nodes.
                 % (rank))
 
     MPI.Finalize()
-</details>
+
+.. raw:: html
+
+    </details>
+
 
 The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
 that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
