@@ -120,11 +120,9 @@ by calling ``MPI.Init()``.
 
     </details>
 
-.. note::
-
-  The Slurm submission script above sets a ``OMPI_MCA`` environment variable before launching the job.
-  That particular variable suppresses warnings written to the job output file; it can of course be removed.
-  Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
+The Slurm submission script (``broadcast-submit.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
+That particular variable suppresses warnings written to the job output file; it can of course be removed.
+Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
 
 
 mpi4py for GPU
@@ -180,6 +178,10 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
     </details>
 
+By default, the CuPy cache will be located within the user's home directory.
+And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
+``CUPY_CACHE_DIR`` such that the cache is on the ``/work`` file system instead.
+
 .. raw:: html
 
     <details><summary><b>allreduce-submit.ll</b></summary>
@@ -210,11 +212,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
     </details>
 
-By default, the CuPy cache will be located within the user's home directory.
-And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
-``CUPY_CACHE_DIR`` such that the cache is on the ``/work`` file system instead.
-
-Again, the submission script is the place to set ``OMPI_MCA`` variables - the two
+Again, the submission script (``allreduce-submit.ll``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
 
 https://www.open-mpi.org/faq/?category=tuning#mca-def
