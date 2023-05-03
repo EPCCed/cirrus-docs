@@ -27,7 +27,7 @@ across two compute nodes.
 
 .. raw:: html
 
-   <details>
+   <details><summary>numpy-broadcast.py</summary>
 
 .. code-block:: python
 
