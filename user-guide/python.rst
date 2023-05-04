@@ -93,7 +93,7 @@ by calling ``MPI.Init()``.
 
 .. raw:: html
 
-    <details><summary><b>broadcast-submit.ll</b></summary>
+    <details><summary><b>submit-broadcast.ll</b></summary>
 
 .. code-block:: bash
 
@@ -120,7 +120,7 @@ by calling ``MPI.Init()``.
 
     </details>
 
-The Slurm submission script (``broadcast-submit.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
+The Slurm submission script (``submit-broadcast.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
 That particular variable suppresses warnings written to the job output file; it can of course be removed.
 Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
 
@@ -184,7 +184,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
 .. raw:: html
 
-    <details><summary><b>allreduce-submit.ll</b></summary>
+    <details><summary><b>submit-allreduce.ll</b></summary>
 
 .. code-block:: bash
 
@@ -212,7 +212,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
     </details>
 
-Again, the submission script (``allreduce-submit.ll``) is the place to set ``OMPI_MCA`` variables - the two
+Again, the submission script (``submit-allreduce.ll``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
 
 https://www.open-mpi.org/faq/?category=tuning#mca-def
@@ -309,10 +309,11 @@ Next, you point ``virtualenv`` at the location where your local environment is t
 
     virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
 
-    gen-venv-activate ${PYTHONUSERBASE}
+    extend-venv-activate ${PYTHONUSERBASE}
 
-The ``virtualenv`` command creates an activate script for your local environment. The second command, ``gen-venv-activate`` amends that script such
-that the centrally-installed ``python`` module is always loaded in subsequent login sessions or job submissions.
+The ``virtualenv`` command creates an activate script for your local environment. The second command, ``extend-venv-activate``, amends that script such
+that the centrally-installed ``python`` module is always loaded in subsequent login sessions or job submissions, and unloaded whenever the virtual
+environment is deactivated.
 
 You're now ready to *activate* your environment.
 
@@ -320,13 +321,42 @@ You're now ready to *activate* your environment.
 
     source /work/x01/x01/auser/myvenv/bin/activate
 
-Once your environment is activated you will be able to install packages as usual using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. (The activation can be undone by running ``deactivate`` at
-the command prompt.)
+Once your environment is activated you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
+as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. And when you have finished installing packages,
+you can deactivate your environment by issuing the `deactivate` command.
 
-These additional packages will only be available from the local environment that you have just activated. So, when running code that requires these packages you must first activate the environment,
-by adding the above ``source ... activate`` command to any submission scripts.
+.. code-block:: bash
 
+    (myvenv) [auser@cirrus-login1 auser]$ deactivate
+    [auser@cirrus-login1 auser]$
+
+The packages you have just installed locally will only be available once the local environment has been activated. So, when running code that requires these packages,
+you must first activate the environment, by adding the activation command to the submission script, as shown below.
+
+.. raw:: html
+
+    <details><summary><b>submit-myvenv.ll</b></summary>
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    #SBATCH --job-name=myvenv
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --partition=gpu
+    #SBATCH --qos=gpu
+    #SBATCH --account=[budget code]
+    #SBATCH --nodes=2
+    #SBATCH --gres=gpu:4
+
+    source /work/x01/x01/auser/myvenv/bin/activate
+
+    srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
+
+.. raw:: html
+
+    </details>
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
