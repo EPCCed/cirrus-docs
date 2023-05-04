@@ -7,7 +7,7 @@ Python on Cirrus is provided by a number of `Miniconda <https://conda.io/minicon
 The Anaconda module is called ``anaconda/python3`` and is suitable for running serial applications.
 
 You can list the Miniconda modules by running ``module avail python`` on a login node. Those module versions that have the ``gpu`` suffix are
-suitable for use on the `Cirrus GPU nodes <user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
+suitable for use on the `Cirrus GPU nodes <gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
 ``tensorflow`` and ``pytorch`` - simply run ``module help <module name>`` for further info.
 
 The Miniconda modules support Python-based parallel codes, i.e., each such ``python`` module provides a suite of packages
