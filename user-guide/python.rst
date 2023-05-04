@@ -7,7 +7,7 @@ Python on Cirrus is provided by a number of `Miniconda <https://conda.io/minicon
 The Anaconda module is called ``anaconda/python3`` and is suitable for running serial applications.
 
 You can list the Miniconda modules by running ``module avail python`` on a login node. Those module versions that have the ``gpu`` suffix are
-suitable for use on the `Cirrus GPU nodes <https://cirrus.readthedocs.io/en/main/user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
+suitable for use on the `Cirrus GPU nodes <user-guide/gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
 ``tensorflow`` and ``pytorch`` - simply run ``module help <module name>`` for further info.
 
 The Miniconda modules support Python-based parallel codes, i.e., each such ``python`` module provides a suite of packages
@@ -237,11 +237,9 @@ running ``pip list``.
 
 Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md>`__ .
 
-More detail on the Cirrus GPU nodes can be found at https://cirrus.readthedocs.io/en/main/user-guide/gpu.html .
 
-
-Extending a centrally-installed Miniconda3 environment
-------------------------------------------------------
+Installing your own Python packages
+-----------------------------------
 
 This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
 By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
