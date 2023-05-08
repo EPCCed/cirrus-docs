@@ -53,15 +53,13 @@ this example, "-t504" is employed.
     #SBATCH --partition=[partition name]
     # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
     #SBATCH --qos=[qos name]
-    
-    # Load Ansys
-    module purge
-    module load ansys/19.0
 
     # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
+    #   This prevents any threaded system libraries from automatically
     #   using threading.
     export OMP_NUM_THREADS=1
+
+    export HOME=${HOME/home/work}
 
     scontrol show hostnames $SLURM_NODELIST > ~/fluent.launcher.host.txt
 

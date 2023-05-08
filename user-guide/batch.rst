@@ -143,6 +143,10 @@ you will be assigned a maximum of 256/36 = 7.1 GB of the memory available on the
    Using the ``--exclusive`` option in jobs will give you access to the full node memory even
    if you do not explicitly request all of the CPU cores on the node.
 
+.. warning::
+   Using the ``--exclusive`` option will charge your account for the usage of the entire node,
+   even if you don't request all the cores in your scripts.
+
 .. note::
 
    You will not generally have access to the full amount of memory resource on the the node as
@@ -166,6 +170,11 @@ you will be assigned a maximum of 384/4 = 96 GB of the memory available on the n
 
    In order to run jobs on the GPU nodes your budget must have positive GPU hours *and* core hours associated with it.
    However, only your GPU hours will be consumed when running these jobs.
+
+.. warning::
+
+   Using the ``--exclusive`` option will charge your account for the usage of the entire node, *i.e.*, 4 GPUs, even
+   if you don't request all the GPUs in your submission script.
 
 Partitions
 ~~~~~~~~~~
@@ -986,6 +995,7 @@ On the first page, you need to provide the following:
 
 On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
+(The selected username will be charged for the reservation but the reservation can be used by all members of the selected budget.)
 
 Your request will be checked by the Cirrus User Administration team and, if approved, you will
 be provided a reservation ID which can be used on the system. To submit jobs to a reservation,

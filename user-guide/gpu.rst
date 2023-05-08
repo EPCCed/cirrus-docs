@@ -54,7 +54,7 @@ the latest module version present on the system.
 Each release of the NVIDIA HPC SDK may include several different versions of
 the CUDA toolchain. For example, the ``nvidia/nvhpc/21.2`` module comes
 with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA toolchains can be
-active at any one time and for ``nvhpc/21.2`` this is CUDA 11.2.
+active at any one time and for ``nvhpc/22.11`` this is CUDA 11.8.
 
 Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:
@@ -64,12 +64,10 @@ version of CUDA:
 
    * - Module
      - Supported CUDA Version
+   * - ``nvidia/nvhpc/22.11``
+     - CUDA 11.8
    * - ``nvidia/nvhpc/22.2``
      - CUDA 11.6
-   * - ``nvidia/nvhpc/21.9``
-     - CUDA 11.4
-   * - ``nvidia/nvhpc/21.2``
-     - CUDA 11.2
 
 To load the latest NVIDIA HPC SDK use
 
@@ -539,13 +537,13 @@ MPI calls. This allows replacement of relevant host device transfers by
 direct communication within a node via NVLink. Between nodes, MPI
 communication will remain limited by network latency and bandwidth.
 
-A version of OpenMPI with both CUDA-aware MPI support and SLURM support
-is available:
+Version of OpenMPI with both CUDA-aware MPI support and SLURM support
+are available, you should load the following modules:
 
 ::
 
-   $ module load openmpi/4.1.4-cuda-11.6-nvfortran
-   $ module load nvidia/nvhpc-nompi/22.2
+   module load openmpi/4.1.4-cuda-11.8
+   module load nvidia/nvhpc-nompi/22.11
    
 The command you use to compile depends on whether you are compiling C/C++ or
 Fortran.
@@ -558,18 +556,18 @@ specified explicitly, e.g.,
 
 ::
 
-   $ nvcc -I${MPI_HOME}/include  -L${MPI_HOME}/lib -lmpi -o my_program.x my_program.cu
+   nvcc -I${MPI_HOME}/include  -L${MPI_HOME}/lib -lmpi -o my_program.x my_program.cu
 
 This will produce an executable in the usual way.
 
-Compiling Fotran
-~~~~~~~~~~~~~~~~
+Compiling Fortran
+~~~~~~~~~~~~~~~~~
 
 Use the ``mpif90`` compiler wrapper to compile Fortran code for GPU. e.g.
 
 ::
 
-   $ mpif90 -o my_program.x my_program.f90
+   mpif90 -o my_program.x my_program.f90
    
 This will produce an executable in the usual way.
 
@@ -589,7 +587,8 @@ A batch script to use such an executable might be:
    #SBATCH --qos=gpu
    #SBATCH --gres=gpu:4
 
-   module load openmpi/4.1.2-cuda-11.6-nvfortran
+   # Load the appropriate modules, e.g.,
+   module load openmpi/4.1.4-cuda-11.8
    module load nvidia/nvhpc-nompi/22.2
 
    export OMP_NUM_THREADS=1
