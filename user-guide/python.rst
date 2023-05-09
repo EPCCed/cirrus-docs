@@ -327,7 +327,7 @@ as activating the virtual environment ensures that all new packages are installe
   ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
   that export command will ensure the pip cache is located off ``/work``.
 
-when you have finished installing packages, you can deactivate your environment by issuing the `deactivate` command.
+when you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
 
 .. code-block:: bash
 
