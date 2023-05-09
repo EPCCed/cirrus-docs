@@ -84,8 +84,7 @@ across two compute nodes.
 
 .. raw:: html
 
-    </details>
-
+    </details><br>
 
 The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
 that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
