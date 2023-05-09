@@ -84,8 +84,7 @@ across two compute nodes.
 
 .. raw:: html
 
-    </details>
-
+    </details><br>
 
 The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
 that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
@@ -118,7 +117,7 @@ by calling ``MPI.Init()``.
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 The Slurm submission script (``submit-broadcast.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
 That particular variable suppresses warnings written to the job output file; it can of course be removed.
@@ -176,7 +175,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 By default, the CuPy cache will be located within the user's home directory.
 And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
@@ -210,7 +209,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 Again, the submission script (``submit-allreduce.ll``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
@@ -228,12 +227,6 @@ package along with the `NVIDIA Collective Communications Library <https://develo
 
 A full package list for these environments can be obtained by loading the module of interest and then
 running ``pip list``.
-
-.. note::
-
-  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
-  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
-  that export command will ensure the pip cache is located off ``/work``.
 
 Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md>`__ .
 
@@ -326,8 +319,15 @@ You're now ready to *activate* your environment.
     source /work/x01/x01/auser/myvenv/bin/activate
 
 Once your environment is activated you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. And when you have finished installing packages,
-you can deactivate your environment by issuing the `deactivate` command.
+as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. 
+
+.. note::
+
+  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
+  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
+  that export command will ensure the pip cache is located off ``/work``.
+
+when you have finished installing packages, you can deactivate your environment by issuing the `deactivate` command.
 
 .. code-block:: bash
 
@@ -360,7 +360,7 @@ you must first activate the environment, by adding the activation command to the
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
