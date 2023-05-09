@@ -229,12 +229,6 @@ package along with the `NVIDIA Collective Communications Library <https://develo
 A full package list for these environments can be obtained by loading the module of interest and then
 running ``pip list``.
 
-.. note::
-
-  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
-  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
-  that export command will ensure the pip cache is located off ``/work``.
-
 Please click on the link indicated to see examples of how to use the `PyTorch and TensorFlow modules <https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md>`__ .
 
 
@@ -326,8 +320,15 @@ You're now ready to *activate* your environment.
     source /work/x01/x01/auser/myvenv/bin/activate
 
 Once your environment is activated you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. And when you have finished installing packages,
-you can deactivate your environment by issuing the `deactivate` command.
+as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. 
+
+.. note::
+
+  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
+  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
+  that export command will ensure the pip cache is located off ``/work``.
+
+when you have finished installing packages, you can deactivate your environment by issuing the `deactivate` command.
 
 .. code-block:: bash
 
