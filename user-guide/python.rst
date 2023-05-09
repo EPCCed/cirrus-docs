@@ -117,7 +117,7 @@ by calling ``MPI.Init()``.
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 The Slurm submission script (``submit-broadcast.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
 That particular variable suppresses warnings written to the job output file; it can of course be removed.
@@ -175,7 +175,7 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 By default, the CuPy cache will be located within the user's home directory.
 And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to set
@@ -209,7 +209,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 Again, the submission script (``submit-allreduce.ll``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
@@ -360,7 +360,7 @@ you must first activate the environment, by adding the activation command to the
 
 .. raw:: html
 
-    </details>
+    </details><br>
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
