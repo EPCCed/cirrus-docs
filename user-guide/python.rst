@@ -382,6 +382,7 @@ you should load it. For istance, type
 
 You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDARC}`` directory.
 To setup the proper environment you need to run the following lines in a shell
+
 .. code-block:: bash
     
     export CONDARC=${CONDA_DIR}/.condarc
@@ -397,12 +398,14 @@ You also need to tell conda in which directories to save the environments and cu
     conda config --prepend pkgs_dirs ${CONDA_DIR}/pkgs
 
 The above commands need to be executed only once. You can now create a new conda virtual environment based on the default virtual environment using 
+
 .. code-block:: bash
     
     conda create --clone base --name ${my_env_name} 
 
 This will create a duplicate environment of the base environment with all the system packages.
 Before starting to install new packages, you need to activate the environment with 
+
 .. code-block:: bash
     
     conda activate ${my_env_name}
