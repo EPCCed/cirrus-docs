@@ -375,6 +375,7 @@ centrally-installed Miniconda environment.
 You can decide which module to base your environment on
 by running module avail python to see the available choices. Once you have selected a suitable python module,
 you should load it. For istance, type
+
 .. code-block:: bash
     module load python/3.9.13
 
