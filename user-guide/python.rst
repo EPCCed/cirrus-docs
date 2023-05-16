@@ -377,11 +377,13 @@ by running module avail python to see the available choices. Once you have selec
 you should load it. For istance, type
 
 .. code-block:: bash
+    
     module load python/3.9.13
 
 You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDARC}`` directory.
 To setup the proper environment you need to run the following lines in a shell
 .. code-block:: bash
+    
     export CONDARC=${CONDA_DIR}/.condarc
     eval "$(conda shell.bash hook)"
 
@@ -390,17 +392,22 @@ These two lines need to be called each time you want to use a virtual conda envi
 You also need to tell conda in which directories to save the environments and custom packages.
 
 .. code-block:: bash
+    
     conda config --prepend envs_dirs ${CONDA_DIR}/envs
     conda config --prepend pkgs_dirs ${CONDA_DIR}/pkgs
 
 The above commands need to be executed only once. You can now create a new conda virtual environment based on the default virtual environment using 
 .. code-block:: bash
+    
     conda create --clone base --name ${my_env_name} 
 
 This will create a duplicate environment of the base environment with all the system packages.
 Before starting to install new packages, you need to activate the environment with 
 .. code-block:: bash
+    
     conda activate ${my_env_name}
+
+
 You can now regularly install packages with ``conda install pkg_name``. The packages currently installed in
 in the active environment can be seen with the command ``conda list``.
 
