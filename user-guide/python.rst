@@ -368,20 +368,20 @@ You could just as easily create a local virtual environment based on one of the 
 modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``
 (and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
 
-Installing your own Python packages (with conda)
+Installing your own Python packages ( with conda )
 ----------------------------------------------
 To setup a custom Python environment you can use conda  or extend a 
 centrally-installed Miniconda environment.  
 You can decide which module to base your environment on
 by running module avail python to see the available choices. Once you have selected a suitable python module,
-you should load it. For istance, type
+you should load it. For instance, type
 
 .. code-block:: bash
     
     module load python/3.9.13
 
 You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDARC}`` directory.
-To setup the proper environment you need to run the following lines in a shell
+To setup the proper environment you need to run the following lines in a shell 
 
 .. code-block:: bash
     
@@ -413,7 +413,6 @@ Before starting to install new packages, you need to activate the environment wi
 
 You can now regularly install packages with ``conda install pkg_name``. The packages currently installed in
 in the active environment can be seen with the command ``conda list``.
-
 
 Using JupyterLab on Cirrus
 --------------------------
