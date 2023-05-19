@@ -285,7 +285,7 @@ You can do this in the following way (once you have set ``PYTHONUSERBASE`` as de
     export PATH=${PYTHONUSERBASE}/bin:${PATH}
     export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
 
-Once, you have done this, you can use ``pip`` to add packages on top of the centrally-installed Miniconda environment.
+Once you have done this, you can use ``pip`` to add packages on top of the centrally-installed Miniconda environment.
 
 .. code-block:: bash
 
@@ -318,7 +318,7 @@ You're now ready to *activate* your environment.
 
     source /work/x01/x01/auser/myvenv/bin/activate
 
-Once your environment is activated you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
+After your environment is activated, you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
 as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. 
 
 .. note::
@@ -327,7 +327,7 @@ as activating the virtual environment ensures that all new packages are installe
   ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
   that export command will ensure the pip cache is located off ``/work``.
 
-when you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
+When you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
 
 .. code-block:: bash
 
