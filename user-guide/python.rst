@@ -243,14 +243,14 @@ Please click on the link indicated to see examples of how to use the `PyTorch an
 Installing your own Python packages (with pip)
 ----------------------------------------------
 
-This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
-By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
+This section shows how to setup a local custom Python environment such that it extends a centrally-installed ``python`` module.
+By extend, we mean being able to install packages locally that are not provided by the central ``python``. This is needed because
 some packages such as ``mpi4py`` must be built specifically for the Cirrus system and so are best provided centrally.
 
 You can do this by creating a lightweight **virtual** environment where the local packages can be installed. Further, this environment
 is created on top of an existing Python installation, known as the environment's **base** Python.
 
-Sselect the base Python by loading the ``python`` module you wish to extend, e.g., ``python/3.9.13-gpu`` (you can run
+Select the base Python by loading the ``python`` module you wish to extend, e.g., ``python/3.9.13-gpu`` (you can run
 ``module avail python`` to list all the available ``python`` modules).
 
 .. code-block:: bash
