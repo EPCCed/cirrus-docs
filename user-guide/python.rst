@@ -4,7 +4,9 @@ Using Python
 Python on Cirrus is provided by a number of `Miniconda <https://conda.io/miniconda.html>`__ modules and one `Anaconda <https://www.continuum.io>`__ module.
 (Miniconda being a small bootstrap version of Anaconda).
 
-The Anaconda module is called ``anaconda/python3`` and is suitable for running serial applications.
+The Anaconda module is called ``anaconda/python3`` and is suitable for
+running serial applications - for parallel applications using
+``mpi4py`` see `mpi4py for CPU`_ or `mpi4py for GPU`_.
 
 You can list the Miniconda modules by running ``module avail python`` on a login node. Those module versions that have the ``gpu`` suffix are
 suitable for use on the `Cirrus GPU nodes <gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
@@ -13,8 +15,9 @@ suitable for use on the `Cirrus GPU nodes <gpu.html>`__. There are also modules 
 The Miniconda modules support Python-based parallel codes, i.e., each such ``python`` module provides a suite of packages
 pertinent to parallel processing and numerical analysis such as ``dask``, ``ipyparallel``, ``jupyter``, ``matplotlib``, ``numpy``, ``pandas`` and ``scipy``.
 
-All the packages provided by a module can be obtained by running ``pip list``. We now give some examples that show how the ``python``
-modules can be used on the Cirrus CPU/GPU nodes.
+All the packages provided by a module can be obtained by running ``pip
+list``. We now give some examples that show how the ``python`` modules
+can be used on the Cirrus CPU/GPU nodes.
 
 
 mpi4py for CPU
@@ -22,8 +25,14 @@ mpi4py for CPU
 
 The ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 
-The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
-across two compute nodes.
+**Important note**: on the cirrus compute nodes it is not possible to
+use the usual automatic intialisation and finalisation routines
+provided by ``mpi4py`` -- these need to be disabled and ``MPI.Init()``
+and ``MPI.Finalize()`` must be called explicitly.
+
+See ``numpy-broadcast.py`` below which is a simple MPI Broadcast
+example, and the Slurm script ``submit-broadcast.ll`` which
+demonstrates how to run across it two compute nodes.
 
 .. raw:: html
 
@@ -86,8 +95,8 @@ across two compute nodes.
 
     </details><br>
 
-The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
-that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
+The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialisation
+that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialisation is invoked explicitly
 by calling ``MPI.Init()``.
 
 .. raw:: html
