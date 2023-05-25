@@ -384,17 +384,20 @@ You also need to setup your conda environments. As the compute nodes do not have
 To setup the proper environment you need to run the following lines in a shell 
 
 You need to tell conda in which directories to save the environments and custom packages.
+
 .. code-block:: bash
     
     conda config --prepend envs_dirs ${CONDA_DIR}/envs
     conda config --prepend pkgs_dirs ${CONDA_DIR}/pkgs
 
-The above commands need to be executed only once. Conda will save information about the configuration in a .condarc file on your home directory. You need to move the .condarc file to a directory visible from the compute nodes, e.g. ``${CONDA_DIR}``.å
+The above commands need to be executed only once. Conda will save information about the configuration in a .condarc file on your home directory. You need to move the .condarc file to a directory visible from the compute nodes, e.g. ``${CONDA_DIR}``
+
 .. code-block:: bash
     
     mv ~/.condarc ${CONDA_DIR}
 
 In order to use conda packages, you first need to activative it with
+
 .. code-block:: bash
 
     export CONDARC=${CONDA_DIR}/.condarc
