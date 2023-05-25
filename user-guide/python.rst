@@ -381,9 +381,7 @@ you should load it. For instance, type
     module load python/3.9.13
 
 You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDA_DIR}`` directory.
-To setup the proper environment you need to run the following lines in a shell 
-
-You need to tell conda in which directories to save the environments and custom packages.
+To setup the proper environment you need need to tell conda in which directories to save custom environments and packages .
 
 .. code-block:: bash
     
@@ -421,7 +419,7 @@ Before starting to install new packages, you need to activate the environment wi
 
 
 You can now regularly install packages with ``conda install pkg_name``. 
-You can see the packages currently installed in the active environment can with the command ``conda list``.
+You can see the packages currently installed in the active environment with the command ``conda list``.
 
 Using JupyterLab on Cirrus
 --------------------------
