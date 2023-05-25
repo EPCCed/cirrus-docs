@@ -286,15 +286,8 @@ Installing packages to your local environment can now be done as follows.
     (myvenv) [auser@cirrus-login1 auser]$ python -m pip install <package name>
 
 Running ``pip`` directly as in ``pip install <package name>`` will also work, but we show the ``python -m`` approach
-as this is consistent with the way the virtual environment was created.
-
-.. note::
-
-  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
-  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
-  that export command will ensure the pip cache is located off ``/work``.
-
-And when you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
+as this is consistent with the way the virtual environment was created. And when you have finished installing packages,
+you can deactivate your environment by issuing the ``deactivate`` command.
 
 .. code-block:: bash
 
