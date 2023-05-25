@@ -279,7 +279,14 @@ You're now ready to activate your environment.
   with your actual project code and username. Alternatively, you could enter ``${HOME/home/work}`` in place of ``/work/x01/x01/auser``.
   That command fragment expands ``${HOME}`` and then replaces the ``home`` part with ``work``.
 
-Installing packages to your local environment is as simple as typing ``pip install <package name>``.
+Installing packages to your local environment can now be done as follows.
+
+.. code-block:: bash
+
+    (myvenv) [auser@cirrus-login1 auser]$ python -m pip install <package name>
+
+Running ``pip`` directly as in ``pip install <package name>`` will also work, but we show the ``python -m`` approach
+as this is consistent with the way the virtual environment was created.
 
 .. note::
 
