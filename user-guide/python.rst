@@ -380,30 +380,34 @@ you should load it. For instance, type
     
     module load python/3.9.13
 
-You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDARC}`` directory.
+You also need to setup your conda environments. As the compute nodes do not have access to the ``/home`` filesystem, you also need to specify a directory where to save conda configurations and packages on the ``/work`` filesystem. Let us assume you want to install packages in the ``${CONDA_DIR}`` directory.
 To setup the proper environment you need to run the following lines in a shell 
 
-.. code-block:: bash
-    
-    export CONDARC=${CONDA_DIR}/.condarc
-    eval "$(conda shell.bash hook)"
-
-The first line will tell conda to save configuration information in the ``.condarc`` file in ``${CONDA_DIR}``. The second line calls the conda setup script. 
-These two lines need to be called each time you want to use a virtual conda environment.
-You also need to tell conda in which directories to save the environments and custom packages.
-
+You need to tell conda in which directories to save the environments and custom packages.
 .. code-block:: bash
     
     conda config --prepend envs_dirs ${CONDA_DIR}/envs
     conda config --prepend pkgs_dirs ${CONDA_DIR}/pkgs
 
-The above commands need to be executed only once. You can now create a new conda virtual environment based on the default virtual environment using 
+The above commands need to be executed only once. Conda will save information about the configuration in a .condarc file on your home directory. You need to move the .condarc file to a directory visible from the compute nodes, e.g. `${CONDA_DIR}`
+.. code-block:: bash
+    mv ~/.condarc ${CONDA_DIR}
+
+In order to use conda packages, you first need to activative it with
+.. code-block:: bash
+    export CONDARC=${CONDA_DIR}/.condarc
+    eval "$(conda shell.bash hook)"
+
+The first line will tell conda to look for configuration information in the ``.condarc`` file in ``${CONDA_DIR}``. The second line calls the conda activation script. 
+These two lines need to be called each time you want to use a virtual conda environment.
+
+You can now create a new conda virtual environment based on the default virtual environment using 
 
 .. code-block:: bash
     
     conda create --clone base --name ${my_env_name} 
 
-This will create a duplicate environment of the base environment with all the system packages.
+This will create a duplicate environment of the base environment with all the system packages. This command may take a long time to complete.
 Before starting to install new packages, you need to activate the environment with 
 
 .. code-block:: bash
@@ -411,8 +415,8 @@ Before starting to install new packages, you need to activate the environment wi
     conda activate ${my_env_name}
 
 
-You can now regularly install packages with ``conda install pkg_name``. The packages currently installed in
-in the active environment can be seen with the command ``conda list``.
+You can now regularly install packages with ``conda install pkg_name``. 
+You can see the packages currently installed in the active environment can with the command ``conda list``.
 
 Using JupyterLab on Cirrus
 --------------------------
