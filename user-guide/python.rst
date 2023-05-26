@@ -31,7 +31,7 @@ provided by ``mpi4py`` -- these need to be disabled and ``MPI.Init()``
 and ``MPI.Finalize()`` must be called explicitly.
 
 See ``numpy-broadcast.py`` below which is a simple MPI Broadcast
-example, and the Slurm script ``submit-broadcast.ll`` which
+example, and the Slurm script ``submit-broadcast.slurm`` which
 demonstrates how to run across it two compute nodes.
 
 .. raw:: html
@@ -101,7 +101,7 @@ by calling ``MPI.Init()``.
 
 .. raw:: html
 
-    <details><summary><b>submit-broadcast.ll</b></summary>
+    <details><summary><b>submit-broadcast.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -128,7 +128,7 @@ by calling ``MPI.Init()``.
 
     </details><br>
 
-The Slurm submission script (``submit-broadcast.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
+The Slurm submission script (``submit-broadcast.slurm``) above sets a ``OMPI_MCA`` environment variable before launching the job.
 That particular variable suppresses warnings written to the job output file; it can of course be removed.
 Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
 
@@ -192,7 +192,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
 .. raw:: html
 
-    <details><summary><b>submit-allreduce.ll</b></summary>
+    <details><summary><b>submit-allreduce.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -220,7 +220,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
     </details><br>
 
-Again, the submission script (``submit-allreduce.ll``) is the place to set ``OMPI_MCA`` variables - the two
+Again, the submission script (``submit-allreduce.slurm``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
 
 https://www.open-mpi.org/faq/?category=tuning#mca-def
@@ -243,38 +243,35 @@ Please click on the link indicated to see examples of how to use the `PyTorch an
 Installing your own Python packages (with pip)
 ----------------------------------------------
 
-This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
-By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
+This section shows how to setup a local custom Python environment such that it extends a centrally-installed ``python`` module.
+By extend, we mean being able to install packages locally that are not provided by the central ``python``. This is needed because
 some packages such as ``mpi4py`` must be built specifically for the Cirrus system and so are best provided centrally.
 
-The first action to take is to decide which ``python`` module to extend, e.g., ``python/3.9.13-gpu`` (you can run
+You can do this by creating a lightweight **virtual** environment where the local packages can be installed. Further, this environment
+is created on top of an existing Python installation, known as the environment's **base** Python.
+
+Select the base Python by loading the ``python`` module you wish to extend, e.g., ``python/3.9.13-gpu`` (you can run
 ``module avail python`` to list all the available ``python`` modules).
 
 .. code-block:: bash
 
-    [auser@cirrus-login1 auser]$ module load python/3.9.13-gpu
+    [auser@cirrus-login1 auser]$ module load python/3.9.13
 
-Loading the python module above will set a number of environment variables such as ``MINICONDA3_PYTHON_VERSION`` and
-``MINICONDA3_PYTHON_LABEL``. This can be confirmed by looking at the output from ``module show python/3.9.13-gpu``.
-
-.. code-block:: bash
-
-    /mnt/lustre/indy2lfs/sw/modulefiles/python/3.9.13-gpu:
-
-    conflict	python
-    setenv	MINICONDA3_PYTHON_VERSION 3.9.13
-    setenv      MINICONDA3_PYTHON_LABEL python3.9
-    ...
-    setenv	MINICONDA3_BIN_PATH /mnt/lustre/indy2lfs/sw/miniconda3/4.12.0-py39-gpu/bin
-
-The *local* packages will be installed using ``pip``. Now, as the ``/home`` file system is not available on the compute nodes,
-you will need to modify the default install location that ``pip`` uses to point to a location on ``/work``. To do this, you set
-the ``PYTHONUSERBASE`` environment variable to point to the location on ``/work`` where you intend to install your local virtual
-Python environment, which we are calling ``myvenv`` for purposes of illustration.
+Next, create the virtual environment within a designated folder.
 
 .. code-block:: bash
 
-    export PYTHONUSERBASE=/work/x01/x01/auser/myvenv
+    python -m venv --system-site-packages /work/x01/x01/auser/myvenv
+
+In our example, the environment is created within a ``myvenv`` folder located on ``/work``, which means the environment
+will be accessible from the compute nodes. The ``--system-site-packages`` option ensures that this environment is
+based on the currently loaded ``python`` module. See https://docs.python.org/3/library/venv.html for more details.
+
+You're now ready to activate your environment.
+
+.. code-block:: bash
+
+    source /work/x01/x01/auser/myvenv/bin/activate
 
 .. note::
 
@@ -282,61 +279,15 @@ Python environment, which we are calling ``myvenv`` for purposes of illustration
   with your actual project code and username. Alternatively, you could enter ``${HOME/home/work}`` in place of ``/work/x01/x01/auser``.
   That command fragment expands ``${HOME}`` and then replaces the ``home`` part with ``work``.
 
-You will also need to ensure that:
-
-1. the location of executables installed by ``pip`` are available on the command line by modifying the ``PATH`` environment variable;
-2. any packages you install are available to Python by modifying the ``PYTHONPATH`` environment variable.
-
-You can do this in the following way (once you have set ``PYTHONUSERBASE`` as described above).
+Installing packages to your local environment can now be done as follows.
 
 .. code-block:: bash
 
-    export PATH=${PYTHONUSERBASE}/bin:${PATH}
-    export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
+    (myvenv) [auser@cirrus-login1 auser]$ python -m pip install <package name>
 
-Once you have done this, you can use ``pip`` to add packages on top of the centrally-installed Miniconda environment.
-
-.. code-block:: bash
-
-    pip install --user <package_name>
-
-The ``--user`` flag ensures that packages are installed in the directory specified by ``PYTHONUSERBASE``.
-
-However, before you start installing packages, we recommend that you first install ``virtualenv`` (or ``pipenv`` if you prefer).
-We will walk you through how to create and manage a virtual environment, but for further information, see `Pipenv and Virtual Environments <https://docs.python-guide.org/dev/virtualenvs/>`__.
-
-.. code-block:: bash
-
-    pip install --user virtualenv
-
-Next, you point ``virtualenv`` at the location where your local environment is to be installed.
-
-.. code-block:: bash
-
-    virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
-
-    extend-venv-activate ${PYTHONUSERBASE}
-
-The ``virtualenv`` command creates an activate script for your local environment. The second command, ``extend-venv-activate``, amends that script such
-that the centrally-installed ``python`` module is always loaded in subsequent login sessions or job submissions, and unloaded whenever the virtual
-environment is deactivated.
-
-You're now ready to *activate* your environment.
-
-.. code-block:: bash
-
-    source /work/x01/x01/auser/myvenv/bin/activate
-
-After your environment is activated, you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. 
-
-.. note::
-
-  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
-  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
-  that export command will ensure the pip cache is located off ``/work``.
-
-When you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
+Running ``pip`` directly as in ``pip install <package name>`` will also work, but we show the ``python -m`` approach
+as this is consistent with the way the virtual environment was created. And when you have finished installing packages,
+you can deactivate your environment by issuing the ``deactivate`` command.
 
 .. code-block:: bash
 
@@ -348,7 +299,7 @@ you must first activate the environment, by adding the activation command to the
 
 .. raw:: html
 
-    <details><summary><b>submit-myvenv.ll</b></summary>
+    <details><summary><b>submit-myvenv.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -374,8 +325,7 @@ you must first activate the environment, by adding the activation command to the
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
 ``tensorflow`` or ``pytorch``. This means you would avoid having to install ML packages within your local area. Each of those ML
-modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``
-(and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
+modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``.
 
 
 Using JupyterLab on Cirrus
