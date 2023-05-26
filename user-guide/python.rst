@@ -31,7 +31,7 @@ provided by ``mpi4py`` -- these need to be disabled and ``MPI.Init()``
 and ``MPI.Finalize()`` must be called explicitly.
 
 See ``numpy-broadcast.py`` below which is a simple MPI Broadcast
-example, and the Slurm script ``submit-broadcast.ll`` which
+example, and the Slurm script ``submit-broadcast.slurm`` which
 demonstrates how to run across it two compute nodes.
 
 .. raw:: html
