@@ -25,11 +25,6 @@ mpi4py for CPU
 
 The ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 
-**Important note**: on the cirrus compute nodes it is not possible to
-use the usual automatic intialisation and finalisation routines
-provided by ``mpi4py`` -- these need to be disabled and ``MPI.Init()``
-and ``MPI.Finalize()`` must be called explicitly.
-
 See ``numpy-broadcast.py`` below which is a simple MPI Broadcast
 example, and the Slurm script ``submit-broadcast.slurm`` which
 demonstrates how to run across it two compute nodes.
@@ -46,14 +41,9 @@ demonstrates how to run across it two compute nodes.
     Parallel Numpy Array Broadcast 
     """
 
-    import mpi4py.rc
-    mpi4py.rc.initialize = False
-
     from mpi4py import MPI
     import numpy as np
     import sys
-
-    MPI.Init()
 
     comm = MPI.COMM_WORLD
 
@@ -89,15 +79,11 @@ demonstrates how to run across it two compute nodes.
                 "Error, rank %d array is not as expected.\n"
                 % (rank))
 
-    MPI.Finalize()
-
 .. raw:: html
 
     </details><br>
 
-The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialisation
-that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialisation is invoked explicitly
-by calling ``MPI.Init()``.
+The MPI initialisation is done automatically as a result of calling ``from mpi4py import MPI``.
 
 .. raw:: html
 
@@ -152,14 +138,9 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     Reduce-to-all CuPy Arrays 
     """
 
-    import mpi4py.rc
-    mpi4py.rc.initialize = False
-
     from mpi4py import MPI
     import cupy as cp
     import sys
-
-    MPI.Init()
 
     comm = MPI.COMM_WORLD
 
@@ -179,8 +160,6 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     sys.stdout.write(
         "%d (%s): recvbuf = %s\n"
         % (rank, name, str(recvbuf)))
-
-    MPI.Finalize()
 
 .. raw:: html
 
