@@ -246,7 +246,12 @@ In our example, the environment is created within a ``myvenv`` folder located on
 will be accessible from the compute nodes. The ``--system-site-packages`` option ensures that this environment is
 based on the currently loaded ``python`` module. See https://docs.python.org/3/library/venv.html for more details.
 
-You're now ready to activate your environment.
+.. code-block:: bash
+
+    extend-venv-activate /work/x01/x01/auser/myvenv
+
+The ``extend-venv-activate`` command ensures that your virtual environment's activate script loads and unloads the base
+``python`` module when appropriate. You're now ready to activate your environment.
 
 .. code-block:: bash
 
