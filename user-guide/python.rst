@@ -246,7 +246,7 @@ In our example, the environment is created within a ``myvenv`` folder located on
 will be accessible from the compute nodes. The ``--system-site-packages`` option ensures that this environment is
 based on the currently loaded ``python`` module. See https://docs.python.org/3/library/venv.html for more details.
 
-... code-block:: bash
+.. code-block:: bash
 
     extend-venv-activate /work/x01/x01/auser/myvenv
 
