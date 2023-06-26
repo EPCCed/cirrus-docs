@@ -51,8 +51,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :maxdepth: 2
    :caption: Software Applications
 
-   software-packages/altair_hw
-   software-packages/Ansys
    software-packages/castep
    software-packages/cp2k
    software-packages/elements
