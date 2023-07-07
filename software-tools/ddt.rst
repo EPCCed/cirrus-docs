@@ -1,11 +1,6 @@
 Debugging using Arm DDT
 ===========================
 
-.. warning::
-   Arm Forge is not available on Cirrus while ARCHER2 undergoes a major
-   software upgrade as the licence server for Arm Forge is hosted by 
-   ARCHER2.
-
 The Arm Forge tool suite is installed on Cirrus. This includes DDT,  which is a
 debugging tool for scalar, multi-threaded and large-scale parallel applications.
 To compile your code for debugging you will usually want to specify the ``-O0``
