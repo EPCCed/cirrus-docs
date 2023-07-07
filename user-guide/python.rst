@@ -420,8 +420,9 @@ Secondly, activating the ``conda`` environment within a submission script is mor
 for a ``pip`` environment.
 
 Further, ``conda`` cannot be used if the base environment is one of the Machine Learning (ML) modules, as ``conda``
-is not flexible enough to gather Python packages from both the ML and base ``python`` modules (e.g., only the packages
-from ``python/3.10.8-gpu`` will be duplicated locally and not the packages supplied by ``pytorch/2.0.0-gpu``).
+is not flexible enough to gather Python packages from both the ML and base ``python`` modules (e.g., the ML module
+``pytorch/2.0.0-gpu`` is itself based on ``python/3.10.8-gpu``, and so ``conda`` will only duplicate packages
+provided by the ``python`` module and not the ones supplied by ``pytorch``). 
 
 
 Using JupyterLab on Cirrus
