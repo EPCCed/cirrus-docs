@@ -415,7 +415,7 @@ The submission script below shows how to use the conda environment within a job 
 
 You can see that using ``conda`` is less convenient compared to ``pip``. In particular, the centrally-installed Python
 packages on copied in to the local ``conda`` environment, consuming some of the disk space allocated to your project.
-In addition, activating the ``conda`` environment within a submission script is more involved: five commands are required
+Secondly, activating the ``conda`` environment within a submission script is more involved: five commands are required
 (including an explicit load for the base ``python`` module), instead of the single ``source`` command that is sufficient
 for a ``pip`` environment.
 
