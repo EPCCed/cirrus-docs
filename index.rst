@@ -46,6 +46,7 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    user-guide/gpu
    user-guide/solidstate
    user-guide/reading
+   user-guide/network-upgrade-2023
 
 .. toctree::
    :maxdepth: 2

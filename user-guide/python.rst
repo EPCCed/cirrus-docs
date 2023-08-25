@@ -4,7 +4,9 @@ Using Python
 Python on Cirrus is provided by a number of `Miniconda <https://conda.io/miniconda.html>`__ modules and one `Anaconda <https://www.continuum.io>`__ module.
 (Miniconda being a small bootstrap version of Anaconda).
 
-The Anaconda module is called ``anaconda/python3`` and is suitable for running serial applications.
+The Anaconda module is called ``anaconda/python3`` and is suitable for
+running serial applications - for parallel applications using
+``mpi4py`` see `mpi4py for CPU`_ or `mpi4py for GPU`_.
 
 You can list the Miniconda modules by running ``module avail python`` on a login node. Those module versions that have the ``gpu`` suffix are
 suitable for use on the `Cirrus GPU nodes <gpu.html>`__. There are also modules that extend these Python environments, e.g., ``pyfr``, ``horovod``,
@@ -13,8 +15,9 @@ suitable for use on the `Cirrus GPU nodes <gpu.html>`__. There are also modules 
 The Miniconda modules support Python-based parallel codes, i.e., each such ``python`` module provides a suite of packages
 pertinent to parallel processing and numerical analysis such as ``dask``, ``ipyparallel``, ``jupyter``, ``matplotlib``, ``numpy``, ``pandas`` and ``scipy``.
 
-All the packages provided by a module can be obtained by running ``pip list``. We now give some examples that show how the ``python``
-modules can be used on the Cirrus CPU/GPU nodes.
+All the packages provided by a module can be obtained by running ``pip
+list``. We now give some examples that show how the ``python`` modules
+can be used on the Cirrus CPU/GPU nodes.
 
 
 mpi4py for CPU
@@ -22,8 +25,9 @@ mpi4py for CPU
 
 The ``python/3.9.13`` module provides mpi4py 3.1.3 linked with OpenMPI 4.1.4.
 
-The scripts below demonstrate how to run a simple MPI Broadcast example (``numpy-broadcast.py``)
-across two compute nodes.
+See ``numpy-broadcast.py`` below which is a simple MPI Broadcast
+example, and the Slurm script ``submit-broadcast.slurm`` which
+demonstrates how to run across it two compute nodes.
 
 .. raw:: html
 
@@ -37,14 +41,9 @@ across two compute nodes.
     Parallel Numpy Array Broadcast 
     """
 
-    import mpi4py.rc
-    mpi4py.rc.initialize = False
-
     from mpi4py import MPI
     import numpy as np
     import sys
-
-    MPI.Init()
 
     comm = MPI.COMM_WORLD
 
@@ -80,19 +79,15 @@ across two compute nodes.
                 "Error, rank %d array is not as expected.\n"
                 % (rank))
 
-    MPI.Finalize()
-
 .. raw:: html
 
     </details><br>
 
-The purpose of the ``mpi4py.rc.initialize = False`` line above is to turn off the automatic MPI initialization
-that would otherwise happen as a result of ``from mpi4py import MPI`` - the MPI initialization is invoked explicitly
-by calling ``MPI.Init()``.
+The MPI initialisation is done automatically as a result of calling ``from mpi4py import MPI``.
 
 .. raw:: html
 
-    <details><summary><b>submit-broadcast.ll</b></summary>
+    <details><summary><b>submit-broadcast.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -119,7 +114,7 @@ by calling ``MPI.Init()``.
 
     </details><br>
 
-The Slurm submission script (``submit-broadcast.ll``) above sets a ``OMPI_MCA`` environment variable before launching the job.
+The Slurm submission script (``submit-broadcast.slurm``) above sets a ``OMPI_MCA`` environment variable before launching the job.
 That particular variable suppresses warnings written to the job output file; it can of course be removed.
 Please see the `OpenMPI documentation <https://www.open-mpi.org/faq/?category=tuning#mca-def>`__ for info on all ``OMPI_MCA`` variables.
 
@@ -143,14 +138,9 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
     Reduce-to-all CuPy Arrays 
     """
 
-    import mpi4py.rc
-    mpi4py.rc.initialize = False
-
     from mpi4py import MPI
     import cupy as cp
     import sys
-
-    MPI.Init()
 
     comm = MPI.COMM_WORLD
 
@@ -171,8 +161,6 @@ performed on a `CuPy array <https://docs.cupy.dev/en/stable/overview.html>`__ (`
         "%d (%s): recvbuf = %s\n"
         % (rank, name, str(recvbuf)))
 
-    MPI.Finalize()
-
 .. raw:: html
 
     </details><br>
@@ -183,7 +171,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
 .. raw:: html
 
-    <details><summary><b>submit-allreduce.ll</b></summary>
+    <details><summary><b>submit-allreduce.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -211,7 +199,7 @@ And so, as ``/home`` is not accessible from the GPU nodes, it is necessary to se
 
     </details><br>
 
-Again, the submission script (``submit-allreduce.ll``) is the place to set ``OMPI_MCA`` variables - the two
+Again, the submission script (``submit-allreduce.slurm``) is the place to set ``OMPI_MCA`` variables - the two
 shown are optional, see the link below for further details.
 
 https://www.open-mpi.org/faq/?category=tuning#mca-def
@@ -234,38 +222,40 @@ Please click on the link indicated to see examples of how to use the `PyTorch an
 Installing your own Python packages (with pip)
 ----------------------------------------------
 
-This section shows how to setup a local custom Python environment such that it extends a centrally-installed Miniconda module.
-By extend, we mean being able to install packages locally that are not provided by the Miniconda module. This is needed because
+This section shows how to setup a local custom Python environment such that it extends a centrally-installed ``python`` module.
+By extend, we mean being able to install packages locally that are not provided by the central ``python``. This is needed because
 some packages such as ``mpi4py`` must be built specifically for the Cirrus system and so are best provided centrally.
 
-The first action to take is to decide which ``python`` module to extend, e.g., ``python/3.9.13-gpu`` (you can run
+You can do this by creating a lightweight **virtual** environment where the local packages can be installed. Further, this environment
+is created on top of an existing Python installation, known as the environment's **base** Python.
+
+Select the base Python by loading the ``python`` module you wish to extend, e.g., ``python/3.9.13-gpu`` (you can run
 ``module avail python`` to list all the available ``python`` modules).
 
 .. code-block:: bash
 
-    [auser@cirrus-login1 auser]$ module load python/3.9.13-gpu
+    [auser@cirrus-login1 auser]$ module load python/3.9.13
 
-Loading the python module above will set a number of environment variables such as ``MINICONDA3_PYTHON_VERSION`` and
-``MINICONDA3_PYTHON_LABEL``. This can be confirmed by looking at the output from ``module show python/3.9.13-gpu``.
-
-.. code-block:: bash
-
-    /mnt/lustre/indy2lfs/sw/modulefiles/python/3.9.13-gpu:
-
-    conflict	python
-    setenv	MINICONDA3_PYTHON_VERSION 3.9.13
-    setenv      MINICONDA3_PYTHON_LABEL python3.9
-    ...
-    setenv	MINICONDA3_BIN_PATH /mnt/lustre/indy2lfs/sw/miniconda3/4.12.0-py39-gpu/bin
-
-The *local* packages will be installed using ``pip``. Now, as the ``/home`` file system is not available on the compute nodes,
-you will need to modify the default install location that ``pip`` uses to point to a location on ``/work``. To do this, you set
-the ``PYTHONUSERBASE`` environment variable to point to the location on ``/work`` where you intend to install your local virtual
-Python environment, which we are calling ``myvenv`` for purposes of illustration.
+Next, create the virtual environment within a designated folder.
 
 .. code-block:: bash
 
-    export PYTHONUSERBASE=/work/x01/x01/auser/myvenv
+    python -m venv --system-site-packages /work/x01/x01/auser/myvenv
+
+In our example, the environment is created within a ``myvenv`` folder located on ``/work``, which means the environment
+will be accessible from the compute nodes. The ``--system-site-packages`` option ensures that this environment is
+based on the currently loaded ``python`` module. See https://docs.python.org/3/library/venv.html for more details.
+
+.. code-block:: bash
+
+    extend-venv-activate /work/x01/x01/auser/myvenv
+
+The ``extend-venv-activate`` command ensures that your virtual environment's activate script loads and unloads the base
+``python`` module when appropriate. You're now ready to activate your environment.
+
+.. code-block:: bash
+
+    source /work/x01/x01/auser/myvenv/bin/activate
 
 .. note::
 
@@ -273,61 +263,15 @@ Python environment, which we are calling ``myvenv`` for purposes of illustration
   with your actual project code and username. Alternatively, you could enter ``${HOME/home/work}`` in place of ``/work/x01/x01/auser``.
   That command fragment expands ``${HOME}`` and then replaces the ``home`` part with ``work``.
 
-You will also need to ensure that:
-
-1. the location of executables installed by ``pip`` are available on the command line by modifying the ``PATH`` environment variable;
-2. any packages you install are available to Python by modifying the ``PYTHONPATH`` environment variable.
-
-You can do this in the following way (once you have set ``PYTHONUSERBASE`` as described above).
+Installing packages to your local environment can now be done as follows.
 
 .. code-block:: bash
 
-    export PATH=${PYTHONUSERBASE}/bin:${PATH}
-    export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
+    (myvenv) [auser@cirrus-login1 auser]$ python -m pip install <package name>
 
-Once you have done this, you can use ``pip`` to add packages on top of the centrally-installed Miniconda environment.
-
-.. code-block:: bash
-
-    pip install --user <package_name>
-
-The ``--user`` flag ensures that packages are installed in the directory specified by ``PYTHONUSERBASE``.
-
-However, before you start installing packages, we recommend that you first install ``virtualenv`` (or ``pipenv`` if you prefer).
-We will walk you through how to create and manage a virtual environment, but for further information, see `Pipenv and Virtual Environments <https://docs.python-guide.org/dev/virtualenvs/>`__.
-
-.. code-block:: bash
-
-    pip install --user virtualenv
-
-Next, you point ``virtualenv`` at the location where your local environment is to be installed.
-
-.. code-block:: bash
-
-    virtualenv -p ${MINICONDA3_BIN_PATH}/python ${PYTHONUSERBASE}
-
-    extend-venv-activate ${PYTHONUSERBASE}
-
-The ``virtualenv`` command creates an activate script for your local environment. The second command, ``extend-venv-activate``, amends that script such
-that the centrally-installed ``python`` module is always loaded in subsequent login sessions or job submissions, and unloaded whenever the virtual
-environment is deactivated.
-
-You're now ready to *activate* your environment.
-
-.. code-block:: bash
-
-    source /work/x01/x01/auser/myvenv/bin/activate
-
-After your environment is activated, you will be able to install packages using ``pip install <package name>``. Note, it is no longer necessary to use the ``--user`` option
-as activating the virtual environment ensures that all new packages are installed within ``/work/x01/x01/auser/myvenv``. 
-
-.. note::
-
-  The Cirrus compute nodes cannot access the ``/home`` file system, which means you may need to run
-  ``export XDG_CACHE_HOME=${HOME/home/work}`` if you're working from within an interactive session as
-  that export command will ensure the pip cache is located off ``/work``.
-
-When you have finished installing packages, you can deactivate your environment by issuing the ``deactivate`` command.
+Running ``pip`` directly as in ``pip install <package name>`` will also work, but we show the ``python -m`` approach
+as this is consistent with the way the virtual environment was created. And when you have finished installing packages,
+you can deactivate your environment by issuing the ``deactivate`` command.
 
 .. code-block:: bash
 
@@ -339,7 +283,7 @@ you must first activate the environment, by adding the activation command to the
 
 .. raw:: html
 
-    <details><summary><b>submit-myvenv.ll</b></summary>
+    <details><summary><b>submit-myvenv.slurm</b></summary>
 
 .. code-block:: bash
 
@@ -365,8 +309,120 @@ you must first activate the environment, by adding the activation command to the
 Lastly, the environment being extended does not have to come from one of the centrally-installed ``python`` modules.
 You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., ``horovod``,
 ``tensorflow`` or ``pytorch``. This means you would avoid having to install ML packages within your local area. Each of those ML
-modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``
-(and so the ``MINICONDA3_PYTHON_VERSION`` environment variable will be set to ``3.10.8``).
+modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``.
+
+
+Installing your own Python packages (with conda)
+------------------------------------------------
+
+This section shows you how to setup a local custom Python environment such that it duplicates a centrally-installed ``python`` module,
+ensuring that your local ``conda`` environment will contain packages that are compatible with the Cirrus system.
+
+Select the base Python by loading the ``python`` module you wish to duplicate, e.g., ``python/3.9.13-gpu`` (you can run
+``module avail python`` to list all the available ``python`` modules).
+
+.. code-block:: bash
+
+    [auser@cirrus-login1 auser]$ module load python/3.9.13
+
+Next, create the folder for holding your ``conda`` environments. This folder should be on the ``/work`` file system as ``/home`` is not
+accessible from the compute nodes.
+
+.. code-block:: bash
+
+    CONDA_ROOT=/work/x01/x01/auser/condaenvs
+    mkdir -p ${CONDA_ROOT}
+
+The following commands tell ``conda`` where to save your custom environments and packages.
+
+.. code-block:: bash
+
+    conda config --prepend envs_dirs ${CONDA_ROOT}/envs
+    conda config --prepend pkgs_dirs ${CONDA_ROOT}/pkgs
+
+The ``conda config`` commands are executed just once and the configuration details are held in a ``.condarc`` file located
+in your home directory. You now need to move this ``.condarc`` file to a directory visible from the compute nodes.
+
+.. code-block:: bash
+
+    mv ~/.condarc ${CONDA_ROOT}
+
+You can now activate the ``conda`` configuration.
+
+.. code-block:: bash
+
+    export CONDARC=${CONDA_ROOT}/.condarc
+    eval "$(conda shell.bash hook)"
+
+These two lines need to be called each time you want to use your virtual ``conda`` environment. The next command creates
+that virtual environment.
+
+.. code-block:: bash
+
+    conda create --clone base --name myvenv
+
+The above creates an environment called ``myvenv`` that will hold the same packages provided by the base ``python`` module.
+As this command involves a significant amount of file copying and downloading, it may take a long time to complete. When it
+has completed please activate the local ``myvenv`` conda environment.
+
+.. code-block:: bash
+
+    conda activate myvenv
+
+You can now install packages using ``conda install -p ${CONDA_ROOT}/envs/myvenv <package_name>``.
+And you can see the packages currently installed in the active environment with the command ``conda list``.
+After all packages have been installed, simply run ``conda deactivate`` twice in order to restore the original
+comand prompt.
+
+.. code-block:: bash
+
+    (myvenv) [auser@cirrus-login1 auser]$ conda deactivate
+    (base) [auser@cirrus-login1 auser]$ conda deactivate
+    [auser@cirrus-login1 auser]$
+
+The submission script below shows how to use the conda environment within a job running on the compute nodes.
+
+.. raw:: html
+
+    <details><summary><b>submit-myvenv.slurm</b></summary>
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    #SBATCH --job-name=myvenv
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --partition=gpu
+    #SBATCH --qos=gpu
+    #SBATCH --account=[budget code]
+    #SBATCH --nodes=2
+    #SBATCH --gres=gpu:4
+
+    module load python/3.9.13
+
+    CONDA_ROOT=/work/x01/x01/auser/condaenvs
+    export CONDARC=${CONDA_ROOT}/.condarc
+    eval "$(conda shell.bash hook)"
+
+    conda activate myvenv
+
+    srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
+
+.. raw:: html
+
+    </details><br>
+
+You can see that using ``conda`` is less convenient compared to ``pip``. In particular, the centrally-installed Python
+packages on copied in to the local ``conda`` environment, consuming some of the disk space allocated to your project.
+Secondly, activating the ``conda`` environment within a submission script is more involved: five commands are required
+(including an explicit load for the base ``python`` module), instead of the single ``source`` command that is sufficient
+for a ``pip`` environment.
+
+Further, ``conda`` cannot be used if the base environment is one of the Machine Learning (ML) modules, as ``conda``
+is not flexible enough to gather Python packages from both the ML and base ``python`` modules (e.g., the ML module
+``pytorch/2.0.0-gpu`` is itself based on ``python/3.10.8-gpu``, and so ``conda`` will only duplicate packages
+provided by the ``python`` module and not the ones supplied by ``pytorch``). 
 
 
 Using JupyterLab on Cirrus
