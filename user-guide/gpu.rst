@@ -528,6 +528,79 @@ Nsight Compute v2021.3.1.0 has been found to work for codes compiled using
 ``nvhpc`` versions 21.2 and 21.9.
 
 
+Monitoring the GPU Power Usage 
+-------------------------------
+
+NVIDIA also provides a useful command line utility for the management and 
+monitoring of NVIDIA GPUs: the NVIDIA System Management Interface ``nvidia-smi``. 
+
+The ``nvidia-smi`` command queries the available GPUs and reports current 
+information, including but not limited to: driver versions, CUDA version, 
+name, temperature, current power usage and maximum power capability. In this 
+example output, there is one available GPU and it is idle: 
+
+:: 
+  +-----------------------------------------------------------------------------+
+  | NVIDIA-SMI 510.47.03    Driver Version: 510.47.03    CUDA Version: 11.6     |
+  |-------------------------------+----------------------+----------------------+
+  | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+  | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+  |                               |                      |               MIG M. |
+  |===============================+======================+======================|
+  |   0  Tesla V100-SXM2...  Off  | 00000000:1C:00.0 Off |                  Off |
+  | N/A   38C    P0    57W / 300W |      0MiB / 16384MiB |      1%      Default |
+  |                               |                      |                  N/A |
+  +-------------------------------+----------------------+----------------------+
+                                                                                
+  +-----------------------------------------------------------------------------+
+  | Processes:                                                                  |
+  |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+  |        ID   ID                                                   Usage      |
+  |=============================================================================|
+  |  No running processes found                                                 |
+  +-----------------------------------------------------------------------------+
+
+
+To monitor the power usage throughout the duration of a job, the output of 
+``nvidia-smi`` will report data at every specified interval with the 
+``--loop=SEC`` option with the tool sleeping in-between queries. The following 
+command will print the output of ``nvidia-smi`` every 10 seconds in the specified output file. 
+
+::
+
+  nvidia-smi --loop=10 --filename=out-nvidia-smi.txt & 
+
+Example submission script: 
+:: 
+  #!/bin/bash --login
+
+  # Slurm job options (name, compute nodes, job time)
+  #SBATCH --job-name=lammps_Example
+  #SBATCH --time=00:20:00
+  #SBATCH --nodes=1
+  #SBATCH --gres=gpu:4
+
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=gpu
+  #SBATCH --qos=gpu
+
+  # Load the required modules
+  module load nvidia/nvhpc
+
+  # Save the output of NVIDIA-SMI every 10 seconds
+  nvidia-smi --loop=10 --filename=out-nvidia-smi.txt & 
+  srun ./cuda_test.x
+
+This submission script uses 4 GPU accelerators for 20 minutes, printing the output 
+of ``nvidia-smi`` every 10 seconds to the ``nvidia-smi.txt`` output file. The ``&`` 
+means the shell executes the command in the background. 
+
+Consult the NVIDIA documentation for further details.
+
+https://developer.nvidia.com/nvidia-system-management-interface
+
+
 Compiling and using GPU-aware MPI
 ---------------------------------
 
