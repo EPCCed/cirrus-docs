@@ -44,7 +44,7 @@ In preparation for the Data Centre Network (DCN) upgrade we have relaxed the que
 Quality of Service (QoS)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-QoS relaxed limits which will be in force during the Networ upgrade.
+QoS relaxed limits which will be in force during the Network upgrade.
 
 .. list-table:: Cirrus QoS
    :header-rows: 1
