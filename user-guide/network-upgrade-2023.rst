@@ -16,7 +16,7 @@ When will the upgrade happen and how long will it take?
 The outage dates will be:
 
  - Start:  Monday 18th September 2023  09:00
- - Scheduled End:  Friday 22nd September 2023
+ -  Ended:  Friday 22nd September 2023  11:55
 
 We will notify users if we are able to complete this work ahead of schedule.
 
