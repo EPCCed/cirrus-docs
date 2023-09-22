@@ -191,7 +191,7 @@ The solid state storage is not backed up.
 Accessing Cirrus data from before March 2022
 --------------------------------------------
 
-Prior to the March 2022 Cirrus upgrade,all user date on the ``/lustre/sw``
+Prior to the March 2022 Cirrus upgrade, all user data on the ``/lustre/sw``
 filesystem was archived. Users can access their archived data from the 
 Cirrus login nodes in the ``/home-archive`` directory. Assuming you are 
 user ``auser`` from project ``x01``, your pre-rebuild archived data can be
@@ -201,28 +201,28 @@ found in:
 
     /home-archive/x01/auser
 
-The data in the ``/home-archive`` file system is **read only** meaning that 
+The data in the ``/home-archive`` file system is **read only**, meaning that 
 you will not be able to create, edit, or copy new information to this file 
 system.
 
 To make archived data visible from the compute nodes, you will need to 
-copy the data from the ``/home-archive`` file system to the ``/home``
+copy the data from the ``/home-archive`` file system to the ``/work``
 file system. Assuming again that you are user ``auser`` from project ``x01``
 and that you were wanting to copy data from ``/home-archive/x01/auser/directory_to_copy``
-to ``/home/x01/x01/auser/destination_directory``, you would do this by running:
+to ``/work/x01/x01/auser/destination_directory``, you would do this by running:
 
 ::
 
     cp -r /home-archive/x01/auser/directory_to_copy \
-       /home/x01/x01/auser/destination_directory
+       /work/x01/x01/auser/destination_directory
 
 Note that the project code appears once in the path for the old home archive and 
-twice in the path on the new /home file system.
+twice in the path on the new work file system.
 
 .. note::
 
    The capacity of the home file system is much larger than the work file system
-   so you should move data to home rather than work.
+   so you should copy data to home rather than work.
 
 Data transfer
 -------------
