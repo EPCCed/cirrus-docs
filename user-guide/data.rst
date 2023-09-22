@@ -341,3 +341,57 @@ using a quoted string as the argument of the ``-e`` flag. e.g.
 
 (Remember to replace ``user`` with your Cirrus username in the example
 above.)
+
+Data transfer using ``rclone``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`Rclone <https://rclone.org/>`_ is a command-line program to manage files on cloud
+storage. You can transfer files directly to/from cloud storage services, such as
+MS OneDrive and Dropbox. The program preserves timestamps and verifies checksums
+at all times.
+
+First of all, you must download and unzip ``rclone`` on Cirrus:
+
+::
+
+   wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.zip
+   unzip rclone-v1.62.2-linux-amd64.zip
+   cd rclone-v1.62.2-linux-amd64/
+
+The previous code snippet uses rclone v1.62.2, which was the latest version when
+these instructions were written.
+
+Configure rclone using ``./rclone config``. This will guide you through an
+interactive setup process where you can make a new remote (called ``remote``).
+See the following for detailed instructions for:
+
+   - `Microsoft OneDrive <https://rclone.org/onedrive/>`_
+   - `Dropbox <https://rclone.org/dropbox/>`_
+
+
+Please note that a token is required to connect from Cirrus to the cloud
+service. You need a web browser to get the token. The recommendation is to run
+rclone in your laptop using ``rclone authorize``, get the token, and then copy the
+token from your laptop to Cirrus. The rclone website contains further
+instructions on
+`configuring rclone on a remote machine without web browser. <https://rclone.org/remote_setup/>`_
+
+Once all the above is done, you're ready to go. If you want to copy a directory,
+please use:
+
+::
+
+   rclone copy <cirrus_directory> remote:<cloud_directory>
+
+Please note that "remote" is the name that you have chosen when running
+``rclone config```. To copy files, please use:
+
+::
+
+   rclone copyto <cirrus_file> remote:<cloud_file>
+
+.. note::
+
+    If the session times out while the data transfer takes place, adding the
+    ``-vv`` flag to an rclone transfer forces rclone to output to the terminal and
+    therefore avoids triggering the timeout process.
