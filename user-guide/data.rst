@@ -191,11 +191,10 @@ The solid state storage is not backed up.
 Accessing Cirrus data from before March 2022
 --------------------------------------------
 
-Prior to the March 2022 Cirrus upgrade, all user data on the ``/lustre/sw``
+Before March 2022 Cirrus upgrade, all user data on the ``/lustre/sw``
 filesystem was archived. Users can access their archived data from the 
 Cirrus login nodes in the ``/home-archive`` directory. Assuming you are 
-user ``auser`` from project ``x01``, your pre-rebuild archived data can be
-found in:
+user ``auser`` from project ``x01``, your archived data can be found in:
 
 ::
 
