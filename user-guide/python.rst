@@ -312,6 +312,119 @@ You could just as easily create a local virtual environment based on one of the 
 modules is based on a ``python`` module. For example, ``tensorflow/2.11.0-gpu`` is itself an extension of ``python/3.10.8-gpu``.
 
 
+Installing your own Python packages (with conda)
+------------------------------------------------
+
+This section shows you how to setup a local custom Python environment such that it duplicates a centrally-installed ``python`` module,
+ensuring that your local ``conda`` environment will contain packages that are compatible with the Cirrus system.
+
+Select the base Python by loading the ``python`` module you wish to duplicate, e.g., ``python/3.9.13-gpu`` (you can run
+``module avail python`` to list all the available ``python`` modules).
+
+.. code-block:: bash
+
+    [auser@cirrus-login1 auser]$ module load python/3.9.13
+
+Next, create the folder for holding your ``conda`` environments. This folder should be on the ``/work`` file system as ``/home`` is not
+accessible from the compute nodes.
+
+.. code-block:: bash
+
+    CONDA_ROOT=/work/x01/x01/auser/condaenvs
+    mkdir -p ${CONDA_ROOT}
+
+The following commands tell ``conda`` where to save your custom environments and packages.
+
+.. code-block:: bash
+
+    conda config --prepend envs_dirs ${CONDA_ROOT}/envs
+    conda config --prepend pkgs_dirs ${CONDA_ROOT}/pkgs
+
+The ``conda config`` commands are executed just once and the configuration details are held in a ``.condarc`` file located
+in your home directory. You now need to move this ``.condarc`` file to a directory visible from the compute nodes.
+
+.. code-block:: bash
+
+    mv ~/.condarc ${CONDA_ROOT}
+
+You can now activate the ``conda`` configuration.
+
+.. code-block:: bash
+
+    export CONDARC=${CONDA_ROOT}/.condarc
+    eval "$(conda shell.bash hook)"
+
+These two lines need to be called each time you want to use your virtual ``conda`` environment. The next command creates
+that virtual environment.
+
+.. code-block:: bash
+
+    conda create --clone base --name myvenv
+
+The above creates an environment called ``myvenv`` that will hold the same packages provided by the base ``python`` module.
+As this command involves a significant amount of file copying and downloading, it may take a long time to complete. When it
+has completed please activate the local ``myvenv`` conda environment.
+
+.. code-block:: bash
+
+    conda activate myvenv
+
+You can now install packages using ``conda install -p ${CONDA_ROOT}/envs/myvenv <package_name>``.
+And you can see the packages currently installed in the active environment with the command ``conda list``.
+After all packages have been installed, simply run ``conda deactivate`` twice in order to restore the original
+comand prompt.
+
+.. code-block:: bash
+
+    (myvenv) [auser@cirrus-login1 auser]$ conda deactivate
+    (base) [auser@cirrus-login1 auser]$ conda deactivate
+    [auser@cirrus-login1 auser]$
+
+The submission script below shows how to use the conda environment within a job running on the compute nodes.
+
+.. raw:: html
+
+    <details><summary><b>submit-myvenv.slurm</b></summary>
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    #SBATCH --job-name=myvenv
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --partition=gpu
+    #SBATCH --qos=gpu
+    #SBATCH --account=[budget code]
+    #SBATCH --nodes=2
+    #SBATCH --gres=gpu:4
+
+    module load python/3.9.13
+
+    CONDA_ROOT=/work/x01/x01/auser/condaenvs
+    export CONDARC=${CONDA_ROOT}/.condarc
+    eval "$(conda shell.bash hook)"
+
+    conda activate myvenv
+
+    srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
+
+.. raw:: html
+
+    </details><br>
+
+You can see that using ``conda`` is less convenient compared to ``pip``. In particular, the centrally-installed Python
+packages on copied in to the local ``conda`` environment, consuming some of the disk space allocated to your project.
+Secondly, activating the ``conda`` environment within a submission script is more involved: five commands are required
+(including an explicit load for the base ``python`` module), instead of the single ``source`` command that is sufficient
+for a ``pip`` environment.
+
+Further, ``conda`` cannot be used if the base environment is one of the Machine Learning (ML) modules, as ``conda``
+is not flexible enough to gather Python packages from both the ML and base ``python`` modules (e.g., the ML module
+``pytorch/2.0.0-gpu`` is itself based on ``python/3.10.8-gpu``, and so ``conda`` will only duplicate packages
+provided by the ``python`` module and not the ones supplied by ``pytorch``). 
+
+
 Using JupyterLab on Cirrus
 --------------------------
 

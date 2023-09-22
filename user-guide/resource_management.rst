@@ -30,8 +30,8 @@ system, including:
    including individual job records
 -  Helpdesk - raise queries and track progress of open queries
 
-Checking your CPU-time allocation
----------------------------------
+Checking your CPU/GPU time allocations
+--------------------------------------
 
 You can view these details by logging into the SAFE
 (https://safe.epcc.ed.ac.uk).
@@ -41,7 +41,7 @@ to query. The page for the login account will summarise the resources
 available to account.
 
 You can also generate reports on your usage over a particular period and
-examine the details of how many CPUh individual jobs on the system cost.
+examine the details of how many CPUh or GPUh individual jobs on the system cost.
 To do this use the *Service information* menu and selet *Report generator*.
 
 Disk quotas
