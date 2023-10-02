@@ -539,7 +539,7 @@ information, including but not limited to: driver versions, CUDA version,
 name, temperature, current power usage and maximum power capability. In this 
 example output, there is one available GPU and it is idle: 
 
-:: 
+.. code-block:: bash
   +-----------------------------------------------------------------------------+
   | NVIDIA-SMI 510.47.03    Driver Version: 510.47.03    CUDA Version: 11.6     |
   |-------------------------------+----------------------+----------------------+
@@ -559,7 +559,7 @@ example output, there is one available GPU and it is idle:
   |=============================================================================|
   |  No running processes found                                                 |
   +-----------------------------------------------------------------------------+
-
+  
 
 To monitor the power usage throughout the duration of a job, the output of 
 ``nvidia-smi`` will report data at every specified interval with the 
