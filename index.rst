@@ -35,7 +35,6 @@ and the documentation for the `ARCHER National Supercomputing Service <http://ww
    :maxdepth: 2
    :caption: Cirrus User Guide
 
-   user-guide/network-upgrade-2023
    user-guide/introduction
    user-guide/connecting
    user-guide/data
