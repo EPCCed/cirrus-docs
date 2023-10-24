@@ -220,7 +220,112 @@ archive and twice in the path on the new /home file system.
 
     The capacity of the home file system is much larger than the work file system so you should move data to home rather than work.
 
+## Archiving
 
+If you have related data that consists of a large number of small files
+it is strongly recommended to pack the files into a larger "archive"
+file for ease of transfer and manipulation. A single large file makes
+more efficient use of the file system and is easier to move and copy and
+transfer because significantly fewer meta-data operations are required.
+Archive files can be created using tools like `tar` and `zip`.
+
+#### tar
+
+The `tar` command packs files into a "tape archive" format. The command
+has general form:
+
+    tar [options] [file(s)]
+
+Common options include:
+
+   - `-c` create a new archive
+   - `-v` verbosely list files processed
+   - `-W` verify the archive after writing
+   - `-l` confirm all file hard links are included in the archive
+   - `-f` use an archive file (for historical reasons, tar writes its
+     output to stdout by default rather than a file).
+
+Putting these together:
+
+    tar -cvWlf mydata.tar mydata
+
+will create and verify an archive.
+
+To extract files from a tar file, the option `-x` is used. For example:
+
+    tar -xf mydata.tar
+
+will recover the contents of `mydata.tar` to the current working
+directory.
+
+To verify an existing tar file against a set of data, the `-d` (diff)
+option can be used. By default, no output will be given if a
+verification succeeds and an example of a failed verification follows:
+
+    $> tar -df mydata.tar mydata/*
+    mydata/damaged_file: Mod time differs
+    mydata/damaged_file: Size differs
+
+!!! note
+    tar files do not store checksums with their data, requiring
+    the original data to be present during verification.
+
+!!! tip
+    Further information on using `tar` can be found in the `tar` manual
+    (accessed via `man tar` or at [man
+    tar](https://linux.die.net/man/1/tar)).
+
+#### zip
+
+The zip file format is widely used for archiving files and is supported
+by most major operating systems. The utility to create zip files can be
+run from the command line as:
+
+    zip [options] mydata.zip [file(s)] 
+
+Common options are:
+
+   - `-r` used to zip up a directory
+   - `-#` where "\#" represents a digit ranging from 0 to 9 to specify
+     compression level, 0 being the least and 9 the most. Default
+     compression is -6 but we recommend using -0 to speed up the
+     archiving process.
+
+Together:
+
+    zip -0r mydata.zip mydata
+
+will create an archive.
+
+!!! note
+    Unlike tar, zip files do not preserve hard links. File data will be
+    copied on archive creation, *e.g.* an uncompressed zip archive of a
+    100MB file and a hard link to that file will be approximately 200MB in
+    size. This makes zip an unsuitable format if you wish to precisely
+    reproduce the file system layout.
+
+The corresponding `unzip` command is used to extract data from the
+archive. The simplest use case is:
+
+    unzip mydata.zip
+
+which recovers the contents of the archive to the current working
+directory.
+
+Files in a zip archive are stored with a CRC checksum to help detect
+data loss. `unzip` provides options for verifying this checksum against
+the stored files. The relevant flag is `-t` and is used as follows:
+
+    $> unzip -t mydata.zip
+    Archive:  mydata.zip
+        testing: mydata/                 OK
+        testing: mydata/file             OK
+    No errors detected in compressed data of mydata.zip.
+
+!!! tip
+    Further information on using `zip` can be found in the `zip` manual
+    (accessed via `man zip` or at [man
+    zip](https://linux.die.net/man/1/zip)).
 
 ## Data transfer
 
