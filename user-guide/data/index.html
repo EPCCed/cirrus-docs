@@ -449,6 +449,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#archiving" class="md-nav__link">
+    Archiving
+  </a>
+  
+    <nav class="md-nav" aria-label="Archiving">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tar" class="md-nav__link">
+    tar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zip" class="md-nav__link">
+    zip
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-transfer" class="md-nav__link">
     Data transfer
   </a>
@@ -1328,6 +1355,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#archiving" class="md-nav__link">
+    Archiving
+  </a>
+  
+    <nav class="md-nav" aria-label="Archiving">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tar" class="md-nav__link">
+    tar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zip" class="md-nav__link">
+    zip
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-transfer" class="md-nav__link">
     Data transfer
   </a>
@@ -1601,6 +1655,101 @@ archive and twice in the path on the new /home file system.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The capacity of the home file system is much larger than the work file system so you should move data to home rather than work.</p>
+</div>
+<h2 id="archiving">Archiving</h2>
+<p>If you have related data that consists of a large number of small files
+it is strongly recommended to pack the files into a larger "archive"
+file for ease of transfer and manipulation. A single large file makes
+more efficient use of the file system and is easier to move and copy and
+transfer because significantly fewer meta-data operations are required.
+Archive files can be created using tools like <code>tar</code> and <code>zip</code>.</p>
+<h4 id="tar">tar</h4>
+<p>The <code>tar</code> command packs files into a "tape archive" format. The command
+has general form:</p>
+<pre><code>tar [options] [file(s)]
+</code></pre>
+<p>Common options include:</p>
+<ul>
+<li><code>-c</code> create a new archive</li>
+<li><code>-v</code> verbosely list files processed</li>
+<li><code>-W</code> verify the archive after writing</li>
+<li><code>-l</code> confirm all file hard links are included in the archive</li>
+<li><code>-f</code> use an archive file (for historical reasons, tar writes its
+     output to stdout by default rather than a file).</li>
+</ul>
+<p>Putting these together:</p>
+<pre><code>tar -cvWlf mydata.tar mydata
+</code></pre>
+<p>will create and verify an archive.</p>
+<p>To extract files from a tar file, the option <code>-x</code> is used. For example:</p>
+<pre><code>tar -xf mydata.tar
+</code></pre>
+<p>will recover the contents of <code>mydata.tar</code> to the current working
+directory.</p>
+<p>To verify an existing tar file against a set of data, the <code>-d</code> (diff)
+option can be used. By default, no output will be given if a
+verification succeeds and an example of a failed verification follows:</p>
+<pre><code>$&gt; tar -df mydata.tar mydata/*
+mydata/damaged_file: Mod time differs
+mydata/damaged_file: Size differs
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>tar files do not store checksums with their data, requiring
+the original data to be present during verification.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Further information on using <code>tar</code> can be found in the <code>tar</code> manual
+(accessed via <code>man tar</code> or at <a href="https://linux.die.net/man/1/tar">man
+tar</a>).</p>
+</div>
+<h4 id="zip">zip</h4>
+<p>The zip file format is widely used for archiving files and is supported
+by most major operating systems. The utility to create zip files can be
+run from the command line as:</p>
+<pre><code>zip [options] mydata.zip [file(s)]
+</code></pre>
+<p>Common options are:</p>
+<ul>
+<li><code>-r</code> used to zip up a directory</li>
+<li><code>-#</code> where "#" represents a digit ranging from 0 to 9 to specify
+     compression level, 0 being the least and 9 the most. Default
+     compression is -6 but we recommend using -0 to speed up the
+     archiving process.</li>
+</ul>
+<p>Together:</p>
+<pre><code>zip -0r mydata.zip mydata
+</code></pre>
+<p>will create an archive.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike tar, zip files do not preserve hard links. File data will be
+copied on archive creation, <em>e.g.</em> an uncompressed zip archive of a
+100MB file and a hard link to that file will be approximately 200MB in
+size. This makes zip an unsuitable format if you wish to precisely
+reproduce the file system layout.</p>
+</div>
+<p>The corresponding <code>unzip</code> command is used to extract data from the
+archive. The simplest use case is:</p>
+<pre><code>unzip mydata.zip
+</code></pre>
+<p>which recovers the contents of the archive to the current working
+directory.</p>
+<p>Files in a zip archive are stored with a CRC checksum to help detect
+data loss. <code>unzip</code> provides options for verifying this checksum against
+the stored files. The relevant flag is <code>-t</code> and is used as follows:</p>
+<pre><code>$&gt; unzip -t mydata.zip
+Archive:  mydata.zip
+    testing: mydata/                 OK
+    testing: mydata/file             OK
+No errors detected in compressed data of mydata.zip.
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Further information on using <code>zip</code> can be found in the <code>zip</code> manual
+(accessed via <code>man zip</code> or at <a href="https://linux.die.net/man/1/zip">man
+zip</a>).</p>
 </div>
 <h2 id="data-transfer">Data transfer</h2>
 <h3 id="before-you-start">Before you start</h3>
