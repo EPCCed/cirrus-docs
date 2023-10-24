@@ -1,0 +1,1848 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../resource_management/">
+      
+      
+        <link rel="next" href="../batch/">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>Application Developement Environment - Cirrus User Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/cirrus.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config",""),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-development-environment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cirrus User Documentation" class="md-header__button md-logo" aria-label="Cirrus User Documentation" data-md-component="logo">
+      
+  <img src="../../images/cirrus_logo_white-Transparent-Background.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cirrus User Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Application Developement Environment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/EPCCed/cirrus-new-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    EPCCed/cirrus-new-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cirrus User Documentation" class="md-nav__button md-logo" aria-label="Cirrus User Documentation" data-md-component="logo">
+      
+  <img src="../../images/cirrus_logo_white-Transparent-Background.png" alt="logo">
+
+    </a>
+    Cirrus User Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/EPCCed/cirrus-new-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    EPCCed/cirrus-new-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connecting to Cirrus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data Management and Transfer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resource_management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File and Resource Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Application Developement Environment
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Application Developement Environment
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-modules-environment" class="md-nav__link">
+    Using the modules environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the modules environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#information-on-the-available-modules" class="md-nav__link">
+    Information on the available modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-unloading-and-swapping-modules" class="md-nav__link">
+    Loading, unloading and swapping modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-compiler-suites" class="md-nav__link">
+    Available Compiler Suites
+  </a>
+  
+    <nav class="md-nav" aria-label="Available Compiler Suites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intel-compiler-suite" class="md-nav__link">
+    Intel Compiler Suite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcc-compiler-suite" class="md-nav__link">
+    GCC Compiler Suite
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-mpi-codes" class="md-nav__link">
+    Compiling MPI codes
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling MPI codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-hpe-mpt" class="md-nav__link">
+    Using HPE MPT
+  </a>
+  
+    <nav class="md-nav" aria-label="Using HPE MPT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-compilers-and-hpe-mpt" class="md-nav__link">
+    Using Intel Compilers and HPE MPT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-gcc-compilers-and-hpe-mpt" class="md-nav__link">
+    Using GCC Compilers and HPE MPT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-mpi" class="md-nav__link">
+    Using Intel MPI
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Intel MPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-compilers-and-intel-mpi" class="md-nav__link">
+    Using Intel Compilers and Intel MPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-gcc-compilers-and-intel-mpi" class="md-nav__link">
+    Using GCC Compilers and Intel MPI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiler-information-and-options" class="md-nav__link">
+    Compiler Information and Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiler Information and Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useful-compiler-options" class="md-nav__link">
+    Useful compiler options
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-static-linkinglibraries" class="md-nav__link">
+    Using static linking/libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intel-modules-and-tools" class="md-nav__link">
+    Intel modules and tools
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../batch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running Jobs on Cirrus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../singularity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Singularity Containers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using the Cirrus GPU Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solidstate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Solid state storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Software Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Software Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/castep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Castep
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/cp2k/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CP2K
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/elements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ELEMENTS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/flacs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FLACS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/gaussian/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gaussian
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/gromacs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GROMACS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/helyx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HELYX&reg;
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/lammps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LAMMPS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/MATLAB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MATLAB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/namd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NAMD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/openfoam/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenFOAM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/orca/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/qe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quantum Espresso (QE)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/starccm%2B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    STAR-CCM+
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/vasp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VASP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-packages/specfem3d/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SPECFEM3D Cartesian
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Software Libraries
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Software Libraries
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intel MKL: BLAS, LAPACK, ScaLAPACK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/hdf5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HDF5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Software Tools
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Software Tools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/ddt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging using Arm DDT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/scalasca/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling using Scalasca
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/intel-vtune/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intel VTune
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References and further reading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-modules-environment" class="md-nav__link">
+    Using the modules environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the modules environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#information-on-the-available-modules" class="md-nav__link">
+    Information on the available modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-unloading-and-swapping-modules" class="md-nav__link">
+    Loading, unloading and swapping modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-compiler-suites" class="md-nav__link">
+    Available Compiler Suites
+  </a>
+  
+    <nav class="md-nav" aria-label="Available Compiler Suites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intel-compiler-suite" class="md-nav__link">
+    Intel Compiler Suite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcc-compiler-suite" class="md-nav__link">
+    GCC Compiler Suite
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-mpi-codes" class="md-nav__link">
+    Compiling MPI codes
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling MPI codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-hpe-mpt" class="md-nav__link">
+    Using HPE MPT
+  </a>
+  
+    <nav class="md-nav" aria-label="Using HPE MPT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-compilers-and-hpe-mpt" class="md-nav__link">
+    Using Intel Compilers and HPE MPT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-gcc-compilers-and-hpe-mpt" class="md-nav__link">
+    Using GCC Compilers and HPE MPT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-mpi" class="md-nav__link">
+    Using Intel MPI
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Intel MPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-intel-compilers-and-intel-mpi" class="md-nav__link">
+    Using Intel Compilers and Intel MPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-gcc-compilers-and-intel-mpi" class="md-nav__link">
+    Using GCC Compilers and Intel MPI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiler-information-and-options" class="md-nav__link">
+    Compiler Information and Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiler Information and Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useful-compiler-options" class="md-nav__link">
+    Useful compiler options
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-static-linkinglibraries" class="md-nav__link">
+    Using static linking/libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intel-modules-and-tools" class="md-nav__link">
+    Intel modules and tools
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="application-development-environment">Application Development Environment</h1>
+<p>The application development environment on Cirrus is primarily
+controlled through the <em>modules</em> environment. By loading and switching
+modules you control the compilers, libraries and software available.</p>
+<p>This means that for compiling on Cirrus you typically set the compiler
+you wish to use using the appropriate modules, then load all the
+required library modules (e.g. numerical libraries, IO format
+libraries).</p>
+<p>Additionally, if you are compiling parallel applications using MPI (or
+SHMEM, etc.) then you will need to load one of the MPI environments and
+use the appropriate compiler wrapper scripts.</p>
+<p>By default, all users on Cirrus start with no modules loaded.</p>
+<p>Basic usage of the <code>module</code> command on Cirrus is covered below. For full
+documentation please see:</p>
+<ul>
+<li><a href="http://linux.die.net/man/1/module">Linux manual page on modules</a></li>
+</ul>
+<h2 id="using-the-modules-environment">Using the modules environment</h2>
+<h3 id="information-on-the-available-modules">Information on the available modules</h3>
+<p>Finding out which modules (and hence which compilers, libraries and
+software) are available on the system is performed using the
+<code>module avail</code> command:</p>
+<pre><code>[user@cirrus-login0 ~]$ module avail
+...
+</code></pre>
+<p>This will list all the names and versions of the modules available on
+the service. Not all of them may work in your account though due to, for
+example, licencing restrictions. You will notice that for many modules
+we have more than one version, each of which is identified by a version
+number. One of these versions is the default. As the service develops
+the default version will change.</p>
+<p>You can list all the modules of a particular type by providing an
+argument to the <code>module avail</code> command. For example, to list all
+available versions of the Intel Compiler type:</p>
+<pre><code>[user@cirrus-login0 ~]$ module avail intel-compilers
+
+--------------------------------- /mnt/lustre/indy2lfs/sw/modulefiles --------------------------------
+intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117
+</code></pre>
+<p>If you want more info on any of the modules, you can use the
+<code>module help</code> command:</p>
+<pre><code>[user@cirrus-login0 ~]$ module help mpt
+
+-------------------------------------------------------------------
+Module Specific Help for /usr/share/Modules/modulefiles/mpt/2.25:
+
+The HPE Message Passing Toolkit (MPT) is an optimized MPI
+implementation for HPE systems and clusters.  See the
+MPI(1) man page and the MPT User's Guide for more
+information.
+-------------------------------------------------------------------
+</code></pre>
+<p>The simple <code>module list</code> command will give the names of the modules and
+their versions you have presently loaded in your environment, e.g.:</p>
+<pre><code>[user@cirrus-login0 ~]$ module list
+Currently Loaded Modulefiles:
+1) git/2.35.1(default)                                  6) gcc/8.2.0(default)
+2) singularity/3.7.2(default)                           7) intel-cc-18/18.0.5.274
+3) epcc/utils                                           8) intel-fc-18/18.0.5.274
+4) /mnt/lustre/indy2lfs/sw/modulefiles/epcc/setup-env   9) intel-compilers-18/18.05.274
+5) intel-license                                       10) mpt/2.25
+</code></pre>
+<h3 id="loading-unloading-and-swapping-modules">Loading, unloading and swapping modules</h3>
+<p>To load a module to use <code>module add</code> or <code>module load</code>. For example, to
+load the intel-compilers-18 into the development environment:</p>
+<pre><code>module load intel-compilers-18
+</code></pre>
+<p>This will load the default version of the intel compilers. If you need a
+specific version of the module, you can add more information:</p>
+<pre><code>module load intel-compilers-18/18.0.5.274
+</code></pre>
+<p>will load version 18.0.2.274 for you, regardless of the default.</p>
+<p>If a module loading file cannot be accessed within 10 seconds, a warning
+message will appear: <code>Warning: Module system not loaded</code>.</p>
+<p>If you want to clean up, <code>module remove</code> will remove a loaded module:</p>
+<pre><code>module remove intel-compilers-18
+</code></pre>
+<p>(or <code>module rm intel-compilers-18</code> or
+<code>module unload intel-compilers-18</code>) will unload what ever version of
+intel-compilers-18 (even if it is not the default) you might have
+loaded. There are many situations in which you might want to change the
+presently loaded version to a different one, such as trying the latest
+version which is not yet the default or using a legacy version to keep
+compatibility with old data. This can be achieved most easily by using
+"module swap oldmodule newmodule".</p>
+<p>Suppose you have loaded version 18 of the Intel compilers; the following
+command will change to version 19:</p>
+<pre><code>module swap intel-compilers-18 intel-compilers-19
+</code></pre>
+<h2 id="available-compiler-suites">Available Compiler Suites</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As Cirrus uses dynamic linking by default you will generally also need to load any modules you used to compile your code in your job submission script when you run your code.</p>
+</div>
+<h3 id="intel-compiler-suite">Intel Compiler Suite</h3>
+<p>The Intel compiler suite is accessed by loading the <code>intel-compilers-*</code>
+and <code>intel-*/compilers</code> modules, where <code>*</code> references the version. For
+example, to load the 2019 release, you would run:</p>
+<pre><code>module load intel-compilers-19
+</code></pre>
+<p>Once you have loaded the module, the compilers are available as:</p>
+<ul>
+<li><code>ifort</code> - Fortran</li>
+<li><code>icc</code> - C</li>
+<li><code>icpc</code> - C++</li>
+</ul>
+<p>See the extended section below for further details of available Intel
+compiler versions and tools.</p>
+<h3 id="gcc-compiler-suite">GCC Compiler Suite</h3>
+<p>The GCC compiler suite is accessed by loading the <code>gcc/*</code> modules, where
+<code>*</code> again is the version. For example, to load version 8.2.0 you would
+run:</p>
+<pre><code>module load gcc/8.2.0
+</code></pre>
+<p>Once you have loaded the module, the compilers are available as:</p>
+<ul>
+<li><code>gfortran</code> - Fortran</li>
+<li><code>gcc</code> - C</li>
+<li><code>g++</code> - C++</li>
+</ul>
+<h2 id="compiling-mpi-codes">Compiling MPI codes</h2>
+<p>MPI on Cirrus is currently provided by the HPE MPT library.</p>
+<p>You should also consult the chapter on running jobs through the batch
+system for examples of how to run jobs compiled against MPI.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, all compilers produce dynamic executables on Cirrus. This   means that you must load the same modules at runtime (usually in your job submission script) as you have loaded at compile time.</p>
+</div>
+<h3 id="using-hpe-mpt">Using HPE MPT</h3>
+<p>To compile MPI code with HPE MPT, using any compiler, you must first
+load the "mpt" module.</p>
+<pre><code>module load mpt
+</code></pre>
+<p>This makes the compiler wrapper scripts <code>mpicc</code>, <code>mpicxx</code> and <code>mpif90</code>
+available to you.</p>
+<p>What you do next depends on which compiler (Intel or GCC) you wish to
+use to compile your code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend that you use the Intel compiler wherever possible to compile MPI applications as this is the method officially supported and tested by HPE.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can always check which compiler the MPI compiler wrapper scripts are using with, for example, <code>mpicc -v</code> or <code>mpif90 -v</code>.</p>
+</div>
+<h4 id="using-intel-compilers-and-hpe-mpt">Using Intel Compilers and HPE MPT</h4>
+<p>Once you have loaded the MPT module you should next load the Intel
+compilers module you intend to use (e.g. <code>intel-compilers-19</code>):</p>
+<pre><code>module load intel-compilers-19
+</code></pre>
+<p>The compiler wrappers are then available as</p>
+<ul>
+<li><code>mpif90</code> - Fortran with MPI</li>
+<li><code>mpicc</code> - C with MPI</li>
+<li><code>mpicxx</code> - C++ with MPI</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The MPT compiler wrappers use GCC by default rather than the Intel compilers:</p>
+<p>When compiling C applications you must also specify that <code>mpicc</code> should use the <code>icc</code> compiler with, for example, <code>mpicc -cc=icc</code>. Similarly, when compiling C++ applications you must also specify that <code>mpicxx</code> should use the <code>icpc</code> compiler with, for example, <code>mpicxx -cxx=icpc</code>. (This is not required for Fortran as the <code>mpif90</code> compiler automatically uses <code>ifort</code>.) If in doubt use <code>mpicc -cc=icc -v</code> or <code>mpicxx -cxx=icpc -v</code> to see which compiler is actually being called.</p>
+<p>Alternatively, you can set the environment variables <code>MPICC_CC=icc</code> and/or <code>MPICXX=icpc</code> to ensure the correct base compiler is used:</p>
+<pre><code>export MPICC_CC=icc
+export MPICXX_CXX=icpc
+</code></pre>
+</div>
+<h4 id="using-gcc-compilers-and-hpe-mpt">Using GCC Compilers and HPE MPT</h4>
+<p>Once you have loaded the MPT module you should next load the <code>gcc</code>
+module:</p>
+<pre><code>module load gcc
+</code></pre>
+<p>Compilers are then available as</p>
+<ul>
+<li><code>mpif90</code> - Fortran with MPI</li>
+<li><code>mpicc</code> - C with MPI</li>
+<li><code>mpicxx</code> - C++ with MPI</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>HPE MPT does not support the syntax <code>use mpi</code> in Fortran applications with the GCC compiler <code>gfortran</code>. You should use the older <code>include "mpif.h"</code> syntax when using GCC compilers with <code>mpif90</code>. If you cannot change this, then use the Intel compilers with MPT.</p>
+</div>
+<h3 id="using-intel-mpi">Using Intel MPI</h3>
+<p>Although HPE MPT remains the default MPI library and we recommend that
+first attempts at building code follow that route, you may also choose
+to use Intel MPI if you wish. To use these, load the appropriate
+<code>intel-mpi</code> module, for example <code>intel-mpi-19</code>:</p>
+<pre><code>module load intel-mpi-19
+</code></pre>
+<p>Please note that the name of the wrappers to use when compiling with
+Intel MPI depends on whether you are using the Intel compilers or GCC.
+You should make sure that you or any tools use the correct ones when
+building software.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although Intel MPI is available on Cirrus, HPE MPT remains the recommended and default MPI library to use when building applications.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using Intel MPI 18 can cause warnings in your output similar to
+<code>no hfi units are available</code> or
+<code>The /dev/hfi1_0 device failed to appear</code>. These warnings can be safely
+ignored, or, if you would prefer to prevent them, you may add the line</p>
+<pre><code>export I_MPI_FABRICS=shm:ofa
+</code></pre>
+<p>to your job scripts after loading the Intel MPI 18 module.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using Intel MPI 18, you should always launch MPI tasks with <code>srun</code>,
+the supported method on Cirrus. Launches with <code>mpirun</code> or <code>mpiexec</code> will
+likely fail.</p>
+</div>
+<h4 id="using-intel-compilers-and-intel-mpi">Using Intel Compilers and Intel MPI</h4>
+<p>After first loading Intel MPI, you should next load the appropriate
+<code>intel-compilers</code> module (e.g. <code>intel-compilers-19</code>):</p>
+<pre><code>module load intel-compilers-19
+</code></pre>
+<p>You may then use the following MPI compiler wrappers:</p>
+<ul>
+<li><code>mpiifort</code> - Fortran with MPI</li>
+<li><code>mpiicc</code> - C with MPI</li>
+<li><code>mpiicpc</code> - C++ with MPI</li>
+</ul>
+<h4 id="using-gcc-compilers-and-intel-mpi">Using GCC Compilers and Intel MPI</h4>
+<p>After loading Intel MPI, you should next load the <code>gcc</code> module you wish
+to use:</p>
+<pre><code>module load gcc
+</code></pre>
+<p>You may then use these MPI compiler wrappers:</p>
+<ul>
+<li><code>mpif90</code> - Fortran with MPI</li>
+<li><code>mpicc</code> - C with MPI</li>
+<li><code>mpicxx</code> - C++ with MPI</li>
+</ul>
+<h2 id="compiler-information-and-options">Compiler Information and Options</h2>
+<p>The manual pages for the different compiler suites are available:</p>
+<p>GCC<br />
+Fortran <code>man gfortran</code> , C/C++ <code>man gcc</code></p>
+<p>Intel<br />
+Fortran <code>man ifort</code> , C/C++ <code>man icc</code></p>
+<h3 id="useful-compiler-options">Useful compiler options</h3>
+<p>Whilst difference codes will benefit from compiler optimisations in
+different ways, for reasonable performance on Cirrus, at least
+initially, we suggest the following compiler options:</p>
+<p>Intel<br />
+<code>-O2</code></p>
+<p>GNU<br />
+<code>-O2 -ftree-vectorize -funroll-loops -ffast-math</code></p>
+<p>When you have a application that you are happy is working correctly and
+has reasonable performance you may wish to investigate some more
+aggressive compiler optimisations. Below is a list of some further
+optimisations that you can try on your application (Note: these
+optimisations may result in incorrect output for programs that depend on
+an exact implementation of IEEE or ISO rules/specifications for math
+functions):</p>
+<p>Intel<br />
+<code>-fast</code></p>
+<p>GNU<br />
+<code>-Ofast -funroll-loops</code></p>
+<p>Vectorisation, which is one of the important compiler optimisations for
+Cirrus, is enabled by default as follows:</p>
+<p>Intel<br />
+At <code>-O2</code> and above</p>
+<p>GNU<br />
+At <code>-O3</code> and above or when using <code>-ftree-vectorize</code></p>
+<p>To promote integer and real variables from four to eight byte precision
+for Fortran codes the following compiler flags can be used:</p>
+<p>Intel<br />
+<code>-real-size 64 -integer-size 64 -xAVX</code> (Sometimes the Intel compiler
+incorrectly generates AVX2 instructions if the <code>-real-size 64</code> or <code>-r8</code>
+options are set. Using the <code>-xAVX</code> option prevents this.)</p>
+<p>GNU<br />
+<code>-freal-4-real-8 -finteger-4-integer-8</code></p>
+<h2 id="using-static-linkinglibraries">Using static linking/libraries</h2>
+<p>By default, executables on Cirrus are built using shared/dynamic
+libraries (that is, libraries which are loaded at run-time as and when
+needed by the application) when using the wrapper scripts.</p>
+<p>An application compiled this way to use shared/dynamic libraries will
+use the default version of the library installed on the system (just
+like any other Linux executable), even if the system modules were set
+differently at compile time. This means that the application may
+potentially be using slightly different object code each time the
+application runs as the defaults may change. This is usually the desired
+behaviour for many applications as any fixes or improvements to the
+default linked libraries are used without having to recompile the
+application, however some users may feel this is not the desired
+behaviour for their applications.</p>
+<p>Alternatively, applications can be compiled to use static libraries
+(i.e. all of the object code of referenced libraries are contained in
+the executable file). This has the advantage that once an executable is
+created, whenever it is run in the future, it will always use the same
+object code (within the limit of changing runtime environment). However,
+executables compiled with static libraries have the potential
+disadvantage that when multiple instances are running simultaneously
+multiple copies of the libraries used are held in memory. This can lead
+to large amounts of memory being used to hold the executable and not
+application data.</p>
+<p>To create an application that uses static libraries you must pass an
+extra flag during compilation, <code>-Bstatic</code>.</p>
+<p>Use the UNIX command <code>ldd exe_file</code> to check whether you are using an
+executable that depends on shared libraries. This utility will also
+report the shared libraries this executable will use if it has been
+dynamically linked.</p>
+<h2 id="intel-modules-and-tools">Intel modules and tools</h2>
+<p>There are a number of different Intel compiler versions available, and
+there is also a slight difference in the way different versions appear.</p>
+<p>A full list is available via <code>module avail intel</code>.</p>
+<p>The different available compiler versions are:</p>
+<ul>
+<li><code>intel-*/18.0.5.274</code> Intel 2018 Update 4</li>
+<li><code>intel-*/19.0.0.117</code> Intel 2019 Initial release</li>
+<li><code>intel-19.5/*</code> Intel 2019 Update 5</li>
+<li><code>intel-20.4/*</code> Intel 2020 Update 4</li>
+</ul>
+<p>We recommend the most up-to-date version in the first instance, unless
+you have particular reasons for preferring an older version.</p>
+<p>For a note on Intel compiler version numbers, see this <a href="https://software.intel.com/content/www/us/en/develop/articles/intel-compiler-and-composer-update-version-numbers-to-compiler-version-number-mapping.html">Intel
+page</a></p>
+<p>The different module names (or parts thereof) indicate:</p>
+<ul>
+<li><code>cc</code> C/C++ compilers only</li>
+<li><code>cmkl</code> MKL libraries (see Software Libraries section)</li>
+<li><code>compilers</code> Both C/C++ and Fortran compilers</li>
+<li><code>fc</code> Fortran compiler only</li>
+<li><code>itac</code> Intel Trace Analyze and Collector</li>
+<li><code>mpi</code> Intel MPI</li>
+<li><code>pxse</code> Intel Parallel Studio (all Intel modules)</li>
+<li><code>tbb</code> Thread Building Blocks</li>
+<li><code>vtune</code> VTune profiler - note that in older versions
+  (<code>intel-*/18.0.5.274</code>, <code>intel-*/19.0.0.117</code> VTune is launched as
+  <code>amplxe-gui</code> for GUI or <code>amplxe-cl</code> for CLI use)</li>
+</ul>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/EPCCed" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>
