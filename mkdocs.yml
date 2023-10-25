@@ -25,7 +25,7 @@ extra:
     property: 
   analytics:
     provider: google
-    property: 
+    property: G-3T9RVR5FTP
 
 markdown_extensions:
   - admonition
