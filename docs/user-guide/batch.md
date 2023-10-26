@@ -234,10 +234,10 @@ resource limits. The following table has a list of active QoS on Cirrus.
 | standard     | No limit              | 500 jobs             | 4 days       | 88 nodes (3168 cores/25%)               | standard              |       |
 | largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) or 144 GPUs | standard, gpu         |       |
 | long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes or 8 GPUs                      | standard, gpu         |       |
-| highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              |       |
+| highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              |        charged at 1.5 x normal rate |
 | gpu          | No limit              | 128 jobs             | 4 days       | 64 GPUs (16 nodes/40%)                  | gpu                   |       |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes or 4 GPUs                       | standard, gpu         |       |
-| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%) or 16 GPUs    | standard, gpu         |       |
+| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%) or 16 GPUs    | standard, gpu         |        usage is not charged |
 
 #### Cirrus QoS
 
