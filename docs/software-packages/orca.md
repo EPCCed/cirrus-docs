@@ -15,7 +15,7 @@ institutions.
 
 ## Using ORCA on Cirrus
 
-ORCA is available for academic use on ARCHER2 only. If you wish to use
+ORCA is available for academic use on Cirrus only. If you wish to use
 ORCA for commercial applications, you must contact the ORCA developers.
 
 ORCA cannot use GPUs.
