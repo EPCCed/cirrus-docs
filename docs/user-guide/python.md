@@ -546,6 +546,24 @@ you can start from a login node prompt.
     - Please note, you will get a connection error if you haven't used
       the correct node name in step 4 or 5.
 
+!!! Note
+
+	If you have extended a central Python venv following the
+	instructions about for [Installing your own Python packages
+	(with pip)](#installing-your-own-python-packages-(with-pip)),
+	Jupyter Lab will load the central ipython kernel, not the one
+	for your venv. To enable loading of the ipython kernel for your
+	venv from within Jupyter Lab, first install the ipykernel module
+	and then use this to install the kernel for your venv.
+	```
+	source /work/x01/x01/auser/myvenv/bin/activate
+	python -m pip install ipykernel
+	python -m ipykernel install --user --name=myvenv
+	```
+	changing placeholder account and username as appropriate.
+	Thereafter, launch Jupyter Lab as above and select the `myvenv`
+	kernel.
+
 If you are on a compute node, the JupyterLab server will be available
 for the length of the interactive session you have requested.
 
