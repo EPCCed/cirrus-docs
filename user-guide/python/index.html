@@ -1686,6 +1686,23 @@ be asked to enter your Cirrus password -- please do so.</p>
 </ul>
 </li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have extended a central Python venv following the
+instructions about for <a href="#installing-your-own-python-packages-(with-pip)">Installing your own Python packages
+(with pip)</a>,
+Jupyter Lab will load the central ipython kernel, not the one
+for your venv. To enable loading of the ipython kernel for your
+venv from within Jupyter Lab, first install the ipykernel module
+and then use this to install the kernel for your venv.
+<div class="highlight"><pre><span></span><code>source /work/x01/x01/auser/myvenv/bin/activate
+python -m pip install ipykernel
+python -m ipykernel install --user --name=myvenv
+</code></pre></div>
+changing placeholder account and username as appropriate.
+Thereafter, launch Jupyter Lab as above and select the <code>myvenv</code>
+kernel.</p>
+</div>
 <p>If you are on a compute node, the JupyterLab server will be available
 for the length of the interactive session you have requested.</p>
 <p>You can also run Jupyter sessions using the centrally-installed
