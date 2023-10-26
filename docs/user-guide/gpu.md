@@ -452,35 +452,34 @@ The `nvidia-smi` command queries the available GPUs and reports current informat
 
 
 
-::
-```
-    NVIDIA-SMI 510.47.03 Driver Version: 510.47.03 CUDA Version: 11.6
 
-——————————-+———————-+———————-
-
-    GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M.
-
-        | MIG M.
-
-===============================+======================+======================
-
-        0 Tesla V100-SXM2… Off | 00000000:1C:00.0 Off | Off
-
-    N/A 38C P0 57W / 300W | 0MiB / 16384MiB | 1% Default
-        | N/A
 
 ```
+
+  +-----------------------------------------------------------------------------+
+  | NVIDIA-SMI 510.47.03    Driver Version: 510.47.03    CUDA Version: 11.6     |
+  |-------------------------------+----------------------+----------------------+
+  | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+  | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+  |                               |                      |               MIG M. |
+  |===============================+======================+======================|
+  |   0  Tesla V100-SXM2...  Off  | 00000000:1C:00.0 Off |                  Off |
+  | N/A   38C    P0    57W / 300W |      0MiB / 16384MiB |      1%      Default |
+  |                               |                      |                  N/A |
+  +-------------------------------+----------------------+----------------------+
+                                                                                
+  +-----------------------------------------------------------------------------+
+  | Processes:                                                                  |
+  |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+  |        ID   ID                                                   Usage      |
+  |=============================================================================|
+  |  No running processes found                                                 |
+  +-----------------------------------------------------------------------------+
+
 ```
 
 
-    Processes:
 
-        GPU GI CI PID Type Process name GPU Memory
-            ID ID Usage
-
-    No running processes found
-
-```
 
 To monitor the power usage throughout the duration of a job, the output of nvidia-smi will report data at every specified interval with the --loop=SEC option with the tool sleeping in-between queries. The following command will print the output of nvidia-smi every 10 seconds in the specified output file.
 
