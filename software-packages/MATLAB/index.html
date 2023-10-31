@@ -1359,7 +1359,8 @@ that expresses matrix and array mathematics directly.</p>
 <li><a href="https://uk.mathworks.com/help/index.html">MATLAB Documentation</a></li>
 </ul>
 <h2 id="using-matlab-on-cirrus">Using MATLAB on Cirrus</h2>
-<p>MATLAB R2018b is available on Cirrus.</p>
+<p>MATLAB R2020b and R2021b are available on Cirrus. R2020b is the 
+current default.</p>
 <p>This installation of MATLAB on Cirrus is covered by an Academic
 License - for use in teaching, academic research, and meeting course
 requirements at degree granting institutions only. Not for government,
@@ -1368,91 +1369,24 @@ commercial, or other organizational use.</p>
 not use this installation.</strong> Please contact the <a href="http://www.cirrus.ac.uk/support/">Cirrus
 Helpdesk</a> to arrange use of your own
 MATLAB license on Cirrus.</p>
-<p>This is MATLAB Version 9.5.0.1033004 (R2018b) Update 2 and provides the
-following toolboxes :</p>
-<div class="highlight"><pre><span></span><code>MATLAB                                  Version 9.5
-Simulink                                Version 9.2
-5G Toolbox                              Version 1.0
-Aerospace Blockset                      Version 4.0
-Aerospace Toolbox                       Version 3.0
-Antenna Toolbox                         Version 3.2
-Audio System Toolbox                    Version 1.5
-Automated Driving System Toolbox        Version 1.3
-Bioinformatics Toolbox                  Version 4.11
-Communications Toolbox                  Version 7.0
-Computer Vision System Toolbox          Version 8.2
-Control System Toolbox                  Version 10.5
-Curve Fitting Toolbox                   Version 3.5.8
-DO Qualification Kit                    Version 3.6
-DSP System Toolbox                      Version 9.7
-Database Toolbox                        Version 9.0
-Datafeed Toolbox                        Version 5.8
-Deep Learning Toolbox                   Version 12.0
-Econometrics Toolbox                    Version 5.1
-Embedded Coder                          Version 7.1
-Filter Design HDL Coder                 Version 3.1.4
-Financial Instruments Toolbox           Version 2.8
-Financial Toolbox                       Version 5.12
-Fixed-Point Designer                    Version 6.2
-Fuzzy Logic Toolbox                     Version 2.4
-GPU Coder                               Version 1.2
-Global Optimization Toolbox             Version 4.0
-HDL Coder                               Version 3.13
-HDL Verifier                            Version 5.5
-IEC Certification Kit                   Version 3.12
-Image Acquisition Toolbox               Version 5.5
-Image Processing Toolbox                Version 10.3
-Instrument Control Toolbox              Version 3.14
-LTE HDL Toolbox                         Version 1.2
-LTE Toolbox                             Version 3.0
-MATLAB Coder                            Version 4.1
-MATLAB Distributed Computing Server     Version 6.13
-MATLAB Report Generator                 Version 5.5
-Mapping Toolbox                         Version 4.7
-Model Predictive Control Toolbox        Version 6.2
-Optimization Toolbox                    Version 8.2
-Parallel Computing Toolbox              Version 6.13
-Partial Differential Equation Toolbox   Version 3.1
-Phased Array System Toolbox             Version 4.0
-Polyspace Bug Finder                    Version 2.6
-Polyspace Code Prover                   Version 9.10
-Powertrain Blockset                     Version 1.4
-Predictive Maintenance Toolbox          Version 1.1
-RF Blockset                             Version 7.1
-RF Toolbox                              Version 3.5
-Risk Management Toolbox                 Version 1.4
-Robotics System Toolbox                 Version 2.1
-Robust Control Toolbox                  Version 6.5
-Sensor Fusion and Tracking Toolbox      Version 1.0
-Signal Processing Toolbox               Version 8.1
-SimBiology                              Version 5.8.1
-SimEvents                               Version 5.5
-Simscape                                Version 4.5
-Simscape Driveline                      Version 2.15
-Simscape Electrical                     Version 7.0
-Simscape Fluids                         Version 2.5
-Simscape Multibody                      Version 6.0
-Simulink 3D Animation                   Version 8.1
-Simulink Check                          Version 4.2
-Simulink Code Inspector                 Version 3.3
-Simulink Coder                          Version 9.0
-Simulink Control Design                 Version 5.2
-Simulink Coverage                       Version 4.2
-Simulink Design Optimization            Version 3.5
-Simulink Report Generator               Version 5.5
-Simulink Requirements                   Version 1.2
-Simulink Test                           Version 2.5
-Stateflow                               Version 9.2
-Statistics and Machine Learning Toolbox Version 11.4
-Symbolic Math Toolbox                   Version 8.2
-System Identification Toolbox           Version 9.9
-Text Analytics Toolbox                  Version 1.2
-Trading Toolbox                         Version 3.5
-Vehicle Dynamics Blockset               Version 1.1
-Vehicle Network Toolbox                 Version 4.1
-Vision HDL Toolbox                      Version 1.7
-WLAN Toolbox                            Version 2.0
-Wavelet Toolbox                         Version 5.1
+<p>Detailed version information:</p>
+<div class="highlight"><pre><span></span><code>-----------------------------------------------------------------------------------------------------
+MATLAB Version: 9.9.0.2037887 (R2020b) Update 8
+MATLAB License Number: 904098
+Operating System: Linux 4.18.0-305.25.1.el8_4.x86_64 #1 SMP Mon Oct 18 14:34:11 EDT 2021 x86_64
+Java Version: Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+-----------------------------------------------------------------------------------------------------
+MATLAB                                                Version 9.9         (R2020b)
+Simulink                                              Version 10.2        (R2020b)
+DSP System Toolbox                                    Version 9.11        (R2020b)
+Deep Learning HDL Toolbox                             Version 1.0         (R2020b)
+Deep Learning Toolbox                                 Version 14.1        (R2020b)
+Image Processing Toolbox                              Version 11.2        (R2020b)
+Parallel Computing Toolbox                            Version 7.3         (R2020b)
+Signal Processing Toolbox                             Version 8.5         (R2020b)
+Statistics and Machine Learning Toolbox               Version 12.0        (R2020b)
+Symbolic Math Toolbox                                 Version 8.6         (R2020b)
+Wavelet Toolbox                                       Version 5.5         (R2020b)
 </code></pre></div>
 <h2 id="running-matlab-jobs">Running MATLAB jobs</h2>
 <p>On Cirrus, MATLAB is intended to be used on the compute nodes within
@@ -1496,7 +1430,7 @@ particular case would be :</p>
 
 module<span class="w"> </span>load<span class="w"> </span>matlab
 
-matlab_wrapper<span class="w"> </span>-nodisplay<span class="w"> </span>&lt;<span class="w"> </span>/lustre/sw/cse-matlab/examples/testp.m<span class="w"> </span>&gt;<span class="w"> </span>testp.log
+matlab_wrapper<span class="w"> </span>-nodisplay<span class="w"> </span>&lt;<span class="w"> </span>/mnt/lustre/indy2lfs/sw/cse-matlab/examples/testp.m<span class="w"> </span>&gt;<span class="w"> </span>testp.log
 </code></pre></div>
 <p>Note, for MATLAB versions R2019 and later, the
 <span class="title-ref">matlab_wrapper_2019</span> script may be
