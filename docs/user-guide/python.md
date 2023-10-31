@@ -239,7 +239,11 @@ list all the available `python` modules).
 [auser@cirrus-login1 auser]$ module load python/3.9.13
 ```
 
-Next, create the virtual environment within a designated folder.
+!!! tip
+    In the commands below, remember to replace `x01` with your project code
+    and `auser` with your username. 
+
+Next, create the virtual environment within a designated folder:
 
 ``` bash
 python -m venv --system-site-packages /work/x01/x01/auser/myvenv
@@ -263,8 +267,7 @@ when appropriate. You're now ready to activate your environment.
 source /work/x01/x01/auser/myvenv/bin/activate
 ```
 
-!!! Note
-
+!!! Important
 	The path above uses a fictitious project code, `x01`, and username,
 	`auser`. Please remember to replace those values with your actual
 	project code and username. Alternatively, you could enter
