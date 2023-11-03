@@ -41,7 +41,7 @@ nav:
     - "Connecting to Cirrus": user-guide/connecting.md
     - "Data Management and Transfer": user-guide/data.md
     - "File and Resource Management": user-guide/resource_management.md
-    - "Application Developement Environment": user-guide/development.md
+    - "Application Development Environment": user-guide/development.md
     - "Running Jobs on Cirrus": user-guide/batch.md
     - "Singularity Containers": user-guide/singularity.md
     - "Using Python": user-guide/python.md
