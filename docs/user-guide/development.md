@@ -314,6 +314,33 @@ You may then use these MPI compiler wrappers:
 - `mpicc` - C with MPI
 - `mpicxx` - C++ with MPI
 
+
+### Using OpenMPI
+
+There are a number of OpenMPI modules available on Cirrus; these can be listed
+by running `module avail openmpi`. You'll notice that the majority of these
+modules are intended for use on the GPU nodes.
+
+The fact that OpenMPI is open source means that we have full control over
+how the OpenMPI libraries are built. Indeed the OpenMPI configure script
+supports a wealth of options that allow us to build OpenMPI for a
+specific CUDA version, one that is fully compatible with the underlying
+NVIDIA GPU device driver. See the link below for an example how an OpenMPI
+build is configured.
+
+[Build instructions for OpenMPI 4.1.5 on Cirrus](https://github.com/hpc-uk/build-instructions/blob/main/libs/openmpi/build_openmpi_4.1.5_cirrus_gcc8.md)
+
+All this means we build can OpenMPI such that it supports direct GPU-to-GPU communications
+using the NVLink intra-node GPU comm links (and inter-node GPU comms are direct to Infiniband
+intead of passing through the host processor).
+
+Hence, the OpenMPI GPU modules allow the user to run GPU-aware MPI code as efficiently
+as possible, see [Compiling and using GPU-aware MPI](../gpu/#compiling-and-using-gpu-aware-mpi).
+
+OpenMPI modules for use on the CPU nodes are also available, but these are not
+expected to provide any performance advantage over HPE MPT or Intel MPI.
+
+
 ## Compiler Information and Options
 
 The manual pages for the different compiler suites are available:
