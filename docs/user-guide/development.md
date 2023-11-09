@@ -331,11 +331,11 @@ build is configured.
 [Build instructions for OpenMPI 4.1.5 on Cirrus](https://github.com/hpc-uk/build-instructions/blob/main/libs/openmpi/build_openmpi_4.1.5_cirrus_gcc8.md)
 
 All this means we build can OpenMPI such that it supports direct GPU-to-GPU communications
-using the NVLink intra-node GPU comm links. And inter-node GPU comms are direct to Infiniband
-intead of passing through the host processor.
+using the NVLink intra-node GPU comm links (and inter-node GPU comms are direct to Infiniband
+intead of passing through the host processor).
 
 Hence, the OpenMPI GPU modules allow the user to run GPU-aware MPI code as efficiently
-as possible, see [Compiling and using GPU-aware MPI](./gpu/#compiling-and-using-gpu-aware-mpi).
+as possible, see [Compiling and using GPU-aware MPI](../gpu/#compiling-and-using-gpu-aware-mpi).
 
 OpenMPI modules for use on the CPU nodes are also available, but these are not
 expected to provide any performance advantage over HPE MPT or Intel MPI.
