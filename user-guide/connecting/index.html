@@ -1465,6 +1465,17 @@ account.</p>
 <h3 id="mfa-time-based-one-time-password">MFA Time-based one-time password</h3>
 <p>Remember, you will need to use both an SSH key and Time-based one-time password to log into Cirrus so you will
 also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up your TOTP</a> before you can log into Cirrus. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you <strong>first</strong> log into Cirrus, you will be prompted to change your initial password. This is a three step process:</p>
+<ol>
+<li>When promoted to enter your <em>ldap password</em>: Enter the password  which you <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine">retrieve from SAFE</a></li>
+<li>When prompted to enter your new password: type in a new password</li>
+<li>When prompted to re-enter the new password: re-enter the new password</li>
+</ol>
+<p>Your password has now been changed<br>
+You will <strong>not</strong> use your password when logging on to Cirrus after the initial logon.</p>
+</div>
 <h2 id="ssh-clients">SSH Clients</h2>
 <p>Interaction with Cirrus is done remotely, over an encrypted
 communication channel, Secure Shell version 2 (SSH-2). This allows
