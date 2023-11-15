@@ -81,6 +81,19 @@ also need to [set up your TOTP](https://epcced.github.io/safe-docs/safe-for-user
 
 
 
+!!! Note
+
+    When you **first** log into Cirrus, you will be prompted to change your initial password. This is a three step process:
+
+    1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
+    2.  When prompted to enter your new password: type in a new password
+    3.  When prompted to re-enter the new password: re-enter the new password
+
+    Your password has now been changed<br>
+	You will **not** use your password when logging on to Cirrus after the initial logon.
+
+
+
 ## SSH Clients
 
 Interaction with Cirrus is done remotely, over an encrypted
