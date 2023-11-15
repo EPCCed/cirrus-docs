@@ -15,10 +15,11 @@ This section covers the basic connection methods.
 
 ## Access credentials
 
-To access Cirrus, you need to use two credentials: your password **and**
-an SSH key pair protected by a passphrase. You can find more detailed
-instructions on how to set up your credentials to access Cirrus from
-Windows, macOS and Linux below.
+To access Cirrus, you need to use two credentials: your   SSH
+key pair protected by a passphrase **and** a Time-based one-time password. You 
+can find more detailed instructions on
+how to set up your credentials to access Cirrus from Windows, macOS and Linux
+below.
 
 ### SSH Key Pairs
 
@@ -71,47 +72,14 @@ by following the instructions at:
 Once you have done this, your SSH key will be added to your Cirrus
 account.
 
-Remember, you will need to use both an SSH key and password to log into
-Cirrus so you will also need to collect your initial password before you
-can log into Cirrus. We cover this next.
+### MFA Time-based one-time password
 
-### Initial passwords
-
-The SAFE web interface is used to provide your initial password for
-logging onto Cirrus (see the [SAFE
-Documentation](https://epcced.github.io/safe-docs/) for more details on
-requesting accounts and picking up passwords).
-
-### Changing passwords
-
-You may now change your password on the Cirrus machine itself using the
-*passwd* command or when you are prompted the first time you login. This
-change will not be reflected in the SAFE. If you forget your password,
-you should use the SAFE to request a new one-shot password.
+Remember, you will need to use both an SSH key and Time-based one-time password to log into Cirrus so you will
+also need to [set up your TOTP](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into Cirrus. 
 
 
 
-!!! Note
 
-    When you first log into Cirrus, you will be prompted to change your initial password. This is a three step process:
-
-    1.  When promoted to enter your *ldap password*: Re-enter the password     you retrieved from SAFE
-    2.  When prompted to enter your new password: type in a new password
-    3.  When prompted to re-enter the new password: re-enter the new
-    password
-
-    Your password has now been changed
-
-
-
-### Password Expiration
-
-Passwords on Cirrus will expire after two years. When this happens, you
-will be required to update your password. This will be done by following
-the same steps as above.
-
-**Note:** You will still be prompted to enter your current password
-first before changing your password
 
 ## SSH Clients
 
@@ -424,19 +392,10 @@ on the private key file `id_rsa_cirrus` one would use the command
     For example the pattern `-rw-r--r--` indicates that the owning user can read and write the file, members of the owning group can read it, and anyone else can also read it. The `chmod` codes are constructed by treating the user, group, and owner permission strings as binary numbers, then converting them to decimal. For example the permission string `-rwx------` becomes `111 000 000` -\> `700`.
 
 
+### MFA
 
-### Password
+If your TOTP passcode is being consistently rejected, you can [remove MFA from your account](https://epcced.github.io/safe-docs/safe-for-users/#mfa_off) and then [re-enable it](https://epcced.github.io/safe-docs/safe-for-users/#mfa).
 
-If you are having trouble entering your password consider using a
-password manager, from which you can copy and paste it. This will also
-help you generate a secure password. If you need to reset your password,
-instructions for doing so can be found
-[here](https://epcced.github.io/safe-docs/safe-for-users/#reset_machine).
-
-Windows users please note that `Ctrl+V` does not work to paste in to
-PuTTY, MobaXterm, or PowerShell. Instead use `Shift+Ins` to paste.
-Alternatively, right-click and select 'Paste' in PuTTY and MobaXterm, or
-simply right-click to paste in PowerShell.
 
 ### SSH verbose output
 
