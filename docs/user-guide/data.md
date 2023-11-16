@@ -392,11 +392,18 @@ the `source` should be the absolute path of the file/directory being
 copied or the command should be executed in the directory containing the
 source file/directory.
 
+!!! tip
+    If your local version of OpenSSL (the library underlying `scp`) is 
+    very new you may see errors transferring data to Cirrus using `scp` where the version
+    of OpenSSL is older. The errors typically look like
+    `scp: upload "mydata": path canonicalization failed`. You can get
+    around this issue by adding the `-O` option to `scp`.
+
 If you want to request a different encryption algorithm add the
 `-c [algorithm-name]` flag to the `scp` options. For example, to use the
-(usually faster) *arcfour* encryption algorithm you would use:
+(usually faster) *aes128-ctr* encryption algorithm you would use:
 
-    scp [options] -c arcfour source user@login.cirrus.ac.uk:[destination]
+    scp [options] -c aes128-ctr source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace `user` with your Cirrus username in the example
 above.)
@@ -429,7 +436,7 @@ source file/directory.
 Additional flags can be specified for the underlying `ssh` command by
 using a quoted string as the argument of the `-e` flag. e.g.
 
-    rsync [options] -e "ssh -c arcfour" source user@login.cirrus.ac.uk:[destination]
+    rsync [options] -e "ssh -c aes128-ctr" source user@login.cirrus.ac.uk:[destination]
 
 (Remember to replace `user` with your Cirrus username in the example
 above.)
