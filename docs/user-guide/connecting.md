@@ -1,4 +1,4 @@
-# Connecting to Cirrus
+q# Connecting to Cirrus
 
 On the Cirrus system, interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In
@@ -13,10 +13,12 @@ found at:
 
 This section covers the basic connection methods.
 
-## Access credentials
+## Access credentials: MFA
 
-To access Cirrus, you need to use two credentials: your   SSH
-key pair protected by a passphrase **and** a Time-based one-time password. You 
+To access Cirrus, you need to use two credentials (this is known as *multi-factor authentication*
+or *MFA*): your SSH
+key pair, protected by a passphrase, **and** a time-based one-time passcode (sometimes
+known as a *TOTP code*). You 
 can find more detailed instructions on
 how to set up your credentials to access Cirrus from Windows, macOS and Linux
 below.
@@ -72,27 +74,27 @@ by following the instructions at:
 Once you have done this, your SSH key will be added to your Cirrus
 account.
 
-### MFA Time-based one-time password
+### Time-based one-time passcode (TOTP code)
 
-Remember, you will need to use both an SSH key and Time-based one-time password to log into Cirrus so you will
-also need to [set up your TOTP](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into Cirrus. 
+Remember, you will need to use both an SSH key and time-based one-time passcode (TOTP code) to log into Cirrus so you will
+also need to [set up a method for generating a TOTP code](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account)
+before you can log into Cirrus. 
 
+### First login: password required
 
+!!! Important
+    You will **not** use your password when logging on to Cirrus after the first login for a new account.
 
+As an additional security measure, you will also need to us a password from SAFE for your first login to Cirrus
+with a new account. When you log into Cirrus for the first time with a new account, you will be prompted to change
+your initial password. This is a three step process:
 
+1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
+2.  When prompted to enter your new password: type in a new password
+3.  When prompted to re-enter the new password: re-enter the new password
 
-!!! Note
-
-    When you **first** log into Cirrus, you will be prompted to change your initial password. This is a three step process:
-
-    1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
-    2.  When prompted to enter your new password: type in a new password
-    3.  When prompted to re-enter the new password: re-enter the new password
-
-    Your password has now been changed<br>
-	You will **not** use your password when logging on to Cirrus after the initial logon.
-
-
+Your password has now been changed. You will no longer need this password to log into Cirrus from this point
+forwards, you will use your SSH key and TOTP code as decribed above.
 
 ## SSH Clients
 
