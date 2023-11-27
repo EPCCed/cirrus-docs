@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -83,7 +83,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#connecting-to-cirrus" class="md-skip">
+        <a href="#access-credentials-mfa" class="md-skip">
           Skip to content
         </a>
       
@@ -231,6 +231,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
         
@@ -250,6 +251,7 @@
   
   
     
+  
   
   
     
@@ -288,6 +290,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../introduction/" class="md-nav__link">
         
@@ -310,12 +313,11 @@
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
-      
-        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -345,8 +347,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -355,30 +355,47 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-credentials" class="md-nav__link">
-    Access credentials
+  <a href="#access-credentials-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access credentials: MFA
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="Access credentials">
+    <nav class="md-nav" aria-label="Access credentials: MFA">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ssh-key-pairs" class="md-nav__link">
-    SSH Key Pairs
+    <span class="md-ellipsis">
+      SSH Key Pairs
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#upload-public-part-of-key-pair-to-safe" class="md-nav__link">
-    Upload public part of key pair to SAFE
+    <span class="md-ellipsis">
+      Upload public part of key pair to SAFE
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mfa-time-based-one-time-password" class="md-nav__link">
-    MFA Time-based one-time password
+  <a href="#time-based-one-time-passcode-totp-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time-based one-time passcode (TOTP code)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-login-password-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      First login: password required
+    </span>
   </a>
   
 </li>
@@ -390,7 +407,9 @@
       
         <li class="md-nav__item">
   <a href="#ssh-clients" class="md-nav__link">
-    SSH Clients
+    <span class="md-ellipsis">
+      SSH Clients
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="SSH Clients">
@@ -398,14 +417,18 @@
         
           <li class="md-nav__item">
   <a href="#logging-in-from-linux-and-macos" class="md-nav__link">
-    Logging in from Linux and MacOS
+    <span class="md-ellipsis">
+      Logging in from Linux and MacOS
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#logging-in-from-windows-using-mobaxterm" class="md-nav__link">
-    Logging in from Windows using MobaXterm
+    <span class="md-ellipsis">
+      Logging in from Windows using MobaXterm
+    </span>
   </a>
   
 </li>
@@ -417,28 +440,36 @@
       
         <li class="md-nav__item">
   <a href="#making-access-more-convenient-using-the-ssh-configuration-file" class="md-nav__link">
-    Making access more convenient using the SSH configuration file
+    <span class="md-ellipsis">
+      Making access more convenient using the SSH configuration file
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#accessing-cirrus-from-more-than-1-machine" class="md-nav__link">
-    Accessing Cirrus from more than 1 machine
+    <span class="md-ellipsis">
+      Accessing Cirrus from more than 1 machine
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#ssh-forwarding-to-use-cirrus-from-a-second-remote-machine" class="md-nav__link">
-    SSH forwarding (to use Cirrus from a second remote machine)
+    <span class="md-ellipsis">
+      SSH forwarding (to use Cirrus from a second remote machine)
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#ssh-debugging-tips" class="md-nav__link">
-    SSH debugging tips
+    <span class="md-ellipsis">
+      SSH debugging tips
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="SSH debugging tips">
@@ -446,28 +477,36 @@
         
           <li class="md-nav__item">
   <a href="#can-you-connect-to-the-login-node" class="md-nav__link">
-    Can you connect to the login node?
+    <span class="md-ellipsis">
+      Can you connect to the login node?
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#ssh-key" class="md-nav__link">
-    SSH key
+    <span class="md-ellipsis">
+      SSH key
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#mfa" class="md-nav__link">
-    MFA
+    <span class="md-ellipsis">
+      MFA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#ssh-verbose-output" class="md-nav__link">
-    SSH verbose output
+    <span class="md-ellipsis">
+      SSH verbose output
+    </span>
   </a>
   
 </li>
@@ -479,7 +518,9 @@
       
         <li class="md-nav__item">
   <a href="#default-shell-environment" class="md-nav__link">
-    Default shell environment
+    <span class="md-ellipsis">
+      Default shell environment
+    </span>
   </a>
   
 </li>
@@ -495,6 +536,7 @@
             
               
                 
+  
   
   
   
@@ -518,6 +560,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../resource_management/" class="md-nav__link">
         
@@ -535,6 +578,7 @@
             
               
                 
+  
   
   
   
@@ -558,6 +602,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../batch/" class="md-nav__link">
         
@@ -575,6 +620,7 @@
             
               
                 
+  
   
   
   
@@ -598,6 +644,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../python/" class="md-nav__link">
         
@@ -618,6 +665,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../gpu/" class="md-nav__link">
         
@@ -635,6 +683,7 @@
             
               
                 
+  
   
   
   
@@ -662,6 +711,7 @@
     
       
       
+  
   
   
   
@@ -701,6 +751,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/castep/" class="md-nav__link">
         
@@ -718,6 +769,7 @@
             
               
                 
+  
   
   
   
@@ -741,6 +793,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/elements/" class="md-nav__link">
         
@@ -758,6 +811,7 @@
             
               
                 
+  
   
   
   
@@ -781,6 +835,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/gaussian/" class="md-nav__link">
         
@@ -798,6 +853,7 @@
             
               
                 
+  
   
   
   
@@ -821,6 +877,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/helyx/" class="md-nav__link">
         
@@ -838,6 +895,7 @@
             
               
                 
+  
   
   
   
@@ -861,6 +919,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/MATLAB/" class="md-nav__link">
         
@@ -878,6 +937,7 @@
             
               
                 
+  
   
   
   
@@ -901,6 +961,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/openfoam/" class="md-nav__link">
         
@@ -918,6 +979,7 @@
             
               
                 
+  
   
   
   
@@ -941,6 +1003,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/qe/" class="md-nav__link">
         
@@ -958,6 +1021,7 @@
             
               
                 
+  
   
   
   
@@ -981,6 +1045,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-packages/vasp/" class="md-nav__link">
         
@@ -998,6 +1063,7 @@
             
               
                 
+  
   
   
   
@@ -1025,6 +1091,7 @@
     
       
       
+  
   
   
   
@@ -1064,6 +1131,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
         
@@ -1081,6 +1149,7 @@
             
               
                 
+  
   
   
   
@@ -1108,6 +1177,7 @@
     
       
       
+  
   
   
   
@@ -1147,6 +1217,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-tools/ddt/" class="md-nav__link">
         
@@ -1167,6 +1238,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../software-tools/scalasca/" class="md-nav__link">
         
@@ -1184,6 +1256,7 @@
             
               
                 
+  
   
   
   
@@ -1211,6 +1284,7 @@
     
       
       
+  
   
   
   
@@ -1245,8 +1319,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1255,30 +1327,47 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-credentials" class="md-nav__link">
-    Access credentials
+  <a href="#access-credentials-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access credentials: MFA
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="Access credentials">
+    <nav class="md-nav" aria-label="Access credentials: MFA">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ssh-key-pairs" class="md-nav__link">
-    SSH Key Pairs
+    <span class="md-ellipsis">
+      SSH Key Pairs
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#upload-public-part-of-key-pair-to-safe" class="md-nav__link">
-    Upload public part of key pair to SAFE
+    <span class="md-ellipsis">
+      Upload public part of key pair to SAFE
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mfa-time-based-one-time-password" class="md-nav__link">
-    MFA Time-based one-time password
+  <a href="#time-based-one-time-passcode-totp-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time-based one-time passcode (TOTP code)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-login-password-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      First login: password required
+    </span>
   </a>
   
 </li>
@@ -1290,7 +1379,9 @@
       
         <li class="md-nav__item">
   <a href="#ssh-clients" class="md-nav__link">
-    SSH Clients
+    <span class="md-ellipsis">
+      SSH Clients
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="SSH Clients">
@@ -1298,14 +1389,18 @@
         
           <li class="md-nav__item">
   <a href="#logging-in-from-linux-and-macos" class="md-nav__link">
-    Logging in from Linux and MacOS
+    <span class="md-ellipsis">
+      Logging in from Linux and MacOS
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#logging-in-from-windows-using-mobaxterm" class="md-nav__link">
-    Logging in from Windows using MobaXterm
+    <span class="md-ellipsis">
+      Logging in from Windows using MobaXterm
+    </span>
   </a>
   
 </li>
@@ -1317,28 +1412,36 @@
       
         <li class="md-nav__item">
   <a href="#making-access-more-convenient-using-the-ssh-configuration-file" class="md-nav__link">
-    Making access more convenient using the SSH configuration file
+    <span class="md-ellipsis">
+      Making access more convenient using the SSH configuration file
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#accessing-cirrus-from-more-than-1-machine" class="md-nav__link">
-    Accessing Cirrus from more than 1 machine
+    <span class="md-ellipsis">
+      Accessing Cirrus from more than 1 machine
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#ssh-forwarding-to-use-cirrus-from-a-second-remote-machine" class="md-nav__link">
-    SSH forwarding (to use Cirrus from a second remote machine)
+    <span class="md-ellipsis">
+      SSH forwarding (to use Cirrus from a second remote machine)
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#ssh-debugging-tips" class="md-nav__link">
-    SSH debugging tips
+    <span class="md-ellipsis">
+      SSH debugging tips
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="SSH debugging tips">
@@ -1346,28 +1449,36 @@
         
           <li class="md-nav__item">
   <a href="#can-you-connect-to-the-login-node" class="md-nav__link">
-    Can you connect to the login node?
+    <span class="md-ellipsis">
+      Can you connect to the login node?
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#ssh-key" class="md-nav__link">
-    SSH key
+    <span class="md-ellipsis">
+      SSH key
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#mfa" class="md-nav__link">
-    MFA
+    <span class="md-ellipsis">
+      MFA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#ssh-verbose-output" class="md-nav__link">
-    SSH verbose output
+    <span class="md-ellipsis">
+      SSH verbose output
+    </span>
   </a>
   
 </li>
@@ -1379,7 +1490,9 @@
       
         <li class="md-nav__item">
   <a href="#default-shell-environment" class="md-nav__link">
-    Default shell environment
+    <span class="md-ellipsis">
+      Default shell environment
+    </span>
   </a>
   
 </li>
@@ -1402,7 +1515,9 @@
   
 
 
-<h1 id="connecting-to-cirrus">Connecting to Cirrus</h1>
+  <h1>Connecting to Cirrus</h1>
+
+<p>q# Connecting to Cirrus</p>
 <p>On the Cirrus system, interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In
 addition data can be transferred to and from the Cirrus system using
@@ -1412,9 +1527,11 @@ on Cirrus through the EPCC SAFE. Documentation on how to do this can be
 found at:</p>
 <p><a href="https://epcced.github.io/safe-docs/safe-for-users/">SAFE Guide for  Users</a></p>
 <p>This section covers the basic connection methods.</p>
-<h2 id="access-credentials">Access credentials</h2>
-<p>To access Cirrus, you need to use two credentials: your   SSH
-key pair protected by a passphrase <strong>and</strong> a Time-based one-time password. You 
+<h2 id="access-credentials-mfa">Access credentials: MFA</h2>
+<p>To access Cirrus, you need to use two credentials (this is known as <em>multi-factor authentication</em>
+or <em>MFA</em>): your SSH
+key pair, protected by a passphrase, <strong>and</strong> a time-based one-time passcode (sometimes
+known as a <em>TOTP code</em>). You 
 can find more detailed instructions on
 how to set up your credentials to access Cirrus from Windows, macOS and Linux
 below.</p>
@@ -1462,20 +1579,25 @@ by following the instructions at:</p>
 </ol>
 <p>Once you have done this, your SSH key will be added to your Cirrus
 account.</p>
-<h3 id="mfa-time-based-one-time-password">MFA Time-based one-time password</h3>
-<p>Remember, you will need to use both an SSH key and Time-based one-time password to log into Cirrus so you will
-also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up your TOTP</a> before you can log into Cirrus. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When you <strong>first</strong> log into Cirrus, you will be prompted to change your initial password. This is a three step process:</p>
+<h3 id="time-based-one-time-passcode-totp-code">Time-based one-time passcode (TOTP code)</h3>
+<p>Remember, you will need to use both an SSH key and time-based one-time passcode (TOTP code) to log into Cirrus so you will
+also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up a method for generating a TOTP code</a>
+before you can log into Cirrus. </p>
+<h3 id="first-login-password-required">First login: password required</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You will <strong>not</strong> use your password when logging on to Cirrus after the first login for a new account.</p>
+</div>
+<p>As an additional security measure, you will also need to us a password from SAFE for your first login to Cirrus
+with a new account. When you log into Cirrus for the first time with a new account, you will be prompted to change
+your initial password. This is a three step process:</p>
 <ol>
 <li>When promoted to enter your <em>ldap password</em>: Enter the password  which you <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine">retrieve from SAFE</a></li>
 <li>When prompted to enter your new password: type in a new password</li>
 <li>When prompted to re-enter the new password: re-enter the new password</li>
 </ol>
-<p>Your password has now been changed<br>
-You will <strong>not</strong> use your password when logging on to Cirrus after the initial logon.</p>
-</div>
+<p>Your password has now been changed. You will no longer need this password to log into Cirrus from this point
+forwards, you will use your SSH key and TOTP code as decribed above.</p>
 <h2 id="ssh-clients">SSH Clients</h2>
 <p>Interaction with Cirrus is done remotely, over an encrypted
 communication channel, Secure Shell version 2 (SSH-2). This allows
@@ -1869,7 +1991,7 @@ fi
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.81fa17fe.min.js"></script>
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
       
     
   </body>
