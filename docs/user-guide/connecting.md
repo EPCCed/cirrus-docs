@@ -1,4 +1,4 @@
-q# Connecting to Cirrus
+# Connecting to Cirrus
 
 On the Cirrus system, interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In
