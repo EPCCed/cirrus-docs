@@ -98,7 +98,7 @@ your initial password. This is a three step process:
 3.  When prompted to re-enter the new password: re-enter the new password
 
 Your password has now been changed. You will no longer need this password to log into Cirrus from this point
-forwards, you will use your SSH key and TOTP code as decribed above.
+forwards, you will use your SSH key and TOTP code as described above.
 
 ## SSH Clients
 
