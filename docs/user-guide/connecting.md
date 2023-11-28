@@ -23,6 +23,10 @@ can find more detailed instructions on
 how to set up your credentials to access Cirrus from Windows, macOS and Linux
 below.
 
+!!! Note
+    The first time you log into a new account you will also need to enter a one-time
+    password from SAFE. This is described in more detail below.
+
 ### SSH Key Pairs
 
 You will need to generate an SSH key pair protected by a passphrase to
@@ -85,7 +89,7 @@ before you can log into Cirrus.
 !!! Important
     You will **not** use your password when logging on to Cirrus after the first login for a new account.
 
-As an additional security measure, you will also need to us a password from SAFE for your first login to Cirrus
+As an additional security measure, you will also need to use a password from SAFE for your first login to Cirrus
 with a new account. When you log into Cirrus for the first time with a new account, you will be prompted to change
 your initial password. This is a three step process:
 
