@@ -21,6 +21,12 @@ users. A number of versions are available:
 - Parallel MPI: using impi or mpt
 - MPI+GPU version: using impi and CUDA11.8
 
+To see what versions are currently available:
+```
+  $ module avail lammps
+```
+The current default central module is based on the ``08Feb2023`` release.
+
 ## Running parallel LAMMPS jobs (MPI)
 
 LAMMPS can exploit multiple nodes on Cirrus and will generally be run in

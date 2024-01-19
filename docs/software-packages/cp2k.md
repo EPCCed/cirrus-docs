@@ -86,7 +86,9 @@ with 2 OpenMP threads per MPI process:
      module load cp2k
 
      # Set the number of threads to 2
+     # and propagate --cpus-per-task to srun
      export OMP_NUM_THREADS=2
+     export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
      # Run using input in test.inp
      srun cp2k.psmp -i test.inp
