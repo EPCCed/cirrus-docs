@@ -49,12 +49,8 @@ following script starts the server:
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Load the default HPE MPI environment
     module load mpt
@@ -62,11 +58,17 @@ following script starts the server:
 
     export SGI_MPI_HOME=$MPI_ROOT
     export PATH=$STARCCM_EXE:$PATH
-    export LM_LICENSE_FILE=48001@192.168.191.10
-    export CDLMD_LICENSE_FILE=48001@192.168.191.10
+    export LM_LICENSE_FILE=48002@192.168.191.10
+    export CDLMD_LICENSE_FILE=48002@192.168.191.10
+
+    export LIBNSL_PATH=/mnt/lustre/indy2lfs/sw/libnsl/1.3.0
 
     scontrol show hostnames $SLURM_NODELIST > ./starccm.launcher.host.$SLURM_JOB_ID.txt
-    starccm+ -clientldlibpath /scratch/sw/libnsl/1.3.0/lib/ -ldlibpath /scratch/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 48001@192.168.191.10 -server -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh 
+
+    starccm+ -clientldlibpath ${LIBNSL_PATH}/lib -ldlibpath ${LIBNSL_PATH}/lib \
+	         -power -podkey <PODkey> -licpath ${LM_LICENSE_FILE} \
+	         -server -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt \
+	         -np 504 -rsh ssh
 
 You should replace "<PODkey\>" with your PoD licence key.
 
@@ -88,12 +90,8 @@ previous examples is the "starccm+" line)
     #SBATCH --tasks-per-node=36
     #SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Load the default HPE MPI environment
     module load mpt
@@ -101,15 +99,22 @@ previous examples is the "starccm+" line)
 
     export SGI_MPI_HOME=$MPI_ROOT
     export PATH=$STARCCM_EXE:$PATH
-    export LM_LICENSE_FILE=48001@192.168.191.10
-    export CDLMD_LICENSE_FILE=48001@192.168.191.10
+    export LM_LICENSE_FILE=48002@192.168.191.10
+    export CDLMD_LICENSE_FILE=48002@192.168.191.10
+
+    export LIBNSL_PATH=/mnt/lustre/indy2lfs/sw/libnsl/1.3.0
 
     scontrol show hostnames $SLURM_NODELIST > ./starccm.launcher.host.$SLURM_JOB_ID.txt
-    starccm+ -clientldlibpath /scratch/sw/libnsl/1.3.0/lib/ -ldlibpath /scratch/sw/libnsl/1.3.0/lib/ -power -podkey <PODkey> -licpath 48001@192.168.191.10 -batch simulation.java -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt -np 504 -rsh ssh
+
+    starccm+ -clientldlibpath ${LIBNSL_PATH}/lib -ldlibpath ${LIBNSL_PATH}/lib \
+	         -power -podkey <PODkey> -licpath ${LM_LICENSE_FILE} \
+	         -batch simulation.java \
+	         -machinefile ./starccm.launcher.host.$SLURM_JOB_ID.txt \
+	         -np 504 -rsh ssh
 
 This script will load the file "simulation.java". You can find
 instructions on how to write a suitable "simulation.java"
-[here](https://mdx.plm.automation.siemens.com/star-ccm-plus)
+[in the Star-CCM+ documentation](https://mdx.plm.automation.siemens.com/star-ccm-plus)
 
 The file "simulation.java" must be in the same directory as your Slurm
 submission script (or you can provide a full path).
@@ -120,7 +125,7 @@ Start your local STAR-CCM+ application and connect to your server. Click
 on the File -\> "Connect to Server..." option and use the following
 settings:
 
-- Host: name of first Cirrus compute node (use 'qtsat', e.g. r1i0n32)
+- Host: name of first Cirrus compute node (use ``squeue``, e.g. ``r1i0n32``)
 - Port: the number that you specified in the submission script
 
 Select the "Connect through SSH tunnel" option and use:
