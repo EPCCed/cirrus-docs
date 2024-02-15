@@ -63,7 +63,6 @@ nav:
     - "Quantum Espresso (QE)": software-packages/qe.md
     - "STAR-CCM+": software-packages/starccm+.md
     - "VASP": software-packages/vasp.md
-    - "SPECFEM3D Cartesian": software-packages/specfem3d.md
   - "Software Libraries":
     - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md
     - "HDF5": software-libraries/hdf5.md
@@ -72,9 +71,3 @@ nav:
     - "Profiling using Scalasca": software-tools/scalasca.md
     - "Intel VTune": software-tools/intel-vtune.md
   - "References and further reading": user-guide/reading.md
-
-
-  
-
-
-
