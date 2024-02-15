@@ -1,6 +1,6 @@
 # GROMACS
 
-[GROMACS](http://www.gromacs.org/) GROMACS is a versatile package to
+[GROMACS](http://www.gromacs.org/) is a versatile package to
 perform molecular dynamics, i.e. simulate the Newtonian equations of
 motion for systems with hundreds to millions of particles. It is
 primarily designed for biochemical molecules like proteins, lipids and
@@ -11,8 +11,8 @@ using it for research on non-biological systems, e.g. polymers.
 
 ## Useful Links
 
-- [GROMACS User Guides](http://manual.gromacs.org/documentation/)
-- [GROMACS Tutorials](http://www.gromacs.org/Documentation/Tutorials)
+- [GROMACS User Guides](https://manual.gromacs.org/documentation/)
+- [GROMACS Tutorials](https://tutorials.gromacs.org/)
 
 ## Using GROMACS on Cirrus
 
