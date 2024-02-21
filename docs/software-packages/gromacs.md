@@ -19,10 +19,13 @@ using it for research on non-biological systems, e.g. polymers.
 GROMACS is Open Source software and is freely available to all Cirrus
 users. A number of versions are available:
 
-- Serial/shared memory, single precision: `gmx`
-- Parallel MPI/OpenMP, single precision: `gmx_mpi`
-- Parallel MPI/OpenMP, doubld precision: `gmx_mpi_d`
-- GPU version, single precision: gmx
+- CPU-only:
+    - Serial/shared memory, single precision: `gmx`
+    - Parallel MPI/OpenMP, single precision: `gmx_mpi`
+    - Parallel MPI/OpenMP, doubld precision: `gmx_mpi_d`
+- GPU version:
+    - Parallel MPI/OpenMP, single precision: `gmx_mpi`
+    - Parallel MPI/OpenMP, doubld precision: `gmx_mpi_d`
 
 ## Running parallel GROMACS jobs: pure MPI
 
