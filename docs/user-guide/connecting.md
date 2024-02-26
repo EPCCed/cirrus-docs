@@ -180,6 +180,26 @@ sure to use -X option along with the ssh command (see above) to enable
 X11 forwarding, which allows you to run graphical clients on your local
 X server.
 
+
+
+## Host Keys
+
+Adding the host keys to your SSH configuration file provides an extra level of security for your connections to Cirrus. The host keys are checked against the login nodes when you login to Cirrus and if the remote server key does not match the one in the configuration file, the connection will be refused. This provides protection against potential malicious servers masquerading as the Cirrus login nodes.
+
+### login.cirrus.ac.uk
+
+```
+login.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOXYXQEFJfIBZRadNjVU9T0bYVlssht4Qz9Urliqor3L+S8rQojSQtPAjsxxgtD/yeaUWAaBZnXcbPFl2/uFPro=
+
+login.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4YJNc0yYfUPtiApGzzkwTYxUhFB1q1G2/vO8biwDL4W0LOcaBFCNTVst1IXQ6tZ9l0GfvlmYTb1LHYoTYLn5CyUL5KKS7X4FkhM9n2EExy/WK+H7kOvOwnWEAWM3GOwPYfhPWdddIHO7cI3CTd1kAL3NVzlt/yvx0CKGtw2QyL9gLGPJ23soDlIJYp/OC/f7E6U+JM6jx8QshQn0PiBPN3gB9MLWNX7ZsYXaSafIw1/txoh7D7CawsTrlKEHgEyNpQIgZFR7pLYlydRijbWEtD40DxlgaF1l/OuJrBfddRXC7VYHNvHq0jv0HCncCjxcHZmr3FW9B3PuRvBeWJpzV6Bv2pLGTPPwd8p7QgkAmTQ1Ews/Q4giUboZyqRcJAkFQtOBCmv43+qxWXKMAB7OdbjJL2oO9UIfPtUmE6oj+rnPxpJMhJuQX2aHIlS0Mev7NzaTUpQqNa4QgsI7Kj/m2JT0ZfQ0I33NO10Z3PLZghKqhTH5yy+2nSYLK6rnxZLU=
+
+login.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFk4UnY1DaS+LFSS8AFKbmAmlevxShN4hGpn+gGGX8Io
+
+```
+
+Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts` and replacing it with the new key published here.  We recommend users should check this page for any key updates and not just accept a new key from the server without confirmation.
+
+
 ## Making access more convenient using the SSH configuration file
 
 Typing in the full command to login or transfer data to Cirrus can
