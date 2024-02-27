@@ -1,12 +1,11 @@
-# Cirrus migration to E1000 system migration
+# Cirrus migration to E1000 system 
 
-This section of the documentation is a guide for users migrating to the E1000 taking place in March 2024
+There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 BST to allow for some major changes on the Cirrus service. 
 
-It covers:
-
--  [Change of authentication from ldap to free-ipa](#change-of-authentication-from-ldap-to-free-ipa)
--  [New storage -> Data migration](#new-storage-data-migration)
--  [CSE Module Updates](#cse-module-updates)
+- [Change of authentication protocol ](#change-of-authentication-protocol)
+- [New /work file system](#new-work-file-system)
+    - [Note: Slurm pending work will be lost](#note)
+- [Update and removal of application modules](#update-and-removal-of-application-modules) 
 
 
 
@@ -15,33 +14,57 @@ It covers:
     please [contact the Cirrus service desk](https://www.cirrus.ac.uk/support/)
 
 
-## Change of authentication from ldap to free-ipa: 
+## Change of authentication protocol  
 
-This change should be transparent to users and the TOTP and ssh keys should work as previously  
-If users do experience issues then please reset your TOTP and ssh keys and try to reconnect. 
-If issues persist, then please [contact the service desk](mailto:support@cirrus.ac.uk) 
+We are changing the authentication protocol on Cirrus from `ldap` to `freeipa`. 
 
-## New storage -> Data migration
+We expect this change to be transparent to users but you may notice a change from `username@cirrus` to `username@eidf` within your SAFE account. 
 
-The old data will be made available from the Cirrus login nodes and will be read-ony. 
-Users will be asked to migrate any data they require from the old data disks to the new disks on the E1000
+You should be able to connect using your existing Cirrus authentication factors i.e. your ssh key pair and  your TOTP token. 
 
-Old data is mounted as: <br>
-`/mnt/lustre/indy2lfs` with user files being at `/mnt/lustre/indy2lfs/work/`
+If you do experience issues, then please reset your tokens and try to reconnect. If problems persist then please [contact the service desk](mailto:support@cirrus.ac.uk).
 
-Need Example command to do this: 
-
--	Do we just use `mv` or suggest `rsync`? 
+[Further details on Connecting to Cirrus](https://docs.cirrus.ac.uk/user-guide/connecting/ )
 
 
 
+## New /work file system
+
+We are replacing the existing lustre `/work` file system with a new more performant lustre file system, `E1000`. 
+
+The old `/work` file system will be available as read-only and we ask you to copy any files you require onto the new `/work` file system. 
+
+The old read-only file system will be removed on **1st May** so please retrieve all required data by then. 
+
+For username in project x01, to copy data from <br>
+`/mnt/lustre/indy2lfs/work/username/directory_to_copy `  
+to <br>
+`/work/x01/x01/username/destination_directory`<br> 
+you would do this by running:
+
+```cp -r /mnt/lustre/indy2lfs/work/username/directory_to_copy   \  ``` 
+<br>
+```/work/x01/x01/username/destination_directory
+```
+
+Note that the project code appears once in the path for the old `/work` file system and twice in the path on the new `/work` file system.
+
+Further details of [Data Management and Transfer on Cirrus](https://docs.cirrus.ac.uk/user-guide/data/ )
+
+
+
+<a name="note"></a>
 !!! note
-    Due to the change of location of the data, all pending jobs within slurm will be removed and users will need to resubmit any required jobs to ensure they are submitted with the correct pathname and data destination 
+    **Slurm Pending Jobs**<br>
+    As the underlying pathname for /work will be changing with the addition of the new file system, all of the pending work in the slurm queue will be removed during the migration. When the service is returned, please resubmit your slurm jobs to Cirrus.
 
 
-## CSE Module Updates
+## Update and removal of application modules 
 
-We are taking the opportunity to update modules and remove outdated modules. 
+Our Computational Science and Engineering (CSE) Team have taken the opportunity of the arrival of the new file system to update modules and also remove older versions of modules. A full list of the changes to the modules can be found below.
+
+Please [contact the service desk](mailto:support@cirrus.ac.uk) if you have concerns about the removal of any of the older modules. 
+
 
 
 ### TO BE REMOVED (Alphabetical order!)
