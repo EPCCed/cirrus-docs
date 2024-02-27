@@ -16,7 +16,7 @@
     
     
       
-        <title>Cirrus migration to E1000 system migration - Cirrus User Documentation</title>
+        <title>Cirrus migration to E1000 system - Cirrus User Documentation</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cirrus-migration-to-e1000-system-migration" class="md-skip">
+        <a href="#cirrus-migration-to-e1000-system" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cirrus migration to E1000 system migration
+              Cirrus migration to E1000 system
             
           </span>
         </div>
@@ -1087,31 +1087,31 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#change-of-authentication-from-ldap-to-free-ipa" class="md-nav__link">
+  <a href="#change-of-authentication-protocol" class="md-nav__link">
     <span class="md-ellipsis">
-      Change of authentication from ldap to free-ipa:
+      Change of authentication protocol
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-storage-data-migration" class="md-nav__link">
+  <a href="#new-work-file-system" class="md-nav__link">
     <span class="md-ellipsis">
-      New storage -&gt; Data migration
+      New /work file system
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cse-module-updates" class="md-nav__link">
+  <a href="#update-and-removal-of-application-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      CSE Module Updates
+      Update and removal of application modules
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="CSE Module Updates">
+    <nav class="md-nav" aria-label="Update and removal of application modules">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1146,38 +1146,50 @@
   
 
 
-<h1 id="cirrus-migration-to-e1000-system-migration">Cirrus migration to E1000 system migration</h1>
-<p>This section of the documentation is a guide for users migrating to the E1000 taking place in March 2024</p>
-<p>It covers:</p>
+<h1 id="cirrus-migration-to-e1000-system">Cirrus migration to E1000 system</h1>
+<p>There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 BST to allow for some major changes on the Cirrus service. </p>
 <ul>
-<li><a href="#change-of-authentication-from-ldap-to-free-ipa">Change of authentication from ldap to free-ipa</a></li>
-<li><a href="#new-storage-data-migration">New storage -&gt; Data migration</a></li>
-<li><a href="#cse-module-updates">CSE Module Updates</a></li>
+<li><a href="#change-of-authentication-protocol">Change of authentication protocol </a></li>
+<li><a href="#new-work-file-system">New /work file system</a><ul>
+<li><a href="#note">Note: Slurm pending work will be lost</a></li>
+</ul>
+</li>
+<li><a href="#update-and-removal-of-application-modules">Update and removal of application modules</a> </li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you need help or have questions on the Cirrus E1000 migration 
 please <a href="https://www.cirrus.ac.uk/support/">contact the Cirrus service desk</a></p>
 </div>
-<h2 id="change-of-authentication-from-ldap-to-free-ipa">Change of authentication from ldap to free-ipa:</h2>
-<p>This change should be transparent to users and the TOTP and ssh keys should work as previously<br />
-If users do experience issues then please reset your TOTP and ssh keys and try to reconnect. 
-If issues persist, then please <a href="mailto:support@cirrus.ac.uk">contact the service desk</a> </p>
-<h2 id="new-storage-data-migration">New storage -&gt; Data migration</h2>
-<p>The old data will be made available from the Cirrus login nodes and will be read-ony. 
-Users will be asked to migrate any data they require from the old data disks to the new disks on the E1000</p>
-<p>Old data is mounted as: <br>
-<code>/mnt/lustre/indy2lfs</code> with user files being at <code>/mnt/lustre/indy2lfs/work/</code></p>
-<p>Need Example command to do this: </p>
-<ul>
-<li>Do we just use <code>mv</code> or suggest <code>rsync</code>? </li>
-</ul>
+<h2 id="change-of-authentication-protocol">Change of authentication protocol</h2>
+<p>We are changing the authentication protocol on Cirrus from <code>ldap</code> to <code>freeipa</code>. </p>
+<p>We expect this change to be transparent to users but you may notice a change from <code>username@cirrus</code> to <code>username@eidf</code> within your SAFE account. </p>
+<p>You should be able to connect using your existing Cirrus authentication factors i.e. your ssh key pair and  your TOTP token. </p>
+<p>If you do experience issues, then please reset your tokens and try to reconnect. If problems persist then please <a href="mailto:support@cirrus.ac.uk">contact the service desk</a>.</p>
+<p><a href="https://docs.cirrus.ac.uk/user-guide/connecting/">Further details on Connecting to Cirrus</a></p>
+<h2 id="new-work-file-system">New /work file system</h2>
+<p>We are replacing the existing lustre <code>/work</code> file system with a new more performant lustre file system, <code>E1000</code>. </p>
+<p>The old <code>/work</code> file system will be available as read-only and we ask you to copy any files you require onto the new <code>/work</code> file system. </p>
+<p>The old read-only file system will be removed on <strong>1st May</strong> so please retrieve all required data by then. </p>
+<p>For username in project x01, to copy data from <br>
+<code>/mnt/lustre/indy2lfs/work/username/directory_to_copy</code><br />
+to <br>
+<code>/work/x01/x01/username/destination_directory</code><br> 
+you would do this by running:</p>
+<p><code>cp -r /mnt/lustre/indy2lfs/work/username/directory_to_copy   \</code> 
+<br>
+<code>/work/x01/x01/username/destination_directory</code></p>
+<p>Note that the project code appears once in the path for the old <code>/work</code> file system and twice in the path on the new <code>/work</code> file system.</p>
+<p>Further details of <a href="https://docs.cirrus.ac.uk/user-guide/data/">Data Management and Transfer on Cirrus</a></p>
+<p><a name="note"></a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Due to the change of location of the data, all pending jobs within slurm will be removed and users will need to resubmit any required jobs to ensure they are submitted with the correct pathname and data destination </p>
+<p><strong>Slurm Pending Jobs</strong><br>
+As the underlying pathname for /work will be changing with the addition of the new file system, all of the pending work in the slurm queue will be removed during the migration. When the service is returned, please resubmit your slurm jobs to Cirrus.</p>
 </div>
-<h2 id="cse-module-updates">CSE Module Updates</h2>
-<p>We are taking the opportunity to update modules and remove outdated modules. </p>
+<h2 id="update-and-removal-of-application-modules">Update and removal of application modules</h2>
+<p>Our Computational Science and Engineering (CSE) Team have taken the opportunity of the arrival of the new file system to update modules and also remove older versions of modules. A full list of the changes to the modules can be found below.</p>
+<p>Please <a href="mailto:support@cirrus.ac.uk">contact the service desk</a> if you have concerns about the removal of any of the older modules. </p>
 <h3 id="to-be-removed-alphabetical-order">TO BE REMOVED (Alphabetical order!)</h3>
 <table  ><colgroup><col  /><col  /><col  /><col /><col  /></colgroup>
 <tbody>
