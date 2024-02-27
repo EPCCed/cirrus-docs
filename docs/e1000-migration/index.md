@@ -5,7 +5,7 @@ There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 
 - [Change of authentication protocol ](#change-of-authentication-protocol)
 - [New /work file system](#new-work-file-system)
     - [Note: Slurm pending work will be lost](#note)
-- [Update and removal of application modules](#update-and-removal-of-application-modules) 
+- [CSE Module Updates](#cse-module-updates) 
 
 
 
@@ -55,7 +55,7 @@ Further details of [Data Management and Transfer on Cirrus](https://docs.cirrus.
     As the underlying pathname for /work will be changing with the addition of the new file system, all of the pending work in the slurm queue will be removed during the migration. When the service is returned, please resubmit your slurm jobs to Cirrus.
 
 
-## Update and removal of application modules 
+## CSE Module Updates
 
 Our Computational Science and Engineering (CSE) Team have taken the opportunity of the arrival of the new file system to update modules and also remove older versions of modules. A full list of the changes to the modules can be found below.
 
