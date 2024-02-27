@@ -36,6 +36,7 @@ markdown_extensions:
 
 nav:
   - "Overview": index.md
+  - "Cirrus migration to E1000 system": e1000-migration
   - "User Guide":
     - "Introduction": user-guide/introduction.md
     - "Connecting to Cirrus": user-guide/connecting.md
