@@ -1,6 +1,6 @@
 # Cirrus migration to E1000 system 
 
-There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 BST to allow for some major changes on the Cirrus service. 
+There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 GMT to allow for some major changes on the Cirrus service. 
 
 - [Change of authentication protocol ](#change-of-authentication-protocol)
 - [New /work file system](#new-work-file-system)
