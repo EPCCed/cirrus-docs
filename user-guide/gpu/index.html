@@ -1299,7 +1299,7 @@
         
   
   <span class="md-ellipsis">
-    Debugging using Arm DDT
+    Debugging using Linaro DDT
   </span>
   
 
@@ -1708,10 +1708,8 @@ Versions of the SDK are available via the module system.</p>
 are particular reasons to use earlier versions. The default version is
 therefore the latest module version present on the system.</p>
 <p>Each release of the NVIDIA HPC SDK may include several different
-versions of the CUDA toolchain. For example, the <code>nvidia/nvhpc/21.2</code>
-module comes with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA
-toolchains can be active at any one time and for <code>nvhpc/22.11</code> this is
-CUDA 11.8.</p>
+versions of the CUDA toolchain. Only one of these CUDA toolchains
+can be active at any one time and for <code>nvhpc/22.11</code> this is CUDA 11.8.</p>
 <p>Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:</p>
 <table>
@@ -1753,10 +1751,10 @@ is added when <code>nvidia/nvhpc</code> is loaded.</p>
 compatible with the NVIDIA Volta architecture.</p>
 </div>
 <h4 id="using-cuda-with-intel-compilers">Using CUDA with Intel compilers</h4>
-<p>You can load either the Intel 18 or Intel 19 compilers to use with
+<p>You can load either the Intel 19 or Intel 20 compilers to use with
 <code>nvcc</code>.</p>
 <pre><code>module unload gcc
-module load intel-compilers-19
+module load intel-20.4/compilers
 </code></pre>
 <p>You can now use <code>nvcc -ccbin icpc</code> to compile your source code with the
 Intel C++ compiler <code>icpc</code>.</p>
@@ -2062,8 +2060,8 @@ prohibitively large.</p>
 via the links below.</p>
 <p><a href="https://developer.nvidia.com/nsight-systems">https://developer.nvidia.com/nsight-systems</a></p>
 <p><a href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html">https://docs.nvidia.com/nsight-systems/UserGuide/index.html</a></p>
-<p>If your code was compiled with the tools provided by <code>nvidia/nvhpc/21.2</code>
-you should download and install Nsight Systems v2020.5.1.85.</p>
+<p>If your code was compiled with the tools provided by <code>nvidia/nvhpc/22.2</code>
+you should download and install Nsight Systems v2023.4.1.97.</p>
 <h3 id="using-nsight-compute">Using Nsight Compute</h3>
 <p>Nsight Compute may be used in a similar way as Nsight Systems. A job may
 be submitted like so.</p>
@@ -2092,9 +2090,9 @@ The <code>--section</code> option determines which statistics are recorded
 A common starting point is <code>--section MemoryWorkloadAnalysis</code>.</p>
 <p>Consult the NVIDIA documentation for further details.</p>
 <p><a href="https://developer.nvidia.com/nsight-compute">https://developer.nvidia.com/nsight-compute</a></p>
-<p><a href="https://docs.nvidia.com/nsight-compute/2021.2/index.html">https://docs.nvidia.com/nsight-compute/2021.2/index.html</a></p>
-<p>Nsight Compute v2021.3.1.0 has been found to work for codes compiled
-using <code>nvhpc</code> versions 21.2 and 21.9.</p>
+<p><a href="https://docs.nvidia.com/nsight-compute/2023.3/index.html">https://docs.nvidia.com/nsight-compute/2023.3/index.html</a></p>
+<p>Nsight Compute v2023.3.1.0 has been found to work for codes compiled
+using <code>nvhpc</code> versions 22.2 and 22.11.</p>
 <h2 id="monitoring-the-gpu-power-usage">Monitoring the GPU Power Usage</h2>
 <p>NVIDIA also provides a useful command line utility for the management and monitoring of NVIDIA GPUs: the NVIDIA System Management Interface <code>nvidia-smi</code>.</p>
 <p>The <code>nvidia-smi</code> command queries the available GPUs and reports current information, including but not limited to: driver versions, CUDA version, name, temperature, current power usage and maximum power capability. In this example output, there is one available GPU and it is idle:</p>
@@ -2154,8 +2152,8 @@ nodes, MPI communication will remain limited by network latency and
 bandwidth.</p>
 <p>Version of OpenMPI with both CUDA-aware MPI support and SLURM support
 are available, you should load the following modules:</p>
-<pre><code>module load openmpi/4.1.4-cuda-11.8
-module load nvidia/nvhpc-nompi/22.11
+<pre><code>module load openmpi/4.1.6-cuda-11.6
+module load nvidia/nvhpc-nompi/22.2
 </code></pre>
 <p>The command you use to compile depends on whether you are compiling
 C/C++ or Fortran.</p>
@@ -2182,7 +2180,7 @@ explicitly, e.g.,</p>
 #SBATCH --gres=gpu:4
 
 # Load the appropriate modules, e.g.,
-module load openmpi/4.1.4-cuda-11.8
+module load openmpi/4.1.6-cuda-11.6
 module load nvidia/nvhpc-nompi/22.2
 
 export OMP_NUM_THREADS=1

@@ -1101,7 +1101,7 @@
         
   
   <span class="md-ellipsis">
-    Debugging using Arm DDT
+    Debugging using Linaro DDT
   </span>
   
 
@@ -1283,15 +1283,14 @@
 <a href="https://conda.io/miniconda.html">Miniconda</a> modules and one
 <a href="https://www.continuum.io">Anaconda</a> module. (Miniconda being a small
 bootstrap version of Anaconda).</p>
-<p>The Anaconda module is called <code>anaconda/python3</code> and is suitable for
+<p>The Anaconda module is called <code>anaconda3/2023.9</code> and is suitable for
 running serial applications - for parallel applications using <code>mpi4py</code>
 see <a href="#mpi4py-for-cpu">mpi4py for CPU</a> or <a href="#mpi4py-for-gpu">mpi4py for GPU</a>.</p>
 <p>You can list the Miniconda modules by running <code>module avail python</code> on a
 login node. Those module versions that have the <code>gpu</code> suffix are
 suitable for use on the <a href="../gpu">Cirrus GPU nodes</a>. There are also
-modules that extend these Python environments, e.g., <code>pyfr</code>, <code>horovod</code>,
-<code>tensorflow</code> and <code>pytorch</code> - simply run <code>module help &lt;module name&gt;</code> for
-further info.</p>
+modules that extend these Python environments, e.g., <code>pyfr</code>, <code>tensorflow</code>
+and <code>pytorch</code> - simply run <code>module help &lt;module name&gt;</code> for further info.</p>
 <p>The Miniconda modules support Python-based parallel codes, i.e., each
 such <code>python</code> module provides a suite of packages pertinent to parallel
 processing and numerical analysis such as <code>dask</code>, <code>ipyparallel</code>,
@@ -1300,8 +1299,8 @@ processing and numerical analysis such as <code>dask</code>, <code>ipyparallel</
 <code>pip list</code>. We now give some examples that show how the <code>python</code> modules
 can be used on the Cirrus CPU/GPU nodes.</p>
 <h2 id="mpi4py-for-cpu">mpi4py for CPU</h2>
-<p>The <code>python/3.9.13</code> module provides mpi4py 3.1.3 linked with OpenMPI
-4.1.4.</p>
+<p>The <code>python/3.9.13</code> module provides mpi4py 3.1.5 linked with OpenMPI
+4.1.6.</p>
 <p>See <code>numpy-broadcast.py</code> below which is a simple MPI Broadcast example,
 and the Slurm script <code>submit-broadcast.slurm</code> which demonstrates how to
 run across it two compute nodes.</p>
@@ -1462,15 +1461,15 @@ below for further details.</p>
 <h2 id="machine-learning-frameworks">Machine Learning frameworks</h2>
 <p>There are several more Python-based modules that also target the Cirrus
 GPU nodes. These include two machine learning frameworks,
-<code>pytorch/1.12.1-gpu</code> and <code>tensorflow/2.9.1-gpu</code>. Both modules are Python
-virtual environments that extend <code>python/3.9.13-gpu</code>. The MPI comms is
+<code>pytorch/1.13.1-gpu</code> and <code>tensorflow/2.15.0-gpu</code>. Both modules are Python
+virtual environments that extend <code>python/3.10.8-gpu</code>. The MPI comms is
 handled by the <a href="https://horovod.readthedocs.io/en/stable/">Horovod</a>
-0.25.0 package along with the <a href="https://developer.nvidia.com/nccl">NVIDIA Collective Communications
+0.28.1 package along with the <a href="https://developer.nvidia.com/nccl">NVIDIA Collective Communications
 Library</a> v2.11.4.</p>
 <p>A full package list for these environments can be obtained by loading
 the module of interest and then running <code>pip list</code>.</p>
 <p>Please click on the link indicated to see examples of how to use the
-<a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md">PyTorch and TensorFlow
+<a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/ml/run_ml_workloads_cirrus_gpu.md">PyTorch and TensorFlow
 modules</a>
 .</p>
 <h2 id="installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</h2>
@@ -1557,10 +1556,10 @@ srun<span class="w"> </span>--ntasks<span class="o">=</span><span class="m">8</s
 <p>Lastly, the environment being extended does not have to come from one of
 the centrally-installed <code>python</code> modules. You could just as easily
 create a local virtual environment based on one of the Machine Learning
-(ML) modules, e.g., <code>horovod</code>, <code>tensorflow</code> or <code>pytorch</code>. This means you
-would avoid having to install ML packages within your local area. Each
-of those ML modules is based on a <code>python</code> module. For example,
-<code>tensorflow/2.11.0-gpu</code> is itself an extension of <code>python/3.10.8-gpu</code>.</p>
+(ML) modules, e.g., <code>tensorflow</code> or <code>pytorch</code>. This means you would avoid
+having to install ML packages within your local area. Each of those ML
+modules is based on a <code>python</code> module. For example, <code>tensorflow/2.15.0-gpu</code>
+is itself an extension of <code>python/3.10.8-gpu</code>.</p>
 <h2 id="installing-your-own-python-packages-with-conda">Installing your own Python packages (with conda)</h2>
 <p>This section shows you how to setup a local custom Python environment
 such that it duplicates a centrally-installed <code>python</code> module, ensuring
@@ -1650,7 +1649,7 @@ the single <code>source</code> command that is sufficient for a <code>pip</code>
 <p>Further, <code>conda</code> cannot be used if the base environment is one of the
 Machine Learning (ML) modules, as <code>conda</code> is not flexible enough to
 gather Python packages from both the ML and base <code>python</code> modules (e.g.,
-the ML module <code>pytorch/2.0.0-gpu</code> is itself based on
+the ML module <code>pytorch/1.13.1-gpu</code> is itself based on
 <code>python/3.10.8-gpu</code>, and so <code>conda</code> will only duplicate packages
 provided by the <code>python</code> module and not the ones supplied by <code>pytorch</code>).</p>
 <h2 id="using-jupyterlab-on-cirrus">Using JupyterLab on Cirrus</h2>
