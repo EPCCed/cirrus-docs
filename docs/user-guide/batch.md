@@ -123,7 +123,7 @@ primary resource that you request.
 !!! Warning
 
 
-	
+
 	On Cirrus, you cannot specify the memory for a job using the `--mem`
 	options to Slurm (e.g. `--mem`, `--mem-per-cpu`, `--mem-per-gpu`). The
 	amount of memory you are assigned is calculated from the amount of
@@ -306,7 +306,7 @@ problems are listed below, with a suggestion about the likely cause:
   > submission script. E.g., `--time=01:30:00` gives a time limit of 90
   > minutes.
 
-- `error: QOSMaxWallDurationPerJobLimit`  
+- `error: QOSMaxWallDurationPerJobLimit`
   `error: Batch job submission failed: Job violates accounting/QOS policy`
   `(job submit limit, user's size and/or time limits)`
 
@@ -444,7 +444,9 @@ parallel processes and threads they require.
    parallel process (e.g. number of OpenMP threads per MPI task for
    hybrid MPI/OpenMP jobs). **Note:** you must also set the
    `OMP_NUM_THREADS` environment variable if using OpenMP in your job
-   and usually add the `--cpu-bind=cores` option to `srun`
+   and usually add the `--cpu-bind=cores` option to `srun`. See the
+   example below for an MPI+OpenMP job for further notes on
+   ``--cpus-per-task``.
 
 
 
@@ -559,7 +561,7 @@ options:
 	If you specify `--ntasks` explicitly and it is not compatible with the
 	value of `tasks-per-node` then you will get a warning message from
 	srun such as `srun: Warning: can't honor --ntasks-per-node set to 36`.
-	
+
 	In this case, srun does the sensible thing and allocates MPI processes
 	as evenly as it can across nodes. For example, the second option above
 	would result in 32 MPI processes on each of the 4 nodes.
@@ -639,8 +641,23 @@ export OMP_NUM_THREADS=18
 #   2 MPI processes per node
 #   18 OpenMP threads per MPI process
 
-srun --cpu-bind=cores ./my_mixed_executable.x arg1 arg2
+srun --cpu-bind=cores --cpus-per-task=18 ./my_mixed_executable.x arg1 arg2
 ```
+In the above we add ``--cpus-per-task=18`` to the `srun` command to be
+consistent with that specified to ``#SBATCH``. This is required to ensure
+that the correct assignment of threads to physical cores takes place.
+The reason for this duplication is that the value specified to ``SBATCH``
+does not propagate automatically to ``srun``. The alternative is to
+specify:
+```
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+```
+in the script before the ``srun`` command. This will allow the ``--cpus-per-task`` value specified at submission (``SBATCH``) to propagate to ``srun``
+(the default value would be ``--cpus-per-task=1`` at the ``srun`` stage).
+Failure to use either of these
+approaches may result in threads using the same physical core, which
+will cause a significant degradation in performance compared with
+that expected.
 
 ### Example: job submission script for OpenMP parallel job
 
@@ -672,7 +689,9 @@ module load mpt
 cd $SLURM_SUBMIT_DIR
 
 # Set the number of threads to the CPUs per task
+# and propagate `--cpus-per-task` value to srun
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Launch the parallel job
 #   Using 36 threads per node
@@ -680,7 +699,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 srun --cpu-bind=cores ./my_openmp_executable.x
 ```
 
-This will run your executable "my_openmp_executable.x" in parallel on 36
+This will run your executable ``my_openmp_executable.x`` in parallel on 36
 threads. Slurm will allocate 1 node to your job and srun will place 36
 threads (one per physical core).
 
@@ -1022,5 +1041,3 @@ up the temporary directory at the end of your job script, e.g.
 	Applications should not hard-code specific locations such as `/tmp`.
 	Parallel applications should further ensure that there are no collisions
 	in temporary file names on separate processes/nodes.
-
-

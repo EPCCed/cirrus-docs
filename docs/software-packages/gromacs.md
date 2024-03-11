@@ -89,6 +89,9 @@ threads per MPI process.
 # Load GROMACS and MPI modules
 module load gromacs
 
+# Propagate --cpus-per-task to srun
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
 # Run using input in test_calc.tpr
 export OMP_NUM_THREADS=6
 srun gmx_mpi mdrun -s test_calc.tpr

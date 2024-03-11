@@ -42,6 +42,9 @@ of which is reserved for communications.
 
     module load namd/2.14
 
+    # Make sure --cpus-per-task information propagates to srun
+    export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
     srun namd2 +setcpuaffinity +ppn 17 +pemap 1-17,19-35 +commap 0,18 input.namd
 
 NAMD can also be run without SMP.
