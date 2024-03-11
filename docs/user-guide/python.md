@@ -462,7 +462,7 @@ enter an [interactive session](../batch/#interactive-jobs); otherwise
 you can start from a login node prompt.
 
 1.  As described above, load the Anaconda module on Cirrus using
-    `module load anaconda/python3`.
+    `module load anaconda3/2023.9`.
 
 2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`.
 
