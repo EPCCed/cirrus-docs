@@ -11,7 +11,7 @@ see [mpi4py for CPU](#mpi4py-for-cpu) or [mpi4py for GPU](#mpi4py-for-gpu).
 
 You can list the Miniconda modules by running `module avail python` on a
 login node. Those module versions that have the `gpu` suffix are
-suitable for use on the [Cirrus GPU nodes](../gpu). There are also
+suitable for use on the [Cirrus GPU nodes](gpu.md). There are also
 modules that extend these Python environments, e.g., `pyfr`, `tensorflow`
 and `pytorch` - simply run `module help <module name>` for further info.
 
@@ -458,7 +458,7 @@ but please don’t attempt to run any computationally intensive work (such
 jobs will be killed should they reach the login node CPU limit).
 
 If you want to run your JupyterLab on a compute node, you will need to
-enter an [interactive session](../batch/#interactive-jobs); otherwise
+enter an [interactive session](batch.md#interactive-jobs); otherwise
 you can start from a login node prompt.
 
 1.  As described above, load the Anaconda module on Cirrus using
