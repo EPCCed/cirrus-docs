@@ -1,13 +1,13 @@
-# Debugging using Arm DDT
+# Debugging using Linaro DDT
 
-The Arm Forge tool suite is installed on Cirrus. This includes DDT,
+The Linaro Forge tool suite is installed on Cirrus. This includes DDT,
 which is a debugging tool for scalar, multi-threaded and large-scale
 parallel applications. To compile your code for debugging you will
 usually want to specify the `-O0` option to turn off all code
 optimisation (as this can produce a mismatch between source code line
 numbers and debugging information) and `-g` to include debugging
 information in the compiled executable. To use this package you will
-need to log in to Cirrus with X11-forwarding enabled, load the Arm Forge
+need to log in to Cirrus with X11-forwarding enabled, load the Linaro Forge
 module and execute `forge`:
 
     module load forge
@@ -37,7 +37,7 @@ tick the *MPI* box -- when running on the compute nodes, you must set
 the MPI implementation to *Slurm (generic)*. You must also tick the
 *Submit to Queue* box. Clicking the *Configure* button in this section,
 you must now choose the submission template. One is provided for you at
-`/mnt/lustre/indy2lfs/sw/arm/forge/latest/templates/cirrus.qtf` which
+`/work/y07/shared/cirrus-software/forge/latest/templates/cirrus.qtf` which
 you should copy and modify to suit your needs. You will need to load any
 modules required for your code and perform any other necessary setup,
 such as providing extra sbatch options, i.e., whatever is needed for
@@ -47,7 +47,7 @@ your code to run in a normal batch job.
 
 !!! Note
 
-	The current Arm Forge licence permits use on the Cirrus CPU nodes only.
+	The current Linaro Forge licence permits use on the Cirrus CPU nodes only.
 	The licence does not permit use of DDT/MAP for codes that run on the
 	Cirrus GPUs.
 
@@ -77,18 +77,18 @@ libraries should be found without further arguments.
 
 ## Remote Client
 
-Arm Forge can connect to remote systems using SSH so you can run the
+Linaro Forge can connect to remote systems using SSH so you can run the
 user interface on your desktop or laptop machine without the need for X
 forwarding. Native remote clients are available for Windows, macOS and
-Linux. You can download the remote clients from the [Arm
-website](https://developer.arm.com/downloads/-/arm-forge). No licence
+Linux. You can download the remote clients from the [Linaro Forge
+website](https://www.linaroforge.com/downloadForge/). No licence
 file is required by a remote client.
 
 
 
 !!! Note
 
-	The same versions of Arm Forge must be installed on the local and remote
+	The same versions of Linaro Forge must be installed on the local and remote
 	systems in order to use DDT remotely.
 
 
@@ -98,7 +98,7 @@ click on the *Remote Launch* drop-down box and click on *Configure*. In
 the new window, click *Add* to create a new login profile. For the
 hostname you should provide `username@login.cirrus.ac.uk` where
 `username` is your login username. For *Remote Installation Directory*\*
-enter `/mnt/lustre/indy2lfs/sw/arm/forge/latest`. To ensure your SSH
+enter `/work/y07/shared/cirrus-software/forge/latest`. To ensure your SSH
 private key can be used to connect, the SSH agent on your local machine
 should be configured to provide it. You can ensure this by running
 `ssh-add ~/.ssh/id_rsa_cirrus` before using the Forge client where you
@@ -127,11 +127,11 @@ usual login password the connection to Cirrus will be established and
 you will be able to start debugging.
 
 You can find more detailed information
-[here](https://developer.arm.com/documentation/101136/2011/Arm-Forge/Connecting-to-a-remote-system).
+[here](https://docs.linaroforge.com/23.1.1/html/forge/forge/connecting_to_a_remote_system/connecting_remotely.html).
 
 ## Getting further help on DDT
 
 - [DDT
-  website](https://www.arm.com/products/development-tools/server-and-hpc/forge/ddt)
+  website](https://www.linaroforge.com/linaroDdt/)
 - [DDT user
-  guide](https://developer.arm.com/documentation/101136/22-1-3/DDT?lang=en)
+  guide](https://docs.linaroforge.com/23.1.1/html/forge/ddt/index.html)
