@@ -1344,6 +1344,9 @@ threads per MPI process.</p>
 <span class="c1"># Load GROMACS and MPI modules</span>
 module<span class="w"> </span>load<span class="w"> </span>gromacs
 
+<span class="c1"># Propagate --cpus-per-task to srun</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
+
 <span class="c1"># Run using input in test_calc.tpr</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">6</span>
 srun<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
