@@ -1278,68 +1278,76 @@ using it for research on non-biological systems, e.g. polymers.</p>
 <p>GROMACS is Open Source software and is freely available to all Cirrus
 users. A number of versions are available:</p>
 <ul>
-<li>Serial/shared memory, single precision: gmx</li>
-<li>Parallel MPI/OpenMP, single precision: gmx_mpi</li>
-<li>GPU version, single precision: gmx</li>
+<li>CPU-only:<ul>
+<li>Serial/shared memory, single precision: <code>gmx</code></li>
+<li>Parallel MPI/OpenMP, single precision: <code>gmx_mpi</code></li>
+<li>Parallel MPI/OpenMP, doubld precision: <code>gmx_mpi_d</code></li>
+</ul>
+</li>
+<li>GPU version:<ul>
+<li>Parallel MPI/OpenMP, single precision: <code>gmx_mpi</code></li>
+<li>Parallel MPI/OpenMP, doubld precision: <code>gmx_mpi_d</code></li>
+</ul>
+</li>
 </ul>
 <h2 id="running-parallel-gromacs-jobs-pure-mpi">Running parallel GROMACS jobs: pure MPI</h2>
 <p>GROMACS can exploit multiple nodes on Cirrus and will generally be run
 in exclusive mode over more than one node.</p>
 <p>For example, the following script will run a GROMACS MD job using 2
 nodes (72 cores) with pure MPI.</p>
-<pre><code>#!/bin/bash --login
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=gmx_test
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=36
-#SBATCH --time=0:25:0
-# Make sure you are not sharing nodes with other users
-#SBATCH --exclusive
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=gmx_test</span>
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --tasks-per-node=36</span>
+<span class="c1">#SBATCH --time=0:25:0</span>
+<span class="c1"># Make sure you are not sharing nodes with other users</span>
+<span class="c1">#SBATCH --exclusive</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
 
-# Load GROMACS module
-module load gromacs
+<span class="c1"># Load GROMACS module</span>
+module<span class="w"> </span>load<span class="w"> </span>gromacs
 
-# Run using input in test_calc.tpr
-export OMP_NUM_THREADS=1 
-srun gmx_mpi mdrun -s test_calc.tpr
-</code></pre>
+<span class="c1"># Run using input in test_calc.tpr</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>
+srun<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
+</code></pre></div>
 <h2 id="running-parallel-gromacs-jobs-hybrid-mpiopenmp">Running parallel GROMACS jobs: hybrid MPI/OpenMP</h2>
 <p>The following script will run a GROMACS MD job using 2 nodes (72 cores)
 with 6 MPI processes per node (12 MPI processes in total) and 6 OpenMP
 threads per MPI process.</p>
-<pre><code>#!/bin/bash --login
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=gmx_test
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=6
-#SBATCH --cpus-per-task=6
-#SBATCH --time=0:25:0
-# Make sure you are not sharing nodes with other users
-#SBATCH --exclusive
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=gmx_test</span>
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --tasks-per-node=6</span>
+<span class="c1">#SBATCH --cpus-per-task=6</span>
+<span class="c1">#SBATCH --time=0:25:0</span>
+<span class="c1"># Make sure you are not sharing nodes with other users</span>
+<span class="c1">#SBATCH --exclusive</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
 
-# Load GROMACS and MPI modules
-module load gromacs
+<span class="c1"># Load GROMACS and MPI modules</span>
+module<span class="w"> </span>load<span class="w"> </span>gromacs
 
-# Run using input in test_calc.tpr
-export OMP_NUM_THREADS=6
-srun gmx_mpi mdrun -s test_calc.tpr
-</code></pre>
+<span class="c1"># Run using input in test_calc.tpr</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">6</span>
+srun<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
+</code></pre></div>
 <h2 id="gromacs-gpu-jobs">GROMACS GPU jobs</h2>
 <p>The following script will run a GROMACS GPU MD job using 1 node (40
 cores and 4 GPUs). The job is set up to run on
@@ -1352,34 +1360,33 @@ will need to change these variables when running your script.</p>
 MDRUN installed. For any pre- and post-processing, you will need to use
 the non-GPU version of GROMACS.</p>
 </div>
-<div class="highlight"><pre><span></span><code>    #!/bin/bash --login
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=gmx_test
-    #SBATCH --nodes=1
-    #SBATCH --time=0:25:0
-    #SBATCH --exclusive
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=gmx_test</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --time=0:25:0</span>
+<span class="c1">#SBATCH --exclusive</span>
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-    #SBATCH --qos=[qos name]
-    #SBATCH --gres=gpu:4
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
+<span class="c1">#SBATCH --gres=gpu:4</span>
 
-    # Load GROMACS and MPI modules
-    module load gromacs/2022.1-gpu
+<span class="c1"># Load GROMACS and MPI modules</span>
+module<span class="w"> </span>load<span class="w"> </span>gromacs/2023.4-gpu
 
-    # Run using input in test_calc.tpr
-    export OMP_NUM_THREADS=&lt;OMP thread count&gt;
-    srun --ntasks=&lt;MPI task count&gt; --cpus-per-task=&lt;OMP thread count&gt; \
-         gmx_mpi mdrun -ntomp &lt;OMP thread count&gt; -s test_calc.tpr
+<span class="c1"># Run using input in test_calc.tpr</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>&lt;OMP<span class="w"> </span>thread<span class="w"> </span>count&gt;
+srun<span class="w"> </span>--ntasks<span class="o">=</span>&lt;MPI<span class="w"> </span>task<span class="w"> </span>count&gt;<span class="w"> </span>--cpus-per-task<span class="o">=</span>&lt;OMP<span class="w"> </span>thread<span class="w"> </span>count&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-ntomp<span class="w"> </span>&lt;OMP<span class="w"> </span>thread<span class="w"> </span>count&gt;<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
 </code></pre></div>
 <p>Information on how to assign different types of calculation to the CPU
-or GPU appears in the GROMACS documentation under <a href="http://manual.gromacs.org/documentation/current/user-guide/mdrun-performance.html">Getting good
-performance from
-mdrun</a></p>
+or GPU appears in the GROMACS documentation under
+<a href="http://manual.gromacs.org/documentation/current/user-guide/mdrun-performance.html">Getting good performance from mdrun</a></p>
 
 
 

@@ -1277,37 +1277,37 @@ or continuum scale.</p>
 <p>LAMMPS is Open Source software, and is freely available to all Cirrus
 users. A number of versions are available:</p>
 <ul>
-<li>Parallel MPI: using impi or mpt</li>
-<li>MPI+GPU version: using impi and CUDA11.8</li>
+<li>Parallel MPI: using intel-20.4 mpi</li>
+<li>MPI+GPU version: using intel-20.4 mpi and CUDA11.8</li>
 </ul>
 <h2 id="running-parallel-lammps-jobs-mpi">Running parallel LAMMPS jobs (MPI)</h2>
 <p>LAMMPS can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.</p>
 <p>For example, the following script will run a LAMMPS MD job using 4 nodes
 (144 cores) with pure MPI.</p>
-<pre><code>#!/bin/bash --login
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=lammps_Example
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=36
-#SBATCH --cpus-per-task=1
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=lammps_Example</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --exclusive</span>
+<span class="c1">#SBATCH --nodes=4</span>
+<span class="c1">#SBATCH --tasks-per-node=36</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
 
-# Load LAMMPS module
-module load lammps
+<span class="c1"># Load LAMMPS module</span>
+module<span class="w"> </span>load<span class="w"> </span>lammps
 
-# Run using input in in.test
- srun lmp_mpi &lt; in.test
-</code></pre>
+<span class="c1"># Run using input in in.test</span>
+srun<span class="w"> </span>lmp_mpi<span class="w"> </span>&lt;<span class="w"> </span><span class="k">in</span>.test
+</code></pre></div>
 <h2 id="running-parallel-lammps-jobs-gpu">Running parallel LAMMPS jobs (GPU)</h2>
 <p>LAMMPS can exploit multiple GPUs, although the performance scaling
 depends heavily on the particular system, so each user should run
@@ -1316,32 +1316,31 @@ forcefield/fix are available for GPU, a vast majority is, and more are
 added with each new version. Check the LAMMPS documentation for GPU
 compatibility with a specific command.</p>
 <p>For example, the following script will run a LAMMPS MD job using 2 GPUs</p>
-<pre><code>#!/bin/bash --login
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=lammps_Example
-#SBATCH --time=00:20:00
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:2
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=lammps_Example</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --gres=gpu:2</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
 
-# Load LAMMPS module
-module load lammps/8Feb2023-GCC8-IMPI-CUDA118
+<span class="c1"># Load LAMMPS module</span>
+module<span class="w"> </span>load<span class="w"> </span>lammps-gpu
 
-# Run using input in in.test
- srun lmp -sf gpu -pk gpu 2 -in input.file -l log.file
-</code></pre>
+<span class="c1"># Run using input in in.test</span>
+srun<span class="w"> </span>lmp<span class="w"> </span>-sf<span class="w"> </span>gpu<span class="w"> </span>-pk<span class="w"> </span>gpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>-in<span class="w"> </span>input.file<span class="w"> </span>-l<span class="w"> </span>log.file
+</code></pre></div>
 <h2 id="compiling-lammps-on-cirrus">Compiling LAMMPS on Cirrus</h2>
 <p>Compile instructions for LAMMPS on Cirrus can be found on GitHub:</p>
 <ul>
-<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS">Cirrus LAMMPS compile
-  instructions</a></li>
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS">Cirrus LAMMPS compile instructions</a></li>
 </ul>
 
 
