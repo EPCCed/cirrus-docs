@@ -11,6 +11,16 @@ and the ability to combine and account for the interaction between the
 various physics and motion models in a single simulation to cover your
 specific application.
 
+!!! Note
+
+
+	STAR-CCM+ is not centrally available as a module on Cirrus. All users 
+    must build the software in their own user space. 
+
+    Below we provide some guidance for using STAR-CCM+ on Cirrus with the 
+    PoD license. 
+
+
 ## Useful Links
 
 > - [Information about STAR-CCM+ by
@@ -52,10 +62,9 @@ following script starts the server:
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
-    # Load the default HPE MPI environment
-    module load mpt
-    module load starccm+
+    # Add starccm+ installation to PATH and LD_LIBRARY_PATH
 
+    # License information: 
     export SGI_MPI_HOME=$MPI_ROOT
     export PATH=$STARCCM_EXE:$PATH
     export LM_LICENSE_FILE=48002@192.168.191.10
@@ -93,10 +102,9 @@ previous examples is the "starccm+" line)
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
-    # Load the default HPE MPI environment
-    module load mpt
-    module load starccm+
+    # Add starccm+ installation to PATH and LD_LIBRARY_PATH
 
+    # License information: 
     export SGI_MPI_HOME=$MPI_ROOT
     export PATH=$STARCCM_EXE:$PATH
     export LM_LICENSE_FILE=48002@192.168.191.10
