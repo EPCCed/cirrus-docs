@@ -25,7 +25,7 @@ To see what versions are currently available:
 ```
   $ module avail lammps
 ```
-The current default central module is based on the ``08Feb2023`` release.
+The current default central module is based on the ``15Dec2023`` release.
 
 ## Running parallel LAMMPS jobs (MPI)
 
