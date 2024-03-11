@@ -5,16 +5,15 @@ Python on Cirrus is provided by a number of
 [Anaconda](https://www.continuum.io) module. (Miniconda being a small
 bootstrap version of Anaconda).
 
-The Anaconda module is called `anaconda/python3` and is suitable for
+The Anaconda module is called `anaconda3/2023.9` and is suitable for
 running serial applications - for parallel applications using `mpi4py`
 see [mpi4py for CPU](#mpi4py-for-cpu) or [mpi4py for GPU](#mpi4py-for-gpu).
 
 You can list the Miniconda modules by running `module avail python` on a
 login node. Those module versions that have the `gpu` suffix are
 suitable for use on the [Cirrus GPU nodes](../gpu). There are also
-modules that extend these Python environments, e.g., `pyfr`, `horovod`,
-`tensorflow` and `pytorch` - simply run `module help <module name>` for
-further info.
+modules that extend these Python environments, e.g., `pyfr`, `tensorflow`
+and `pytorch` - simply run `module help <module name>` for further info.
 
 The Miniconda modules support Python-based parallel codes, i.e., each
 such `python` module provides a suite of packages pertinent to parallel
@@ -27,8 +26,8 @@ can be used on the Cirrus CPU/GPU nodes.
 
 ## mpi4py for CPU
 
-The `python/3.9.13` module provides mpi4py 3.1.3 linked with OpenMPI
-4.1.4.
+The `python/3.9.13` module provides mpi4py 3.1.5 linked with OpenMPI
+4.1.6.
 
 See `numpy-broadcast.py` below which is a simple MPI Broadcast example,
 and the Slurm script `submit-broadcast.slurm` which demonstrates how to
@@ -203,10 +202,10 @@ below for further details.
 
 There are several more Python-based modules that also target the Cirrus
 GPU nodes. These include two machine learning frameworks,
-`pytorch/1.12.1-gpu` and `tensorflow/2.9.1-gpu`. Both modules are Python
-virtual environments that extend `python/3.9.13-gpu`. The MPI comms is
+`pytorch/1.13.1-gpu` and `tensorflow/2.15.0-gpu`. Both modules are Python
+virtual environments that extend `python/3.10.8-gpu`. The MPI comms is
 handled by the [Horovod](https://horovod.readthedocs.io/en/stable/)
-0.25.0 package along with the [NVIDIA Collective Communications
+0.28.1 package along with the [NVIDIA Collective Communications
 Library](https://developer.nvidia.com/nccl) v2.11.4.
 
 A full package list for these environments can be obtained by loading
@@ -214,7 +213,7 @@ the module of interest and then running `pip list`.
 
 Please click on the link indicated to see examples of how to use the
 [PyTorch and TensorFlow
-modules](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/horovod/run_horovod_0.25.0_cirrus_gpu.md)
+modules](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/ml/run_ml_workloads_cirrus_gpu.md)
 .
 
 ## Installing your own Python packages (with pip)
@@ -324,10 +323,10 @@ srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
 Lastly, the environment being extended does not have to come from one of
 the centrally-installed `python` modules. You could just as easily
 create a local virtual environment based on one of the Machine Learning
-(ML) modules, e.g., `horovod`, `tensorflow` or `pytorch`. This means you
-would avoid having to install ML packages within your local area. Each
-of those ML modules is based on a `python` module. For example,
-`tensorflow/2.11.0-gpu` is itself an extension of `python/3.10.8-gpu`.
+(ML) modules, e.g., `tensorflow` or `pytorch`. This means you would avoid
+having to install ML packages within your local area. Each of those ML
+modules is based on a `python` module. For example, `tensorflow/2.15.0-gpu`
+is itself an extension of `python/3.10.8-gpu`.
 
 ## Installing your own Python packages (with conda)
 
@@ -447,7 +446,7 @@ the single `source` command that is sufficient for a `pip` environment.
 Further, `conda` cannot be used if the base environment is one of the
 Machine Learning (ML) modules, as `conda` is not flexible enough to
 gather Python packages from both the ML and base `python` modules (e.g.,
-the ML module `pytorch/2.0.0-gpu` is itself based on
+the ML module `pytorch/1.13.1-gpu` is itself based on
 `python/3.10.8-gpu`, and so `conda` will only duplicate packages
 provided by the `python` module and not the ones supplied by `pytorch`).
 

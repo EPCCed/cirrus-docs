@@ -219,7 +219,7 @@ below shows that the `srun` command now contains an additional
     module load singularity
 
     # The host bind paths for the Singularity container.
-    BIND_ARGS=/mnt/lustre/indy2lfs/sw,/opt/hpe,/etc/libibverbs.d,/path/to/input/files
+    BIND_ARGS=/work/y07/shared/cirrus-software,/opt/hpe,/etc/libibverbs.d,/path/to/input/files
 
     # The file containing environment variable settings that will allow
     # the container to find libraries on the host, e.g., LD_LIBRARY_PATH . 
@@ -342,20 +342,20 @@ must be run on a system where you have root access, not on Cirrus).
 
 The resulting image file (`centos7.sif`) can then be copied to Cirrus
 using scp; such an image already exists on Cirrus and can be found in
-the `/mnt/lustre/indy2lfs/sw/singularity/images` folder.
+the `/work/y07/shared/cirrus-software/singularity/images` folder.
 
 When you use that image interactively on Cirrus you must start with a
-login shell and also bind `/mnt/lustre/indy2lfs/sw` so that the container
+login shell and also bind `/work/y07/shared/cirrus-software` so that the container
 can see all the module files, see below.
 
     [user@cirrus-login1 ~]$ module load singularity
-    [user@cirrus-login1 ~]$ singularity exec -B /mnt/lustre/indy2lfs/sw \
-      /mnt/lustre/indy2lfs/sw/singularity/images/centos7.sif \
+    [user@cirrus-login1 ~]$ singularity exec -B /work/y07/shared/cirrus-software \
+      /work/y07/shared/cirrus-software/singularity/images/centos7.sif \
         /bin/bash --login
-    Singularity> module avail intel-compilers
+    Singularity> module avail intel-*/compilers
 
-    --------- /mnt/lustre/indy2lfs/sw/modulefiles -------------
-    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117
+    --------- /work/y07/shared/cirrus-modulefiles -------------
+    intel-19.5/compilers  intel-20.4/compilers
     Singularity> exit
     logout
     [user@cirrus-login1 ~]$ 
@@ -372,10 +372,10 @@ followed by a `shell` command with the `--writable` option. You are now
 free to change the files inside the container sandbox.
 
     user@cirrus-login1 ~]$ singularity build --sandbox image.sif.sandbox image.sif
-    user@cirrus-login1 ~]$ singularity shell -B /mnt/lustre/indy2lfs/sw --writable image.sif.sandbox
+    user@cirrus-login1 ~]$ singularity shell -B /work/y07/shared/cirrus-software --writable image.sif.sandbox
     Singularity> 
 
-In the example above, the `/mnt/lustre/indy2lfs/sw` bind path is specified, allowing
+In the example above, the `/work/y07/shared/cirrus-software` bind path is specified, allowing
 you to build code that links to the Cirrus module libraries.
 
 Finally, once you are finished with the sandbox you can exit and convert

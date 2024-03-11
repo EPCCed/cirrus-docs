@@ -68,7 +68,7 @@ nav:
     - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md
     - "HDF5": software-libraries/hdf5.md
   - "Software Tools":
-    - "Debugging using Arm DDT": software-tools/ddt.md
+    - "Debugging using Linaro DDT": software-tools/ddt.md
     - "Profiling using Scalasca": software-tools/scalasca.md
     - "Intel VTune": software-tools/intel-vtune.md
   - "References and further reading": user-guide/reading.md
