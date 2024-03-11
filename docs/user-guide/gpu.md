@@ -44,10 +44,8 @@ are particular reasons to use earlier versions. The default version is
 therefore the latest module version present on the system.
 
 Each release of the NVIDIA HPC SDK may include several different
-versions of the CUDA toolchain. For example, the `nvidia/nvhpc/21.2`
-module comes with CUDA 10.2, 11.0 and 11.2. Only one of these CUDA
-toolchains can be active at any one time and for `nvhpc/22.11` this is
-CUDA 11.8.
+versions of the CUDA toolchain. Only one of these CUDA toolchains
+can be active at any one time and for `nvhpc/22.11` this is CUDA 11.8.
 
 Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:
@@ -88,11 +86,11 @@ Compile your source code in the usual way.
 
 #### Using CUDA with Intel compilers
 
-You can load either the Intel 18 or Intel 19 compilers to use with
+You can load either the Intel 19 or Intel 20 compilers to use with
 `nvcc`.
 
     module unload gcc
-    module load intel-compilers-19
+    module load intel-20.4/compilers
 
 You can now use `nvcc -ccbin icpc` to compile your source code with the
 Intel C++ compiler `icpc`.
@@ -401,8 +399,8 @@ via the links below.
 
 <https://docs.nvidia.com/nsight-systems/UserGuide/index.html>
 
-If your code was compiled with the tools provided by `nvidia/nvhpc/21.2`
-you should download and install Nsight Systems v2020.5.1.85.
+If your code was compiled with the tools provided by `nvidia/nvhpc/22.2`
+you should download and install Nsight Systems v2023.4.1.97.
 
 ### Using Nsight Compute
 
@@ -437,10 +435,10 @@ Consult the NVIDIA documentation for further details.
 
 <https://developer.nvidia.com/nsight-compute>
 
-<https://docs.nvidia.com/nsight-compute/2021.2/index.html>
+<https://docs.nvidia.com/nsight-compute/2023.3/index.html>
 
-Nsight Compute v2021.3.1.0 has been found to work for codes compiled
-using `nvhpc` versions 21.2 and 21.9.
+Nsight Compute v2023.3.1.0 has been found to work for codes compiled
+using `nvhpc` versions 22.2 and 22.11.
 
 
 ## Monitoring the GPU Power Usage
@@ -526,8 +524,8 @@ bandwidth.
 Version of OpenMPI with both CUDA-aware MPI support and SLURM support
 are available, you should load the following modules:
 
-    module load openmpi/4.1.4-cuda-11.8
-    module load nvidia/nvhpc-nompi/22.11
+    module load openmpi/4.1.6-cuda-11.6
+    module load nvidia/nvhpc-nompi/22.2
 
 The command you use to compile depends on whether you are compiling
 C/C++ or Fortran.
@@ -563,7 +561,7 @@ A batch script to use such an executable might be:
     #SBATCH --gres=gpu:4
 
     # Load the appropriate modules, e.g.,
-    module load openmpi/4.1.4-cuda-11.8
+    module load openmpi/4.1.6-cuda-11.6
     module load nvidia/nvhpc-nompi/22.2
 
     export OMP_NUM_THREADS=1

@@ -36,6 +36,7 @@ markdown_extensions:
 
 nav:
   - "Overview": index.md
+  - "Cirrus migration to E1000 system": e1000-migration
   - "User Guide":
     - "Introduction": user-guide/introduction.md
     - "Connecting to Cirrus": user-guide/connecting.md
@@ -63,18 +64,11 @@ nav:
     - "Quantum Espresso (QE)": software-packages/qe.md
     - "STAR-CCM+": software-packages/starccm+.md
     - "VASP": software-packages/vasp.md
-    - "SPECFEM3D Cartesian": software-packages/specfem3d.md
   - "Software Libraries":
     - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md
     - "HDF5": software-libraries/hdf5.md
   - "Software Tools":
-    - "Debugging using Arm DDT": software-tools/ddt.md
+    - "Debugging using Linaro DDT": software-tools/ddt.md
     - "Profiling using Scalasca": software-tools/scalasca.md
     - "Intel VTune": software-tools/intel-vtune.md
   - "References and further reading": user-guide/reading.md
-
-
-  
-
-
-

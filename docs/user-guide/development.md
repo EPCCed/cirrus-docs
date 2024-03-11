@@ -42,10 +42,10 @@ You can list all the modules of a particular type by providing an
 argument to the `module avail` command. For example, to list all
 available versions of the Intel Compiler type:
 
-    [user@cirrus-login0 ~]$ module avail intel-compilers
+    [user@cirrus-login0 ~]$ module avail intel-*/compilers
 
-    --------------------------------- /mnt/lustre/indy2lfs/sw/modulefiles --------------------------------
-    intel-compilers-18/18.05.274  intel-compilers-19/19.0.0.117
+    --------------------------------- /work/y07/shared/cirrus-modulefiles --------------------------------
+    intel-19.5/compilers  intel-20.4/compilers  
 
 If you want more info on any of the modules, you can use the
 `module help` command:
@@ -66,46 +66,37 @@ their versions you have presently loaded in your environment, e.g.:
 
     [user@cirrus-login0 ~]$ module list
     Currently Loaded Modulefiles:
-    1) git/2.35.1(default)                                  6) gcc/8.2.0(default)
-    2) singularity/3.7.2(default)                           7) intel-cc-18/18.0.5.274
-    3) epcc/utils                                           8) intel-fc-18/18.0.5.274
-    4) /mnt/lustre/indy2lfs/sw/modulefiles/epcc/setup-env   9) intel-compilers-18/18.05.274
-    5) intel-license                                       10) mpt/2.25
+    1) git/2.35.1(default)                                  
+    2) epcc/utils
+    2) /mnt/lustre/e1000/home/y07/shared/cirrus-modulefiles/epcc/setup-env 
 
 ### Loading, unloading and swapping modules
 
 To load a module to use `module add` or `module load`. For example, to
-load the intel-compilers-18 into the development environment:
+load the intel 20.4 compilers into the development environment:
 
-    module load intel-compilers-18
+    module load intel-20.4/compilers
 
-This will load the default version of the intel compilers. If you need a
-specific version of the module, you can add more information:
-
-    module load intel-compilers-18/18.0.5.274
-
-will load version 18.0.2.274 for you, regardless of the default.
+This will load the default version of the intel compilers.
 
 If a module loading file cannot be accessed within 10 seconds, a warning
 message will appear: `Warning: Module system not loaded`.
 
 If you want to clean up, `module remove` will remove a loaded module:
 
-    module remove intel-compilers-18
+    module remove intel-20.4/compilers
 
-(or `module rm intel-compilers-18` or
-`module unload intel-compilers-18`) will unload what ever version of
-intel-compilers-18 (even if it is not the default) you might have
-loaded. There are many situations in which you might want to change the
+You could also run `module rm intel-20.4/compilers` or `module unload intel-20.4/compilers`.
+There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
 version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using
 "module swap oldmodule newmodule".
 
-Suppose you have loaded version 18 of the Intel compilers; the following
-command will change to version 19:
+Suppose you have loaded version 19 of the Intel compilers; the following
+command will change to version 20:
 
-    module swap intel-compilers-18 intel-compilers-19
+    module swap intel-19.5/compilers intel-20.4/compilers
 
 ## Available Compiler Suites
 
@@ -119,11 +110,11 @@ command will change to version 19:
 
 ### Intel Compiler Suite
 
-The Intel compiler suite is accessed by loading the `intel-compilers-*`
-and `intel-*/compilers` modules, where `*` references the version. For
-example, to load the 2019 release, you would run:
+The Intel compiler suite is accessed by loading the `intel-*/compilers`
+module, where `*` references the version. For example, to load the v20
+release, you would run:
 
-    module load intel-compilers-19
+    module load intel-20.4/compilers
 
 Once you have loaded the module, the compilers are available as:
 
@@ -137,10 +128,10 @@ compiler versions and tools.
 ### GCC Compiler Suite
 
 The GCC compiler suite is accessed by loading the `gcc/*` modules, where
-`*` again is the version. For example, to load version 8.2.0 you would
+`*` again is the version. For example, to load version 10.2.0 you would
 run:
 
-    module load gcc/8.2.0
+    module load gcc/10.2.0
 
 Once you have loaded the module, the compilers are available as:
 
@@ -193,9 +184,9 @@ use to compile your code.
 #### Using Intel Compilers and HPE MPT
 
 Once you have loaded the MPT module you should next load the Intel
-compilers module you intend to use (e.g. `intel-compilers-19`):
+compilers module you intend to use (e.g. `intel-20.4/compilers`):
 
-    module load intel-compilers-19
+    module load intel-20.4/compilers
 
 The compiler wrappers are then available as
 
@@ -243,9 +234,9 @@ Compilers are then available as
 Although HPE MPT remains the default MPI library and we recommend that
 first attempts at building code follow that route, you may also choose
 to use Intel MPI if you wish. To use these, load the appropriate
-`intel-mpi` module, for example `intel-mpi-19`:
+MPI module, for example `intel-20.4/mpi`:
 
-    module load intel-mpi-19
+    module load intel-20.4/mpi
 
 Please note that the name of the wrappers to use when compiling with
 Intel MPI depends on whether you are using the Intel compilers or GCC.
@@ -260,40 +251,12 @@ building software.
 
 
 
-
-
-!!! Note
-
-
-	Using Intel MPI 18 can cause warnings in your output similar to
-	`no hfi units are available` or
-	`The /dev/hfi1_0 device failed to appear`. These warnings can be safely
-	ignored, or, if you would prefer to prevent them, you may add the line
-
-    	export I_MPI_FABRICS=shm:ofa
-
-	to your job scripts after loading the Intel MPI 18 module.
-
-
-
-
-
-!!! Note
-
-
-
-	When using Intel MPI 18, you should always launch MPI tasks with `srun`,
-	the supported method on Cirrus. Launches with `mpirun` or `mpiexec` will
-	likely fail.
-
-
-
 #### Using Intel Compilers and Intel MPI
 
 After first loading Intel MPI, you should next load the appropriate
-`intel-compilers` module (e.g. `intel-compilers-19`):
+Intel compilers module (e.g. `intel-20.4/compilers`):
 
-    module load intel-compilers-19
+    module load intel-20.4/compilers
 
 You may then use the following MPI compiler wrappers:
 
@@ -328,7 +291,7 @@ specific CUDA version, one that is fully compatible with the underlying
 NVIDIA GPU device driver. See the link below for an example how an OpenMPI
 build is configured.
 
-[Build instructions for OpenMPI 4.1.5 on Cirrus](https://github.com/hpc-uk/build-instructions/blob/main/libs/openmpi/build_openmpi_4.1.5_cirrus_gcc8.md)
+[Build instructions for OpenMPI 4.1.6 on Cirrus](https://github.com/hpc-uk/build-instructions/blob/main/libs/openmpi/build_openmpi_4.1.6_cirrus_gcc10.md)
 
 All this means we build can OpenMPI such that it supports direct GPU-to-GPU communications
 using the NVLink intra-node GPU comm links (and inter-node GPU comms are direct to Infiniband
@@ -442,8 +405,6 @@ A full list is available via `module avail intel`.
 
 The different available compiler versions are:
 
-- `intel-*/18.0.5.274` Intel 2018 Update 4
-- `intel-*/19.0.0.117` Intel 2019 Initial release
 - `intel-19.5/*` Intel 2019 Update 5
 - `intel-20.4/*` Intel 2020 Update 4
 
