@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.15">
     
     
       
@@ -408,15 +408,6 @@
   <a href="#time-based-one-time-passcode-totp-code" class="md-nav__link">
     <span class="md-ellipsis">
       Time-based one-time passcode (TOTP code)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#first-login-password-required" class="md-nav__link">
-    <span class="md-ellipsis">
-      First login: password required
     </span>
   </a>
   
@@ -1384,15 +1375,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#first-login-password-required" class="md-nav__link">
-    <span class="md-ellipsis">
-      First login: password required
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1631,21 +1613,26 @@ account.</p>
 <p>Remember, you will need to use both an SSH key and time-based one-time passcode (TOTP code) to log into Cirrus so you will
 also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up a method for generating a TOTP code</a>
 before you can log into Cirrus. </p>
-<h3 id="first-login-password-required">First login: password required</h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>You will <strong>not</strong> use your password when logging on to Cirrus after the first login for a new account.</p>
-</div>
-<p>As an additional security measure, you will also need to use a password from SAFE for your first login to Cirrus
+<!--
+
+### First login: password required
+
+!!! Important
+    You will **not** use your password when logging on to Cirrus after the first login for a new account.
+
+As an additional security measure, you will also need to use a password from SAFE for your first login to Cirrus
 with a new account. When you log into Cirrus for the first time with a new account, you will be prompted to change
-your initial password. This is a three step process:</p>
-<ol>
-<li>When promoted to enter your <em>ldap password</em>: Enter the password  which you <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine">retrieve from SAFE</a></li>
-<li>When prompted to enter your new password: type in a new password</li>
-<li>When prompted to re-enter the new password: re-enter the new password</li>
-</ol>
-<p>Your password has now been changed. You will no longer need this password to log into Cirrus from this point
-forwards, you will use your SSH key and TOTP code as described above.</p>
+your initial password. This is a three step process:
+
+1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
+2.  When prompted to enter your new password: type in a new password
+3.  When prompted to re-enter the new password: re-enter the new password
+
+Your password has now been changed. You will no longer need this password to log into Cirrus from this point
+forwards, you will use your SSH key and TOTP code as described above.
+
+-->
+
 <h2 id="ssh-clients">SSH Clients</h2>
 <p>Interaction with Cirrus is done remotely, over an encrypted
 communication channel, Secure Shell version 2 (SSH-2). This allows
@@ -2057,7 +2044,7 @@ fi
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
       
     
   </body>
