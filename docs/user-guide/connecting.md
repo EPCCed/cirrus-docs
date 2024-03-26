@@ -84,6 +84,8 @@ Remember, you will need to use both an SSH key and time-based one-time passcode 
 also need to [set up a method for generating a TOTP code](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account)
 before you can log into Cirrus. 
 
+<!--
+
 ### First login: password required
 
 !!! Important
@@ -99,6 +101,8 @@ your initial password. This is a three step process:
 
 Your password has now been changed. You will no longer need this password to log into Cirrus from this point
 forwards, you will use your SSH key and TOTP code as described above.
+
+-->
 
 ## SSH Clients
 
