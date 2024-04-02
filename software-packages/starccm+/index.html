@@ -1301,6 +1301,13 @@ mesh morphing, overset mesh and six degrees of freedom (6DOF) motion;
 and the ability to combine and account for the interaction between the
 various physics and motion models in a single simulation to cover your
 specific application.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>STAR-CCM+ is not centrally available as a module on Cirrus. All users 
+must build the software in their own user space. </p>
+<p>Below we provide some guidance for using STAR-CCM+ on Cirrus with the 
+PoD license. </p>
+</div>
 <h2 id="useful-links">Useful Links</h2>
 <blockquote>
 <ul>
@@ -1336,10 +1343,9 @@ following script starts the server:</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Load the default HPE MPI environment
-module load mpt
-module load starccm+
+# Add starccm+ installation to PATH and LD_LIBRARY_PATH
 
+# License information: 
 export SGI_MPI_HOME=$MPI_ROOT
 export PATH=$STARCCM_EXE:$PATH
 export LM_LICENSE_FILE=48002@192.168.191.10
@@ -1373,10 +1379,9 @@ previous examples is the "starccm+" line)</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Load the default HPE MPI environment
-module load mpt
-module load starccm+
+# Add starccm+ installation to PATH and LD_LIBRARY_PATH
 
+# License information: 
 export SGI_MPI_HOME=$MPI_ROOT
 export PATH=$STARCCM_EXE:$PATH
 export LM_LICENSE_FILE=48002@192.168.191.10
