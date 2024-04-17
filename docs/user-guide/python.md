@@ -202,7 +202,7 @@ below for further details.
 
 There are several more Python-based modules that also target the Cirrus
 GPU nodes. These include two machine learning frameworks,
-`pytorch/1.13.1-gpu` and `tensorflow/2.15.0-gpu`. Both modules are Python
+`pytorch/1.13.1-gpu` and `tensorflow/2.13.0-gpu`. Both modules are Python
 virtual environments that extend `python/3.10.8-gpu`. The MPI comms is
 handled by the [Horovod](https://horovod.readthedocs.io/en/stable/)
 0.28.1 package along with the [NVIDIA Collective Communications
@@ -325,7 +325,7 @@ the centrally-installed `python` modules. You could just as easily
 create a local virtual environment based on one of the Machine Learning
 (ML) modules, e.g., `tensorflow` or `pytorch`. This means you would avoid
 having to install ML packages within your local area. Each of those ML
-modules is based on a `python` module. For example, `tensorflow/2.15.0-gpu`
+modules is based on a `python` module. For example, `tensorflow/2.13.0-gpu`
 is itself an extension of `python/3.10.8-gpu`.
 
 ## Installing your own Python packages (with conda)
