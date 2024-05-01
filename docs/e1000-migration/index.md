@@ -421,8 +421,9 @@ Please [contact the service desk](mailto:support@cirrus.ac.uk) if you have conce
 <p>tensorflow/2.11.0-gpu</p></td>
 <td>
 <p>Please use one of the following</p>
+<p>tensorflow/2.13.0</p>
 <p>tensorflow/2.15.0</p>
-<p>tensorflow/2.15.0-gpu</p></td>
+<p>tensorflow/2.13.0-gpu</p></td>
 </tr>
 <tr>
 <td>

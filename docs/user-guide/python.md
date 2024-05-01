@@ -11,7 +11,7 @@ see [mpi4py for CPU](#mpi4py-for-cpu) or [mpi4py for GPU](#mpi4py-for-gpu).
 
 You can list the Miniconda modules by running `module avail python` on a
 login node. Those module versions that have the `gpu` suffix are
-suitable for use on the [Cirrus GPU nodes](../gpu). There are also
+suitable for use on the [Cirrus GPU nodes](gpu.md). There are also
 modules that extend these Python environments, e.g., `pyfr`, `tensorflow`
 and `pytorch` - simply run `module help <module name>` for further info.
 
@@ -202,7 +202,7 @@ below for further details.
 
 There are several more Python-based modules that also target the Cirrus
 GPU nodes. These include two machine learning frameworks,
-`pytorch/1.13.1-gpu` and `tensorflow/2.15.0-gpu`. Both modules are Python
+`pytorch/1.13.1-gpu` and `tensorflow/2.13.0-gpu`. Both modules are Python
 virtual environments that extend `python/3.10.8-gpu`. The MPI comms is
 handled by the [Horovod](https://horovod.readthedocs.io/en/stable/)
 0.28.1 package along with the [NVIDIA Collective Communications
@@ -325,7 +325,7 @@ the centrally-installed `python` modules. You could just as easily
 create a local virtual environment based on one of the Machine Learning
 (ML) modules, e.g., `tensorflow` or `pytorch`. This means you would avoid
 having to install ML packages within your local area. Each of those ML
-modules is based on a `python` module. For example, `tensorflow/2.15.0-gpu`
+modules is based on a `python` module. For example, `tensorflow/2.13.0-gpu`
 is itself an extension of `python/3.10.8-gpu`.
 
 ## Installing your own Python packages (with conda)
@@ -458,11 +458,11 @@ but please don’t attempt to run any computationally intensive work (such
 jobs will be killed should they reach the login node CPU limit).
 
 If you want to run your JupyterLab on a compute node, you will need to
-enter an [interactive session](../batch/#interactive-jobs); otherwise
+enter an [interactive session](batch.md#interactive-jobs); otherwise
 you can start from a login node prompt.
 
 1.  As described above, load the Anaconda module on Cirrus using
-    `module load anaconda/python3`.
+    `module load anaconda3/2023.9`.
 
 2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`.
 
