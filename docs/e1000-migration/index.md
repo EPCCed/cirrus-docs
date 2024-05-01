@@ -34,7 +34,7 @@ We are replacing the existing lustre `/work` file system with a new more perform
 
 The old `/work` file system will be available as read-only and we ask you to copy any files you require onto the new `/work` file system. 
 
-The old read-only file system will be removed on **1st May** so please retrieve all required data by then. 
+The old read-only file system will be removed on **15th May** so please retrieve all required data by then. 
 
 For username in project x01, to copy data from <br>
 `/mnt/lustre/indy2lfs/work/x01/x01/username/directory_to_copy  ` 
