@@ -50,11 +50,15 @@ Your Cirrus /work directory will be shown
 
 ## Setting up the other end of the transfer
 
+![image](../images/globus/10a-two-pane.jpg)
+
+Make sure you select two-panel view mode
+
 ### Laptop
 
 ![image](../images/globus/10-destination.jpg)
 
-If you wish to transfer data to/from your personal laptop or other device, click on the Collection Search
+If you wish to transfer data to/from your personal laptop or other device, click on the Collection Search in the right-hand panel
 
 ![image](../images/globus/11-globus-connect-personal.jpg)
 
