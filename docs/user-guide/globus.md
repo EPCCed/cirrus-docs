@@ -74,7 +74,9 @@ Please see the [JASMIN Globus page for more information](https://help.jasmin.ac.
 
 ![image](../images/globus/13-jasmin.jpg)
 
-Once you are connected to both the Source and Destination Collections, you can use the File Manager to select the files to be transferred, and the click the Start button to initiate the transfer
+## Setting up and initiating the transfer
+
+Once you are connected to both the Source and Destination Collections, you can use the File Manager to select the files to be transferred, and then click the Start button to initiate the transfer
 
 ![image](../images/globus/14-transfer.jpg)
 
