@@ -473,3 +473,10 @@ Please note that “remote” is the name that you have chosen when running rclo
 !!! Note
 
     If the session times out while the data transfer takes place, adding the `-vv` flag to an rclone transfer forces rclone to output to the terminal and therefore avoids triggering the timeout process.
+
+### Data transfer using Globus
+
+The Cirrus `/work` filesystem, which is hosted on the e1000 fileserver, has a Globus Collection (formerly known as an endpoint) with the name `e1000-fs1 directories`   
+
+[Full step-by-step guide for using Globus](../globus) to transfer files to/from Cirrus `/work`
+
