@@ -57,7 +57,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
 module load lammps
 
 # Run using input in in.test
-srun lmp_mpi < in.test
+srun lmp < in.test
 ```
 
 ## Running parallel LAMMPS jobs (GPU)
