@@ -182,7 +182,7 @@ the limit of `13.57T` indicates the quota for the group.
 ### Solid state storage
 
 More information on using the solid state storage can be found in the
-`/user-guide/solidstate` section of the user guide.
+[`/user-guide/solidstate`](https://docs.cirrus.ac.uk/user-guide/solidstate/) section of the user guide.
 
 The solid state storage is not backed up.
 
