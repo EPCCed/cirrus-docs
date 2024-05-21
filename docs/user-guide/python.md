@@ -5,7 +5,7 @@ Python on Cirrus is provided by a number of
 [Anaconda](https://www.continuum.io) module. (Miniconda being a small
 bootstrap version of Anaconda).
 
-The Anaconda module is called `anaconda3/2023.09` and is suitable for
+The Anaconda module is called `anaconda3` and is suitable for
 running serial applications - for parallel applications using `mpi4py`
 see [mpi4py for CPU](#mpi4py-for-cpu) or [mpi4py for GPU](#mpi4py-for-gpu).
 
@@ -462,7 +462,7 @@ enter an [interactive session](batch.md#interactive-jobs); otherwise
 you can start from a login node prompt.
 
 1.  As described above, load the Anaconda module on Cirrus using
-    `module load anaconda3/2023.9`.
+    `module load anaconda3`.
 
 2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`.
 
