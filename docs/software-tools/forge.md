@@ -98,10 +98,10 @@ relevant command to start the executable is as follows.
 
 module load forge
 
-export OMP_NUM_THREADS=16
+export OMP_NUM_THREADS=6
 export OMP_PLACES=cores
 
-ddt --verbose --offline --mpi=slurm --np 8 \
+ddt --verbose --offline --mpi=slurm --np 6 \
     --mem-debug=fast --check-bounds=before \
     ./my_executable
 ```
@@ -110,7 +110,7 @@ The parallel launch is delegated to `ddt` and the `--mpi=slurm` option
 indicates to `ddt` that the relevant queue system is Slurm
 (there is no explicit `srun`). It will also be
 necessary to state explicitly to `ddt` the number of processes
-required (here `--np 8`). For other options see, e.g., `ddt --help`.
+required (here `--np 6`). For other options see, e.g., `ddt --help`.
 
 Note that higher levels of memory debugging can result in extremely
 slow execution. The example given above uses the default
@@ -196,12 +196,15 @@ Load the `forge` module:
 module load forge
 ```
 
-#### Compilation and linking
+#### Linking
 
-Compilation should take place as usual. However, an additional set of
-libraries is required at link time.
+MAP uses two small libraries to collect data from your program. These
+are called `map-sampler` and `map-sampler-pmpi`. On Cirrus, the linking
+of these libraries is usually done automatically via the LD_PRELOAD
+mechanism, but only if your program is dynamically linked. Otherwise, you
+will need to link the MAP libraries manually by providing explicit link options.
 
-The path to the additional libraries required will depend on the MPI library and compiler.
+The library paths specified in the link options will depend on the MPI library and compiler.
 
 - `MPT 2.55 and GCC 10.2.0`: `${FORGE_DIR}/map/libs/mpt-2.25/gcc`
 - `Intel MPI 20.4 and Intel 20.4`: `${FORGE_DIR}/map/libs/impi-20/intel20`
