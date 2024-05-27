@@ -169,8 +169,8 @@ Please [contact the service desk](mailto:support@cirrus.ac.uk) if you have conce
 </tr>
 <tr>
 <td>
-<p>forge/22.1.3</p></td>
-<td>Please use forge/23.1.1</td>
+<p>forge/24.0</p></td>
+<td>Please use forge/24.0</td>
 </tr>
 <tr>
 <td>
