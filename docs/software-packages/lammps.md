@@ -69,7 +69,7 @@ forcefield/fix are available for GPU, a vast majority is, and more are
 added with each new version. Check the LAMMPS documentation for GPU
 compatibility with a specific command.
 
-For example, the following script will run a LAMMPS MD job using 2 GPUs
+For example, the following script will run a LAMMPS MD job using 2 GPUs, 1 MPI thread per GPU:
 
 ```bash
 #!/bin/bash --login
@@ -93,6 +93,36 @@ module load lammps-gpu
 # Run using input in in.test
 srun lmp -sf gpu -pk gpu 2 -in input.file -l log.file
 ```
+
+to increase the number of cores-per-gpu used, either use [OpenMP](https://docs.lammps.org/Speed_omp.html)
+or increase the number of MPI threads, using the `--ntasks` and `--ntasks-per-node` SBATCH flags:
+
+
+```bash
+#!/bin/bash --login
+
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=lammps_Example
+#SBATCH --time=00:20:00
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:2
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+# Replace [partition name] below with your partition name (e.g. standard,gpu)
+#SBATCH --partition=[partition name]
+# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+#SBATCH --qos=[qos name]
+
+# Load LAMMPS module
+module load lammps-gpu
+
+# --ntasks and --ntasks-per-node should be up to 10 x number of gpus requested.
+export PARAMS=" --ntasks-per-node=20 --ntasks=20 --exclusive"
+# Run using input in in.test
+srun ${PARAMS} lmp -sf gpu -pk gpu 2 -in in.ethanol_optimized
+```
+
 
 ## Compiling LAMMPS on Cirrus
 
