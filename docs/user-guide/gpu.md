@@ -149,6 +149,21 @@ enabled by the use of `-Minfo=mp`, see below.
     Generating "nvkernel_main_F1L88_2" GPU kernel
     26, Loop parallelized across teams and threads(128), schedule(static)
 
+### SYCL
+
+This section shows how to compile SYCL codes using the Intel compiler. First,
+load the following modules:
+
+    module load gcc/10.2.0 nvidia/nvhpc/22.11
+    module load oneapi
+    module load compiler
+
+Once the above modules are loaded, you can compile the code using the following:
+
+    icpx -fsycl code.cpp
+
+For testing, you can use material from the [SYCL Academy repository](https://github.com/codeplaysoftware/syclacademy).
+
 ## Submitting jobs to the GPU nodes
 
 To run a GPU job, a SLURM submission must specify a GPU partition and a
