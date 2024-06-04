@@ -1319,7 +1319,7 @@ benchmarks for their particular use-case. While not every LAMMPS
 forcefield/fix are available for GPU, a vast majority is, and more are
 added with each new version. Check the LAMMPS documentation for GPU
 compatibility with a specific command.</p>
-<p>For example, the following script will run a LAMMPS MD job using 2 GPUs</p>
+<p>For example, the following script will run a LAMMPS MD job using 2 GPUs, 1 MPI thread per GPU:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -1340,6 +1340,31 @@ module<span class="w"> </span>load<span class="w"> </span>lammps-gpu
 
 <span class="c1"># Run using input in in.test</span>
 srun<span class="w"> </span>lmp<span class="w"> </span>-sf<span class="w"> </span>gpu<span class="w"> </span>-pk<span class="w"> </span>gpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>-in<span class="w"> </span>input.file<span class="w"> </span>-l<span class="w"> </span>log.file
+</code></pre></div>
+<p>to increase the number of cores-per-gpu used, either use <a href="https://docs.lammps.org/Speed_omp.html">OpenMP</a>
+or increase the number of MPI threads, using the <code>--ntasks</code> and <code>--ntasks-per-node</code> SBATCH flags:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
+
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="c1">#SBATCH --job-name=lammps_Example</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --gres=gpu:2</span>
+
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard,gpu)</span>
+<span class="c1">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long,gpu)</span>
+<span class="c1">#SBATCH --qos=[qos name]</span>
+
+<span class="c1"># Load LAMMPS module</span>
+module<span class="w"> </span>load<span class="w"> </span>lammps-gpu
+
+<span class="c1"># --ntasks and --ntasks-per-node should be up to 10 x number of gpus requested.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PARAMS</span><span class="o">=</span><span class="s2">&quot; --ntasks-per-node=20 --ntasks=20 --exclusive&quot;</span>
+<span class="c1"># Run using input in in.test</span>
+srun<span class="w"> </span><span class="si">${</span><span class="nv">PARAMS</span><span class="si">}</span><span class="w"> </span>lmp<span class="w"> </span>-sf<span class="w"> </span>gpu<span class="w"> </span>-pk<span class="w"> </span>gpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>-in<span class="w"> </span><span class="k">in</span>.ethanol_optimized
 </code></pre></div>
 <h2 id="compiling-lammps-on-cirrus">Compiling LAMMPS on Cirrus</h2>
 <p>Compile instructions for LAMMPS on Cirrus can be found on GitHub:</p>
