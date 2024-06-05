@@ -602,6 +602,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sycl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SYCL
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1483,6 +1492,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sycl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SYCL
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1802,6 +1820,17 @@ main:
 Generating "nvkernel_main_F1L88_2" GPU kernel
 26, Loop parallelized across teams and threads(128), schedule(static)
 </code></pre>
+<h3 id="sycl">SYCL</h3>
+<p>This section shows how to compile SYCL codes using the Intel compiler. First,
+load the following modules:</p>
+<pre><code>module load gcc/10.2.0 nvidia/nvhpc/22.11
+module load oneapi
+module load compiler
+</code></pre>
+<p>Once the above modules are loaded, you can compile the code using the following:</p>
+<pre><code>icpx -fsycl code.cpp
+</code></pre>
+<p>For testing, you can use material from the <a href="https://github.com/codeplaysoftware/syclacademy">SYCL Academy repository</a>.</p>
 <h2 id="submitting-jobs-to-the-gpu-nodes">Submitting jobs to the GPU nodes</h2>
 <p>To run a GPU job, a SLURM submission must specify a GPU partition and a
 quality of service (QoS) as well as the number of GPUs required. You
