@@ -35,6 +35,17 @@ ssh <username>@login.cirrus.ac.uk -L 4241:cirrus-ag1:4241
 
 You can now view the status page from within a local browser, see [http://localhost:4241/status.html](http://localhost:4241/status.html).
 
+!!! note
+    The licence status page may contain multiple licences, indicated by a row of buttons (one per licence) near the top of the page.
+    The details of the 12-month licence described above can be accessed by clicking on the first button in the row.
+    Additional buttons may appear at various times for *boosted* licences that offer more tokens. Such licences are primarily for the
+    benefit of [ARCHER2](https://www.archer2.ac.uk/) users. Please contact the [Service Desk](https://www.cirrus.ac.uk/support/) if you have a specific requirement that exceeds
+    the current Forge licence provision.
+
+!!! note
+    The licence status page refers to the Arm Licence Server. Arm is the name of the company that originally developed Forge
+    before it was acquired by Linaro.
+
 
 ### One time set-up for using Forge
 
