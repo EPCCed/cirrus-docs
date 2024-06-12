@@ -1711,18 +1711,15 @@ compilers module you intend to use (e.g. <code>intel-20.4/compilers</code>):</p>
 <p>The compiler wrappers are then available as</p>
 <ul>
 <li><code>mpif90</code> - Fortran with MPI</li>
-<li><code>mpicc</code> - C with MPI</li>
-<li><code>mpicxx</code> - C++ with MPI</li>
+<li><code>mpicc -cc=icc</code> - C with MPI</li>
+<li><code>mpicxx --cxx=icpc</code> - C++ with MPI</li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The MPT compiler wrappers use GCC by default rather than the Intel compilers:</p>
-<p>When compiling C applications you must also specify that <code>mpicc</code> should use the <code>icc</code> compiler with, for example, <code>mpicc -cc=icc</code>. Similarly, when compiling C++ applications you must also specify that <code>mpicxx</code> should use the <code>icpc</code> compiler with, for example, <code>mpicxx -cxx=icpc</code>. (This is not required for Fortran as the <code>mpif90</code> compiler automatically uses <code>ifort</code>.) If in doubt use <code>mpicc -cc=icc -v</code> or <code>mpicxx -cxx=icpc -v</code> to see which compiler is actually being called.</p>
+<p>The MPT C/C++ compiler wrappers use GCC by default rather than the Intel compilers hence the additional options in the commands above. When compiling C applications you must also specify that <code>mpicc</code> should use the <code>icc</code> compiler with, for example, <code>mpicc -cc=icc</code>. Similarly, when compiling C++ applications you must also specify that <code>mpicxx</code> should use the <code>icpc</code> compiler with, for example, <code>mpicxx -cxx=icpc</code>. (This is not required for Fortran as the <code>mpif90</code> compiler automatically uses <code>ifort</code>.) If in doubt use <code>mpicc -cc=icc -v</code> or <code>mpicxx -cxx=icpc -v</code> to see which compiler is actually being called.</p>
 <p>Alternatively, you can set the environment variables <code>MPICC_CC=icc</code> and/or <code>MPICXX=icpc</code> to ensure the correct base compiler is used:</p>
-<pre><code>export MPICC_CC=icc
+<div class="highlight"><pre><span></span><code>export MPICC_CC=icc
 export MPICXX_CXX=icpc
-</code></pre>
-</div>
+</code></pre></div>
+<p>Whent eh environment variables are set, you can use <code>mpicc</code> or <code>mpicxx</code> without needing additional options.</p>
 <h4 id="using-gcc-compilers-and-hpe-mpt">Using GCC Compilers and HPE MPT</h4>
 <p>Once you have loaded the MPT module you should next load the <code>gcc</code>
 module:</p>
