@@ -203,7 +203,7 @@ export MPICC_CC=icc
 export MPICXX_CXX=icpc
 ```
 
-Whent eh environment variables are set, you can use `mpicc` or `mpicxx` without needing additional options.
+When the environment variables are set, you can use `mpicc` or `mpicxx` without needing additional options.
 
 
 #### Using GCC Compilers and HPE MPT
