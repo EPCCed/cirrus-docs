@@ -191,21 +191,19 @@ compilers module you intend to use (e.g. `intel-20.4/compilers`):
 The compiler wrappers are then available as
 
 - `mpif90` - Fortran with MPI
-- `mpicc` - C with MPI
-- `mpicxx` - C++ with MPI
+- `mpicc -cc=icc` - C with MPI
+- `mpicxx --cxx=icpc` - C++ with MPI
 
+The MPT C/C++ compiler wrappers use GCC by default rather than the Intel compilers hence the additional options in the commands above. When compiling C applications you must also specify that `mpicc` should use the `icc` compiler with, for example, `mpicc -cc=icc`. Similarly, when compiling C++ applications you must also specify that `mpicxx` should use the `icpc` compiler with, for example, `mpicxx -cxx=icpc`. (This is not required for Fortran as the `mpif90` compiler automatically uses `ifort`.) If in doubt use `mpicc -cc=icc -v` or `mpicxx -cxx=icpc -v` to see which compiler is actually being called.
 
-!!! Note
+Alternatively, you can set the environment variables `MPICC_CC=icc` and/or `MPICXX=icpc` to ensure the correct base compiler is used:
 
-    The MPT compiler wrappers use GCC by default rather than the Intel compilers:
+```
+export MPICC_CC=icc
+export MPICXX_CXX=icpc
+```
 
-    When compiling C applications you must also specify that `mpicc` should use the `icc` compiler with, for example, `mpicc -cc=icc`. Similarly, when compiling C++ applications you must also specify that `mpicxx` should use the `icpc` compiler with, for example, `mpicxx -cxx=icpc`. (This is not required for Fortran as the `mpif90` compiler automatically uses `ifort`.) If in doubt use `mpicc -cc=icc -v` or `mpicxx -cxx=icpc -v` to see which compiler is actually being called.
-
-    Alternatively, you can set the environment variables `MPICC_CC=icc` and/or `MPICXX=icpc` to ensure the correct base compiler is used:
-
-        export MPICC_CC=icc
-        export MPICXX_CXX=icpc
-
+Whent eh environment variables are set, you can use `mpicc` or `mpicxx` without needing additional options.
 
 
 #### Using GCC Compilers and HPE MPT
