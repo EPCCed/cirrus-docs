@@ -1,6 +1,6 @@
 # Cirrus migration to E1000 system 
 
-There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 GMT to allow for some major changes on the Cirrus service. 
+There was a full service maintenance on Tuesday 12th March 2024 from 0900 - 1700 GMT which allowed some major changes on the Cirrus service. 
 
 - [Change of authentication protocol ](#change-of-authentication-protocol)
 - [New /work file system](#new-work-file-system)
@@ -16,9 +16,9 @@ There will be a full service maintenance on Tuesday 12th March from 0900 - 1700 
 
 ## Change of authentication protocol  
 
-We are changing the authentication protocol on Cirrus from `ldap` to `freeipa`. 
+We changed the authentication protocol on Cirrus from `ldap` to `freeipa`. 
 
-We expect this change to be transparent to users but you may notice a change from `username@cirrus` to `username@eidf` within your SAFE account. 
+This change was transparent to users but you may have noticed a change from `username@cirrus` to `username@eidf` within your SAFE account. 
 
 You should be able to connect using your existing Cirrus authentication factors i.e. your ssh key pair and  your TOTP token. 
 
@@ -30,11 +30,11 @@ If you do experience issues, then please reset your tokens and try to reconnect.
 
 ## New /work file system
 
-We are replacing the existing lustre `/work` file system with a new more performant lustre file system, `E1000`. 
+We replaced the existing lustre `/work` file system with a new more performant lustre file system, `E1000`. 
 
 The old `/work` file system will be available as read-only and we ask you to copy any files you require onto the new `/work` file system. 
 
-The old read-only file system will be removed on **15th May** so please retrieve all required data by then. 
+The old read-only file system was be removed on **15th May 024** so please ensure all data is retrieved by then. 
 
 For username in project x01, to copy data from <br>
 `/mnt/lustre/indy2lfs/work/x01/x01/username/directory_to_copy  ` 
@@ -62,7 +62,7 @@ Our Computational Science and Engineering (CSE) Team have taken the opportunity 
 Please [contact the service desk](mailto:support@cirrus.ac.uk) if you have concerns about the removal of any of the older modules. 
 
 
-### TO BE REMOVED 
+### REMOVED MODULES 
 
 <table  ><colgroup><col  /><col  /><col  /></colgroup>
 <tbody>
