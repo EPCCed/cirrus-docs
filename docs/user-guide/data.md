@@ -220,6 +220,98 @@ archive and twice in the path on the new /home file system.
 
     The capacity of the home file system is much larger than the work file system so you should move data to home rather than work.
 
+
+
+## Sharing data with other Cirrus users
+
+How you share data with other Cirrus users depends on whether or not
+they belong to the same project as you. Each project has two shared
+folders that can be used for sharing data.
+
+### Sharing data with Cirrus users in your project
+
+Each project has an *inner* shared folder.
+
+    /work/[project code]/[project code]/shared
+
+This folder has read/write permissions for all project members. You can
+place any data you wish to share with other project members in this
+directory. For example, if your project code is x01 the inner shared
+folder would be located at `/work/x01/x01/shared`.
+
+### Sharing data with  Cirrus users within the same project group
+
+Some projects have [subprojects](#subprojects) (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.
+
+Often project groups do not have a disk quota set, but if the project PI [does set up a group disk quota](https://epcced.github.io/safe-docs/safe-for-managers/#how-can-i-create-a-quota-for-a-project-group-or-move-space-between-quotas) e.g. for /work then additional directories are created:
+
+	/work/e123/e123-fred
+	/work/e123/e123-fred/shared
+	/work/e123/e123-fred/<user> (for every user in the group)
+
+and all members of the ```/work/e123/e123-fred``` group will be able to use the ```/work/e123/e123-fred/shared``` directory to share their files.
+
+!!! Note
+    If files are copied from their usual directories they will keep the original ownership. To grant ownership to the group:
+
+	```chown -R $USER:e123-fred /work/e123/e123-fred/ ...```
+
+
+### Sharing data with all Cirrus users
+
+Each project also has an *outer* shared folder.:
+
+    /work/[project code]/shared
+
+It is writable by all project members and readable by any user on the
+system. You can place any data you wish to share with other Cirrus
+users who are not members of your project in this directory. For example,
+if your project code is x01 the outer shared folder would be located
+at `/work/x01/shared`.
+
+### Permissions
+
+You should check the permissions of any files that you place in the shared area,
+especially if those files were created in your own Cirrus account. Files of the
+latter type are likely to be readable by you only.
+
+The `chmod` command below shows how to make sure that a file placed in the outer
+shared folder is also readable by all Cirrus users.
+
+    chmod a+r /work/x01/shared/your-shared-file.txt
+
+Similarly, for the inner shared folder, `chmod` can be called such that read
+permission is granted to all users within the x01 project.
+
+    chmod g+r /work/x01/x01/shared/your-shared-file.txt
+
+If you're sharing a set of files stored within a folder hierarchy the `chmod`
+is slightly more complicated.
+
+    chmod -R a+Xr /work/x01/shared/my-shared-folder
+    chmod -R g+Xr /work/x01/x01/shared/my-shared-folder
+
+The `-R` option ensures that the read permission is enabled recursively and
+the `+X` guarantees that the user(s) you're sharing the folder with can access
+the subdirectories below `my-shared-folder`.
+
+### Sharing data between projects and subprojects
+
+Every file has an *owner* group that specifies access permissions for users
+belonging to that group. It's usually the case that the group id is synonymous
+with the project code. Somewhat confusingly however, projects can contain
+groups of their own, called [subprojects](#sharing-data-with-cirrus-users-within-the-same-project-group), which can be assigned disk space
+quotas distinct from the project.
+
+    chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
+
+The `chown` command above changes the owning group for all the files within
+`my-folder` to the `x01-subproject` group. This might be necessary if previously
+those files were *owned* by the x01 group and thereby using some of the x01
+disk quota.
+
+
+
 ## Archiving
 
 If you have related data that consists of a large number of small files
