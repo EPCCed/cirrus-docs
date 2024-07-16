@@ -45,18 +45,20 @@ therefore the latest module version present on the system.
 
 Each release of the NVIDIA HPC SDK may include several different
 versions of the CUDA toolchain. Only one of these CUDA toolchains
-can be active at any one time and for `nvhpc/22.11` this is CUDA 11.8.
+can be active at any one time and for `nvhpc/24.5` this is CUDA 12.4.
 
 Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:
 
 | Module               | Supported CUDA Version |
 |----------------------|------------------------|
+| `nvidia/nvhpc/24.5`  | CUDA 12.4              |
 | `nvidia/nvhpc/22.11` | CUDA 11.8              |
 | `nvidia/nvhpc/22.2`  | CUDA 11.6              |
 
 To load the latest NVIDIA HPC SDK use
 
+    $ module load gcc
     $ module load nvidia/nvhpc
 
 The following sections provide some details of compilation for different
@@ -69,8 +71,8 @@ platform and programming model developed by NVIDIA for general computing
 on graphical processing units (GPUs).
 
 Programs, typically written in C or C++, are compiled with `nvcc`. As
-well as `nvcc`, a host compiler is required. By default, a `gcc` module
-is added when `nvidia/nvhpc` is loaded.
+well as `nvcc`, a host compiler is required. This is usually `gcc`
+meaning the `gcc` module should also be loaded, as above.
 
 Compile your source code in the usual way.
 
@@ -103,6 +105,7 @@ OpenACC is a directive-based approach to introducing parallelism into
 either C/C++ or Fortran codes. A code with OpenACC directives may be
 compiled like so.
 
+    $ module load gcc
     $ module load nvidia/nvhpc
     $ nvc program.c
 
@@ -118,6 +121,7 @@ CUDA Fortran provides extensions to standard Fortran which allow GPU
 functionality. CUDA Fortran files (with file extension `.cuf`) may be
 compiled with the NVIDIA Fortran compiler.
 
+    $ module load gcc
     $ module load nvidia/nvhpc
     $ nvfortran program.cuf
 
@@ -132,6 +136,7 @@ Cirrus). OpenMP code can be compiled with the NVIDIA compilers in a
 similar manner to OpenACC. To enable this functionality, you must add
 `-mp=gpu` to your compile command.
 
+    $ module load gcc
     $ module load nvidia/nvhpc
     $ nvc++ -mp=gpu program.cpp
 
@@ -254,7 +259,7 @@ minutes would look like the following.
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
 
-    # Load the required modules 
+    # Load the required modules
     module load nvidia/nvhpc
 
     srun ./cuda_test.x
@@ -286,7 +291,7 @@ minutes would appear as follows.
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
 
-    # Load the required modules 
+    # Load the required modules
     module load nvidia/nvhpc
 
     srun ./cuda_test.x
@@ -314,7 +319,7 @@ minutes.
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
 
-    # Load the required modules 
+    # Load the required modules
     module load nvidia/nvhpc
 
     srun ./cuda_test.x
@@ -353,7 +358,7 @@ application.
     $ cuda-gdb ./my-application.x
     NVIDIA (R) CUDA Debugger
     ...
-    (cuda-gdb) 
+    (cuda-gdb)
 
 Debugging then proceeds as usual. One can use the help facility within
 `cuda-gdb` to find details on the various debugging commands. Type
@@ -385,7 +390,7 @@ a batch job.
 
     #SBATCH --time=00:10:00
     #SBATCH --nodes=1
-    #SBATCH --exclusive  
+    #SBATCH --exclusive
     #SBATCH --partition=gpu
     #SBATCH --qos=short
     #SBATCH --gres=gpu:1
@@ -480,7 +485,7 @@ The `nvidia-smi` command queries the available GPUs and reports current informat
   | N/A   38C    P0    57W / 300W |      0MiB / 16384MiB |      1%      Default |
   |                               |                      |                  N/A |
   +-------------------------------+----------------------+----------------------+
-                                                                                
+
   +-----------------------------------------------------------------------------+
   | Processes:                                                                  |
   |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
@@ -501,21 +506,21 @@ To monitor the power usage throughout the duration of a job, the output of nvidi
 Example submission script:
 
 	#!/bin/bash --login
-	
+
 	# Slurm job options (name, compute nodes, job time)
 	#SBATCH --job-name=lammps_Example
 	#SBATCH --time=00:20:00
 	#SBATCH --nodes=1
 	#SBATCH --gres=gpu:4
-	
+
 	# Replace [budget code] below with your project code (e.g. t01)
 	#SBATCH --account=[budget code]
 	#SBATCH --partition=gpu
 	#SBATCH --qos=gpu
-	
+
 	# Load the required modules
 	module load nvidia/nvhpc
-	
+
 	# Save the output of NVIDIA-SMI every 10 seconds
 	nvidia-smi --loop=10 --filename=out-nvidia-smi.txt &
 	srun ./cuda_test.x
@@ -539,8 +544,8 @@ bandwidth.
 Version of OpenMPI with both CUDA-aware MPI support and SLURM support
 are available, you should load the following modules:
 
-    module load openmpi/4.1.6-cuda-11.6
-    module load nvidia/nvhpc-nompi/22.2
+    module load openmpi/4.1.6-cuda-12.4
+    module load nvidia/nvhpc-nompi/24.5
 
 The command you use to compile depends on whether you are compiling
 C/C++ or Fortran.
@@ -576,16 +581,15 @@ A batch script to use such an executable might be:
     #SBATCH --gres=gpu:4
 
     # Load the appropriate modules, e.g.,
-    module load openmpi/4.1.6-cuda-11.6
-    module load nvidia/nvhpc-nompi/22.2
+    module load openmpi/4.1.6-cuda-12.4
+    module load nvidia/nvhpc-nompi/24.5
 
     export OMP_NUM_THREADS=1
 
-    # Note the addition
-    export OMPI_MCA_pml=ob1
-
     srun --ntasks=4 --cpus-per-task=10 --hint=nomultithread ./my_program
 
-Note the addition of the environment variable `OMPI_MCA_pml=ob1` is
-required for correct operation. As before, MPI and placement options
-should be directly specified to `srun` and not via `SBATCH` directives.
+As before, MPI and placement options should be directly specified to
+`srun` and not via `SBATCH` directives.
+
+It is possible you may still see warning messages at run time concerning
+`fork()`. These may be safely ignored.
