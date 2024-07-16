@@ -586,14 +586,10 @@ A batch script to use such an executable might be:
 
     export OMP_NUM_THREADS=1
 
-    # Note the addition
-    export OMPI_MCA_pml=ob1
-
     srun --ntasks=4 --cpus-per-task=10 --hint=nomultithread ./my_program
 
-Note the addition of the environment variable `OMPI_MCA_pml=ob1` is
-required for correct operation. As before, MPI and placement options
-should be directly specified to `srun` and not via `SBATCH` directives.
+As before, MPI and placement options should be directly specified to
+`srun` and not via `SBATCH` directives.
 
 It is possible you may still see warning messages at run time concerning
 `fork()`. These may be safely ignored.
