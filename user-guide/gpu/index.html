@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.76a95c52.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -1727,7 +1727,7 @@ are particular reasons to use earlier versions. The default version is
 therefore the latest module version present on the system.</p>
 <p>Each release of the NVIDIA HPC SDK may include several different
 versions of the CUDA toolchain. Only one of these CUDA toolchains
-can be active at any one time and for <code>nvhpc/22.11</code> this is CUDA 11.8.</p>
+can be active at any one time and for <code>nvhpc/24.5</code> this is CUDA 12.4.</p>
 <p>Here is a list of available HPC SDK versions, and the corresponding
 version of CUDA:</p>
 <table>
@@ -1739,6 +1739,10 @@ version of CUDA:</p>
 </thead>
 <tbody>
 <tr>
+<td><code>nvidia/nvhpc/24.5</code></td>
+<td>CUDA 12.4</td>
+</tr>
+<tr>
 <td><code>nvidia/nvhpc/22.11</code></td>
 <td>CUDA 11.8</td>
 </tr>
@@ -1749,7 +1753,8 @@ version of CUDA:</p>
 </tbody>
 </table>
 <p>To load the latest NVIDIA HPC SDK use</p>
-<pre><code>$ module load nvidia/nvhpc
+<pre><code>$ module load gcc
+$ module load nvidia/nvhpc
 </code></pre>
 <p>The following sections provide some details of compilation for different
 programming models.</p>
@@ -1758,8 +1763,8 @@ programming models.</p>
 platform and programming model developed by NVIDIA for general computing
 on graphical processing units (GPUs).</p>
 <p>Programs, typically written in C or C++, are compiled with <code>nvcc</code>. As
-well as <code>nvcc</code>, a host compiler is required. By default, a <code>gcc</code> module
-is added when <code>nvidia/nvhpc</code> is loaded.</p>
+well as <code>nvcc</code>, a host compiler is required. This is usually <code>gcc</code>
+meaning the <code>gcc</code> module should also be loaded, as above.</p>
 <p>Compile your source code in the usual way.</p>
 <pre><code>nvcc -arch=sm_70 -o cuda_test.x cuda_test.cu
 </code></pre>
@@ -1782,7 +1787,8 @@ Intel C++ compiler <code>icpc</code>.</p>
 <p>OpenACC is a directive-based approach to introducing parallelism into
 either C/C++ or Fortran codes. A code with OpenACC directives may be
 compiled like so.</p>
-<pre><code>$ module load nvidia/nvhpc
+<pre><code>$ module load gcc
+$ module load nvidia/nvhpc
 $ nvc program.c
 
 $ nvc++ program.cpp
@@ -1794,7 +1800,8 @@ explicit CUDA content. See <code>man nvc</code> or <code>man nvc++</code> for fu
 <p>CUDA Fortran provides extensions to standard Fortran which allow GPU
 functionality. CUDA Fortran files (with file extension <code>.cuf</code>) may be
 compiled with the NVIDIA Fortran compiler.</p>
-<pre><code>$ module load nvidia/nvhpc
+<pre><code>$ module load gcc
+$ module load nvidia/nvhpc
 $ nvfortran program.cuf
 </code></pre>
 <p>See <code>man nvfortran</code> for further details.</p>
@@ -1805,7 +1812,8 @@ host (i.e. CPU) to one or more target devices (such as the GPUs on
 Cirrus). OpenMP code can be compiled with the NVIDIA compilers in a
 similar manner to OpenACC. To enable this functionality, you must add
 <code>-mp=gpu</code> to your compile command.</p>
-<pre><code>$ module load nvidia/nvhpc
+<pre><code>$ module load gcc
+$ module load nvidia/nvhpc
 $ nvc++ -mp=gpu program.cpp
 </code></pre>
 <p>You can specify exactly which GPU to target with the <code>-gpu</code> flag. For
@@ -1955,7 +1963,7 @@ minutes would look like the following.</p>
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
 
-# Load the required modules 
+# Load the required modules
 module load nvidia/nvhpc
 
 srun ./cuda_test.x
@@ -1983,7 +1991,7 @@ minutes would appear as follows.</p>
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
 
-# Load the required modules 
+# Load the required modules
 module load nvidia/nvhpc
 
 srun ./cuda_test.x
@@ -2008,7 +2016,7 @@ minutes.</p>
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
 
-# Load the required modules 
+# Load the required modules
 module load nvidia/nvhpc
 
 srun ./cuda_test.x
@@ -2065,7 +2073,7 @@ a batch job.</p>
 
 #SBATCH --time=00:10:00
 #SBATCH --nodes=1
-#SBATCH --exclusive  
+#SBATCH --exclusive
 #SBATCH --partition=gpu
 #SBATCH --qos=short
 #SBATCH --gres=gpu:1
@@ -2181,8 +2189,8 @@ nodes, MPI communication will remain limited by network latency and
 bandwidth.</p>
 <p>Version of OpenMPI with both CUDA-aware MPI support and SLURM support
 are available, you should load the following modules:</p>
-<pre><code>module load openmpi/4.1.6-cuda-11.6
-module load nvidia/nvhpc-nompi/22.2
+<pre><code>module load openmpi/4.1.6-cuda-12.4
+module load nvidia/nvhpc-nompi/24.5
 </code></pre>
 <p>The command you use to compile depends on whether you are compiling
 C/C++ or Fortran.</p>
@@ -2209,19 +2217,17 @@ explicitly, e.g.,</p>
 #SBATCH --gres=gpu:4
 
 # Load the appropriate modules, e.g.,
-module load openmpi/4.1.6-cuda-11.6
-module load nvidia/nvhpc-nompi/22.2
+module load openmpi/4.1.6-cuda-12.4
+module load nvidia/nvhpc-nompi/24.5
 
 export OMP_NUM_THREADS=1
 
-# Note the addition
-export OMPI_MCA_pml=ob1
-
 srun --ntasks=4 --cpus-per-task=10 --hint=nomultithread ./my_program
 </code></pre>
-<p>Note the addition of the environment variable <code>OMPI_MCA_pml=ob1</code> is
-required for correct operation. As before, MPI and placement options
-should be directly specified to <code>srun</code> and not via <code>SBATCH</code> directives.</p>
+<p>As before, MPI and placement options should be directly specified to
+<code>srun</code> and not via <code>SBATCH</code> directives.</p>
+<p>It is possible you may still see warning messages at run time concerning
+<code>fork()</code>. These may be safely ignored.</p>
 
 
 
@@ -2288,7 +2294,7 @@ should be directly specified to <code>srun</code> and not via <code>SBATCH</code
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>
