@@ -3,7 +3,8 @@
 
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling tools
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
-(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.
+(and also hydrid MPI/OpenMP). Debugging is also possible for CUDA applications
+on the GPU nodes. Forge DDT is the debugger and MAP is the profiler.
 
 
 ### User interface
@@ -16,36 +17,6 @@ and run it locally. The remote client should be used if at all possible.
 To download the remote client, see the [Forge download pages](https://www.linaroforge.com/downloadForge/).
 Version 24.0 is known to work at the time of writing. A section further down this page explains how to use the remote client,
 see [Connecting with the remote client](#connecting-with-the-remote-client).
-
-### Licensing
-
-Cirrus has a licence for up to 2080 tokens, where a token represents an MPI parallel process.
-Running Forge DDT/MAP to debug/profile a code running across 16 nodes using 36 MPI ranks per
-node would require 576 tokens. Alternatively, the number of tokens required would be halved
-if there were 18 MPI ranks per node.
-
-Please note, Forge licence tokens are shared by all Cirrus (and [ARCHER2](https://www.archer2.ac.uk/)) users.
-
-To see how many tokens are in use, you can view the licence server status page by first
-setting up an SSH tunnel to the node hosting the licence server.
-
-```bash
-ssh <username>@login.cirrus.ac.uk -L 4241:cirrus-ag1:4241
-```
-
-You can now view the status page from within a local browser, see [http://localhost:4241/status.html](http://localhost:4241/status.html).
-
-!!! note
-    The licence status page may contain multiple licences, indicated by a row of buttons (one per licence) near the top of the page.
-    The details of the 12-month licence described above can be accessed by clicking on the first button in the row.
-    Additional buttons may appear at various times for *boosted* licences that offer more tokens. Such licences are primarily for the
-    benefit of [ARCHER2](https://www.archer2.ac.uk/) users. Please contact the [Service Desk](https://www.cirrus.ac.uk/support/) if you have a specific requirement that exceeds
-    the current Forge licence provision.
-
-!!! note
-    The licence status page refers to the Arm Licence Server. Arm is the name of the company that originally developed Forge
-    before it was acquired by Linaro.
-
 
 ### One time set-up for using Forge
 
@@ -95,7 +66,7 @@ to reduce the optimisation to `-O0` to obtain full and consistent
 information. However, this in itself can change the behaviour of bugs,
 so some experimentation may be necessary.
 
-#### Post-mortem debugging
+#### Post-mortem, or offline, debugging
 
 A non-interactive method of debugging is available which allows information
 to be obtained on the state of the execution at the point of failure in a
@@ -145,6 +116,7 @@ with C++) or `-ldmallocthcxx` (for threading with C++). The library
 locations are all set up when the `forge` module is loaded so these
 libraries should be found without further arguments.
 
+
 #### Interactive debugging: using the client to submit a batch job
 
 You can also start the client interactively (for details of remote launch, see [Connecting with the remote client](#connecting-with-the-remote-client)).
@@ -164,7 +136,10 @@ Note:
 the left-hand side;
 
 * If the license has connected successfully, a serial number will be
-shown in small text at the lower left.
+shown in small text at the lower left (see image below). One can click
+on the question
+mark icon next to the license serial number to see current information
+on the status of the license (number of processes available and so on).
 
 
 ![Forge window](./forge-ddt.png)
@@ -198,6 +173,18 @@ template file can then be specified in the dialog window.
 There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the [Linaro Forge documentation](https://docs.linaroforge.com/24.0/html/forge/ddt/index.html).
 
+#### GPU debugging
+
+This proceeds in the normal way on GPU nodes. We recommend that one sets, in
+the environment (e.g., via the `.qft` file, q.v.)
+```
+export TMPDIR=/tmp
+```
+If this is not set, the application may not start, or fail at the point
+of execution.
+
+See the Linaro Forge documentation for further comments on GPU debugging.
+
 
 ### Using MAP
 
@@ -217,8 +204,8 @@ will need to link the MAP libraries manually by providing explicit link options.
 
 The library paths specified in the link options will depend on the MPI library and compiler.
 
-- `MPT 2.55 and GCC 10.2.0`: `${FORGE_DIR}/map/libs/mpt-2.25/gcc`
-- `Intel MPI 20.4 and Intel 20.4`: `${FORGE_DIR}/map/libs/impi-20/intel20`
+- MPT 2.55 and GCC 10.2.0: `${FORGE_DIR}/map/libs/mpt-2.25/gcc`
+- Intel MPI 20.4 and Intel 20.4: `${FORGE_DIR}/map/libs/impi-20/intel20`
 
 For example, for `MPT 2.55 and GCC 10.2.0` the additional options required at link time
 are given below.
@@ -229,7 +216,7 @@ are given below.
 ```
 
 The MAP libraries for other combinations of MPI library and compiler can be found under
-`${FORGE_DIR}/map/libs`. 
+`${FORGE_DIR}/map/libs`.
 
 #### Generating a profile
 
@@ -240,7 +227,8 @@ Submit a batch job in the usual way, and include the lines:
 
 module load forge
 
-map -n <number of MPI processes> --mpi=slurm --mpiargs="--hint=nomultithread --distribution=block:block" --profile ./my_executable
+map -n <number of MPI processes> --mpi=slurm --mpiargs="--hint=nomultithread \
+    --distribution=block:block" --profile ./my_executable
 ```
 
 Successful execution will generate a file with a `.map` extension.
@@ -289,6 +277,59 @@ that batch submissions via `sbatch` will not be rejected.
 Finally, note that `ssh` may need to be configured so that it picks up
 the correct local public key file. This may be done, e.g., via the
 local `.ssh/config` configuration file.
+
+#### Troubleshooting
+
+A common cause of problems in the use of the remote client is incorrect
+Forge configuration in the `.forge/system.config` file, particularly in the
+specification of the shared directory. The should be of the form
+```
+shared directory = /mnt/lustre/e1000/home/project/project/user/.forge
+```
+(and certainly not the home directory `~`). The full mount point your
+work directory can be obtained with e.g., `pwd -P` (somewhat
+confusingly, `/mnt/lustre/e100/home` is `/work`).
+
+If you submit a job to the queue via the remote client, and the job starts
+(can check using `squeue` interactively), but the client does not connect,
+you may need to check this configuration setting.
+
+
+For hybrid applications where thread placement is critical, the remote
+client does not provide good control of such placement (or any at all).
+The `--offline` approach discussed above is one solution.
+
+
+### Licensing
+
+Cirrus has a licence for up to 2080 tokens, where a token represents an MPI parallel process.
+Running Forge DDT/MAP to debug/profile a code running across 16 nodes using 36 MPI ranks per
+node would require 576 tokens. Alternatively, the number of tokens required would be halved
+if there were 18 MPI ranks per node.
+
+Please note, Forge licence tokens are shared by all Cirrus (and [ARCHER2](https://www.archer2.ac.uk/)) users.
+
+To see how many tokens are in use, you can view the licence server status page by first
+setting up an SSH tunnel to the node hosting the licence server.
+
+```bash
+ssh <username>@login.cirrus.ac.uk -L 4241:cirrus-ag1:4241
+```
+
+You can now view the status page from within a local browser, see [http://localhost:4241/status.html](http://localhost:4241/status.html).
+
+!!! note
+    The licence status page may contain multiple licences, indicated by a row of buttons (one per licence) near the top of the page.
+    The details of the 12-month licence described above can be accessed by clicking on the first button in the row.
+    Additional buttons may appear at various times for *boosted* licences that offer more tokens. Such licences are primarily for the
+    benefit of [ARCHER2](https://www.archer2.ac.uk/) users. Please contact the [Service Desk](https://www.cirrus.ac.uk/support/) if you have a specific requirement that exceeds
+    the current Forge licence provision.
+
+!!! note
+    The licence status page refers to the Arm Licence Server. Arm is the name of the company that originally developed Forge
+    before it was acquired by Linaro.
+
+
 
 ## Useful links
 
