@@ -199,16 +199,49 @@ you request 1 GPU card, then you will be assigned a maximum of 384/4 =
 
 
 
+### Primary resources on high memory (CPU) compute nodes
+
+The *primary resource* you request on the high memory compute node is CPU
+cores. The maximum amount of memory you are allocated is computed as the
+number of CPU cores you requested multiplied by 1/112th of the total
+memory available (as there are 112 CPU cores per node). So, if you
+request the full node (112 cores), then you will be allocated a maximum
+of all of the memory (3 TB) available on the node; however, if you
+request 1 core, then you will be assigned a maximum of 3000/112 = 26.8 GB
+of the memory available on the node.
+
+!!! Note
+
+	Using the `--exclusive` option in jobs will give you access to the full
+	node memory even if you do not explicitly request all of the CPU cores
+	on the node.
+
+
+!!! Warning
+
+	Using the `--exclusive` option will charge your account for the usage of
+	the entire node, even if you don't request all the cores in your
+	scripts.
+
+!!! Note
+
+	You will not generally have access to the full amount of memory resource
+	on the the node as some is retained for running the operating system and
+	other system processes.
+
+
+
 ### Partitions
 
 On Cirrus, compute nodes are grouped into partitions. You will have to
 specify a partition using the `--partition` option in your submission
 script. The following table has a list of active partitions on Cirrus.
 
-| Partition | Description                                                                    | Total nodes available | Notes |
-|-----------|--------------------------------------------------------------------------------|-----------------------|-------|
-| standard  | CPU nodes with 2x 18-core Intel Broadwell processors                           | 352                   |       |
-| gpu       | GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors | 36                    |       |
+| Partition | Description                                                                                   | Total nodes available | Notes |
+|-----------|-----------------------------------------------------------------------------------------------|-----------------------|-------|
+| standard  | CPU nodes with 2x 18-core Intel Broadwell processors, 256 GB memory                           | 352                   |       |
+| highmem   | CPU node with 4x 28-core Intel Xeon Platinum processors, 3 TB memory                          | 1                     |       |
+| gpu       | GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors, 384 GB memory | 36                    |       |
 
 Cirrus Partitions
 
@@ -232,12 +265,13 @@ resource limits. The following table has a list of active QoS on Cirrus.
 | QoS Name     | Jobs Running Per User | Jobs Queued Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
 | standard     | No limit              | 500 jobs             | 4 days       | 88 nodes (3168 cores/25%)               | standard              |       |
+| highmem      | 1 job                 | 2 jobs               | 24 hours     | 1 node                                  | highmem               |       |
 | largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) or 144 GPUs | standard, gpu         |       |
 | long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes or 8 GPUs                      | standard, gpu         |       |
-| highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              |        charged at 1.5 x normal rate |
+| highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              | charged at 1.5 x normal rate |
 | gpu          | No limit              | 128 jobs             | 4 days       | 64 GPUs (16 nodes/40%)                  | gpu                   |       |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes or 4 GPUs                       | standard, gpu         |       |
-| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%) or 16 GPUs    | standard, gpu         |        usage is not charged |
+| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%) or 16 GPUs    | standard, gpu         | usage is not charged |
 
 #### Cirrus QoS
 
