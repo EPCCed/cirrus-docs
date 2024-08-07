@@ -12,9 +12,11 @@ information on how to get access to the system please see the [Cirrus
 website](http://www.cirrus.ac.uk).
 
 The Cirrus facility is based around an SGI ICE XA system. There are 280
-standard compute nodes and 38 GPU compute nodes. Each standard compute
-node has 256 GiB of memory and contains two 2.1 GHz, 18-core Intel Xeon
-(Broadwell) processors. Each GPU compute node has 384 GiB of memory,
+standard compute nodes, 1 high memory compute node and 38 GPU compute
+nodes. Each standard compute node has 256 GiB of memory and contains two
+2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each high memory
+compute node has 3 TiB of memory and contains four 2.7 GHz, 28-core Intel
+Xeon (Platinum) processors. Each GPU compute node has 384 GiB of memory,
 contains two 2.4 GHz, 20-core Intel Xeon (Cascade Lake) processors and
 four NVIDIA Tesla V100-SXM2-16GB (Volta) GPU accelerators connected to
 the host processors and each other via PCIe. All nodes are connected
