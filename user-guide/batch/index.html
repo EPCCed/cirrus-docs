@@ -540,6 +540,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#primary-resources-on-high-memory-cpu-compute-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary resources on high memory (CPU) compute nodes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#partitions" class="md-nav__link">
     <span class="md-ellipsis">
       Partitions
@@ -1601,6 +1610,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#primary-resources-on-high-memory-cpu-compute-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary resources on high memory (CPU) compute nodes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#partitions" class="md-nav__link">
     <span class="md-ellipsis">
       Partitions
@@ -2059,6 +2077,33 @@ will be consumed when running these jobs.</p>
 the entire node, <em>i.e.</em>, 4 GPUs, even if you don't request all the GPUs
 in your submission script.</p>
 </div>
+<h3 id="primary-resources-on-high-memory-cpu-compute-nodes">Primary resources on high memory (CPU) compute nodes</h3>
+<p>The <em>primary resource</em> you request on the high memory compute node is CPU
+cores. The maximum amount of memory you are allocated is computed as the
+number of CPU cores you requested multiplied by 1/112th of the total
+memory available (as there are 112 CPU cores per node). So, if you
+request the full node (112 cores), then you will be allocated a maximum
+of all of the memory (3 TB) available on the node; however, if you
+request 1 core, then you will be assigned a maximum of 3000/112 = 26.8 GB
+of the memory available on the node.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the <code>--exclusive</code> option in jobs will give you access to the full
+node memory even if you do not explicitly request all of the CPU cores
+on the node.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using the <code>--exclusive</code> option will charge your account for the usage of
+the entire node, even if you don't request all the cores in your
+scripts.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will not generally have access to the full amount of memory resource
+on the the node as some is retained for running the operating system and
+other system processes.</p>
+</div>
 <h3 id="partitions">Partitions</h3>
 <p>On Cirrus, compute nodes are grouped into partitions. You will have to
 specify a partition using the <code>--partition</code> option in your submission
@@ -2075,13 +2120,19 @@ script. The following table has a list of active partitions on Cirrus.</p>
 <tbody>
 <tr>
 <td>standard</td>
-<td>CPU nodes with 2x 18-core Intel Broadwell processors</td>
+<td>CPU nodes with 2x 18-core Intel Broadwell processors, 256 GB memory</td>
 <td>352</td>
 <td></td>
 </tr>
 <tr>
+<td>highmem</td>
+<td>CPU node with 4x 28-core Intel Xeon Platinum processors, 3 TB memory</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
 <td>gpu</td>
-<td>GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors</td>
+<td>GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors, 384 GB memory</td>
 <td>36</td>
 <td></td>
 </tr>
@@ -2118,6 +2169,15 @@ resource limits. The following table has a list of active QoS on Cirrus.</p>
 <td>4 days</td>
 <td>88 nodes (3168 cores/25%)</td>
 <td>standard</td>
+<td></td>
+</tr>
+<tr>
+<td>highmem</td>
+<td>1 job</td>
+<td>2 jobs</td>
+<td>24 hours</td>
+<td>1 node</td>
+<td>highmem</td>
 <td></td>
 </tr>
 <tr>
