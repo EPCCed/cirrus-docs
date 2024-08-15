@@ -261,11 +261,13 @@ You can list the active partitions using
 
 On Cirrus Quality of Service (QoS) is used alongside partitions to set
 resource limits. The following table has a list of active QoS on Cirrus.
+Note that the number of jobs queued includes both pending and running
+jobs.
 
 | QoS Name     | Jobs Running Per User | Jobs Queued Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
 | standard     | No limit              | 500 jobs             | 4 days       | 88 nodes (3168 cores/25%)               | standard              |       |
-| highmem      | 1 job                 | 2 jobs               | 24 hours     | 1 node                                  | highmem               |       |
+| highmem      | 1 job                 | 2 jobs               | 48 hours     | 1 node                                  | highmem               |       |
 | largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) or 144 GPUs | standard, gpu         |       |
 | long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes or 8 GPUs                      | standard, gpu         |       |
 | highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              | charged at 1.5 x normal rate |
