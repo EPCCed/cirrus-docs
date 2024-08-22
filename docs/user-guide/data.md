@@ -100,7 +100,7 @@ A full path name can be specified if required.
 
 Every project has an allocation on the work file system and your
 project's space can always be accessed via the path
-`/work/[project-code]`. The work file system is approximately 400 TB in
+`/work/[project-code]`. The work file system is approximately 1 PB in
 size and is implemented using the Lustre parallel file system
 technology. They are designed to support data in large files. The
 performance for data stored in large numbers of small files is probably
@@ -124,12 +124,6 @@ If you have data on the work file system that you are not going to need
 in the future please delete it.
 
 #### Quotas on the work file system
-
-
-
-!!! Tip
-
-    The capacity of the home file system is much larger than the work file system so you should store most data on home and only move data to work that you need for current running work.
 
 
 As for the home file system, all projects are assigned a quota on the
