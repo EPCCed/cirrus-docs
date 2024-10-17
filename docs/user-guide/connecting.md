@@ -78,10 +78,10 @@ by following the instructions at:
 Once you have done this, your SSH key will be added to your Cirrus
 account.
 
-!!!tip
-   You can upload multiple public keys to SAFE to associate with your login account. This 
-   can be helpful if you want to log into Cirrus from multiple machines - you can have a different
-   SSH key pair on each machine.
+!!! Tip
+    You can upload multiple public keys to SAFE to associate with your login account. This 
+    can be helpful if you want to log into Cirrus from multiple machines - you can have a different
+    SSH key pair on each machine.
 
 ### Time-based one-time passcode (TOTP code)
 
