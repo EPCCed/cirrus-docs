@@ -78,6 +78,11 @@ by following the instructions at:
 Once you have done this, your SSH key will be added to your Cirrus
 account.
 
+!!!tip
+   You can upload multiple public keys to SAFE to associate with your login account. This 
+   can be helpful if you want to log into Cirrus from multiple machines - you can have a different
+   SSH key pair on each machine.
+
 ### Time-based one-time passcode (TOTP code)
 
 Remember, you will need to use both an SSH key and time-based one-time passcode (TOTP code) to log into Cirrus so you will
@@ -257,59 +262,8 @@ to use for each system.
 
 It is common for users to want to access Cirrus from more than one local
 machine (e.g. a desktop linux, and a laptop) - this can be achieved
-through use of an `~/.ssh/authorized_keys` file on Cirrus to hold the
-additional keys you generate. Note that if you want to access Cirrus via
-another remote service, see the next section, SSH forwarding.
-
-You need to consider one of your local machines as your primary
-machine - this is the machine you should connect to Cirrus with using
-the instructions further up this page, adding your public key to SAFE.
-
-On your second local machine, generate a new SSH key pair. Copy the
-public key to your primary machine (e.g. by email, USB stick, or cloud
-storage); the default location for this on a Linux or MacOS machine will
-be `~/.ssh/id_rsa.pub`. If you are a Windows user using MobaXTerm, you
-should export the public key it generates to OpenSSH format
-(`Conversions > Export OpenSSH Key`). You should never move the private
-key off the machine on which it was generated.
-
-Once back on your primary machine, you should copy the public key from
-your secondary machine to Cirrus using:
-
-    scp id_rsa.pub <user>@login.cirrus.ac.uk:id_secondary.pub
-
-You should then log into Cirrus, as normal:
-`ssh <user>@login.cirrus.ac.uk`, and then:
-
-- check to see if the `.ssh` directory exists, using `ls -la ~`
-- if it doesn't, create it, and apply appropriate permissions:
-
-<!-- -->
-
-    mkdir ~/.ssh
-    chmod 700 ~/.ssh
-
-- and then create an authorized_keys file, and add the public key from
-  your secondary machine in one go:
-
-<!-- -->
-
-    cat ~/id_secondary.pub >> ~/.ssh/authorized_keys
-    chmod 600 ~/.ssh/authorized_keys
-    rm ~/id_secondary.pub
-
-You can then repeat this process for any more local machines you want to
-access Cirrus from, omitting the `mkdir` and `chmod` lines as the
-relevant files and directories will already exist with the correct
-permissions. You don't need to add the public key from your primary
-machine in your <span class="title-ref">authorized_keys</span> file,
-because Cirrus can find this in SAFE.
-
-Note that the permissions on the `.ssh` directory must be set to 700
-(Owner can read, can write and can execute but group and world do not
-have access) and on the `authorized_keys` file must be 600 (Owner can
-read and write but group and world do not have access). Keys will be
-ignored if this is not the case.
+by adding multiple public keys to your account through SAFE
+as described above.
 
 ## SSH forwarding (to use Cirrus from a second remote machine)
 
