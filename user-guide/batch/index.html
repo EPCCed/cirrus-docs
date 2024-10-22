@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -459,6 +459,15 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#use-of-the-work-file-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use of the /work file system
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#basic-slurm-commands" class="md-nav__link">
@@ -1531,6 +1540,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#use-of-the-work-file-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use of the /work file system
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-slurm-commands" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Slurm commands
@@ -1944,6 +1962,12 @@ developing and debugging applications. More details are available below.</p>
 login nodes (to submit, check and cancel jobs), and by specifying Slurm
 directives that describe the resources required for your jobs in job
 submission scripts.</p>
+<h2 id="use-of-the-work-file-system">Use of the <code>/work</code> file system</h2>
+<p>Jobs executing in the batch system should use the <code>/work</code> file system. In
+particular, the <code>/home</code> file system (including home directories <code>${HOME}</code>)
+are not available to batch jobs. All relevant software installation, scripts,
+executable files, and input data should be stored in an appropriate
+location in <code>/work</code> before submitting batch jobs.</p>
 <h2 id="basic-slurm-commands">Basic Slurm commands</h2>
 <p>There are three key commands used to interact with the Slurm on the
 command line:</p>
