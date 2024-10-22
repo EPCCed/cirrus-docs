@@ -25,6 +25,15 @@ login nodes (to submit, check and cancel jobs), and by specifying Slurm
 directives that describe the resources required for your jobs in job
 submission scripts.
 
+## Use of the `/work` file system
+
+Jobs executing in the batch system should use the `/work` file system. In
+particular, the `/home` file system (including home directories `${HOME}`)
+are not available to batch jobs. All relevant software installation, scripts,
+executable files, and input data should be stored in an appropriate
+location in `/work` before submitting batch jobs.
+
+
 ## Basic Slurm commands
 
 There are three key commands used to interact with the Slurm on the
