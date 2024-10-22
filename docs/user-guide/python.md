@@ -39,7 +39,7 @@ run across it two compute nodes.
 #!/usr/bin/env python
 
 """
-Parallel Numpy Array Broadcast 
+Parallel Numpy Array Broadcast
 """
 
 from mpi4py import MPI
@@ -132,7 +132,7 @@ show below an example that features an MPI reduction performed on a
 #!/usr/bin/env python
 
 """
-Reduce-to-all CuPy Arrays 
+Reduce-to-all CuPy Arrays
 """
 
 from mpi4py import MPI
@@ -240,7 +240,7 @@ list all the available `python` modules).
 
 !!! tip
     In the commands below, remember to replace `x01` with your project code
-    and `auser` with your username. 
+    and `auser` with your username.
 
 Next, create the virtual environment within a designated folder:
 
@@ -397,7 +397,7 @@ You can now install packages using
 `conda install -p ${CONDA_ROOT}/envs/myvenv <package_name>`. And you can
 see the packages currently installed in the active environment with the
 command `conda list`. After all packages have been installed, simply run
-`conda deactivate` twice in order to restore the original comand prompt.
+`conda deactivate` twice in order to restore the original command prompt.
 
 ``` bash
 (myvenv) [auser@cirrus-login1 auser]$ conda deactivate
@@ -464,7 +464,10 @@ you can start from a login node prompt.
 1.  As described above, load the Anaconda module on Cirrus using
     `module load anaconda3`.
 
-2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`.
+2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`. Jobs running in the
+    batch system may also need to set both `JUPYTER_CONFIG_DIR` and
+    `JUPYTER_DATA_DIR` is the same way. By default, these are related to
+    `${HOME}`, which is not available on the back end.
 
 3.  Start the JupyterLab server by running
     `jupyter lab --ip=0.0.0.0 --no-browser`
