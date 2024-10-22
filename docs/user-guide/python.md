@@ -464,7 +464,10 @@ you can start from a login node prompt.
 1.  As described above, load the Anaconda module on Cirrus using
     `module load anaconda3`.
 
-2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`.
+2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`. Jobs running in the
+    batch system may also need to set both `JUPYTER_CONFIG_DIR` and
+    `JUPYTER_DATA_DIR` is the same way. By default, these are related to
+    `${HOME}`, which is not available on the back end.
 
 3.  Start the JupyterLab server by running
     `jupyter lab --ip=0.0.0.0 --no-browser`
