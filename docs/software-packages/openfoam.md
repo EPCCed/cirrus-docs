@@ -47,7 +47,7 @@ there is no completely standardised way in which this works. Some packages
 assume they have write access to the main OpenFOAM installation. If this is
 the case, you must install your own version before continuing. This
 can be done on an individual basis, or a per-project basis using the
-project shared directories.
+[project shared directories](https://docs.cirrus.ac.uk/user-guide/resource_management/#sharing-data-with-cirrus-users-in-your-project).
 
 Some packages are installed in the OpenFOAM user directory, by default this is
 set to `$HOME/OpenFOAM/$USER-[openfoam-version]`. This can be changed (e.g. to
