@@ -40,6 +40,31 @@ example, for OpenFOAM v8:
 
 You should then be able to use OpenFOAM in the usual way.
 
+### Extensions to OpenFOAM
+
+Many packages extend the central OpenFOAM functionality in some way. However,
+there is no completely standardised way in which this works. Some packages
+assume they have write access to the main OpenFOAM installation. If this is
+the case, you must install your own version before continuing. This
+can be done on an individual basis, or a per-project basis using the
+project shared directories.
+
+Some packages are installed in the OpenFOAM user directory, by default this is
+set to `$HOME/OpenFOAM/$USER-[openfoam-version]`. This can be changed (e.g. to
+the work filesystem) by adding `WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-[openfoam-version]`
+as an argument to `source ${FOAM_INSTALL_DIR}/etc/bashrc`. For example:
+
+```bash
+source ${FOAM_INSTALL_DIR}/etc/bashrc WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-v2106
+```
+
+### Compiling OpenFOAM
+
+If you want to compile your own version of OpenFOAM, instructions are
+available for Cirrus at:
+
+ - [Build instructions for OpenFOAM on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM)
+
 ## Example Batch Submisison
 
 The following example batch submission script would run OpenFOAM on two
