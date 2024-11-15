@@ -542,15 +542,17 @@ nodes, MPI communication will remain limited by network latency and
 bandwidth.
 
 Version of OpenMPI with both CUDA-aware MPI support and SLURM support
-are available, you should load the following modules:
+are available.
 
-    module load openmpi/4.1.6-cuda-12.4
-    module load nvidia/nvhpc-nompi/24.5
-
-The command you use to compile depends on whether you are compiling
+The command you use to compile and the modules you need to load depend on whether you are compiling
 C/C++ or Fortran.
 
 ### Compiling C/C++
+
+You should load the following modules:
+
+    module load openmpi/4.1.6-cuda-12.4
+    module load nvidia/nvhpc-nompi/24.5
 
 The location of the MPI include files and libraries must be specified
 explicitly, e.g.,
@@ -560,6 +562,11 @@ explicitly, e.g.,
 This will produce an executable in the usual way.
 
 ### Compiling Fortran
+
+You should load the following modules:
+
+    module load openmpi/4.1.6-cuda-12.4-nvfortran
+    module load nvidia/nvhpc-nompi/24.5
 
 Use the `mpif90` compiler wrapper to compile Fortran code for GPU. e.g.
 
