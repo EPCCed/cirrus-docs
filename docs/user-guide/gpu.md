@@ -544,7 +544,7 @@ bandwidth.
 Version of OpenMPI with both CUDA-aware MPI support and SLURM support
 are available.
 
-The command you use to compile and the modules you need to load depend on whether you are compiling
+The modules you need to load and the command you use to compile depend on whether you are compiling
 C/C++ or Fortran.
 
 ### Compiling C/C++
