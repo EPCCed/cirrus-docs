@@ -15,7 +15,7 @@ specific application.
 
 
 	STAR-CCM+ is not centrally available as a module on Cirrus. All users 
-    must build the software in their own user space. 
+    must build the software in their own user space. The following is from previous testing, and is not guaranteed to work. 
 
     Below we provide some guidance for using STAR-CCM+ on Cirrus with the 
     PoD license. 
