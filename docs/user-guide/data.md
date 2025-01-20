@@ -136,7 +136,7 @@ account.
 
 1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
 2.  Use the "Login accounts" menu and select your Cirrus login account
-3.  The "Login account details" table lists any user or group quotas
+3.  The "Login account details" table lists any user or project quotas
     that are linked with your account. (If there is no quota shown for a
     row then you have an unlimited quota for that item, but you may
     still may be limited by another quota.)
@@ -163,15 +163,15 @@ project `t01` then I would:
 the quota and limit of 0k here indicate that no user quota is set for
 this user.
 
-To check your project (group) quota, you would use the command:
+To check your project quota, you would use the command:
 
     [auser@cirrus-login1 auser]$ lfs quota -hp $(id -g)'01'
     Disk quotas for prj 3773301 (pid 3773301):
      Filesystem    used   quota   limit   grace   files   quota   limit   grace
-              .  15.16T      0k  19.53T       - 9038326       0       0       -
+              .  15.16T      0k  13.57T       - 9038326       0       0       -
     pid 3773301 is using default file quota setting
 
-the limit of `13.57T` indicates the quota for the group.
+the limit of `13.57T` indicates the quota for the project.
 
 ### Solid state storage
 
