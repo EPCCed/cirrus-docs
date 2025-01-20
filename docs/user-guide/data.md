@@ -165,11 +165,11 @@ this user.
 
 To check your project (group) quota, you would use the command:
 
-    [auser@cirrus-login1 auser]$ lfs quota -hg t01 .
-    Disk quotas for grp t01 (gid 37733):
-         Filesystem    used   quota   limit   grace   files   quota   limit   grace
-               .  958.3G      0k  13.57T       - 1427052       0       0       -
-    gid 37733 is using default file quota setting
+    [auser@cirrus-login1 auser]$ lfs quota -hp $(id -g)'01'
+    Disk quotas for prj 3773301 (pid 3773301):
+     Filesystem    used   quota   limit   grace   files   quota   limit   grace
+              .  15.16T      0k  19.53T       - 9038326       0       0       -
+    pid 3773301 is using default file quota setting
 
 the limit of `13.57T` indicates the quota for the group.
 
