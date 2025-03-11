@@ -441,7 +441,7 @@ be submitted like so.
 
     module load nvidia/nvhpc
 
-    srun -n 1 nv-nsight-cu-cli --section SpeedOfLight_RooflineChart \
+    srun -n 1 ncu --section SpeedOfLight_RooflineChart \
                                -o prof2 -f ./my_application.x
 
 In this case, a file called `prof2.ncu-rep` should be produced. Again,
@@ -455,7 +455,7 @@ Consult the NVIDIA documentation for further details.
 
 <https://developer.nvidia.com/nsight-compute>
 
-<https://docs.nvidia.com/nsight-compute/2023.3/index.html>
+<https://docs.nvidia.com/nsight-compute/2024.1/index.html>
 
 Nsight Compute v2023.3.1.0 has been found to work for codes compiled
 using `nvhpc` versions 22.2 and 22.11.
