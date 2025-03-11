@@ -457,9 +457,6 @@ Consult the NVIDIA documentation for further details.
 
 <https://docs.nvidia.com/nsight-compute/2024.1/index.html>
 
-Nsight Compute v2023.3.1.0 has been found to work for codes compiled
-using `nvhpc` versions 22.2 and 22.11.
-
 
 ## Monitoring the GPU Power Usage
 
