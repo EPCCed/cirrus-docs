@@ -14,7 +14,7 @@ Finally we cover some guidelines for I/O and data archiving on Cirrus.
 ## The Cirrus Administration Web Site (SAFE)
 
 All users have a login and password on the Cirrus Administration Web
-Site (also know as the 'SAFE'): [SAFE](https://safe.epcc.ed.ac.uk/).
+Site (also know as the [SAFE](https://safe.epcc.ed.ac.uk/).
 Once logged into this web site, users can find out much about their
 usage of the Cirrus system, including:
 
@@ -29,8 +29,7 @@ usage of the Cirrus system, including:
 
 ## Checking your CPU/GPU time allocations
 
-You can view these details by logging into the SAFE
-(<https://safe.epcc.ed.ac.uk>).
+You can view these details by logging into the [SAFE.](https://safe.epcc.ed.ac.uk)
 
 Use the *Login accounts* menu to select the user account that you wish
 to query. The page for the login account will summarise the resources

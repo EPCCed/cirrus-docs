@@ -6,7 +6,7 @@ explosion modelling and one of the best validated tools for modeling
 flammable and toxic releases in a technical safety context.
 
 The Cirrus cluster is ideally suited to run multiple FLACS simulations
-simultaneously, via its [batch system](../../user-guide/batch/). Short
+simultaneously, via its [batch system](../user-guide/batch.md). Short
 lasting simulations (of typically up to a few hours computing time each)
 can be processed efficiently and you could get a few hundred done in a
 day or two. In contrast, the Cirrus cluster is not particularly suited
@@ -202,7 +202,7 @@ list only your jobs use:
 ### Submitting many FLACS jobs as a job array
 
 Running many related scenarios with the FLACS simulator is ideally
-suited for using [job arrays](../../user-guide/batch/#job-arrays), i.e.
+suited for using [job arrays](../user-guide/batch.md#job-arrays), i.e.
 running the simulations as part of a single job.
 
 Note you must determine ahead of time the number of scenarios involved.

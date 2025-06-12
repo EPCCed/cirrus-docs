@@ -472,5 +472,5 @@ Please note that “remote” is the name that you have chosen when running rclo
 
 The Cirrus `/work` filesystem, which is hosted on the e1000 fileserver, has a Globus Collection (formerly known as an endpoint) with the name `e1000-fs1 directories`   
 
-[Full step-by-step guide for using Globus](../globus) to transfer files to/from Cirrus `/work`
+[Full step-by-step guide for using Globus](globus.md) to transfer files to/from Cirrus `/work`
 

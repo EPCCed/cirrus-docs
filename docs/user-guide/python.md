@@ -555,7 +555,7 @@ you can start from a login node prompt.
 
 	If you have extended a central Python venv following the
 	instructions about for [Installing your own Python packages
-	(with pip)](#installing-your-own-python-packages-(with-pip)),
+	(with pip)](#installing-your-own-python-packages-with-pip),
 	Jupyter Lab will load the central ipython kernel, not the one
 	for your venv. To enable loading of the ipython kernel for your
 	venv from within Jupyter Lab, first install the ipykernel module
@@ -567,13 +567,17 @@ you can start from a login node prompt.
 	```
 	changing placeholder account and username as appropriate.
 	Thereafter, launch Jupyter Lab as above and select the `myvenv`
-	kernel.
+	kernel. It may be needed to load the following environment variables:
+        ```
+        export PYTHONUSERBASE=$(pwd)/.local
+        export PATH=$PYTHONUSERBASE/bin:$PATH
+        export HOME=$(pwd)
+        export JUPYTER_RUNTIME_DIR=$(pwd)
+        ```
 
 If you are on a compute node, the JupyterLab server will be available
 for the length of the interactive session you have requested.
 
 You can also run Jupyter sessions using the centrally-installed
-Miniconda3 modules available on Cirrus. For example, the following link
-provides instructions for how to setup a Jupyter server on a GPU node.
-
-<https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel>
+Miniconda3 modules available on Cirrus. [This page provides instructions
+for how to setup a Jupyter server on a GPU node.](https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel)
