@@ -31,10 +31,10 @@ meaning.
 CPUh  
 Cirrus CPU time is measured in CPUh. Each job you run on the service
 consumes CPUhs from your budget. You can find out more about CPUhs and
-how to track your usage in the [resource management section](../resource_management/)
+how to track your usage in the [resource management section.](resource_management.md)
 
 GPUh  
 Cirrus GPU time is measured in GPUh. Each job you run on the GPU nodes
 consumes GPUhs from your budget, and requires positive CPUh, even though
 these will not be consumed. You can find out more about GPUhs and how to
-track your usage in the [resource management section](../resource_management/)
+track your usage in the [resource management section.](resource_management.md)
