@@ -48,9 +48,9 @@ with 2 OpenMP threads per MPI process:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
+    # Replace [partition name] below with your partition name (e.g. standard)
     #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    # Replace [qos name] below with your qos name (e.g. standard,long)
     #SBATCH --qos=[qos name]
 
     # Load CP2K

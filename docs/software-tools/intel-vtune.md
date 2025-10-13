@@ -36,8 +36,7 @@ used to inspect time taken per function and per line of code.
 measures including application memory bandwidth.
 
 Use `vtune --help collect` for a full summary of collection options.
-Note that not all options are available (e.g., prefer NVIDIA profiling
-for GPU codes).
+Note that not all options are available.
 
 ### Example SLURM script
 
