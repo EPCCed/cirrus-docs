@@ -49,9 +49,9 @@ For example, here is a job script to run a serial RADIOSS job on Cirrus:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
+# Replace [partition name] below with your partition name (e.g. standard)
 #SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+# Replace [qos name] below with your qos name (e.g. standard,long)
 #SBATCH --qos=[qos name]
 
 # Set the number of threads to the CPUs per task
@@ -104,9 +104,9 @@ the following job script:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
+# Replace [partition name] below with your partition name (e.g. standard)
 #SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+# Replace [qos name] below with your qos name (e.g. standard,long)
 #SBATCH --qos=[qos name]
 
 # Load Hyperworks module
@@ -152,9 +152,9 @@ Example OptiStruct SPMD job submission script:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
+# Replace [partition name] below with your partition name (e.g. standard)
 #SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+# Replace [qos name] below with your qos name (e.g. standard,long)
 #SBATCH --qos=[qos name]
 
 # Load Hyperworks module and Intel MPI

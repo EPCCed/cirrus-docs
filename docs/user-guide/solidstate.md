@@ -3,7 +3,7 @@
 In addition to the Lustre file system, the Cirrus login and compute
 nodes have access to a shared, high-performance, solid state storage
 system (also known as RPOOL). This storage system is network mounted and
-shared across the login nodes and GPU compute nodes in a similar way to
+shared across the login nodes and compute nodes in a similar way to
 the normal, spinning-disk Lustre file system but has different
 performanc characteristics.
 
