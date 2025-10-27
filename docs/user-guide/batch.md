@@ -13,10 +13,10 @@ Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
 
-
 !!! Hint
 
-    If you have any questions on how to run jobs on Cirrus do not hesitate to contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk).
+    If you have any questions on how to run jobs on Cirrus do not hesitate to contact the
+    [Cirrus Service Desk](mailto:support@cirrus.ac.uk).
 
 
 
@@ -53,10 +53,16 @@ We cover each of these commands in more detail below.
 partitions. Without any options, `sinfo` lists the status of all
 resources and partitions, e.g.
 
-    [auser@cirrus-login3 ~]$ sinfo
+```bash
+[auser@login01 ~]$ sinfo
 
-    PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
-    standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33]
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+Compute*     up   infinite      4 drain* cs-n[0086-0087,0112-0113]
+Compute*     up   infinite      3  down* cs-n[0050-0051,0170]
+Compute*     up   infinite      4  drain cs-n[0019,0104,0165,0239]
+Compute*     up   infinite      1  alloc cs-n0166
+Compute*     up   infinite    244   idle cs-n[0000-0018,0020-0049,0052-0085,0088-0103,0105-0111,0114-0164,0167-0169,0171-0238,0240-0255]
+```
 
 ### `sbatch`: submitting jobs
 
@@ -68,24 +74,30 @@ When you submit the job, the scheduler provides the job ID, which is
 used to identify this job in other Slurm commands and when looking at
 resource usage in SAFE.
 
-    [auser@cirrus-login3 ~]$ sbatch test-job.slurm
-    Submitted batch job 12345
+```bash
+[auser@login01 ~]$ sbatch test-job.slurm
+Submitted batch job 12345
+```
 
 ### `squeue`: monitoring jobs
 
 `squeue` without any options or arguments shows the current status of
 all jobs known to the scheduler. For example:
 
-    [auser@cirrus-login3 ~]$ squeue
-              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-              1554  comp-cse CASTEP_a  auser  R       0:03      2 r2i0n[18-19]
+```bash
+[auser@login01 ~]$ squeue
+          JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+          1554  comp-cse CASTEP_a  auser  R       0:03      2 cs-n01[18-19]
+```
 
 will list all jobs on Cirrus.
 
 The output of this is often overwhelmingly large. You can restrict the
-output to just your jobs by adding the `-u $USER` option:
+output to just your jobs by adding the `--me` option:
 
-    [auser@cirrus-login3 ~]$ squeue -u $USER
+```bash
+[auser@login01 ~]$ squeue --me
+```
 
 ### `scancel`: deleting jobs
 
@@ -94,19 +106,17 @@ waiting to run it is simply cancelled, if it is a running job then it is
 stopped immediately. You need to provide the job ID of the job you wish
 to cancel/stop. For example:
 
-    [auser@cirrus-login3 ~]$ scancel 12345
+[auser@login01 ~]$ scancel 12345
 
 will cancel (if waiting) or stop (if running) the job with ID `12345`.
 
 ## Resource Limits
 
 
-
 !!! Note
 
-	If you have requirements which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements.
-
-
+	If you have requirements which do not fit within the current QoS, please
+  contact the Service Desk and we can discuss how to accommodate your requirements.
 
 There are different resource limits on Cirrus for different purposes.
 There are three different things you need to specify for each job:
@@ -122,78 +132,39 @@ Each of these aspects are described in more detail below.
 
 
 !!! Warning
+    On Cirrus, you cannot specify the memory for a job using the `--mem`
+    options to Slurm (e.g. `--mem`, `--mem-per-cpu`). The
+    amount of memory you are assigned is calculated from the amount of
+    primary resource you request.
 
 
-
-	On Cirrus, you cannot specify the memory for a job using the `--mem`
-	options to Slurm (e.g. `--mem`, `--mem-per-cpu`). The
-	amount of memory you are assigned is calculated from the amount of
-	primary resource you request.
-
-
-
-### Primary resources on standard (CPU) compute nodes
+### Primary resources on CPU compute nodes
 
 The *primary resource* you request on standard compute nodes are CPU
 cores. The maximum amount of memory you are allocated is computed as the
-number of CPU cores you requested multiplied by 1/36th of the total
-memory available (as there are 36 CPU cores per node). So, if you
-request the full node (36 cores), then you will be allocated a maximum
-of all of the memory (256 GB) available on the node; however, if you
-request 1 core, then you will be assigned a maximum of 256/36 = 7.1 GB
-of the memory available on the node.
+number of CPU cores you requested multiplied by 1/288th of the total
+memory available (as there are 288 CPU cores per node). So, if you
+request the full node (288 cores), then you will be allocated a maximum
+of all of the memory (768 GB or 1,536 GB) available on the node; however,
+if you request 1 core, then you will be assigned a maximum of 768/288 = 2.66 GB
+of the memory available on a standard memory node or 5.33 GB on a high 
+memory node.
 
 !!! Note
-
-	Using the `--exclusive` option in jobs will give you access to the full
-	node memory even if you do not explicitly request all of the CPU cores
-	on the node.
+    Using the `--exclusive` option in jobs will give you access to the full
+    node memory even if you do not explicitly request all of the CPU cores
+    on the node.
 
 
 !!! Warning
-
-	Using the `--exclusive` option will charge your account for the usage of
-	the entire node, even if you don't request all the cores in your
-	scripts.
-
-!!! Note
-
-	You will not generally have access to the full amount of memory resource
-	on the the node as some is retained for running the operating system and
-	other system processes.
-
-
-### Primary resources on high memory (CPU) compute nodes
-
-The *primary resource* you request on the high memory compute node is CPU
-cores. The maximum amount of memory you are allocated is computed as the
-number of CPU cores you requested multiplied by 1/112th of the total
-memory available (as there are 112 CPU cores per node). So, if you
-request the full node (112 cores), then you will be allocated a maximum
-of all of the memory (3 TB) available on the node; however, if you
-request 1 core, then you will be assigned a maximum of 3000/112 = 26.8 GB
-of the memory available on the node.
+    Using the `--exclusive` option will charge your account for the usage of
+    the entire node, even if you don't request all the cores in your
+    scripts.
 
 !!! Note
-
-	Using the `--exclusive` option in jobs will give you access to the full
-	node memory even if you do not explicitly request all of the CPU cores
-	on the node.
-
-
-!!! Warning
-
-	Using the `--exclusive` option will charge your account for the usage of
-	the entire node, even if you don't request all the cores in your
-	scripts.
-
-!!! Note
-
-	You will not generally have access to the full amount of memory resource
-	on the the node as some is retained for running the operating system and
-	other system processes.
-
-
+    You will not generally have access to the full amount of memory resource
+    on the the node as some is retained for running the operating system and
+    other system processes.
 
 ### Partitions
 
@@ -203,22 +174,15 @@ script. The following table has a list of active partitions on Cirrus.
 
 | Partition | Description                                                                                   | Total nodes available | Notes |
 |-----------|-----------------------------------------------------------------------------------------------|-----------------------|-------|
-| standard  | CPU nodes with 2x 18-core Intel Broadwell processors, 256 GB memory                           | 352                   |       |
-| highmem   | CPU node with 4x 28-core Intel Xeon Platinum processors, 3 TB memory                          | 1                     |       |
-
-Cirrus Partitions
+| standard  | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory                           | 256                   |       |
+| highmem   | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 1,536 GB memory                          | 64                     |       |
 
 You can list the active partitions using
 
     sinfo
 
-
-
 !!! Note
-
-	you may not have access to all the available partitions.
-
-
+    You may not have access to all the available partitions.
 
 ### Quality of Service (QoS)
 
@@ -229,13 +193,13 @@ jobs.
 
 | QoS Name     | Jobs Running Per User | Jobs Queued Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
-| standard     | No limit              | 500 jobs             | 4 days       | 88 nodes (3168 cores/25%)               | standard              |       |
-| highmem      | 1 job                 | 2 jobs               | 48 hours     | 1 node                                  | highmem               |       |
-| largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) | standard         |       |
-| long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes                      | standard         |       |
-| highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              | charged at 1.5 x normal rate |
+| standard     | No limit              | 256 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes in use by any one user at any time.      |
+| largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         |       |
+| long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
+| highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%)     | standard        | usage is not charged |
+| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged |
+| reservation  | No limit              | No limit             | No limit       | No limit     | standard, highmem        | Only usuable within reservation. |
 
 #### Cirrus QoS
 
@@ -255,7 +219,7 @@ failure of one individual task by specifying the `--kill-on-bad-exit`
 argument to `srun`. E.g.,
 
 ``` bash
-srun -n 36 --kill-on-bad-exit ./my-mpi-program
+srun -n 288 --kill-on-bad-exit ./my-mpi-program
 ```
 
 This can prevent effective "hanging" of the job until the wall time
@@ -376,13 +340,10 @@ working directory once your job starts running.
 
 
 !!! Note
-
-
-	This file is plain text and can contain useful information to help
-	debugging if a job is not working as expected. The Cirrus Service Desk
-	team will often ask you to provide the contents of this file if you
-	contact them for help with issues.
-
+    This file is plain text and can contain useful information to help
+    debugging if a job is not working as expected. The Cirrus Service Desk
+    team will often ask you to provide the contents of this file if you
+    contact them for help with issues.
 
 
 ## Specifying resources in job scripts
@@ -391,14 +352,9 @@ You specify the resources you require for your job using directives at
 the top of your job submission script using lines that start with the
 directive `#SBATCH`.
 
-
-
 !!! Note
-
-	Options provided using `#SBATCH` directives can also be specified as
-	command line options to `srun`.
-
-
+    Options provided using `#SBATCH` directives can also be specified as
+    command line options to `sbatch`.
 
 If you do not specify any options, then the default for each option will
 be applied. As a minimum, all job submissions must specify the budget
@@ -411,7 +367,7 @@ the QoS they want to use with the options:
  - `--partition=<partition>` The partition specifies the set of nodes
    you want to run on. More information on available partitions is
    given above.
- - `--qos="QoS"` The QoS specifies the limits to apply to your job.
+ - `--qos=<QoS>` The QoS specifies the limits to apply to your job.
    More information on available QoS are given above.
 
 Other common options that are used are:
@@ -420,16 +376,6 @@ Other common options that are used are:
    6.5 hour walltime, you would use `--time=6:30:0`.
  - `--job-name=<jobname>` set a name for the job to help identify it in
    Slurm command output.
-
-Other not so common options that are used are:
-
- - `--switches=max-switches{@max-time-to-wait}` optimum switches and
-   max time to wait for them. The scheduler will wait indefinitely when
-   attempting to place these jobs. Users can override this indefinite
-   wait. The scheduler will deliberately place work to clear space for
-   these jobs, so we don't foresee the indefinite wait nature to be an
-   issue. For the Cirrus CPU partition, the maximum number of nodes per
-   switch is 18.
 
 In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
@@ -447,23 +393,20 @@ parallel processes and threads they require.
    example below for an MPI+OpenMP job for further notes on
    ``--cpus-per-task``.
 
-
-
 !!! Note
-
-	For parallel jobs, you should request exclusive node access with the
-	`--exclusive` option to ensure you get the expected resources and
-	performance.
+    For parallel jobs, you should generally request exclusive node access with the
+    `--exclusive` option to ensure you get the expected resources and
+    performance.
 
 
 !!! Note
     When submitting your job, the scheduler will check that the requested resources are available e.g. that your account
-    is a member of the requested budget, that the requested QoS exists.<br>
+    is a member of the requested budget, that the requested QoS exists.
+
     If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
-    then the job will not be able to start. <br>
+    then the job will not be able to start.
+
     In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.
-
-
 
 ## `srun`: Launching parallel jobs
 
@@ -482,32 +425,23 @@ If you are using OpenMP threads then you will generally add the
 `--cpu-bind=cores` option to `srun` to bind threads to cores to obtain
 the best performance.
 
-
 !!! Note
-
-	See the example job submission scripts below for examples of using
-	`srun` for pure MPI jobs and for jobs that use OpenMP threading.
-
-
+    See the example job submission scripts below for examples of using
+    `srun` for pure MPI jobs and for jobs that use OpenMP threading.
 
 ## Example parallel job submission scripts
 
 A subset of example job submission scripts are included in full below.
 
-
-
 !!! Hint
-
-	Do not replace `srun` with `mpirun` in the following examples. Although
-	this might work under special circumstances, it is not guaranteed and
-	therefore not supported.
-
-
+    Do not replace `srun` with `mpirun` in the following examples. Although
+    this might work under special circumstances, it is not guaranteed and
+    therefore not supported.
 
 ### Example: job submission script for MPI parallel job
 
-A simple MPI job submission script to submit a job using 4 compute nodes
-and 36 MPI ranks per node for 20 minutes would look like:
+A simple MPI job submission script to submit a job using 2 compute nodes
+and 576 MPI processes per node for 20 minutes would look like:
 
 ``` bash
 #!/bin/bash
@@ -516,8 +450,8 @@ and 36 MPI ranks per node for 20 minutes would look like:
 #SBATCH --job-name=Example_MPI_Job
 #SBATCH --time=0:20:0
 #SBATCH --exclusive
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=36
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=288
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
@@ -527,12 +461,6 @@ and 36 MPI ranks per node for 20 minutes would look like:
 # We use the "standard" QoS as our runtime is less than 4 days
 #SBATCH --qos=standard
 
-# Load the default HPE MPI environment
-module load mpt
-
-# Change to the submission directory
-cd $SLURM_SUBMIT_DIR
-
 # Set the number of threads to 1
 #   This prevents any threaded system libraries from automatically
 #   using threading.
@@ -540,39 +468,36 @@ export OMP_NUM_THREADS=1
 
 # Launch the parallel job
 #   Using 144 MPI processes and 36 MPI processes per node
-#   srun picks up the distribution from the sbatch options
-srun ./my_mpi_executable.x
+#   srun picks up the distribution from the sbatch options
+srun --hint=nomultithread --distribution=block:block ./my_mpi_executable.x
 ```
 
-This will run your executable "my_mpi_executable.x" in parallel on 144
-MPI processes using 4 nodes (36 cores per node, i.e. not using
-hyper-threading). Slurm will allocate 4 nodes to your job and srun will
-place 36 MPI processes on each node (one per physical core).
+This will run your executable "my_mpi_executable.x" in parallel on 576
+MPI processes using 2 nodes (288 cores per node, i.e. not using
+hyper-threading). Slurm will allocate 2 nodes to your job and srun will
+place 288 MPI processes on each node (one per physical core).
 
 By default, srun will launch an MPI job that uses all of the cores you
 have requested via the "nodes" and "tasks-per-node" options. If you want
 to run fewer MPI processes than cores you will need to change the
 script.
 
-For example, to run this program on 128 MPI processes you have two
+For example, to run this program on 512 MPI processes you have two
 options:
 
- - set `--tasks-per-node=32` for an even distribution across nodes
+ - set `--tasks-per-node=256` for an even distribution across nodes
    (this may not always be possible depending on the exact combination
    of nodes requested and MPI tasks required)
- - set the number of MPI tasks explicitly using `#SBATCH --ntasks=128`
-
+ - set the number of MPI tasks explicitly using `#SBATCH --ntasks=512`
 
 !!! Note
+    If you specify `--ntasks` explicitly and it is not compatible with the
+    value of `tasks-per-node` then you will get a warning message from
+    srun such as `srun: Warning: can't honor --ntasks-per-node set to 288`.
 
-	If you specify `--ntasks` explicitly and it is not compatible with the
-	value of `tasks-per-node` then you will get a warning message from
-	srun such as `srun: Warning: can't honor --ntasks-per-node set to 36`.
-
-	In this case, srun does the sensible thing and allocates MPI processes
-	as evenly as it can across nodes. For example, the second option above
-	would result in 32 MPI processes on each of the 4 nodes.
-
+    In this case, srun does the sensible thing and allocates MPI processes
+    as evenly as it can across nodes. For example, the second option above
+    would result in 256 MPI processes on each of the 2 nodes.
 
 See above for a more detailed discussion of the different `sbatch`
 options.
