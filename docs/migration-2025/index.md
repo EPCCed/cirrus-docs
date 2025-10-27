@@ -1,14 +1,15 @@
-# ARCHER to ARCHER2 migration
+# Cirrus migration 2025
 
-This section of the documentation is a guide for user migrating from ARCHER
-to ARCHER2.
+This section of the documentation is a guide for users migrating from the 
+old Cirrus system (SGI ICE XA) to the new Cirrus system (HPE Cray EX4000)
+in Q4 2025.
 
 It covers:
 
-   - [Migrating your account from ARCHER to ARCHER2](account-migration.md)
-   - [Migrating data from ARCHER to ARCHER2](data-migration.md)
-   - [Main differences between ARCHER and ARCHER2](archer2-differences.md)
+   - [Migrating your account to Cirrus EX4000](account-migration.md)
+   - [Migrating data to Cirrus EX4000](data-migration.md)
+   - [Main differences between old Cirrus and Cirrus EX4000](cirrus-differences.md)
 
 !!! tip
-    If you need help or have questions on ARCHER to ARCHER2 migration, 
-    please [contact the ARCHER2 service desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
+    If you need help or have questions on this migration process, 
+    please [contact the Cirrus service desk](https://www.cirrus.ac.uk/support-access/user-support/)
