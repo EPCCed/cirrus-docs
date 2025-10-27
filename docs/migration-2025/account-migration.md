@@ -14,9 +14,9 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus EX4000?
 
-We anticipate that users will have access around the beginning of Dec 2025. Mailings
-will be sent to all users with the exact date once it is confirmed and this page will
-be updated.
+We anticipate that users will have access on **Wednesday 3rd December 2025** but this 
+date is subject to change based on progress with setting up the new system. We will
+update the date on these pages and in emails to all users.
 
 ## Has my project been migrated to Cirrus EX4000?
 
