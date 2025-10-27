@@ -7,11 +7,10 @@ bootstrap version of Anaconda).
 
 The Anaconda module is called `anaconda3` and is suitable for
 running serial applications - for parallel applications using `mpi4py`
-see [mpi4py for CPU](#mpi4py-for-cpu) or [mpi4py for GPU](#mpi4py-for-gpu).
+see [mpi4py for CPU](#mpi4py-for-cpu).
 
 You can list the Miniconda modules by running `module avail python` on a
-login node. Those module versions that have the `gpu` suffix are
-suitable for use on the [Cirrus GPU nodes](gpu.md). There are also
+login node. There are also
 modules that extend these Python environments, e.g., `pyfr`, `tensorflow`
 and `pytorch` - simply run `module help <module name>` for further info.
 
@@ -22,7 +21,7 @@ processing and numerical analysis such as `dask`, `ipyparallel`,
 
 All the packages provided by a module can be obtained by running
 `pip list`. We now give some examples that show how the `python` modules
-can be used on the Cirrus CPU/GPU nodes.
+can be used on the Cirrus CPU nodes.
 
 ## mpi4py for CPU
 
@@ -118,103 +117,7 @@ it can of course be removed. Please see the [OpenMPI
 documentation](https://www.open-mpi.org/faq/?category=tuning#mca-def)
 for info on all `OMPI_MCA` variables.
 
-## mpi4py for GPU
-
-There's also an mpi4py module (again using OpenMPI 4.1.4) that is
-tailored for CUDA 11.6 on the Cirrus GPU nodes, `python/3.9.13-gpu`. We
-show below an example that features an MPI reduction performed on a
-[CuPy array](https://docs.cupy.dev/en/stable/overview.html)
-(`cupy-allreduce.py`).
-
-<details><summary><b>cupy-allreduce.py</b></summary>
-
-``` python
-#!/usr/bin/env python
-
-"""
-Reduce-to-all CuPy Arrays
-"""
-
-from mpi4py import MPI
-import cupy as cp
-import sys
-
-comm = MPI.COMM_WORLD
-
-size = comm.Get_size()
-rank = comm.Get_rank()
-name = MPI.Get_processor_name()
-
-sendbuf = cp.arange(10, dtype='i')
-recvbuf = cp.empty_like(sendbuf)
-assert hasattr(sendbuf, '__cuda_array_interface__')
-assert hasattr(recvbuf, '__cuda_array_interface__')
-cp.cuda.get_current_stream().synchronize()
-comm.Allreduce(sendbuf, recvbuf)
-
-assert cp.allclose(recvbuf, sendbuf*size)
-
-sys.stdout.write(
-    "%d (%s): recvbuf = %s\n"
-    % (rank, name, str(recvbuf)))
-```
-
-</details><br>
-
-By default, the CuPy cache will be located within the user's home
-directory. And so, as `/home` is not accessible from the GPU nodes, it
-is necessary to set `CUPY_CACHE_DIR` such that the cache is on the
-`/work` file system instead.
-
-<details><summary><b>submit-allreduce.slurm</b></summary>
-
-``` bash
-#!/bin/bash
-
-#SBATCH --job-name=allreduce
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --partition=gpu
-#SBATCH --qos=gpu
-#SBATCH --account=[budget code]
-#SBATCH --nodes=2
-#SBATCH --gres=gpu:4
-
-module load python/3.9.13-gpu
-
-export CUPY_CACHE_DIR=${HOME/home/work}/.cupy/kernel_cache
-
-export OMPI_MCA_mpi_warn_on_fork=0
-export OMPI_MCA_mca_base_component_show_load_errors=0
-
-srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=1 cupy-allreduce.py
-```
-
-</details><br>
-
-Again, the submission script (`submit-allreduce.slurm`) is the place to
-set `OMPI_MCA` variables - the two shown are optional, see the link
-below for further details.
-
-<https://www.open-mpi.org/faq/?category=tuning#mca-def>
-
 ## Machine Learning frameworks
-
-There are several more Python-based modules that also target the Cirrus
-GPU nodes. These include two machine learning frameworks,
-`pytorch/1.13.1-gpu` and `tensorflow/2.13.0-gpu`. Both modules are Python
-virtual environments that extend `python/3.10.8-gpu`. The MPI comms is
-handled by the [Horovod](https://horovod.readthedocs.io/en/stable/)
-0.28.1 package along with the [NVIDIA Collective Communications
-Library](https://developer.nvidia.com/nccl) v2.11.4.
-
-A full package list for these environments can be obtained by loading
-the module of interest and then running `pip list`.
-
-Please click on the link indicated to see examples of how to use the
-[PyTorch and TensorFlow
-modules](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/ml/run_ml_workloads_cirrus_gpu.md)
-.
 
 ## Installing your own Python packages (with pip)
 
@@ -231,7 +134,7 @@ created on top of an existing Python installation, known as the
 environment's **base** Python.
 
 Select the base Python by loading the `python` module you wish to
-extend, e.g., `python/3.9.13-gpu` (you can run `module avail python` to
+extend, e.g., `python/3.9.13` (you can run `module avail python` to
 list all the available `python` modules).
 
 ``` bash
@@ -307,11 +210,7 @@ adding the activation command to the submission script, as shown below.
 #SBATCH --job-name=myvenv
 #SBATCH --time=00:20:00
 #SBATCH --exclusive
-#SBATCH --partition=gpu
-#SBATCH --qos=gpu
-#SBATCH --account=[budget code]
 #SBATCH --nodes=2
-#SBATCH --gres=gpu:4
 
 source /work/x01/x01/auser/myvenv/bin/activate
 
@@ -325,8 +224,8 @@ the centrally-installed `python` modules. You could just as easily
 create a local virtual environment based on one of the Machine Learning
 (ML) modules, e.g., `tensorflow` or `pytorch`. This means you would avoid
 having to install ML packages within your local area. Each of those ML
-modules is based on a `python` module. For example, `tensorflow/2.13.0-gpu`
-is itself an extension of `python/3.10.8-gpu`.
+modules is based on a `python` module. For example, `tensorflow/2.13.0`
+is itself an extension of `python/3.10.8.
 
 ## Installing your own Python packages (with conda)
 
@@ -336,7 +235,7 @@ that your local `conda` environment will contain packages that are
 compatible with the Cirrus system.
 
 Select the base Python by loading the `python` module you wish to
-duplicate, e.g., `python/3.9.13-gpu` (you can run `module avail python`
+duplicate, e.g., `python/3.9.13` (you can run `module avail python`
 to list all the available `python` modules).
 
 ``` bash
@@ -416,11 +315,7 @@ within a job running on the compute nodes.
 #SBATCH --job-name=myvenv
 #SBATCH --time=00:20:00
 #SBATCH --exclusive
-#SBATCH --partition=gpu
-#SBATCH --qos=gpu
-#SBATCH --account=[budget code]
 #SBATCH --nodes=2
-#SBATCH --gres=gpu:4
 
 module load python/3.9.13
 
@@ -446,8 +341,8 @@ the single `source` command that is sufficient for a `pip` environment.
 Further, `conda` cannot be used if the base environment is one of the
 Machine Learning (ML) modules, as `conda` is not flexible enough to
 gather Python packages from both the ML and base `python` modules (e.g.,
-the ML module `pytorch/1.13.1-gpu` is itself based on
-`python/3.10.8-gpu`, and so `conda` will only duplicate packages
+the ML module `pytorch/1.13.1` is itself based on
+`python/3.10.8`, and so `conda` will only duplicate packages
 provided by the `python` module and not the ones supplied by `pytorch`).
 
 ## Using JupyterLab on Cirrus
@@ -573,7 +468,5 @@ If you are on a compute node, the JupyterLab server will be available
 for the length of the interactive session you have requested.
 
 You can also run Jupyter sessions using the centrally-installed
-Miniconda3 modules available on Cirrus. For example, the following link
-provides instructions for how to setup a Jupyter server on a GPU node.
+Miniconda3 modules available on Cirrus.
 
-<https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel>

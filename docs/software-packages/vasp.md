@@ -35,8 +35,6 @@ self-consistency cycle.
 
 ## Using VASP on Cirrus
 
-CPU and GPU versions of VASP are available on Cirrus
-
 **VASP is only available to users who have a valid VASP licence. VASP 5
 and VASP 6 are separate packages on Cirrus and requests for access need
 to be made separately for the two versions via SAFE.**
@@ -80,9 +78,9 @@ The following script will run a VASP job using 4 nodes (144 cores).
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
+    # Replace [partition name] below with your partition name (e.g. standard)
     #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    # Replace [qos name] below with your qos name (e.g. standard,long)
     #SBATCH --qos=[qos name]
 
     # Load VASP version 6 module
@@ -93,33 +91,3 @@ The following script will run a VASP job using 4 nodes (144 cores).
 
     # Run standard VASP executable
     srun --hint=nomultithread --distribution=block:block vasp_std
-
-## Running parallel VASP jobs - GPU
-
-The GPU version of VASP can exploit multiple GPU across multiple nodes,
-you should benchmark your system to ensure you understand how many GPU
-can be used in parallel for your calculations.
-
-The following script will run a VASP job using 2 GPU on 1 node.
-
-    #!/bin/bash
-
-    # job options (name, compute nodes, job time)
-    #SBATCH --job-name=VASP_GPU_test
-    #SBATCH --nodes=1
-    #SBATCH --gres=gpu:2
-    #SBATCH --time=0:20:0
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=gpu
-    #SBATCH --qos=gpu
-
-    # Load VASP version 6 module
-    module load vasp/6/6.3.2-gpu-nvhpc22
-
-    # Set number of OpenMP threads to 1
-    export OMP_NUM_THREADS=1
-
-    # Run standard VASP executable with 1 MPI process per GPU
-    srun --ntasks=2 --cpus-per-task=10 --hint=nomultithread --distribution=block:block vasp_std

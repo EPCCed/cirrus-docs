@@ -18,8 +18,6 @@ institutions.
 ORCA is available for academic use on Cirrus only. If you wish to use
 ORCA for commercial applications, you must contact the ORCA developers.
 
-ORCA cannot use GPUs.
-
 ## Running parallel ORCA jobs
 
 The following script will run an ORCA job on the Cirrus using 4 MPI

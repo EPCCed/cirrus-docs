@@ -52,9 +52,9 @@ For example, the following script will run a CASTEP job using 4 nodes
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard,gpu)
+    # Replace [partition name] below with your partition name (e.g. standard)
     #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+    # Replace [qos name] below with your qos name (e.g. standard,long)
     #SBATCH --qos=[qos name]
 
     # Load CASTEP version 18 module

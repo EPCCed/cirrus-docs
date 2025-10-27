@@ -57,7 +57,6 @@ resources and partitions, e.g.
 
     PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
     standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33]
-    gpu            up   infinite     36   idle r2i4n[0-8],r2i5n[0-8],r2i6n[0-8],r2i7n[0-8]
 
 ### `sbatch`: submitting jobs
 
@@ -121,20 +120,13 @@ There are three different things you need to specify for each job:
 
 Each of these aspects are described in more detail below.
 
-The *primary resources* you request are *compute* resources: either CPU
-cores on the standard compute nodes or GPU cards on the GPU compute
-nodes. Other node resources: memory on the standard compute nodes;
-memory and CPU cores on the GPU nodes are assigned pro rata based on the
-primary resource that you request.
-
-
 
 !!! Warning
 
 
 
 	On Cirrus, you cannot specify the memory for a job using the `--mem`
-	options to Slurm (e.g. `--mem`, `--mem-per-cpu`, `--mem-per-gpu`). The
+	options to Slurm (e.g. `--mem`, `--mem-per-cpu`). The
 	amount of memory you are assigned is calculated from the amount of
 	primary resource you request.
 
@@ -169,43 +161,6 @@ of the memory available on the node.
 	You will not generally have access to the full amount of memory resource
 	on the the node as some is retained for running the operating system and
 	other system processes.
-
-
-
-### Primary resources on GPU nodes
-
-The *primary resource* you request on standard compute nodes are GPU
-cards. The maximum amount of memory and CPU cores you are allocated is
-computed as the number of GPU cards you requested multiplied by 1/4 of
-the total available (as there are 4 GPU cards per node). So, if you
-request the full node (4 GPU cards), then you will be allocated a
-maximum of all of the memory (384 GB) available on the node; however, if
-you request 1 GPU card, then you will be assigned a maximum of 384/4 =
-96 GB of the memory available on the node.
-
-
-
-!!! Note
-
-	Using the `--exclusive` option in jobs will give you access to all of
-	the CPU cores and the full node memory even if you do not explicitly
-	request all of the GPU cards on the node.
-
-
-!!! Warning
-
-	In order to run jobs on the GPU nodes your budget must have positive GPU
-	hours *and* core hours associated with it. However, only your GPU hours
-	will be consumed when running these jobs.
-
-
-!!! Warning
-
-
-	Using the `--exclusive` option will charge your account for the usage of
-	the entire node, *i.e.*, 4 GPUs, even if you don't request all the GPUs
-	in your submission script.
-
 
 
 ### Primary resources on high memory (CPU) compute nodes
@@ -250,7 +205,6 @@ script. The following table has a list of active partitions on Cirrus.
 |-----------|-----------------------------------------------------------------------------------------------|-----------------------|-------|
 | standard  | CPU nodes with 2x 18-core Intel Broadwell processors, 256 GB memory                           | 352                   |       |
 | highmem   | CPU node with 4x 28-core Intel Xeon Platinum processors, 3 TB memory                          | 1                     |       |
-| gpu       | GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors, 384 GB memory | 36                    |       |
 
 Cirrus Partitions
 
@@ -277,12 +231,11 @@ jobs.
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
 | standard     | No limit              | 500 jobs             | 4 days       | 88 nodes (3168 cores/25%)               | standard              |       |
 | highmem      | 1 job                 | 2 jobs               | 48 hours     | 1 node                                  | highmem               |       |
-| largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) or 144 GPUs | standard, gpu         |       |
-| long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes or 8 GPUs                      | standard, gpu         |       |
+| largescale   | 1 job                 | 4 jobs               | 24 hours     | 228 nodes (8192+ cores/65%) | standard         |       |
+| long         | 5 jobs                | 20 jobs              | 14 days      | 16 nodes                      | standard         |       |
 | highpriority | 10 jobs               | 20 jobs              | 4 days       | 140 nodes                               | standard              | charged at 1.5 x normal rate |
-| gpu          | No limit              | 128 jobs             | 4 days       | 64 GPUs (16 nodes/40%)                  | gpu                   |       |
-| short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes or 4 GPUs                       | standard, gpu         |       |
-| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%) or 16 GPUs    | standard, gpu         | usage is not charged |
+| short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
+| lowpriority  | No limit              | 100 jobs             | 2 days       | 36 nodes (1296 cores/10%)     | standard        | usage is not charged |
 
 #### Cirrus QoS
 
@@ -1000,12 +953,6 @@ the system. To submit jobs to a reservation, you need to add
 job submission script or Slurm job submission command.
 
 
-!!! Note
-
-	You must have at least 1 CPUh - and 1 GPUh for reservations on GPU
-	nodes - to be able to submit jobs to reservations.
-
-
 
 !!! Tip
 
@@ -1067,8 +1014,7 @@ srun --cpu-bind=cores ./my_serial_executable.x
 Applications which normally read and write temporary files from `/tmp`
 may require some care in batch jobs on Cirrus. As the size of `/tmp` on
 backend nodes is relatively small (\< 150 MB), applications should use a
-different location to prevent possible failures. This is relevant for
-both CPU and GPU nodes.
+different location to prevent possible failures.
 
 Note also that the default value of the variable `TMPDIR` in batch jobs
 is a memory-resident file system location specific to the current job

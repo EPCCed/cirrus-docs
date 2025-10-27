@@ -1,6 +1,6 @@
 <img src="images/epcc_uoe_epsrc.png" class="align-right" alt="image" align="right" />
 
-# Cirrus
+# Cirrus 2025
 
 Cirrus is a HPC and data science service hosted and run by
 [EPCC](http://www.epcc.ed.ac.uk) at [The University of
@@ -11,16 +11,14 @@ Cirrus is available to industry and academic researchers. For
 information on how to get access to the system please see the [Cirrus
 website](http://www.cirrus.ac.uk).
 
-The Cirrus facility is based around an SGI ICE XA system. There are 280
-standard compute nodes, 1 high memory compute node and 38 GPU compute
-nodes. Each standard compute node has 256 GiB of memory and contains two
-2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each high memory
-compute node has 3 TiB of memory and contains four 2.7 GHz, 28-core Intel
-Xeon (Platinum) processors. Each GPU compute node has 384 GiB of memory,
-contains two 2.4 GHz, 20-core Intel Xeon (Cascade Lake) processors and
-four NVIDIA Tesla V100-SXM2-16GB (Volta) GPU accelerators connected to
-the host processors and each other via PCIe. All nodes are connected
-using a single Infiniband fabric. This documentation covers:
+The Cirrus service is an HPE Cray EX4000 CPU-based system. There are
+192 standard compute nodes with 768 GB per node DDR5 memory and 64
+high memory nodes with 1,536 GB per node. All compute nodes have dual AMD
+EPYC 9825 processors with 144 physical cores each (288 physical
+cores per node). In total the system has 256 compute nodes with
+72,728 cores. Nodes are connected by a high-performance Slingshot 11 network.
+
+This documentation covers:
 
 - Cirrus User Guide: general information on how to use Cirrus
 - Software Applications: notes on using specific software applications
@@ -38,4 +36,3 @@ Documentation](http://tier2-safe.readthedocs.io/en/latest/)
 This documentation draws on the
 documentation for the [ARCHER2 National Supercomputing
 Service](http://docs.archer2.ac.uk).
-

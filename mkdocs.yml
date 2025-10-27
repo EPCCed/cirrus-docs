@@ -46,7 +46,6 @@ nav:
     - "Running Jobs on Cirrus": user-guide/batch.md
     - "Singularity Containers": user-guide/singularity.md
     - "Using Python": user-guide/python.md
-    - "Using the Cirrus GPU Nodes": user-guide/gpu.md
     - "Solid state storage": user-guide/solidstate.md
   - "Software Applications":
     - "Castep": software-packages/castep.md
