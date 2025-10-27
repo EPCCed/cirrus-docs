@@ -36,9 +36,14 @@ markdown_extensions:
 
 nav:
   - "Overview": index.md
-  - "Cirrus migration to E1000 system": e1000-migration
+  - "Migration to Cirrus EX4000":
+    - "Overview": migration-2025/index.md
+    - "Account migration": migration-2025/account-migration.md
+    - "Data migration": migration-2025/data-migration.md
+    - "Cirrus EX4000 differences": migration-2025/cirrus-differences.md
   - "User Guide":
     - "Introduction": user-guide/introduction.md
+    - "Hardware": user-guide/hardware.md
     - "Connecting to Cirrus": user-guide/connecting.md
     - "Data Management and Transfer": user-guide/data.md
     - "File and Resource Management": user-guide/resource_management.md
@@ -48,20 +53,14 @@ nav:
     - "Using Python": user-guide/python.md
     - "Solid state storage": user-guide/solidstate.md
   - "Software Applications":
-    - "Castep": software-packages/castep.md
+    - "CASTEP": software-packages/castep.md
     - "CP2K": software-packages/cp2k.md
-    - "ELEMENTS": software-packages/elements.md
-    - "FLACS": software-packages/flacs.md
-    - "Gaussian": software-packages/gaussian.md
     - "GROMACS": software-packages/gromacs.md
     - "HELYX&reg;": software-packages/helyx.md
     - "LAMMPS": software-packages/lammps.md
-    - "MATLAB": software-packages/MATLAB.md
-    - "NAMD": software-packages/namd.md
     - "OpenFOAM": software-packages/openfoam.md
     - "ORCA": software-packages/orca.md
     - "Quantum Espresso (QE)": software-packages/qe.md
-    - "STAR-CCM+": software-packages/starccm+.md
     - "VASP": software-packages/vasp.md
   - "Software Libraries":
     - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md

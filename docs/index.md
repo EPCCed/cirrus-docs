@@ -1,6 +1,6 @@
-<img src="images/epcc_uoe_epsrc.png" class="align-right" alt="image" align="right" />
+<img src="images/logo-set.png" class="align-right" alt="image" align="right" />
 
-# Cirrus 2025
+# Cirrus
 
 Cirrus is a HPC and data science service hosted and run by
 [EPCC](http://www.epcc.ed.ac.uk) at [The University of
