@@ -198,7 +198,8 @@ jobs.
 | long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged |
+| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to industrial projects. |
+| industry  |              |             |       |      |        | Not available to academic projects. |
 | reservation  | No limit              | No limit             | No limit       | No limit     | standard, highmem        | Only usuable within reservation. |
 
 #### Cirrus QoS
