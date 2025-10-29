@@ -36,7 +36,11 @@ markdown_extensions:
 
 nav:
   - "Overview": index.md
-  - "Cirrus migration to E1000 system": e1000-migration
+  - "New Cirrus EX4000 migration":
+    - "Overview": migration-2025/index.md
+    - "Account/Project Migration": migration-2025/account-migration.md
+    - "Data Migration": migration-2025/data-migration.md
+    - "Differences from old Cirrus": migration-2025/cirrus-differences.md
   - "User Guide":
     - "Introduction": user-guide/introduction.md
     - "Connecting to Cirrus": user-guide/connecting.md
