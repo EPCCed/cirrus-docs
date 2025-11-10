@@ -33,7 +33,7 @@ There are 192 standard memory nodes and 64 high memory nodes.
 | L2 cache           | 1 MB/core                                          |
 | L3 cache           | 32 MB/CCD                                          |
 | Vector support     | AVX512                                             |
-| Network connection | 1x 200 Gb/s injection ports per node               |
+| Network connection | 2x 100 Gb/s injection ports per node               |
 
 Each socket contains 12 *Core Complex Dies* (CCDs) and one I/O die (IOD). Each CCD contains 12 cores and 32 MB of L3 cache. Thus, there are 144 cores per socket and 288 cores per node.
 
