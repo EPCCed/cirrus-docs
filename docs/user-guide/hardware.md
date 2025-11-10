@@ -39,6 +39,7 @@ Each socket contains 12 *Core Complex Dies* (CCDs) and one I/O die (IOD). Each C
 
 More information on the architecture of the AMD EPYC Zen2 processors:
 
+* [5th Gen AMD EPYC Processor Architecture White Paper](https://docs.amd.com/v/u/en-US/5th-gen-amd-epyc-processor-architecture-white-paper)
 * [HPC Tuning Guide for AMD EPYC 9005 Processors](https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/tuning-guides/58479_amd-epyc-9005-tg-hpc.pdf)
 
 ## AMD Zen5 microarchitecture
