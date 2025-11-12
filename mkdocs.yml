@@ -51,7 +51,6 @@ nav:
     - "Running Jobs on Cirrus": user-guide/batch.md
     - "Singularity Containers": user-guide/singularity.md
     - "Using Python": user-guide/python.md
-    - "Solid state storage": user-guide/solidstate.md
   - "Software Applications":
     - "CASTEP": software-packages/castep.md
     - "CP2K": software-packages/cp2k.md
