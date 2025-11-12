@@ -1,412 +1,865 @@
-# Application Development Environment
+# Application development environment
 
-The application development environment on Cirrus is primarily
-controlled through the *modules* environment. By loading and switching
-modules you control the compilers, libraries and software available.
+## What's available
 
-This means that for compiling on Cirrus you typically set the compiler
-you wish to use using the appropriate modules, then load all the
-required library modules (e.g. numerical libraries, IO format
-libraries).
+Cirrus runs the RHEL 9,
+and provides a development environment which includes:
 
-Additionally, if you are compiling parallel applications using MPI (or
-SHMEM, etc.) then you will need to load one of the MPI environments and
-use the appropriate compiler wrapper scripts.
+  - Software modules via a standard module framework
+  - Four different compiler environments (AMD, Cray, Intel and GNU)
+  - MPI, OpenMP, and SHMEM
+  - Scientific and numerical libraries
+  - Parallel Python and R
+  - Parallel debugging and profiling
+  - Apptainer container software
 
-By default, all users on Cirrus start with no modules loaded.
+Access to particular software, and particular versions, is managed by an 
+Lmod module framework. Most software is available by loading modules,
+including the different compiler environments
 
-Basic usage of the `module` command on Cirrus is covered below. For full
-documentation please see:
+You can see what compiler environments are available with:
 
-- [Linux manual page on modules](http://linux.die.net/man/1/module)
+```bash
+user@login01:~> module avail PrgEnv
 
-## Using the modules environment
+------------------------------------- /opt/cray/pe/lmod/modulefiles/core --------------------------------------
+   PrgEnv-amd/8.3.3         PrgEnv-cray-amd/8.3.3          PrgEnv-gnu-amd/8.3.3
+   PrgEnv-amd/8.4.0  (D)    PrgEnv-cray-amd/8.4.0 (D)      PrgEnv-gnu-amd/8.4.0 (D)
+   PrgEnv-aocc/8.3.3        PrgEnv-cray/8.3.3              PrgEnv-gnu/8.3.3
+   PrgEnv-aocc/8.4.0 (D)    PrgEnv-cray/8.4.0     (L,D)    PrgEnv-gnu/8.4.0     (D)
 
-### Information on the available modules
+  Where:
+   L:  Module is loaded
+   D:  Default Module
 
-Finding out which modules (and hence which compilers, libraries and
-software) are available on the system is performed using the
-`module avail` command:
+Module defaults are chosen based on Find First Rules due to Name/Version/Version modules found in the module tree.
+See https://lmod.readthedocs.io/en/latest/060_locating.html for details.
 
-    [user@cirrus-login0 ~]$ module avail
-    ...
+If the avail list is too long consider trying:
 
-This will list all the names and versions of the modules available on
-the service. Not all of them may work in your account though due to, for
-example, licencing restrictions. You will notice that for many modules
-we have more than one version, each of which is identified by a version
-number. One of these versions is the default. As the service develops
-the default version will change.
+"module --default avail" or "ml -d av" to just list the default modules.
+"module overview" or "ml ov" to display the number of modules for each name.
 
-You can list all the modules of a particular type by providing an
-argument to the `module avail` command. For example, to list all
-available versions of the Intel Compiler type:
-
-    [user@cirrus-login0 ~]$ module avail intel-*/compilers
-
-    --------------------------------- /work/y07/shared/cirrus-modulefiles --------------------------------
-    intel-19.5/compilers  intel-20.4/compilers  
-
-If you want more info on any of the modules, you can use the
-`module help` command:
-
-    [user@cirrus-login0 ~]$ module help mpt
-
-    -------------------------------------------------------------------
-    Module Specific Help for /usr/share/Modules/modulefiles/mpt/2.25:
-
-    The HPE Message Passing Toolkit (MPT) is an optimized MPI
-    implementation for HPE systems and clusters.  See the
-    MPI(1) man page and the MPT User's Guide for more
-    information.
-    -------------------------------------------------------------------
-
-The simple `module list` command will give the names of the modules and
-their versions you have presently loaded in your environment, e.g.:
-
-    [user@cirrus-login0 ~]$ module list
-    Currently Loaded Modulefiles:
-    1) git/2.35.1(default)                                  
-    2) epcc/utils
-    2) /mnt/lustre/e1000/home/y07/shared/cirrus-modulefiles/epcc/setup-env 
-
-### Loading, unloading and swapping modules
-
-To load a module to use `module add` or `module load`. For example, to
-load the intel 20.4 compilers into the development environment:
-
-    module load intel-20.4/compilers
-
-This will load the default version of the intel compilers.
-
-If a module loading file cannot be accessed within 10 seconds, a warning
-message will appear: `Warning: Module system not loaded`.
-
-If you want to clean up, `module remove` will remove a loaded module:
-
-    module remove intel-20.4/compilers
-
-You could also run `module rm intel-20.4/compilers` or `module unload intel-20.4/compilers`.
-There are many situations in which you might want to change the
-presently loaded version to a different one, such as trying the latest
-version which is not yet the default or using a legacy version to keep
-compatibility with old data. This can be achieved most easily by using
-"module swap oldmodule newmodule".
-
-Suppose you have loaded version 19 of the Intel compilers; the following
-command will change to version 20:
-
-    module swap intel-19.5/compilers intel-20.4/compilers
-
-## Available Compiler Suites
-
-
-!!! Note
-
-
-    As Cirrus uses dynamic linking by default you will generally also need to load any modules you used to compile your code in your job submission script when you run your code.
-
-
-
-### Intel Compiler Suite
-
-The Intel compiler suite is accessed by loading the `intel-*/compilers`
-module, where `*` references the version. For example, to load the v20
-release, you would run:
-
-    module load intel-20.4/compilers
-
-Once you have loaded the module, the compilers are available as:
-
-- `ifort` - Fortran
-- `icc` - C
-- `icpc` - C++
-
-See the extended section below for further details of available Intel
-compiler versions and tools.
-
-### GCC Compiler Suite
-
-The GCC compiler suite is accessed by loading the `gcc/*` modules, where
-`*` again is the version. For example, to load version 10.2.0 you would
-run:
-
-    module load gcc/10.2.0
-
-Once you have loaded the module, the compilers are available as:
-
-- `gfortran` - Fortran
-- `gcc` - C
-- `g++` - C++
-
-## Compiling MPI codes
-
-MPI on Cirrus is currently provided by the HPE MPT library.
-
-You should also consult the chapter on running jobs through the batch
-system for examples of how to run jobs compiled against MPI.
-
-
-
-!!! Note
-
-    By default, all compilers produce dynamic executables on Cirrus. This   means that you must load the same modules at runtime (usually in your job submission script) as you have loaded at compile time.
-
-
-
-
-### Using HPE MPT
-
-To compile MPI code with HPE MPT, using any compiler, you must first
-load the "mpt" module.
-
-    module load mpt
-
-This makes the compiler wrapper scripts `mpicc`, `mpicxx` and `mpif90`
-available to you.
-
-What you do next depends on which compiler (Intel or GCC) you wish to
-use to compile your code.
-
-
-!!! Note
-
-    We recommend that you use the Intel compiler wherever possible to compile MPI applications as this is the method officially supported and tested by HPE.
-
-
-
-!!! Note
-
-    You can always check which compiler the MPI compiler wrapper scripts are using with, for example, `mpicc -v` or `mpif90 -v`.
-
-
-
-#### Using Intel Compilers and HPE MPT
-
-Once you have loaded the MPT module you should next load the Intel
-compilers module you intend to use (e.g. `intel-20.4/compilers`):
-
-    module load intel-20.4/compilers
-
-The compiler wrappers are then available as
-
-- `mpif90` - Fortran with MPI
-- `mpicc -cc=icc` - C with MPI
-- `mpicxx --cxx=icpc` - C++ with MPI
-
-The MPT C/C++ compiler wrappers use GCC by default rather than the Intel compilers hence the additional options in the commands above. When compiling C applications you must also specify that `mpicc` should use the `icc` compiler with, for example, `mpicc -cc=icc`. Similarly, when compiling C++ applications you must also specify that `mpicxx` should use the `icpc` compiler with, for example, `mpicxx -cxx=icpc`. (This is not required for Fortran as the `mpif90` compiler automatically uses `ifort`.) If in doubt use `mpicc -cc=icc -v` or `mpicxx -cxx=icpc -v` to see which compiler is actually being called.
-
-Alternatively, you can set the environment variables `MPICC_CC=icc` and/or `MPICXX=icpc` to ensure the correct base compiler is used:
+Use "module spider" to find all possible modules and extensions.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
 
 ```
-export MPICC_CC=icc
-export MPICXX_CXX=icpc
+
+Other software modules can be searched using the `module spider` command:
+
+``` 
+auser@uan01:~> module spider
+
+---------------------------------------------------------------------------------------------------------------
+The following is a list of the modules and extensions currently available:
+---------------------------------------------------------------------------------------------------------------
+  PrgEnv-amd: PrgEnv-amd/8.3.3, PrgEnv-amd/8.4.0
+
+  PrgEnv-aocc: PrgEnv-aocc/8.3.3, PrgEnv-aocc/8.4.0
+
+  PrgEnv-cray: PrgEnv-cray/8.3.3, PrgEnv-cray/8.4.0
+
+  PrgEnv-cray-amd: PrgEnv-cray-amd/8.3.3, PrgEnv-cray-amd/8.4.0
+
+  PrgEnv-gnu: PrgEnv-gnu/8.3.3, PrgEnv-gnu/8.4.0
+
+  PrgEnv-gnu-amd: PrgEnv-gnu-amd/8.3.3, PrgEnv-gnu-amd/8.4.0
+
+  adios2: adios2/2.10.1-aocc, adios2/2.10.1-cray, adios2/2.10.1-gnu
+
+  amd: amd/5.2.3
+
+  amd-mixed: amd-mixed/5.2.3
+
+  amd-uprof: amd-uprof/4.0.341
+
+  aocc: aocc/3.2.0, aocc/4.0.0
+
+  aocc-mixed: aocc-mixed/3.2.0, aocc-mixed/4.0.0
+
+  aocl: aocl/3.1, aocl/4.0
+
+  arm/forge: arm/forge/22.1.3
+
+  atp: atp/3.14.16, atp/3.15.1
+
+  blender: blender/4.2.2
+
+  bolt: bolt/0.8
+
+  boost: boost/1.72.0, boost/1.81.0
+
+  castep: castep/23.11, castep/24.1, castep/25.11
+
+  cce: cce/15.0.0, cce/16.0.1
+
+...output trimmed...
+
+
 ```
 
-When the environment variables are set, you can use `mpicc` or `mpicxx` without needing additional options.
+A full discussion of the module system is available in
+[the software environment section](sw-environment.md).
 
+A consistent set of modules is loaded on login to the machine (currently
+`PrgEnv-cray`, see below). Developing applications then means selecting
+and loading the appropriate set of modules before starting work.
 
-#### Using GCC Compilers and HPE MPT
+This section is aimed at code developers and will concentrate on the
+compilation environment, building libraries and executables,
+specifically parallel executables. Other topics such as [Python](python.md) and
+[Containers](containers.md) are covered in more detail in separate sections of the
+documentation.
 
-Once you have loaded the MPT module you should next load the `gcc`
-module:
+!!! tip
+    If you want to get back to the login module state without having to logout
+    and back in again, you can use:
 
-    module load gcc
+    ```
+    module restore
+    ```
 
-Compilers are then available as
+    This is also handy for build scripts to ensure you are starting from a known
+    state.
 
-- `mpif90` - Fortran with MPI
-- `mpicc` - C with MPI
-- `mpicxx` - C++ with MPI
+## Compiler environments
 
+There are four different compiler environments available on Cirrus:
 
+- AMD Compiler Collection (AOCC)
+- GNU Compiler Collection (GCC)
+- Intel oneAPI (Intel)
+- HPE Cray Compiler Collection (CCE) (current default compiler environment)
 
-!!! Note
+The current compiler suite is selected via the
+`PrgEnv` module , while the specific compiler versions are
+determined by the relevant compiler module. A summary is:
 
-    HPE MPT does not support the syntax `use mpi` in Fortran applications with the GCC compiler `gfortran`. You should use the older `include "mpif.h"` syntax when using GCC compilers with `mpif90`. If you cannot change this, then use the Intel compilers with MPT.
+| Suite name | Compiler Environment Module | Compiler Version Module |
+| ---------- | --------------------------- | ----------------------- |
+| CCE        | `PrgEnv-cray`               | `cce`                   |
+| GCC        | `PrgEnv-gnu`                | `gcc`                   |
+| Intel      | `PrgEnv-intel`              | `intel`                 |
+| AOCC       | `PrgEnv-aocc`               | `aocc`                  |
 
+For example, at login, the default set of modules are:
 
+``` 
+user@login03:~> module list
 
-### Using Intel MPI
+Currently Loaded Modules:
+  1) craype-x86-rome               6) cce/16.0.1             11) PrgEnv-cray/8.4.0
+  2) libfabric/1.12.1.2.2.0.0      7) craype/2.7.23          12) bolt/0.8
+  3) craype-network-ofi            8) cray-dsmml/0.2.2       13) epcc-setup-env
+  4) perftools-base/23.09.0        9) cray-mpich/8.1.27      14) load-epcc-module
+  5) xpmem/0.2.119-1.3_0_gnoinfo  10) cray-libsci/23.09.1.1
+```
 
-Although HPE MPT remains the default MPI library and we recommend that
-first attempts at building code follow that route, you may also choose
-to use Intel MPI if you wish. To use these, load the appropriate
-MPI module, for example `intel-20.4/mpi`:
+from which we see the default compiler environment is Cray (indicated
+by `PrgEnv-cray` (at 11 in the list above) and the default compiler module
+is `cce/16.0.1` (at 6 in the list above). The compiler environment
+will give access to a consistent set of compiler, MPI library via
+`cray-mpich` (at 9), and other libraries e.g., `cray-libsci` (at 10 in
+the list above).
 
-    module load intel-20.4/mpi
+### Switching between compiler environments
 
-Please note that the name of the wrappers to use when compiling with
-Intel MPI depends on whether you are using the Intel compilers or GCC.
-You should make sure that you or any tools use the correct ones when
-building software.
+Switching between different compiler environments is achieved using the
+`module load` command. For example, to switch from the default HPE Cray
+(CCE) compiler environment to the GCC environment, you would use:
 
+```
+auser@ln03:~> module load PrgEnv-gnu
 
+Lmod is automatically replacing "cce/16.0.1" with "gcc/11.2.0".
 
-!!! Note
 
-    Although Intel MPI is available on Cirrus, HPE MPT remains the recommended and default MPI library to use when building applications.
+Lmod is automatically replacing "PrgEnv-cray/8.4.0" with "PrgEnv-gnu/8.4.0".
 
 
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.27
 
-#### Using Intel Compilers and Intel MPI
+```
 
-After first loading Intel MPI, you should next load the appropriate
-Intel compilers module (e.g. `intel-20.4/compilers`):
+If you then use the `module list` command, you will see that your environment
+has been changed to the GCC environment:
 
-    module load intel-20.4/compilers
+```
+auser@ln03:~> module list
 
-You may then use the following MPI compiler wrappers:
+Currently Loaded Modules:
+  1) craype-x86-rome               6) bolt/0.8          11) cray-dsmml/0.2.2
+  2) libfabric/1.12.1.2.2.0.0      7) epcc-setup-env    12) cray-mpich/8.1.27
+  3) craype-network-ofi            8) load-epcc-module  13) cray-libsci/23.09.1.1
+  4) perftools-base/23.09.0        9) gcc/11.2.0        14) PrgEnv-gnu/8.4.0
+  5) xpmem/0.2.119-1.3_0_gnoinfo  10) craype/2.7.23
+```
 
-- `mpiifort` - Fortran with MPI
-- `mpiicc` - C with MPI
-- `mpiicpc` - C++ with MPI
+### Switching between compiler versions
 
-#### Using GCC Compilers and Intel MPI
+Within a given compiler environment, it is possible to swap to a
+different compiler version by swapping the relevant compiler module.
+To switch to the GNU compiler environment from the default HPE Cray compiler
+environment and than swap the version of GCC from the 11.2.0 default to 
+the older 10.3.0 version, you would use
 
-After loading Intel MPI, you should next load the `gcc` module you wish
-to use:
+```
+auser@ln03:~> module load PrgEnv-gnu
 
-    module load gcc
+Lmod is automatically replacing "cce/16.0.1" with "gcc/11.2.0".
 
-You may then use these MPI compiler wrappers:
 
-- `mpif90` - Fortran with MPI
-- `mpicc` - C with MPI
-- `mpicxx` - C++ with MPI
+Lmod is automatically replacing "PrgEnv-cray/8.4.0" with "PrgEnv-gnu/8.4.0".
 
 
-### Using OpenMPI
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.27
+
+auser@ln03:~> module load gcc/10.3.0
 
-There are a number of OpenMPI modules available on Cirrus; these can be listed
-by running `module avail openmpi`.
+The following have been reloaded with a version change:
+  1) gcc/11.2.0 => gcc/10.3.0
+
+```
 
-[Build instructions for OpenMPI 4.1.6 on Cirrus](https://github.com/hpc-uk/build-instructions/blob/main/libs/openmpi/build_openmpi_4.1.6_cirrus_gcc10.md)
+The first swap command moves to the GNU compiler environment and the second
+swap command moves to the older version of GCC. As before, `module list`
+will show that your environment has been changed:
 
-OpenMPI modules for use on the CPU nodes are also available, but these are not
-expected to provide any performance advantage over HPE MPT or Intel MPI.
+```
+auser@ln03:~> module list
 
+Currently Loaded Modules:
+  1) craype-x86-rome               6) bolt/0.8          11) cray-libsci/23.09.1.1
+  2) libfabric/1.12.1.2.2.0.0      7) epcc-setup-env    12) PrgEnv-gnu/8.4.0
+  3) craype-network-ofi            8) load-epcc-module  13) gcc/10.3.0
+  4) perftools-base/23.09.0        9) craype/2.7.23     14) cray-mpich/8.1.27
+  5) xpmem/0.2.119-1.3_0_gnoinfo  10) cray-dsmml/0.2.2
 
-## Compiler Information and Options
 
-The manual pages for the different compiler suites are available:
+```
 
-GCC  
-Fortran `man gfortran` , C/C++ `man gcc`
+### Compiler wrapper scripts: `cc`, `CC`, `ftn`
 
-Intel  
-Fortran `man ifort` , C/C++ `man icc`
+To ensure consistent behaviour, compilation of C, C++, and Fortran
+source code should then take place using the appropriate compiler
+wrapper: `cc`, `CC`, and `ftn`, respectively. The wrapper will
+automatically call the relevant underlying compiler and add the
+appropriate include directories and library locations to the invocation.
+This typically eliminates the need to specify this additional
+information explicitly in the configuration stage. To see the details of
+the exact compiler invocation use the `-craype-verbose` flag to the
+compiler wrapper.
 
-### Useful compiler options
+The default link time behaviour is also related to the current
+programming environment. See the section below on [Linking and
+libraries](#linking-and-libraries).
 
-Whilst difference codes will benefit from compiler optimisations in
-different ways, for reasonable performance on Cirrus, at least
-initially, we suggest the following compiler options:
+Users should not, in general, invoke specific compilers at compile/link
+stages. In particular, `gcc`, which may default to `/usr/bin/gcc`,
+should not be used. The compiler wrappers `cc`, `CC`, and `ftn` should
+be used (with the underlying compiler type and version set by the
+module system). Other common MPI compiler wrappers
+e.g., `mpicc`, should also be replaced by the relevant wrapper, e.g. `cc`
+(commands such as `mpicc` are not available on Cirrus).
 
-Intel  
-`-O2`
-
-GNU  
-`-O2 -ftree-vectorize -funroll-loops -ffast-math`
-
-When you have a application that you are happy is working correctly and
-has reasonable performance you may wish to investigate some more
-aggressive compiler optimisations. Below is a list of some further
-optimisations that you can try on your application (Note: these
-optimisations may result in incorrect output for programs that depend on
-an exact implementation of IEEE or ISO rules/specifications for math
-functions):
-
-Intel  
-`-fast`
-
-GNU  
-`-Ofast -funroll-loops`
-
-Vectorisation, which is one of the important compiler optimisations for
-Cirrus, is enabled by default as follows:
-
-Intel  
-At `-O2` and above
-
-GNU  
-At `-O3` and above or when using `-ftree-vectorize`
-
-To promote integer and real variables from four to eight byte precision
-for Fortran codes the following compiler flags can be used:
-
-Intel  
-`-real-size 64 -integer-size 64 -xAVX` (Sometimes the Intel compiler
-incorrectly generates AVX2 instructions if the `-real-size 64` or `-r8`
-options are set. Using the `-xAVX` option prevents this.)
-
-GNU  
-`-freal-4-real-8 -finteger-4-integer-8`
-
-## Using static linking/libraries
-
-By default, executables on Cirrus are built using shared/dynamic
-libraries (that is, libraries which are loaded at run-time as and when
-needed by the application) when using the wrapper scripts.
-
-An application compiled this way to use shared/dynamic libraries will
-use the default version of the library installed on the system (just
-like any other Linux executable), even if the system modules were set
-differently at compile time. This means that the application may
-potentially be using slightly different object code each time the
-application runs as the defaults may change. This is usually the desired
-behaviour for many applications as any fixes or improvements to the
-default linked libraries are used without having to recompile the
-application, however some users may feel this is not the desired
-behaviour for their applications.
-
-Alternatively, applications can be compiled to use static libraries
-(i.e. all of the object code of referenced libraries are contained in
-the executable file). This has the advantage that once an executable is
-created, whenever it is run in the future, it will always use the same
-object code (within the limit of changing runtime environment). However,
-executables compiled with static libraries have the potential
-disadvantage that when multiple instances are running simultaneously
-multiple copies of the libraries used are held in memory. This can lead
-to large amounts of memory being used to hold the executable and not
-application data.
-
-To create an application that uses static libraries you must pass an
-extra flag during compilation, `-Bstatic`.
-
-Use the UNIX command `ldd exe_file` to check whether you are using an
-executable that depends on shared libraries. This utility will also
-report the shared libraries this executable will use if it has been
-dynamically linked.
-
-## Intel modules and tools
-
-There are a number of different Intel compiler versions available, and
-there is also a slight difference in the way different versions appear.
-
-A full list is available via `module avail intel`.
-
-The different available compiler versions are:
-
-- `intel-19.5/*` Intel 2019 Update 5
-- `intel-20.4/*` Intel 2020 Update 4
-
-We recommend the most up-to-date version in the first instance, unless
-you have particular reasons for preferring an older version.
-
-For a note on Intel compiler version numbers, see this [Intel
-page](https://software.intel.com/content/www/us/en/develop/articles/intel-compiler-and-composer-update-version-numbers-to-compiler-version-number-mapping.html)
-
-The different module names (or parts thereof) indicate:
-
-- `cc` C/C++ compilers only
-- `cmkl` MKL libraries (see Software Libraries section)
-- `compilers` Both C/C++ and Fortran compilers
-- `fc` Fortran compiler only
-- `itac` Intel Trace Analyze and Collector
-- `mpi` Intel MPI
-- `pxse` Intel Parallel Studio (all Intel modules)
-- `tbb` Thread Building Blocks
-- `vtune` VTune profiler - note that in older versions
-  (`intel-*/18.0.5.274`, `intel-*/19.0.0.117` VTune is launched as
-  `amplxe-gui` for GUI or `amplxe-cl` for CLI use)
+!!! important
+    Always use the compiler wrappers `cc`, `CC`, and/or `ftn` and not a
+    specific compiler invocation. This will ensure consistent compile/link
+    time behaviour.
+
+
+!!! tip
+    If you are using a build system such as Make or CMake then you 
+    will need to replace all occurrences of `mpicc` with `cc`,
+    `mpicxx`/`mpic++` with `CC` and `mpif90` with `ftn`.
+
+### Compiler man pages and help
+
+Further information on both the compiler wrappers, and the individual
+compilers themselves are available via the command line, and via
+standard `man` pages. The `man` page for the compiler wrappers is common
+to all programming environments, while the `man` page for individual
+compilers depends on the currently loaded programming environment. The
+following table summarises options for obtaining information on the
+compiler and compile options:
+
+| Compiler suite | C            | C++           | Fortran        |
+| -------------- | ------------ | ------------- | -------------- |
+| Cray           | `man clang`  | `man clang++` | `man crayftn`  |
+| GNU            | `man gcc`    | `man g++`     | `man gfortran` |
+| Wrappers       | `man cc`     | `man CC`      | `man ftn`      |
+
+!!! tip
+    You can also pass the `--help` option to any of the compilers or
+    wrappers to get a summary of how to use them. The Cray Fortran
+    compiler uses `ftn --craype-help` to access the help options.
+
+!!! tip
+    There are no `man` pages for the AOCC compilers at the moment.
+
+!!! tip
+    Cray C/C++ is based on Clang and therefore
+    supports similar options to clang/gcc. `clang --help` will produce a full summary
+    of options with Cray-specific options marked "Cray". The `clang` man
+    page on ARCHER2 concentrates on these Cray extensions to the `clang` front end and
+    does not provide an exhaustive description of all `clang` options.
+    Cray Fortran **is not** based on Flang and so takes different options
+    from flang/gfortran.
+
+### Which compiler environment?
+
+If you are unsure which compiler you should choose, we suggest the
+starting point should be the GNU compiler collection (GCC,
+`PrgEnv-gnu`); this is perhaps the most commonly used by code
+developers, particularly in the open source software domain. A portable,
+standard-conforming code should (in principle) compile in any of the
+three compiler environments.
+
+For users requiring specific compiler features, such as coarray
+Fortran, the recommended starting point would be Cray. The following
+sections provide further details of the different compiler
+environments.
+
+### GNU compiler collection (GCC)
+
+The commonly used open source GNU compiler collection is available and
+provides C/C++ and Fortran compilers.
+
+Switch the the GCC compiler environment from the default CCE (cray)
+compiler environment via:
+
+```
+auser@ln03:~> module load PrgEnv-gnu
+
+Lmod is automatically replacing "cce/16.0.1" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.4.0" with "PrgEnv-gnu/8.4.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.27
+
+```
+
+!!! warning
+    If you want to use GCC version 10 or greater to compile Fortran code,
+    with the old MPI interfaces (i.e. `use mpi` or `INCLUDE 'mpif.h'`) you
+    **must** add the `-fallow-argument-mismatch` option (or equivalent) when compiling
+    otherwise you will see compile errors associated with MPI functions.
+    The reason for this is that past versions of `gfortran` have allowed
+    mismatched arguments to external procedures (e.g., where an explicit
+    interface is not available). This is often the case for MPI routines
+    using the old MPI interfaces where arrays of different types are passed
+    to, for example, `MPI_Send()`. This will now generate an error as not
+    standard conforming. The `-fallow-argument-mismatch` option is used
+    to reduce the error to a warning. The same effect may be achieved via
+    `-std=legacy`.
+
+    If you use the Fortran 2008 MPI interface (i.e. `use mpi_f08`) then you
+    should not need to add this option.
+
+    Fortran language MPI bindings are described in more detail at
+    in [the MPI Standard documentation](https://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node408.htm).
+
+#### Useful Gnu Fortran options
+
+| Option | Comment |  
+| ------ | ------- |
+| `-O<level>` | Optimisation levels: `-O0`, `-O1`, `-O2`, `-O3`, `-Ofast`. `-Ofast` is not recommended without careful regression testing on numerical output. |
+| `-std=<standard>` |	Default is gnu |
+| `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater if you are using the older MPI interfaces (see warning above) |
+| `-fbounds-check` | Use runtime checking of array indices |
+| `-fopenmp` | Compile OpenMP (default is no OpenMP) |
+| `-v` | Display verbose output from compiler stages |
+
+!!! tip
+    The `standard` in `-std` may be one of `f95` `f2003`, `f2008` or
+    `f2018`. The default option `-std=gnu` is the latest Fortran standard
+    plus gnu extensions.
+
+!!! warning
+    Past versions of `gfortran` have allowed mismatched arguments to
+    external procedures (e.g., where an explicit interface is not
+    available). This is often the case for MPI routines where arrays of
+    different types are passed to `MPI_Send()` and so on. This will now
+    generate an error as not standard conforming. Use
+    `-fallow-argument-mismatch` to reduce the error to a warning. The same
+    effect may be achieved via `-std=legacy`.
+
+#### Reference material
+
+  - C/C++ documentation  
+    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/>
+
+  - Fortran documentation  
+    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/>
+
+### Cray Compiling Environment (CCE)
+
+The Cray Compiling Environment (CCE) is the default compiler at the point
+of login. CCE supports C/C++ (along with unified parallel C UPC), and
+Fortran (including co-array Fortran). Support for OpenMP parallelism is
+available for both C/C++ and Fortran (currently OpenMP 4.5, with a
+number of exceptions).
+
+The Cray C/C++ compiler is based on a clang front end, and so compiler
+options are similar to those for gcc/clang. However, the Fortran
+compiler remains based around Cray-specific options. Be sure to separate
+C/C++ compiler options and Fortran compiler options (typically `CFLAGS`
+and `FFLAGS`) if compiling mixed C/Fortran applications.
+
+As CCE is the default compiler environment on Cirrus, you do not usually
+need to issue any commands to enable CCE.
+
+#### Useful CCE C/C++ options
+
+When using the compiler wrappers `cc` or `CC`, some of the following
+options may be
+useful:
+
+Language, warning, Debugging options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-std=<standard>` | Default is `-std=gnu11` (`gnu++14` for C++) \[1\] |
+
+Performance options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-Ofast` | Optimisation levels: `-O0`, `-O1`, `-O2`, `-O3`, `-Ofast`. `-Ofast` is not recommended without careful regression testing on numerical output.           |
+| `-ffp=level` | Floating point maths optimisations levels 0-4 \[2\]    |
+| `-flto` | Link time optimisation                                      |
+
+Miscellaneous options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-fopenmp` | Compile OpenMP (default is off)                          |
+| `-v` | Display verbose output from compiler stages                    |
+
+!!! notes
+    1.  Option `-std=gnu11` gives `c11` plus GNU extensions (likewise
+        `c++14` plus GNU extensions). See
+        <https://gcc.gnu.org/onlinedocs/gcc-4.8.2/gcc/C-Extensions.html>
+    2.  Option `-ffp=3` is implied by `-Ofast` or `-ffast-math`
+
+#### Useful CCE Fortran options
+
+Language, Warning, Debugging options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-m <level>` | Message level (default `-m 3` errors and warnings) |
+
+Performance options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-O <level>` | Optimisation levels: -O0 to -O3 (default -O2)      |
+| `-h fp<level>` | Floating point maths optimisations levels 0-3    |
+| `-h ipa` | Inter-procedural analysis                              |
+
+Miscellaneous options:
+
+| Option | Comment |  
+| ------ | ------- |
+| `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
+| `-v` | Display verbose output from compiler stages                |
+
+#### CCE Reference Documentation
+
+* [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
+  details are available via `man clang` once the CCE compiler environment is loaded.
+* [Cray Fortran documentation](https://internal.support.hpe.com/hpesc/public/docDisplay?docId=dp00005037en_us&docLocale=en_US)
+
+### AMD Optimizing Compiler Collection (AOCC)
+
+The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
+compiler. AOCC also includes a flang-based Fortran compiler.
+
+Load the AOCC compiler environment from the default CCE (cray)
+compiler environment via:
+
+```
+auser@ln03:~> module load PrgEnv-aocc
+
+Lmod is automatically replacing "cce/16.0.1" with "aocc/4.0.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.4.0" with "PrgEnv-aocc/8.4.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.27
+
+```
+
+#### AOCC reference material
+
+  - AMD website  
+    <https://developer.amd.com/amd-aocc/>
+
+
+## Message passing interface (MPI)
+
+### HPE Cray MPICH
+
+HPE Cray provide, as standard, an MPICH implementation of the message
+passing interface which is specifically optimised for the Slingshot
+interconnect. The current implementation supports MPI standard version 3.4.
+
+The HPE Cray MPICH implementation is linked into software by default when
+compiling using the standard wrapper scripts: `cc`, `CC` and `ftn`.
+
+You do not need to do anything to make HPE Cray MPICH available when you
+log into Cirrus, it is available by default to all users.
+
+#### MPI reference material
+
+MPI standard documents: <https://www.mpi-forum.org/docs/>
+
+## Linking and libraries
+
+Linking to libraries is performed dynamically on Cirrus.
+
+!!! important
+    Static linking is not supported on Cirrus. If you attempt to link statically,
+    you will see errors similar to:
+    ```
+    /usr/bin/ld: cannot find -lpmi
+    /usr/bin/ld: cannot find -lpmi2
+    collect2: error: ld returned 1 exit status
+    ```
+
+One can use the `-craype-verbose` flag to the compiler wrapper to check exactly what
+linker arguments are invoked. The compiler wrapper scripts encode the
+paths to the programming environment system libraries using RUNPATH.
+This ensures that the executable can find the correct runtime
+libraries without the matching software modules loaded.
+
+!!! tip
+    The RUNPATH setting in the executable only works for default versions
+    of libraries. If you want to use non-default versions then you need
+    to add some additional commands at compile time and in your job submission
+    scripts. See the [Using non-default versions of HPE Cray libraries on Cirrus](#using-non-default-versions-of-hpe-cray-libraries-on-cirrus).
+
+
+The library RUNPATH associated with an executable can be inspected via,
+e.g.,
+
+    $ readelf -d ./a.out
+
+(swap `a.out` for the name of the executable you are querying).
+
+### Commonly used libraries
+
+Modules with names prefixed by `cray-` are provided by HPE Cray, and work
+with any of the compiler environments and. These modules should be the
+first choice for access to software libraries if available.
+
+!!! tip
+    More information on the different software libraries on Cirrus can
+    be found in the [Software libraries](../../software-libraries/)
+    section of the user guide.
+
+## HPE Cray Programming Environment (CPE) releases
+
+### Available HPE Cray Programming Environment (CPE) releases
+
+Cirrus currently has the following HPE Cray Programming Environment (CPE) releases available:
+
+- 22.12
+- **23.09: Current default**
+
+You can find information, notes, and lists of changes for current and upcoming Cirrus 
+HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
+repository](https://github.com/PE-Cray).
+
+!!! tip
+    We recommend that users use the most recent version of the PE available to get
+    the latest improvements and bug fixes.
+
+Later PE releases may sometimes be available via a containerised form. This allows developers to check that their code compiles and runs
+using CPE releases that have not yet been installed on Cirrus.
+                                                        
+### Switching to a different HPE Cray Programming Environment (CPE) release
+
+!!! important
+    See the section below on using non-default versions of HPE Cray libraries
+    as this process will generally need to be followed when using software
+    from non-default PE installs.
+
+Access to non-default PE environments is controlled by the use of the `cpe` modules.
+Loading a `cpe` module will do the following:
+
+- The compiler version will be switched to the one from the selected PE
+- All HPE Cray PE modules will be updated so their default version is the
+  one from the PE you have selected
+
+For example, if you have a code that uses the Gnu compiler environment, FFTW and
+NetCDF parallel libraries and you want to compile in the (non-default and older)
+22.12 programming environment, you would do the following:
+
+First, load the `cpe/22.12` module to switch all the defaults to the versions from
+the 22.12 PE. Then, swap to the GNU compiler environment and load the required library
+modules (FFTW, hdf5-parallel and NetCDF HDF5 parallel). The loaded module list shows they 
+are the versions from the 22.12 PE:
+
+
+```bash
+module load cpe/22.12
+```
+
+Output:
+```output
+
+The following have been reloaded with a version change:
+  1) PrgEnv-cray/8.4.0 => PrgEnv-cray/8.3.3             4) cray-mpich/8.1.27 => cray-mpich/8.1.23
+  2) cce/16.0.1 => cce/15.0.0                           5) craype/2.7.23 => craype/2.7.19
+  3) cray-libsci/23.09.1.1 => cray-libsci/22.12.1.1     6) perftools-base/23.09.0 => perftools-base/22.12.0
+```
+
+```bash
+module load PrgEnv-gnu
+```
+Output:
+```output
+Lmod is automatically replacing "cce/15.0.0" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.3.3".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.23
+
+```
+
+```bash
+module load cray-fftw
+module load cray-hdf5-parallel
+module load cray-netcdf-hdf5parallel
+module list
+```
+
+Output:
+```output
+Currently Loaded Modules:
+  1) craype-x86-rome               7) load-epcc-module        13) cray-mpich/8.1.23
+  2) libfabric/1.12.1.2.2.0.0      8) perftools-base/22.12.0  14) cray-libsci/22.12.1.1
+  3) craype-network-ofi            9) cpe/22.12               15) PrgEnv-gnu/8.3.3
+  4) xpmem/0.2.119-1.3_0_gnoinfo  10) gcc/11.2.0              16) cray-fftw/3.3.10.5
+  5) bolt/0.8                     11) craype/2.7.19           17) cray-hdf5-parallel/1.12.2.1
+  6) epcc-setup-env               12) cray-dsmml/0.2.2        18) cray-netcdf-hdf5parallel/4.9.0.1
+
+```
+
+Now you can go ahead and compile your software with the new programming
+environment.
+
+
+!!! important
+    The `cpe` modules only change the versions of software modules provided
+    as part of the HPE Cray programming environments. Any modules provided
+    by the Cirrus service will need to be loaded manually after you have
+    completed the process described above.
+    
+!!! note
+    Unloading the `cpe` module does not restore the original programming environment
+    release. To restore the default programming environment release you should log 
+    out and then log back in to Cirrus.
+
+## Using non-default versions of HPE Cray libraries
+
+If you wish to make use of non-default versions of libraries provided by HPE
+Cray (usually because they are part of a non-default PE release: either old
+or new) then you need to make changes at *both* compile and runtime. In summary,
+you need to load the correct module and also make changes to the `LD_LIBRARY_PATH`
+environment variable.
+
+**At compile time** you need to load the version of the library module before you compile
+*and* set the LD_LIBRARY_PATH environment variable to include the contencts of
+`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, older 22.12.1.1
+version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
+CCE) you would first setup the environment to compile with:
+
+```bash
+module load cray-libsci/22.12.1.1
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+```
+
+The order is important here: every time you change a module, you will need to reset
+the value of `LD_LIBRARY_PATH` for the process to work (it will not be updated
+automatically).
+
+Now you can compile your code. You can check that the executable is using the correct version 
+of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so.5`, you
+should see the version in the path to the library file:
+
+```bash
+ldd dgemv.x 
+```
+
+Output:
+```
+	linux-vdso.so.1 (0x00007ffc7fff5000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007fd6a6361000)
+	libsci_cray.so.5 => /opt/cray/pe/libsci/22.12.1.1/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fd6a2419000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007fd6a2215000)
+	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fd6a68b3000)
+	libquadmath.so.0 => /opt/cray/pe/gcc-libs/libquadmath.so.0 (0x00007fd6a1fce000)
+	libmodules.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libmodules.so.1 (0x00007fd6a689a000)
+	libfi.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libfi.so.1 (0x00007fd6a1a29000)
+	libcraymath.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcraymath.so.1 (0x00007fd6a67b3000)
+	libf.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libf.so.1 (0x00007fd6a6720000)
+	libu.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libu.so.1 (0x00007fd6a1920000)
+	libcsup.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcsup.so.1 (0x00007fd6a6715000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fd6a152b000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fd6a66ac000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fd6a1308000)
+	librt.so.1 => /lib64/librt.so.1 (0x00007fd6a10ff000)
+	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fd6a0c53000)
+	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fd6a0841000)
+	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fd6a0628000)
+```
+
+!!! tip
+    If any of the libraries point to versions in the `/opt/cray/pe/lib64` directory
+    then these are using the default versions of the libraries rather than the 
+    specific versions. This happens at compile time if you have forgotton to load 
+    the right module and set `$LD_LIBRARY_PATH` afterwards.
+
+**At run time** (typically in your job script) you need to repeat the environment
+setup steps (you can also use the `ldd` command in your job submission script to 
+check the library is pointing to the correct version). For example, a job submission
+script to run our `dgemv.x` executable with the non-default version of LibSci could
+look like:
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=dgemv
+#SBATCH --time=0:20:0
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+
+# Replace the account code, partition and QoS with those you wish to use
+#SBATCH --account=t01        
+#SBATCH --partition=standard
+#SBATCH --qos=short
+
+# Setup up the environment to use the non-default version of LibSci
+module load cray-libsci/22.12.1.1
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+
+# Check which library versions the executable is pointing too
+ldd dgemv.x
+
+export OMP_NUM_THREADS=1
+
+srun --hint=nomultithread --distribution=block:block dgemv.x
+```
+
+!!! tip
+    As when compiling, the order of commands matters. Setting the value of
+    `LD_LIBRARY_PATH` must happen after you have finished all your `module`
+    commands for it to have the correct effect.
+
+!!! important
+    You must setup the environment at both compile and run time otherwise
+    you will end up using the default version of the library.
+
+## Compiling on compute nodes
+
+Sometimes you may wish to compile in a batch job. For example, the compile process may take a long
+time or the compile process is part of the research workflow and can be coupled to the production job.
+Unlike login nodes, the `/home` file system is not available.
+
+An example job submission script for a compile job using `make` (assuming the Makefile is in the same
+directory as the job submission script) would be:
+
+```
+#!/bin/bash
+
+#SBATCH --job-name=compile
+#SBATCH --time=00:20:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+
+# Replace the account code, partition and QoS with those you wish to use
+#SBATCH --account=t01        
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+
+make clean
+
+make
+```
+
+!!! note
+    If you want to use a compiler environment other than the default then
+    you will need to add the `module load` command before the `make` command.
+    e.g. to use the GCC compiler environemnt:
+    
+    ```
+    module load PrgEnv-gnu
+    ```
+
+You can also use a compute node in an interactive way using `salloc`. Please see
+Section [Using salloc to reserve resources](../scheduler/#using-salloc-to-reserve-resources)
+for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.
+
+## Using the compiler wrappers for serial compilations
+
+The compiler wrappers link with a number of HPE-provided libraries automatically. 
+It is possible to compile codes in serial with the compiler wrappers to take 
+advantage of the HPE libraries.
+
+To set up your environment for serial compilation, you will need to run:
+
+```bash
+  module load craype-network-none
+  module remove cray-mpich
+```
+
+Once this is done, you can use the compiler wrappers (`cc` for C, `CC` for 
+C++, and `ftn` for Fortran) to compile your code in serial.
+
+## Managing development
+
+Cirrus supports common revision control software such as `git`.
+
+Standard GNU autoconf tools are available, along with `make` (which is
+GNU Make). Versions of `cmake` are available.
+
+!!! tip
+    Some of these tools are part of the system software, and
+    typically reside in `/usr/bin`, while others are provided as part of the
+    module system. Some tools may be available in different versions via
+    both `/usr/bin` and via the module system. If you find the default
+    version is too old, then look in the module system for a more recent
+    version.
+
+## Build instructions for software on Cirrus
+
+The Cirrus CSE team at [EPCC](https://www.epcc.ed.ac.uk) and other contributors
+provide build configurations ando instructions for a range of research
+software, software libraries and tools on a variety of HPC systems (including
+ARCHER2) in a public Github repository. See:
+
+   - [Build instructions repository](https://www.github.com/HPC-UK/build-instructions)
+
+The repository always welcomes contributions from the Cirrus user community.
+
+## Support for building software on Cirrus
+
+If you run into issues building software on Cirrus or the software you
+require is not available then please contact the
+[Cirrus Service Desk](https://www.cirrus.ac.uk/support-access/servicedesk.html)
+with any questions you have.
