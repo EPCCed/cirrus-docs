@@ -505,7 +505,7 @@ options.
 
 #### Note on MPT task placement
 
-By default, `mpt` will distribute processss to physical cores (cores
+By default, Slurm will distribute processss to physical cores (cores
 0-35 on NUMA region 0, cores 36-71 on NUMA region 1, etc.) in a cyclic fashion. That
 is, rank 0 would be placed on core 0, rank 1 on core 36, rank 2 on core
 72, and so on (in a single-node job). This may be undesirable. Block,
