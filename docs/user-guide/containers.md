@@ -138,284 +138,390 @@ very similar to that for using them on the login nodes. The only
 difference is that you first have to submit an interactive serial job to
 get interactive access to the compute node.
 
-First though, move to a suitable location on `/work` and re-pull the
-`hello-world` image. This step is necessary as the compute nodes do not
-have access to the `/home` file system.
+First though, move to a suitable location on `/work` and copy the
+`hello-world` container image file. This step is necessary as the compute
+nodes do not have access to the `/home` file system. (This step assumes
+you already downloaded the image as described above, if you have not done
+this you can download directly to the `/work` file system by following the
+instructions above.)
 
-    [user@cirrus-login1 ~]$ cd ${HOME/home/work}
-    [user@cirrus-login1 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
+```bash
+[user@login01 ~]$ cd ${HOME/home/work}
+[user@login01 ~]$ cp ~/hello-world.sif .
+```
 
 Now reserve a full node to work on interactively by issuing an `salloc`
 command, see below.
 
-    [user@cirrus-login1 ~]$ salloc --exclusive --nodes=1 \
-      --tasks-per-node=36 --cpus-per-task=1 --time=00:20:00 \
-      --partition=standard --qos=standard --account=[budget code] 
-    salloc: Pending job allocation 14507
-    salloc: job 14507 queued and waiting for resources
-    salloc: job 14507 has been allocated resources
-    salloc: Granted job allocation 14507
-    salloc: Waiting for resource configuration
-    salloc: Nodes r1i0n8 are ready for job
-    [user@cirrus-login1 ~]$ ssh r1i0n8
+```bash
+[user@login01 ~]$ salloc --exclusive --nodes=1 \
+    --tasks-per-node=288 --cpus-per-task=1 --time=00:20:00 \
+    --partition=standard --qos=standard --account=[budget code] 
+salloc: Pending job allocation 14507
+salloc: job 14507 queued and waiting for resources
+salloc: job 14507 has been allocated resources
+salloc: Granted job allocation 14507
+salloc: Waiting for resource configuration
+salloc: Nodes cs-n0030 are ready for job
+[user@login01 ~]$ ssh cs-n0030
+```
 
+!!!tip
+   You will need to setup an SSH key pair and upload the public part
+   to SAFE in the usual way to allow SSH login from login
+   nodes to compute nodes.
+   
 Note the prompt has changed to show you are on a compute node. Once you
-are logged in to the compute node (you may need to submit your account
-password), move to a suitable location on `/work` as before. You can now
-use the `hello-world` image in the same way you did on the login node.
+are logged in to the compute node, move to a suitable location on `/work`
+as before. You can now create a container from the `hello-world.sif`
+container image file in the same way you did on the login node.
 
-    [user@r1i0n8 ~]$ cd ${HOME/home/work}
-    [user@r1i0n8 ~]$ singularity shell hello-world.sif
-    Singularity> exit
-    exit
-    [user@r1i0n8 ~]$ exit
-    logout
-    Connection to r1i0n8 closed.
-    [user@cirrus-login1 ~]$ exit
-    exit
-    salloc: Relinquishing job allocation 14507
-    salloc: Job allocation 14507 has been revoked.
-    [user@cirrus-login1 ~]$
+```bash
+[user@cs-n0030 ~]$ cd ${HOME/home/work}
+[user@cs-n0030 ~]$ apptainer shell hello-world.sif
+Apptainer> exit
+exit
+[user@cs-n0030 ~]$ exit
+logout
+Connection to cs-n0030 closed.
+[user@login01 ~]$ exit
+exit
+salloc: Relinquishing job allocation 14507
+salloc: Job allocation 14507 has been revoked.
+[user@login01 ~]$
+```
 
-Note we used `exit` to leave the interactive container shell and then
+We used `exit` to leave the interactive container shell and then
 called `exit` twice more to close the interactive job on the compute
 node.
 
 ### Serial processes within a non-interactive batch script
 
-You can also use Singularity images within a non-interactive batch
+You can also use Apptainer to run containers within a non-interactive batch
 script as you would any other command. If your image contains a
-*runscript* then you can use `singularity run` to execute the runscript
-in the job. You can also use `singularity exec` to execute arbitrary
+*runscript* then you can use `apptainer run` to execute the runscript
+in the job. You can also use `apptainer exec` command to execute arbitrary
 commands (or scripts) within the image.
 
 An example job submission script to run a serial job that executes the
-runscript within the `hello-world.sif` we built above on Cirrus would be
-as follows.
+runscript within the `hello-world.sif` container image file we downloaded
+above on Cirrus would be as follows. Assuming we submit from the same
+directory that the `ello-world.sif` file is stored in/
 
-    #!/bin/bash --login
+```slurm
+#!/bin/bash --login
 
-    # job options (name, compute nodes, job time)
-    #SBATCH --job-name=hello-world
-    #SBATCH --ntasks=1
-    #SBATCH --exclusive
-    #SBATCH --time=0:20:0
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# job options (name, compute nodes, job time)
+#SBATCH --job-name=hello-world
+#SBATCH --ntasks=1
+#SBATCH --exclusive
+#SBATCH --time=0:20:0
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
 
-    # Load any required modules
-    module load singularity
-
-    # Run the serial executable
-    srun --cpu-bind=cores singularity run ${HOME/home/work}/hello-world.sif
+# Run the serial executable
+srun --cpu-bind=cores apptainer run hello-world.sif
+```
 
 Submit this script using the `sbatch` command and once the job has
-finished, you should see `RaawwWWWWWRRRR!! Avocado!` in the Slurm output
-file.
+finished, you should see the same output you got interactively
+in the Slurm output file when the job finishes.
 
 ### Parallel processes within a non-interactive batch script
 
-Running a Singularity container on the compute nodes isn't too different
-from launching a normal parallel application. The submission script
-below shows that the `srun` command now contains an additional
-`singularity` clause.
+Running a container in parallel on the compute nodes using Apptainer
+is not too different from launching a normal parallel application. 
+he submission script below shows how the `srun` command can be used
+along with Apptainer to run a container created from a container 
+image file in parallel.
 
-    #!/bin/bash --login
+```slurm
+#!/bin/bash --login
 
-    # job options (name, compute nodes, job time)
-    #SBATCH --job-name=[name of application]
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=36
-    #SBATCH --cpus-per-task=1
-    #SBATCH --exclusive
-    #SBATCH --time=0:20:0
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# job options (name, compute nodes, job time)
+#SBATCH --job-name=[name of application]
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=36
+#SBATCH --cpus-per-task=1
+#SBATCH --exclusive
+#SBATCH --time=0:20:0
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
 
-    # Load any required modules
-    module load mpt
-    module load singularity
+# The host bind paths for the Singularity container.
+BIND_ARGS=/work/y07/shared/cirrus-ex,/path/to/input/files
 
-    # The host bind paths for the Singularity container.
-    BIND_ARGS=/work/y07/shared/cirrus-software,/opt/hpe,/etc/libibverbs.d,/path/to/input/files
+# The file containing environment variable settings that will allow
+# the container to find libraries on the host, e.g., LD_LIBRARY_PATH . 
+ENV_PATH=/path/to/container/environment/file
 
-    # The file containing environment variable settings that will allow
-    # the container to find libraries on the host, e.g., LD_LIBRARY_PATH . 
-    ENV_PATH=/path/to/container/environment/file
+IMAGE_PATH=/path/to/apptainer/image/file
 
-    CONTAINER_PATH=/path/to/singularity/image/file
+APP_PATH=/path/to/containerized/application/executable
+APP_PARAMS=[application parameters]
 
-    APP_PATH=/path/to/containerized/application/executable
-    APP_PARAMS=[application parameters]
+srun --distribution=block:block --hint=nomultithread \
+    singularity exec --bind ${BIND_ARGS} --env-file ${ENV_PATH} ${IMAGE_PATH}
+        ${APP_PATH} ${APP_PARAMS}
+```
 
-    srun --distribution=block:block --hint=nomultithread \
-        singularity exec --bind ${BIND_ARGS} --env-file ${ENV_PATH} ${IMAGE_PATH}
-            ${APP_PATH} ${APP_PARAMS}
-
-The script above runs a containerized application such that each of the
-four nodes requested is fully populated. In general, the containerized
+The script above runs a containerised application such that each of the
+four nodes requested is fully populated. In general, the containerised
 application's input and output will be read from and written to a
 location on the host; hence, it is necessary to pass a suitable bind
-path to singularity (`/path/to/input/files`).
-
-
+path to the `apptainer` command (`/path/to/input/files`).
 
 !!! Note
-
 	The paths in the submission script that begin `/path/to` should be
-	provided by the user. All but one of these paths are host specific. The
-	exception being `APP_PATH`, which should be given a path relative to the
-	container file system.
+	provided by the user. All but one of these paths are locations on the
+    host (rather than in the running container). The exception being
+    `APP_PATH`, which should be given a path relative to the container
+    file system.
+
+## Creating your own Apptainer container images
+
+As we saw above, you can create Apptainer container image files by importing from
+DockerHub or other repositories on Cirrus itself. If you wish to create
+your own custom container image to use with Apptainer then you must use a system
+where you have root (or administrator) privileges - often your own
+laptop or workstation.
+
+There are a number of different options to create container images on your local
+system to use with Apptainer on Cirrus. We are going to use Podman on our 
+local system to create the container image, push the new container image to
+Docker Hub and then use Apptainer on Cirrus to convert the Docker container
+image to an Apptainer container image file.
+
+For macOS and Windows users we recommend installing Podman Desktop. For Linux
+users, we recommend installing Podman directly on your local system. See the
+Podman documentation for full details on how to install Podman Desktop/Podman.
+
+### Building container images using Podman
+
+!!! note
+    We assume that you are familiar with using Podman/Docker in these instructions. You 
+    can find an introduction to Docker at
+    [Reproducible Computational Environments Using Containers: Introduction to Docker](https://carpentries-incubator.github.io/docker-introduction/).
+    Podman uses very similar commands to Docker.
+
+As usual, you can build container images with a command similar to:
+
+```bash
+podman build --platform linux/amd64 -t <username>/<image name>:<version> .
+```
+
+Where:
+
+- `<username>` is your Docker Hub username
+- `<image name>` is the name of the container image you wish to create
+- `<version>` - specifies the version of the image you are creating (e.g. "latest", "v1")
+- `.` is the *build context* - in this example it is the location of the Dockerfile
+
+Note, you should use the `--platform linux/amd64` option to ensure that the container
+image is compatible with the processor architecture on Cirrus.
+
+## Using Apptainer with MPI on Cirrus
+
+MPI on Cirrus is provided by the Cray MPICH libraries with the interface
+to the high-performance Slingshot interconnect provided via the OFI interface.
+Therefore, as per the [Apptainer MPI Hybrid model](https://apptainer.org/docs/user/latest/mpi.html#hybrid-model), we will build our container image such that it contains a version of the MPICH MPI library compiled with support for OFI.
+Below, we provide instructions on creating a container image with
+a version of MPICH compiled in this way. We then provide an 
+example of how to run an Apptainer container with MPI over multiple 
+Cirrus compute nodes.
+
+### Building an image with MPI from scratch
+
+!!! warning
+    Remember, all these steps should be executed on your local system where
+    you have administrator privileges and Podman installed, **not on Cirrus**.
+
+We will illustrate the process of building an Apptainer container image with MPI from
+scratch by building a container image that contains MPI provided by MPICH and the OSU
+MPI benchmarks. As part of the container image creation we need to download the source code
+for both MPICH and the OSU benchmarks. At the time of writing, the stable MPICH 3
+release is 3.4.3 and the stable OSU benchmark release is 7.5.1 - this may have
+changed by the time you are following these instructions.
+
+First, create a Dockerfile that describes how to build the image:
+
+```docker
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install the necessary packages (from repo)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+ apt-utils \
+ build-essential \
+ curl \
+ libcurl4-openssl-dev \
+ libzmq3-dev \
+ pkg-config \
+ software-properties-common
+RUN apt-get clean
+RUN apt-get install -y dkms
+RUN apt-get install -y autoconf automake build-essential numactl libnuma-dev autoconf automake gcc g++ git libtool
+
+# Download and build an ABI compatible MPICH
+RUN curl -sSLO http://www.mpich.org/static/downloads/3.4.3/mpich-3.4.3.tar.gz \
+   && tar -xzf mpich-3.4.3.tar.gz -C /root \
+   && cd /root/mpich-3.4.3 \
+   && ./configure --prefix=/usr --with-device=ch4:ofi --disable-fortran \
+   && make -j8 install \
+   && rm -rf /root/mpich-3.4.3 \
+   && rm /mpich-3.4.3.tar.gz
+
+# OSU benchmarks
+RUN curl -sSLO http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.8.1.tar.gz \
+   && tar -xzf osu-micro-benchmarks-7.5.1.tar.gz -C /root \
+   && cd /root/osu-micro-benchmarks-7.5.1 \
+   && ./configure --prefix=/usr/local CC=/usr/bin/mpicc CXX=/usr/bin/mpicxx \
+   && cd mpi \
+   && make -j8 install \
+   && rm -rf /root/osu-micro-benchmarks-7.5.1 \
+   && rm /osu-micro-benchmarks-7.5.1.tar.gz
+
+# Add the OSU benchmark executables to the PATH
+ENV PATH=/usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt:$PATH
+ENV PATH=/usr/local/libexec/osu-micro-benchmarks/mpi/collective:$PATH
+
+# path to mlx libraries in Ubuntu
+ENV LD_LIBRARY_PATH=/usr/lib/libibverbs:$LD_LIBRARY_PATH
+```
+
+A quick overview of what the above Dockerfile is doing:
+
+ - The image is being bootstrapped from the `ubuntu:20.04` Docker image.
+ - The first set of `RUN` sections with `apt-get` commands: install the base packages required from the Ubuntu package repos
+ - MPICH install: downloads and compiles the MPICH 3.4.3 in a way that is compatible with Cray MPICH on ARCHER2
+ - OSU MPI benchmarks install: downloads and compiles the OSU micro benchmarks
+ - `ENV` sections: add the OSU benchmark executables to the PATH so they can be executed in the container without specifying the full path; set the correct paths to the network libraries within the container.
 
 
+Now we can go ahead and build the container image using Podman (this assumes that
+you issue the command in the same directory as the Dockerfile you created based on
+the specification above):
 
-If the Singularity image file was built according to the [Bind
-model](https://sylabs.io/guides/3.7/user-guide/mpi.html#bind-model), you
-will need to specify certain paths (`--bind`) and environment variables
-(`--env-file`) that allow the containerized application to find the
-required MPI libraries.
+```bash
+podman build --platform linux/amd64 -t auser/osu-benchmarks:7.5.1 .
+```
 
-Otherwise, if the image follows the [Hybrid
-model](https://sylabs.io/guides/3.7/user-guide/mpi.html#hybrid-model)
-and so contains its own MPI implementation, you instead need to be sure
-that the containerized MPI is compatible with the host MPI, the one
-loaded in the submission script. In the example above, the host MPI is
-HPE MPT 2.25, but you could also use OpenMPI (with `mpirun`), either by
-loading a suitable `openmpi` module or by referencing the paths to an
-OpenMPI installation that was built locally (i.e., within your Cirrus
-work folder).
+(Remember to change `auser` to your Dockerhub username.)
 
-## Creating Your Own Singularity Images
+Once you have successfully built your container image, you should push it to
+Dockerhub:
 
-You can create Singularity images by importing from DockerHub or
-Singularity Hub directly to Cirrus. If you wish to create your own
-custom image then you must install Singularity on a system where you
-have root (or administrator) privileges - often your own laptop or
-workstation.
+```bash
+podman push auser/osu-benchmarks:7.5.1
+```
 
-We provide links below to instructions on how to install Singularity
-locally and then cover what options you need to include in a Singularity
-definition file in order to create images that can run on Cirrus and
-access the software development modules. This can be useful if you want
-to create a custom environment but still want to compile and link
-against libraries that you only have access to on Cirrus such as the
-Intel compilers and HPE MPI libraries.
+Finally, you need to use Apptainer on Cirrus to convert the Docker container image
+to an Apptainer container image file. Log into Cirrus, move to the work file system
+and then use a command like:
 
-### Installing Singularity on Your Local Machine
+```bash
+auser@login01:/work/t01/t01/auser> apptainer build osu-benchmarks_7.5.1.sif docker://auser/osu-benchmarks:7.5.1
+```
 
-You will need Singularity installed on your machine in order to locally
-run, create and modify images. How you install Singularity on your
-laptop/workstation depends on the operating system you are using.
+!!! tip
+    You can find a copy of the `osu-benchmarks_7.5.1.sif` image on Cirrus in the directory
+    `$EPCC_CONTAINER_DIR` if you do not want to build it yourself but still want to
+    test.
 
-If you are using Windows or macOS, the simplest solution is to use
-[Vagrant](http://www.vagrantup.com) to give you an easy to use virtual
-environment with Linux and Singularity installed. The Singularity
-website has instructions on how to use this method to install
-Singularity.
+### Running parallel MPI jobs using Apptainer containers
 
-- [Installing Singularity on macOS with
-  Vagrant](https://sylabs.io/guides/3.7/admin-guide/installation.html#mac)
-- [Installing Singularity on Windows with
-  Vagrant](https://sylabs.io/guides/3.7/admin-guide/installation.html#windows)
+!!! tip
+    These instructions assume you have built an Apptainer container image file on 
+    Cirrus that includes MPI provided by MPICH with the OFI interface.
+    See the sections above for how to build such container images.
 
-If you are using Linux then you can usually install Singularity
-directly.
+Once you have built your Apptainer container image file that includes MPICH built with
+OFI for ARCHER2, you can use it to run parallel jobs in a similar way to
+non-Apptainer jobs. The example job submission script below uses the container image file
+we built above with MPICH and the OSU benchmarks to run the Allreduce benchmark
+on two nodes where all 288 cores on each node are used for MPI processes (so, 576
+MPI processes in total).
 
-- [Installing Singularity on
-  Linux](https://sylabs.io/guides/3.7/admin-guide/installation.html#installation-on-linux)
+```bash
+#!/bin/bash
 
-### Accessing Cirrus Modules from Inside a Container
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=apptainer_parallel
+#SBATCH --time=0:10:0
+#SBATCH --exclusive
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=288
+#SBATCH --cpus-per-task=1
 
-You may want your custom image to be able to access the modules
-environment on Cirrus so you can make use of custom software that you
-cannot access elsewhere. We demonstrate how to do this for a CentOS 7
-image but the steps are easily translated for other flavours of Linux.
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+#SBATCH --account=[budget code]
 
-For the Cirrus modules to be available in your Singularity container you
-need to ensure that the `environment-modules` package is installed in
-your image.
+# Load the module to make the Cray MPICH ABI available
+module load cray-mpich-abi
 
-In addition, when you use the container you must invoke access as a
-login shell to have access to the module commands.
+export OMP_NUM_THREADS=1
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-Below, is an example Singularity definition file that builds a CentOS 7
-image with access to TCL modules already installed on Cirrus.
+# Set the LD_LIBRARY_PATH environment variable within the Singularity container
+# to ensure that it used the correct MPI libraries.
+export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib:/opt/cray/libfabric/1.12.1.2.2.0.0/lib64:/opt/cray/pe/gcc-libs:/opt/cray/pe/gcc-libs:/opt/cray/pe/lib64:/opt/xpmem/lib64:/usr/lib64/libibverbs:/usr/lib64:/usr/lib64"
 
-    BootStrap: docker
-    From: centos:centos7
+# This makes sure HPE Cray Slingshot interconnect libraries are available
+# from inside the container.
+export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.12.1.2.2.0.0/lib64/libfabric.so.1,/opt/cray/pe/gcc-libs/libatomic.so.1,/opt/cray/pe/gcc-libs/libgcc_s.so.1,/opt/cray/pe/gcc-libs/libgfortran.so.5,/opt/cray/pe/gcc-libs/libquadmath.so.0,/opt/cray/pe/lib64/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/usr/lib64/libibverbs/libmlx5-rdmav34.so,/usr/lib64/libibverbs.so.1,/usr/lib64/libkeyutils.so.1,/usr/lib64/liblnetconfig.so.4,/usr/lib64/liblustreapi.so,/usr/lib64/libmunge.so.2,/usr/lib64/libnl-3.so.200,/usr/lib64/libnl-genl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/librdmacm.so.1,/usr/lib64/libyaml-0.so.2,/usr/lib64/libjansson.so.4"
 
-    %post
-        yum update -y
-        yum install environment-modules -y
-        echo 'module() { eval `/usr/bin/modulecmd bash $*`; }' >> /etc/bashrc
-        yum install wget -y
-        yum install which -y
-        yum install squashfs-tools -y
+# Launch the parallel job.
+srun --hint=nomultithread --distribution=block:block \
+    singularity run osu-benchmarks_7.5.1.sif \
+        osu_allreduce
+```
 
-If we save this definition to a file called `centos7.def`, we can use
-the following `build` command to build the image (remember this command
-must be run on a system where you have root access, not on Cirrus).
+The only changes from a standard submission script are:
 
-    me@my-system:~> sudo singularity build centos7.sif centos7.def
+- We set the environment variable `APPTAINER_LD_LIBRARY_PATH` to ensure that the excutable can find the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.
+- We set the environment variable `APPTAINER_BIND` to ensure that the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.
+- `srun` calls the `apptainer` software with the container image file we created rather than the parallel program directly.
 
-The resulting image file (`centos7.sif`) can then be copied to Cirrus
-using scp; such an image already exists on Cirrus and can be found in
-the `/work/y07/shared/cirrus-software/singularity/images` folder.
+!!! important
+    Remember that the image file must be located on `/work` to run jobs on the
+    compute nodes.
 
-When you use that image interactively on Cirrus you must start with a
-login shell and also bind `/work/y07/shared/cirrus-software` so that the container
-can see all the module files, see below.
+If the job runs correctly, you should see output similar to the following in your `slurm-*.out` 
+file:
 
-    [user@cirrus-login1 ~]$ module load singularity
-    [user@cirrus-login1 ~]$ singularity exec -B /work/y07/shared/cirrus-software \
-      /work/y07/shared/cirrus-software/singularity/images/centos7.sif \
-        /bin/bash --login
-    Singularity> module avail intel-*/compilers
-
-    --------- /work/y07/shared/cirrus-modulefiles -------------
-    intel-19.5/compilers  intel-20.4/compilers
-    Singularity> exit
-    logout
-    [user@cirrus-login1 ~]$ 
-
-### Altering a Container on Cirrus
-
-A container image file is immutable but it is possible to alter the
-image if you convert the file to a sandbox. The sandbox is essentially a
-directory on the host system that contains the full container file
-hierarchy.
-
-You first run the `singularity build` command to perform the conversion
-followed by a `shell` command with the `--writable` option. You are now
-free to change the files inside the container sandbox.
-
-    user@cirrus-login1 ~]$ singularity build --sandbox image.sif.sandbox image.sif
-    user@cirrus-login1 ~]$ singularity shell -B /work/y07/shared/cirrus-software --writable image.sif.sandbox
-    Singularity> 
-
-In the example above, the `/work/y07/shared/cirrus-software` bind path is specified, allowing
-you to build code that links to the Cirrus module libraries.
-
-Finally, once you are finished with the sandbox you can exit and convert
-back to the original image file.
-
-    Singularity> exit
-    exit
-    user@cirrus-login1 ~]$ singularity build --force image.sif image.sif.sandbox
+```
+Lmod is automatically replacing "cray-mpich/8.1.27" with
+"cray-mpich-abi/8.1.27".
 
 
-
-!!! Note
-	
-	Altering a container in this way will cause the associated definition
-	file to be out of step with the current image. Care should be taken to
-	keep a record of the commands that were run within the sandbox so that
-	the image can be reproduced.
-
-
+# OSU MPI Allreduce Latency Test v5.4.1
+# Size       Avg Latency(us)
+4                       7.93
+8                       7.93
+16                      8.13
+32                      8.69
+64                      9.54
+128                    13.75
+256                    17.04
+512                    25.94
+1024                   29.43
+2048                   43.53
+4096                   46.53
+8192                   46.20
+16384                  55.85
+32768                  83.11
+65536                 136.90
+131072                257.13
+262144                486.50
+524288               1025.87
+1048576              2173.25
+```
