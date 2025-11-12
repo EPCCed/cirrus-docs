@@ -1,5 +1,8 @@
 # Migrating your account to Cirrus EX4000
 
+!!! important
+    This information was last updated on 12 Nov 2025
+
 This section covers the following questions:
 
   - When will I be able to access Cirrus EX4000?
@@ -14,7 +17,7 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus EX4000?
 
-We anticipate that users will have access on **Wednesday 3rd December 2025** but this 
+We anticipate that users will have access sometime in the first two weeks of December 2025 but this 
 date is subject to change based on progress with setting up the new system. We will
 update the date on these pages and in emails to all users.
 
@@ -25,12 +28,10 @@ then your project will very likely be migrated to Cirrus EX4000. If your project
 is migrated to Cirrus EX4000 then it will have the same project code as it had
 on old Cirrus.
 
-Some further information that may be useful:
-
-   - If your project code begins with *i* or *d* then you are a member
-     of an industrial project or a Director's Time project, these
-     projects will be contacted individually to discuss arrangements.
-     Please speak to your project leader or PI in the first instance.
+If your project has been migrated to Cirrus EX4000 then you will
+be able to see this on the Project page in SAFE. In particular, you
+will have a button labelled "Manage Group Time Allocations for CirrusEX (Allocations on Cirrus (2025 refresh))"
+in the "Time Budgets" section on the project page.
 
 ## How much resource will my project have on Cirrus EX4000?
 

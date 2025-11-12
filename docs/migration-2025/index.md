@@ -1,14 +1,18 @@
 # Cirrus migration 2025
 
+!!! important
+    This information was last updated on 12 Nov 2025
+
 This section of the documentation is a guide for users migrating from the 
 old Cirrus system (SGI ICE XA) to the new Cirrus system (HPE Cray EX4000)
 in Q4 2025.
 
 !!! important
     The current date for the switch from old Cirrus system to the new Cirrus
-    system is the 3rd December 2025.
+    system is not yet certain but we currently expect this to be in the first or second
+    week of December 2025.
 
-    After this date you will no longer be able to access the old Cirrus login
+    After the switch you will no longer be able to access the old Cirrus login
     and compute nodes or the RPOOL (/scratch) solid state storage.
 
 It covers:
