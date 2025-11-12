@@ -1,5 +1,8 @@
 # Cirrus migration 2025
 
+!!! important
+    This information was last updated on 12 Nov 2025
+
 This section of the documentation is a guide for users migrating from the 
 old Cirrus system (SGI ICE XA) to the new Cirrus system (HPE Cray EX4000)
 in Q4 2025.
