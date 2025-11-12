@@ -48,8 +48,8 @@ nav:
     - "Data Management and Transfer": user-guide/data.md
     - "File and Resource Management": user-guide/resource_management.md
     - "Application Development Environment": user-guide/development.md
-    - "Running Jobs on Cirrus": user-guide/batch.md
-    - "Singularity Containers": user-guide/singularity.md
+    - "Scheduler and Running Jobs": user-guide/batch.md
+    - "Using Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
   - "Software Applications":
     - "CASTEP": software-packages/castep.md
