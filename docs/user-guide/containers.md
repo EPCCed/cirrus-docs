@@ -1,11 +1,11 @@
-# Singularity Containers
+# Using Containers
 
 This page was originally based on the documentation at the [University
 of Sheffield HPC
 service](http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html).
 
 Designed around the notion of mobility of compute and reproducible
-science, Singularity enables users to have full control of their
+science, containers enable users to have full control of their
 operating system environment. This means that a non-privileged user can
 "swap out" the Linux operating system and environment on the host for a
 Linux OS and environment that they control. So if the host system is
@@ -14,51 +14,48 @@ particular software stack, you can create an Ubuntu image, install your
 software into that image, copy the image to another host (e.g. Cirrus),
 and run your application on that host in its native Ubuntu environment.
 
-Singularity also allows you to leverage the resources of whatever host
+Containers also allow you to leverage the resources of whatever host
 you are on. This includes high-speed interconnects (e.g. Infiniband),
-file systems (e.g. Lustre) and potentially other resources (such as the
-licensed Intel compilers on Cirrus).
+file systems (e.g. Lustre) and potentially other resources.
 
+## Apptainer
 
+The container software supported on Cirrus is Apptainer.
 
 !!! Note
-
-	Singularity only supports Linux containers. You cannot create images
+	Apptainer only supports Linux containers. You cannot create images
 	that use Windows or macOS (this is a restriction of the containerisation
-	model rather than of Singularity).
+	model rather than of Apptainer).
 
+### Useful Links
 
-## Useful Links
+- [Apptainer website](https://apptainer.org/)
+- [Apptainer documentation](https://apptainer.org/docs/user/latest/)
 
-- [Singularity website](https://www.sylabs.io/)
-- [Singularity documentation archive](https://www.sylabs.io/docs/)
+## About Apptainer container images
 
-## About Singularity Containers (Images)
-
-Similar to Docker, a Singularity container (or, more commonly, *image*)
-is a self-contained software stack. As Singularity does not require a
+Similar to Docker or Podman, an Apptainer container image (or, more commonly, *image*)
+is a self-contained software stack. As Apptainer does not require a
 root-level daemon to run its images (as is required by Docker) it is
-suitable for use on a multi-user HPC system such as Cirrus. Within the
-container/image, you have exactly the same permissions as you do in a
-standard login session on the system.
+suitable for use on a multi-user HPC system such as Cirrus. Within a 
+running container created from the container image, you have exactly
+the same permissions as you do in a standard login session on the system.
 
-In principle, this means that an image created on your local machine
+In principle, this means that a container image created on your local machine
 with all your research software installed for local development will
 also run on Cirrus.
 
-Pre-built images (such as those on [DockerHub](http://hub.docker.com) or
-[SingularityHub](https://singularity-hub.org/)) can simply be downloaded
-and used on Cirrus (or anywhere else Singularity is installed); see
-`use_image_singularity`).
+Pre-built container images (such as those on [DockerHub](http://hub.docker.com) or
+[Quay.io](hhttps://quay.io/) can simply be downloaded
+and used on Cirrus (or anywhere else Singularity is installed).
 
-Creating and modifying images requires root permission and so must be
+Creating and modifying container images requires root permission and so must be
 done on a system where you have such access (in practice, this is
-usually within a virtual machine on your laptop/workstation); see
-`create_image_singularity`.
+usually your laptop/workstation using Docker or Podman).
 
-## Using Singularity Images on Cirrus
+## Using container images on Cirrus
 
-Singularity images can be used on Cirrus in a number of ways.
+Container images can be used on Cirrus in a number of ways.
 
 1.  Interactively on the login nodes
 2.  Interactively on compute nodes
@@ -66,46 +63,73 @@ Singularity images can be used on Cirrus in a number of ways.
 4.  As parallel processes within a non-interactive batch script
 
 We provide information on each of these scenarios. First, we describe
-briefly how to get existing images onto Cirrus so that you can use them.
+briefly how to get existing container images onto Cirrus and converted
+to the Apptainer format so that you can use them.
 
-### Getting existing images onto Cirrus
+### Getting existing container images onto Cirrus
+
+Container images are most usually downloaded onto Cirrus from a 
+container image repository (such as Dockerhub or Quay.io) so we 
+discuss that mechanism in detail. If you already have your 
+container images in Apptainer format as an *image file* then you 
+can copy these to Cirrus in the same way as any other file.
 
 Singularity images are simply files, so if you already have an image
 file, you can use `scp` to copy the file to Cirrus as you would with any
 other file.
 
-If you wish to get a file from one of the container image repositories
-then Singularity allows you to do this from Cirrus itself.
+To fetch a container image from a container image repository and
+convert to an Apptainer container image file on the fly, you can 
+use a command such as:
 
-For example, to retrieve an image from SingularityHub on Cirrus we can
-simply issue a Singularity command to pull the image.
+```
+apptainer build hello_world.sif docker://hub.docker.com/hello-world
+```
 
-    [user@cirrus-login1 ~]$ module load singularity
-    [user@cirrus-login1 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
-
-The image located at the `shub` URI is written to a Singularity Image
-File (SIF) called `hello-world.sif`.
+This will download the "hello-world" container image from DockerHub
+and save it as an Apptainer image file in the file `hello-world.sif`.
 
 ### Interactive use on the login nodes
 
-The container represented by the image file can be run on the login node
-like so.
+To run a container created from a container image file on the login node
+you would use (note mention of Docker as this was downloaded from Docker Hub,
+however we are running the container using Apptainer):
 
-    [user@cirrus-login1 ~]$ singularity run hello-world.sif 
-    RaawwWWWWWRRRR!! Avocado!
-    [user@cirrus-login1 ~]$
+```bash
+[user@login01 ~]$ apptainer run hello-world.sif 
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
 
-We can also `shell` into the container.
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
 
-    [user@cirrus-login1 ~]$ singularity shell hello-world.sif
-    Singularity> ls /
-    bin  boot  dev  environment  etc  home  lib  lib64  lustre  media  mnt  opt  proc  rawr.sh  root  run  sbin  singularity  srv  sys  tmp  usr  var
-    Singularity> exit
-    exit
-    [user@cirrus-login1 ~]$ 
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
 
-For more information see the [Singularity
-documentation](https://www.sylabs.io/guides/3.7/user-guide).
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+We can also run a container created from the container image file
+and get an interactive shell prompt in the running container:
+
+```bash
+[user@login01 ~]$ apptainer shell hello-world.sif
+Apptainer> ls /
+bin  boot  dev  environment  etc  home  lib  lib64  lustre  media  mnt  opt  proc  rawr.sh  root  run  sbin  singularity  srv  sys  tmp  usr  var
+Apptainer> exit
+exit
+[user@login01 ~]$ 
+```
 
 ### Interactive use on the compute nodes
 
