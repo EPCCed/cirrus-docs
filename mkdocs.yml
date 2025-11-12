@@ -3,8 +3,8 @@ theme:
   favicon: favicon.ico
   logo: images/cirrus_logo_white-Transparent-Background.png
   palette:
-    primary: teal
-    accent:  teal
+    primary: blue
+    accent:  blue
   features:
     - tabs
   icon:
