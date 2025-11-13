@@ -9,12 +9,14 @@ as it becomes available.
 
 - There are **no** GPU nodes on Cirrus EX4000
 - There are 288 cores on a Cirrus EX4000 compute node rather than 36 on current Cirrus
+- Cirrus EX4000 will use the HPE Cray Slingshot 11 interconnect rather than the 
+  Infiniband interconnect used on current Cirrus
 
 ## Software
 
 - The software environment will completely change to be based on the
   HPE Cray Programming Environment - no modules that were available
-  on old Cirrus system will be available in the same wat on the new Cirrus
+  on old Cirrus system will be available in the same way on the new Cirrus
   system. We will update the documentation to cover these changes in 
   detail ahead of the switch between systems.
 
