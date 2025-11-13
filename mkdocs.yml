@@ -61,10 +61,11 @@ nav:
     - "Quantum Espresso (QE)": software-packages/qe.md
     - "VASP": software-packages/vasp.md
   - "Software Libraries":
-    - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md
+    - "Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
+    - "FFTW": software-libraries/fftw.md
     - "HDF5": software-libraries/hdf5.md
+    - "NetCDF": software-libraries/netcdf.md
   - "Software Tools":
-    - "Linaro Forge": software-tools/forge.md
-    - "Profiling using Scalasca": software-tools/scalasca.md
-    - "Intel VTune": software-tools/intel-vtune.md
+    - "Spack": software-tools/spack.md
+    - "Likwid": software-tools/likwid.md
   - "References and further reading": user-guide/reading.md

@@ -1,16 +1,31 @@
 # HDF5
 
-Serial and parallel versions of HDF5 are available on Cirrus.
+The Hierarchical Data Format HDF5
+(and its parallel manifestation HDF5 parallel) is a standard library
+and data format developed and supported by
+[The HDF Group](https://www.hdfgroup.org/), and
+is released under a BSD-like license.
 
-| Module name                        | Library version | Compiler  | MPI library  |
-|------------------------------------|-----------------|-----------|--------------|
-| hdf5parallel/1.10.4-intel18-impi18 | 1.10.4          | Intel 18  | Intel MPI 18 |
-| hdf5parallel/1.10.6-intel18-mpt222 | 1.10.6          | Intel 18  | HPE MPT 2.22 |
-| hdf5parallel/1.10.6-intel19-mpt222 | 1.10.6          | Intel 19  | HPE MPT 2.22 |
-| hdf5parallel/1.10.6-gcc6-mpt222    | 1.10.6          | GCC 6.3.0 | HPE MPT 2.22 |
+Both serial and parallel versions are available on ACirrus as
+standard modules:
+
+  + `module load cray-hdf5` (serial version)
+  + `module load cray-hdf5-parallel` (MPI parallel version)
+
+Use `module help` to locate `cray-`specific release notes on a
+particular version.
+
+## Compiling applications against HDF5
+
+If the appropriate programming environment and HDF5 modules are loaded,
+compiling applications against the HDF5 libraries should straightforward.
+You should use the compiler wrappers `cc`, `CC`, and/or `ftn`. See, e.g.,
+`cc --cray-print-opts` for the full list of include paths and library
+paths and options added by the compiler wrapper.
 
 
+## Resources
 
-Instructions to install a local version of HDF5 can be found on this
-repository:
-<https://github.com/hpc-uk/build-instructions/tree/main/utils/HDF5>
+The HDF5 support website includes [general documentation](https://support.hdfgroup.org/documentation/index.html).
+
+For parallel HDF5, some [tutorials and presentations](https://support.hdfgroup.org/documentation/hdf5-docs/hdf5_topics/ParallelHDF5.html) are available.
