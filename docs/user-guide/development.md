@@ -20,7 +20,7 @@ including the different compiler environments
 You can see what compiler environments are available with:
 
 ```bash
-user@login01:~> module avail PrgEnv
+[auser@uan01:~]$ module avail PrgEnv
 
 -------------------------------------- /opt/cray/pe/lmod/modulefiles/core ---------------------------------------
    PrgEnv-aocc/8.6.0    PrgEnv-cray/8.6.0    PrgEnv-gnu/8.6.0 (L)    PrgEnv-intel/8.6.0
@@ -44,7 +44,7 @@ Use "module keyword key1 key2 ..." to search for all possible modules matching a
 Other software modules can be searched using the `module spider` command:
 
 ``` 
-auser@uan01:~> module spider
+[auser@uan01:~]$ module spider
 
 --------------------------------------------------------------------------------------------------------------
 The following is a list of the modules and extensions currently available:
@@ -139,7 +139,7 @@ determined by the relevant compiler module. A summary is:
 For example, at login, the default set of modules are:
 
 ``` 
-user@login03:~> module list
+[user@login03:~]$ module list
 
 Currently Loaded Modules:
   1) craype-x86-turin         5) xpmem/0.2.119-1.3_gef379be13330   9) cray-dsmml/0.3.1     13) epcc-setup-env
@@ -164,7 +164,7 @@ Switching between different compiler environments is achieved using the
 (CCE) compiler environment to the GCC environment, you would use:
 
 ```
-auser@ln03:~> module load PrgEnv-gnu
+[auser@ln03:~]$ module load PrgEnv-gnu
 
 Lmod is automatically replacing "cce/19.0.0" with "gcc-native/14.2".
 
@@ -182,7 +182,7 @@ If you then use the `module list` command, you will see that your environment
 has been changed to the GCC environment:
 
 ```
-auser@ln03:~> module list
+[auser@ln03:~]$ module list
 
 Currently Loaded Modules:
   1) craype-x86-turin         5) xpmem/0.2.119-1.3_gef379be13330   9) gcc-native/14.2    13) cray-libsci/25.03.0
@@ -200,7 +200,7 @@ environment and than swap the version of GCC from the 11.2.0 default to
 the older 10.3.0 version, you would use
 
 ```
-auser@ln03:~> module load PrgEnv-gnu
+[auser@ln03:~]$ module load PrgEnv-gnu
 
 Lmod is automatically replacing "cce/19.0.0" with "gcc-native/14.2".
 
@@ -223,7 +223,7 @@ swap command moves to the older version of GCC. As before, `module list`
 will show that your environment has been changed:
 
 ```
-auser@ln03:~> module list
+[auser@ln03:~]$ module list
 
 Currently Loaded Modules:
   1) craype-x86-turin         5) xpmem/0.2.119-1.3_gef379be13330   9) cray-dsmml/0.3.1  13) cray-mpich/8.1.32
@@ -322,11 +322,10 @@ environments.
 The commonly used open source GNU compiler collection is available and
 provides C/C++ and Fortran compilers.
 
-Switch the the GCC compiler environment from the default CCE (cray)
-compiler environment via:
+Switch to the GCC compiler environment via:
 
 ```
-auser@ln03:~> module load PrgEnv-gnu
+[auser@ln03:~]$ module load PrgEnv-gnu
 
 Lmod is automatically replacing "cce/19.0.0" with "gcc-native/14.2".
 
@@ -386,11 +385,8 @@ Due to MODULEPATH changes, the following have been reloaded:
 
 #### Reference material
 
-  - C/C++ documentation  
-    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/>
-
-  - Fortran documentation  
-    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/>
+  - [C/C++ documentation](https://gcc.gnu.org/onlinedocs/gcc-14.3.0/gcc/)
+  - [Fortran documentation](https://gcc.gnu.org/onlinedocs/gcc-14.3.0/gfortran/)
 
 ### Cray Compiling Environment (CCE)
 
@@ -471,6 +467,46 @@ Miscellaneous options:
   details are available via `man clang` once the CCE compiler environment is loaded.
 * [Cray Fortran documentation](https://internal.support.hpe.com/hpesc/public/docDisplay?docId=dp00005037en_us&docLocale=en_US)
 
+### Intel compilers (oneAPI)
+
+Intel oneAPI provides C/C++ compiers, Fortran compilers and other
+libraries and tools.
+
+Switch to the Intel compiler environment via:
+
+```
+[auser@ln03:~]$ module load PrgEnv-intel
+
+Lmod is automatically replacing "cce/19.0.0" with "intel/2023.2".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.6.0" with "PrgEnv-intel/8.6.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-libsci/25.03.0     2) cray-mpich/8.1.32
+
+```
+
+!!! warning
+    The Intel compiler environment only provides the new LLVM based
+    compilers (`icx`, `icpx` and `ifx`), the classic Intel compilers are not
+    available.
+
+#### Useful Intel Fortran (`ifx`) options
+
+| Option | Comment |  
+| ------ | ------- |
+| `-O<level>` | Optimisation levels: `-O0`, `-O1`, `-O2`, `-O3`, `-Ofast`. `-Ofast` is not recommended without careful regression testing on numerical output. |
+| `-std=<standard>` |	Default is gnu |
+| `-fbounds-check` | Use runtime checking of array indices |
+| `-fopenmp` | Compile OpenMP (default is no OpenMP) |
+| `-v` | Display verbose output from compiler stages |
+
+#### Reference material
+
+  - [oneAPI documentation library](https://www.intel.com/content/www/us/en/developer/tools/oneapi/documentation-library.html)
+
 ### AMD Optimizing Compiler Collection (AOCC)
 
 The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
@@ -480,7 +516,7 @@ Load the AOCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module load PrgEnv-aocc
+[auser@ln03:~]$ module load PrgEnv-aocc
 
 Lmod is automatically replacing "cce/19.0.0" with "aocc/4.1".
 
@@ -495,8 +531,7 @@ Due to MODULEPATH changes, the following have been reloaded:
 
 #### AOCC reference material
 
-  - AMD website  
-    <https://developer.amd.com/amd-aocc/>
+  - [AOCC on AMD website](https://developer.amd.com/amd-aocc/)
 
 
 ## Message passing interface (MPI)
@@ -515,7 +550,7 @@ log into Cirrus, it is available by default to all users.
 
 #### MPI reference material
 
-MPI standard documents: <https://www.mpi-forum.org/docs/>
+- [MPI standard documents](https://www.mpi-forum.org/docs/)
 
 ## Linking and libraries
 
@@ -567,19 +602,9 @@ first choice for access to software libraries if available.
 
 Cirrus currently has the following HPE Cray Programming Environment (CPE) releases available:
 
-- 22.12
-- **23.09: Current default**
+- **25.09: Current default**
 
-You can find information, notes, and lists of changes for current and upcoming Cirrus 
-HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
-repository](https://github.com/PE-Cray).
-
-!!! tip
-    We recommend that users use the most recent version of the PE available to get
-    the latest improvements and bug fixes.
-
-Later PE releases may sometimes be available via a containerised form. This allows developers to check that their code compiles and runs
-using CPE releases that have not yet been installed on Cirrus.
+<!-- Not relevant at the moment as there is only one PE 
                                                         
 ### Switching to a different HPE Cray Programming Environment (CPE) release
 
@@ -668,6 +693,8 @@ environment.
     release. To restore the default programming environment release you should log 
     out and then log back in to Cirrus.
 
+-->
+
 ## Using non-default versions of HPE Cray libraries
 
 If you wish to make use of non-default versions of libraries provided by HPE
@@ -678,12 +705,12 @@ environment variable.
 
 **At compile time** you need to load the version of the library module before you compile
 *and* set the LD_LIBRARY_PATH environment variable to include the contencts of
-`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, older 22.12.1.1
-version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
+`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, newer 9.0.0
+version of HPE Cray MPICH in the default programming environment (Cray Compiler Environment,
 CCE) you would first setup the environment to compile with:
 
 ```bash
-module load cray-libsci/22.12.1.1
+module load cray-mpich/9.0.0
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
@@ -692,35 +719,8 @@ the value of `LD_LIBRARY_PATH` for the process to work (it will not be updated
 automatically).
 
 Now you can compile your code. You can check that the executable is using the correct version 
-of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so.5`, you
-should see the version in the path to the library file:
-
-```bash
-ldd dgemv.x 
-```
-
-Output:
-```
-	linux-vdso.so.1 (0x00007ffc7fff5000)
-	libm.so.6 => /lib64/libm.so.6 (0x00007fd6a6361000)
-	libsci_cray.so.5 => /opt/cray/pe/libsci/22.12.1.1/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fd6a2419000)
-	libdl.so.2 => /lib64/libdl.so.2 (0x00007fd6a2215000)
-	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fd6a68b3000)
-	libquadmath.so.0 => /opt/cray/pe/gcc-libs/libquadmath.so.0 (0x00007fd6a1fce000)
-	libmodules.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libmodules.so.1 (0x00007fd6a689a000)
-	libfi.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libfi.so.1 (0x00007fd6a1a29000)
-	libcraymath.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcraymath.so.1 (0x00007fd6a67b3000)
-	libf.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libf.so.1 (0x00007fd6a6720000)
-	libu.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libu.so.1 (0x00007fd6a1920000)
-	libcsup.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcsup.so.1 (0x00007fd6a6715000)
-	libc.so.6 => /lib64/libc.so.6 (0x00007fd6a152b000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007fd6a66ac000)
-	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fd6a1308000)
-	librt.so.1 => /lib64/librt.so.1 (0x00007fd6a10ff000)
-	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fd6a0c53000)
-	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fd6a0841000)
-	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fd6a0628000)
-```
+of LibSci with the `ldd` command and look for the line beginning `libmpi*`, you
+should see the version in the path to the library file.
 
 !!! tip
     If any of the libraries point to versions in the `/opt/cray/pe/lib64` directory
@@ -731,15 +731,16 @@ Output:
 **At run time** (typically in your job script) you need to repeat the environment
 setup steps (you can also use the `ldd` command in your job submission script to 
 check the library is pointing to the correct version). For example, a job submission
-script to run our `dgemv.x` executable with the non-default version of LibSci could
+script to run an executable with the non-default version of Cray MPICH could
 look like:
 
 ```slurm
 #!/bin/bash
-#SBATCH --job-name=dgemv
+#SBATCH --job-name=test
 #SBATCH --time=0:20:0
+#SBATCH --exclusive
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks-per-node=288
 #SBATCH --cpus-per-task=1
 
 # Replace the account code, partition and QoS with those you wish to use
@@ -748,15 +749,15 @@ look like:
 #SBATCH --qos=short
 
 # Setup up the environment to use the non-default version of LibSci
-module load cray-libsci/22.12.1.1
+module load cray-mpich/9.0.0
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 
 # Check which library versions the executable is pointing too
-ldd dgemv.x
+ldd /path/to/myapp.x
 
 export OMP_NUM_THREADS=1
 
-srun --hint=nomultithread --distribution=block:block dgemv.x
+srun --hint=nomultithread --distribution=block:block /path/to/myapp.x
 ```
 
 !!! tip
