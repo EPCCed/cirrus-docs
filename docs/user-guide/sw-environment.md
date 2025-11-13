@@ -87,11 +87,11 @@ versions you have presently loaded in your environment:
 auser@login03:~> module list
 
 Currently Loaded Modules:
-  1) craype-x86-rome               6) cce/16.0.1             11) PrgEnv-cray/8.4.0
-  2) libfabric/1.12.1.2.2.0.0      7) craype/2.7.23          12) bolt/0.8
-  3) craype-network-ofi            8) cray-dsmml/0.2.2       13) epcc-setup-env
-  4) perftools-base/23.09.0        9) cray-mpich/8.1.27      14) load-epcc-module
-  5) xpmem/0.2.119-1.3_0_gnoinfo  10) cray-libsci/23.09.1.1
+  1) craype-x86-turin                  6) cce/19.0.0         11) cray-libsci/25.03.0
+  2) libfabric/1.22.0                  7) cse_env/0.2        12) PrgEnv-cray/8.6.0
+  3) craype-network-ofi                8) craype/2.7.34      13) epcc-setup-env
+  4) perftools-base/25.03.0            9) cray-dsmml/0.3.1   14) load-epcc-module
+  5) xpmem/0.2.119-1.3_gef379be13330  10) cray-mpich/8.1.32
 
 ```
 
@@ -111,62 +111,47 @@ currently available to load, use:
 ```
 auser@login01:~> module avail
 
--------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/utils/compiler/crayclang/10.0 --------------
-   darshan/3.3.1
+---- /work/y07/shared/cirrus-ex/cirrus-ex-lmod/apps/mpi/crayclang/16.0/ofi/1.0/x86-turin/1.0/cray-mpich/8.0 ----
+   xthi/1.0
 
------------------------ /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/python/core -----------------------
-   globus-cli/3.32.0 (D)    netcdf4/1.6.4      (D)    pytorch/1.13.1-gpu        tensorflow/2.9.3
-   globus-cli/3.35.2        pytorch-gpu/1.13.1        pytorch/2.2.0      (D)    tensorflow/2.12.0 (D)
-   matplotlib/3.7.2         pytorch/1.10.2            scons/4.8.1               tensorflow/2.13.0
-   netcdf4/1.5.7            pytorch/1.13.0a0          seaborn/0.12.2
+---- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/cce/19.0.0 ----
+   eigen/3.4.0    lammps/20250612    metis/5.1.0    parmetis/4.0.3    petsc/3.23.4
 
------------------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/libs/core ------------------------
-   aocl/3.1     (D)    gmp/6.3.0            mesa/23.3.3         parmetis/4.0.3        slepc/3.14.1
-   aocl/4.0            gsl/2.8              metis/5.1.0         petsc/3.14.2          slepc/3.18.3       (D)
-   boost/1.72.0        hypre/2.18.0         mkl/2023.0.0        petsc/3.18.5   (D)    superlu-dist/6.4.0
-   boost/1.81.0 (D)    hypre/2.25.0  (D)    mumps/5.3.5         scotch/6.1.0          superlu-dist/8.1.2 (D)
-   eigen/3.4.0         libxml2/2.9.7        mumps/5.5.1  (D)    scotch/7.0.3   (D)    superlu/5.2.2
+---------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/16.0/ofi/1.0/cray-mpich/8.0 ----------------
+   cray-hdf5-parallel/1.14.3.5    cray-mpixlate/1.0.7    cray-parallel-netcdf/1.12.3.17
 
------------------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/apps/core ------------------------
-   castep/23.11                    gromacs/2024.2                    onetep/6.1.43.0-GCC-MKL
-   castep/24.1              (D)    lammps-gpu/2Aug2024               onetep/7.3.86-CCE-LibSci
-   castep/25.11                    lammps-python/15Dec2023           onetep/7.3.86-GCC-LibSci
-   code_saturne/8.0.3-cce15        lammps/2Aug2024-GPU               onetep/7.3.86-GCC-MKL
-   code_saturne/8.0.3-gcc11 (D)    lammps/13Feb2024                  openfoam/com/v2106
-   cp2k/cp2k-8.2.0                 lammps/15Dec2023                  openfoam/com/v2212        (D)
-   cp2k/cp2k-9.1.0                 lammps/17Feb2023           (D)    openfoam/org/v9.20210903
-   cp2k/cp2k-2022.2                lammps/29Aug2024                  openfoam/org/v10.20230119 (D)
-   cp2k/cp2k-2023.1.xsmm           namd-gpu/3.0                      py-chemshell/23.0.3
-   cp2k/cp2k-2023.1                namd-nosmp/2.14                   quantum_espresso/6.8
-   cp2k/cp2k-2023.2                namd-nosmp/3.0             (D)    quantum_espresso/7.1      (D)
-   cp2k/cp2k-2024.1                namd/2.14-nosmp                   quantum_espresso/7.3.1
-   cp2k/cp2k-2024.2                namd/2.14                  (D)    tcl-chemshell/3.7.1
-   cp2k/cp2k-2024.3         (D)    namd/3.0-gpu                      vasp/5/5.4.4.pl2-vtst
-   elk/elk-7.2.42                  namd/3.0-nosmp                    vasp/5/5.4.4.pl2
-   fhiaims/221103.0                namd/3.0                          vasp/6/6.4.1-vtst
-   fhiaims/240920.0         (D)    nektar/5.2.0                      vasp/6/6.4.1
-   gromacs-gpu/2022.4              nektar/5.5.0               (D)    vasp/6/6.4.2-mkl19
-   gromacs/2022.4+plumed           nwchem/7.0.2                      vasp/6/6.4.2
-   gromacs/2022.4-GPU              nwchem/7.2.2               (D)    vasp/6/6.4.3              (D)
-   gromacs/2022.4           (D)    onetep/6.1.43.0-CCE-LibSci (D)    vasp/6/6.5.0
-   gromacs/2023.4                  onetep/6.1.43.0-GCC-LibSci
+----- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/Core ------
+   castep/24.1    likwid/5.4.1       openfoam/2412     python-venv/1.0
+   cp2k/2025.1    openfoam-org/12    py-torch/2.7.1    python/3.11.7
 
------------------------ /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/utils/core ------------------------
-   amd-uprof/4.0.341         extra-compilers/1.0        imagemagick/6.8.9           python-wrapper/0.1
-   arm/forge/22.1.3          forge/22.1.3               imagemagick/7.1.0    (D)    reframe/4.2.1
-   blender/4.2.2             forge/24.0          (D)    likwid/5.4.1-archer2        spindle/0.13
-   bolt/0.8           (L)    forge/25.0.1               ncl/6.6.2                   tcl/8.6.13
-   cdo/2.1.1                 gct/v6.2.20201212          nco/5.1.6                   tk/8.6.13
-   cmake/3.18.4              gct/v6.2.20220524   (D)    ncview/2.1.11               usage-analysis/1.4
-   cmake/3.21.3              genmaskcpu/1.0             osu-benchmarks/5.4.1        visidata/2.1
-   cmake/3.29.4       (D)    gnuplot/5.4.2-simg         other-software/1.0          vmd/1.9.3-gcc11     (D)
-   darshan-util/3.3.1        gnuplot/5.4.2       (D)    paraview/5.10.1             vmd/1.9.3-mpi-gcc11
-   epcc-reframe/0.2          gnuplot/5.4.3              paraview/5.11.1             xthi/1.3
-   epcc-setup-env     (L)    graphviz/10.0.1            paraview/5.13.0      (D)
+-------------------------- /work/y07/shared/cirrus-ex/cirrus-ex-lmod/apps/core --------------------------
+   vasp/6/6.5.1
 
-------------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/14.0/ofi/1.0/cray-mpich/8.0 -------------------
-   cray-hdf5-parallel/1.12.2.1 (D)    cray-mpixlate/1.0.0.6        cray-parallel-netcdf/1.12.3.1 (D)
-   cray-hdf5-parallel/1.12.2.7        cray-mpixlate/1.0.2   (D)    cray-parallel-netcdf/1.12.3.7
+------------------------- /work/y07/shared/cirrus-ex/cirrus-ex-lmod/utils/core --------------------------
+   cmake/4.1.2    cse_env/0.2      (L,D)    epcc-setup-env (L)    spack/1.0.2/0.1
+   cse_env/0.1    epcc-reframe/0.5          reframe/4.8.4         spack/1.0.2/0.2 (D)
+
+---------------------- /opt/cray/pe/lmod/modulefiles/comnet/crayclang/16.0/ofi/1.0 ----------------------
+   cray-mpich-abi/8.1.32    cray-mpich-abi/9.0.0 (D)    cray-mpich/8.1.32 (L)    cray-mpich/9.0.0 (D)
+
+------------------------- /opt/cray/pe/lmod/modulefiles/compiler/crayclang/16.0 -------------------------
+   cray-hdf5/1.14.3.5    cray-libsci/25.03.0 (L)
+
+------------------------------ /opt/cray/pe/lmod/modulefiles/mix_compilers ------------------------------
+   aocc-mixed/5.0.0    gcc-native-mixed/12.2    gcc-native-mixed/14.2 (D)    intel-oneapi-mixed/2025.0
+   cce-mixed/19.0.0    gcc-native-mixed/13.3    intel-mixed/2025.0
+
+---------------------------- /opt/cray/pe/lmod/modulefiles/perftools/25.03.0 ----------------------------
+   perftools-lite-events    perftools-lite-hbm      perftools-lite       perftools
+   perftools-lite-gpu       perftools-lite-loops    perftools-preload
+
+------------------------------- /opt/cray/pe/lmod/modulefiles/net/ofi/1.0 -------------------------------
+   cray-openshmemx/11.7.4
+
+---------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-turin/1.0 ----------------------------
+   cray-fftw/3.3.10.10
+
+
 
 ...output trimmed...
 
@@ -193,18 +178,19 @@ available versions of the HPE Cray FFTW library, use:
 ```
 auser@login03:~>  module avail cray-fftw
 
-------------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 --------------------------------
-   cray-fftw/3.3.10.3    cray-fftw/3.3.10.5 (D)
-
-  Where:
-   D:  Default Module
+------------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-turin/1.0 --------------------------------
+   cray-fftw/3.3.10.10
 
 Module defaults are chosen based on Find First Rules due to Name/Version/Version modules found in the module tree.
 See https://lmod.readthedocs.io/en/latest/060_locating.html for details.
 
+If the avail list is too long consider trying:
+
+"module --default avail" or "ml -d av" to just list the default modules.
+"module overview" or "ml ov" to display the number of modules for each name.
+
 Use "module spider" to find all possible modules and extensions.
 Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
-
 
 ```
 
@@ -244,19 +230,31 @@ the versions available:
 ```
 auser@login03:~> module spider
 
------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 The following is a list of the modules and extensions currently available:
------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+  PrgEnv-aocc: PrgEnv-aocc/8.6.0
 
-...output trimmed...
+  PrgEnv-cray: PrgEnv-cray/8.6.0
 
-  cray-mrnet: cray-mrnet/5.0.4, cray-mrnet/5.1.1
+  PrgEnv-gnu: PrgEnv-gnu/8.6.0
 
-  cray-netcdf: cray-netcdf/4.9.0.1, cray-netcdf/4.9.0.7
+  PrgEnv-intel: PrgEnv-intel/8.6.0
 
-  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.9.0.1, cray-netcdf-hdf5parallel/4.9.0.7
+  aocc: aocc/5.0.0
 
-  cray-openshmemx: cray-openshmemx/11.5.7, cray-openshmemx/11.6.1
+  aocc-mixed: aocc-mixed/5.0.0
+
+  atp: atp/3.15.6
+
+  castep: castep/24.1
+
+  cce: cce/19.0.0
+
+  cce-mixed: cce-mixed/19.0.0
+
+  cmake: cmake/4.1.2
+
 
 ...output trimmed...
 
@@ -267,48 +265,64 @@ Now we know which versions are available, we can use
 it available:
 
 ```
-auser@login03:~> module spider cray-netcdf-hdf5parallel/4.9.0.1
+auser@login03:~> module spider libxc/7.0.0
 
----------------------------------------------------------------------------------------------------------------
-  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.9.0.1
----------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+  libxc: libxc/7.0.0
+-------------------------------------------------------------------------------------------------------------
 
-    You will need to load all module(s) on any one of the lines below before the "cray-netcdf-hdf5parallel/4.9.0.1" module is available to load.
+    You will need to load all module(s) on any one of the lines below before the "libxc/7.0.0" module is available to load.
 
-      aocc/3.2.0  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      cce/15.0.0  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      craype-network-none  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      craype-network-ofi  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      craype-network-ucx  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      gcc/10.3.0  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
-      gcc/11.2.0  cray-mpich/8.1.23  cray-hdf5-parallel/1.12.2.1
+      gcc-native/12.2
+      gcc-native/13.3
+      gcc-native/14.2
+      load-epcc-module  cse_env/0.2  gcc-spack/14.2-db4a2iu
  
     Help:
-      Release info:  /opt/cray/pe/netcdf-hdf5parallel/4.9.0.1/release_info
+      Libxc is a library of exchange-correlation functionals for density-
+      functional theory.
+
+
+
 
 ```
 
 There is a lot of information here, but what the output is essentailly telling
-us is that in order to have `cray-netcdf-hdf5parallel/4.9.0.1` available to 
-load we need to have loaded a compiler (any version of CCE, GCC or AOCC), 
-an MPI library (any version of cray-mpich) and `cray-hdf5-parallel` loaded.
-As we always have a compiler and MPI library loaded, we can satisfy all of the
-dependencies by loading `cray-hdf5-parallel`, and then we can use
-`module avail cray-netcdf-hdf5parallel` again to show that the module is now
+us is that in order to have `libxc/7.0.0` available to 
+load we need to have loaded a compiler (any version of GCC) and some utility
+modules that are already loaded for all users.
+We can satisfy all of the
+dependencies by loading `PrgEnv-gnu` (to load a `gcc-native` module), and then we can use
+`module avail libxc` again to show that the module is now
 available to load:
 
 ```
-auser@login03:~> module load cray-hdf5-parallel
-auser@login03:~> module avail cray-netcdf-hdf5parallel
+[auser@login03:~] module load PrgEnv-gnu
 
---- /opt/cray/pe/lmod/modulefiles/hdf5-parallel/crayclang/14.0/ofi/1.0/cray-mpich/8.0/cray-hdf5-parallel/1.12.2 ---
-   cray-netcdf-hdf5parallel/4.9.0.1
+Lmod is automatically replacing "cce/19.0.0" with "gcc-native/14.2".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.6.0" with "PrgEnv-gnu/8.6.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-libsci/25.03.0     2) cray-mpich/8.1.32
+
+[auser@login03 ~]$ module avail libxc
+
+------- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/gcc/14.2 -------
+   libxc/7.0.0
 
 Module defaults are chosen based on Find First Rules due to Name/Version/Version modules found in the module tree.
 See https://lmod.readthedocs.io/en/latest/060_locating.html for details.
 
+If the avail list is too long consider trying:
+
+"module --default avail" or "ml -d av" to just list the default modules.
+"module overview" or "ml ov" to display the number of modules for each name.
+
 Use "module spider" to find all possible modules and extensions.
-Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys"
 
 ```
 
@@ -318,7 +332,7 @@ If you want more info on any of the modules, you can use the `module
 help` command:
 
 ```
-auser@login03:~> module help gromacs
+[auser@login03:~] module help gromacs
 
 
 ```
@@ -330,7 +344,7 @@ performs to change your environment when it is loaded. For example, for
 the default FFTW module:
 
 ```
-auser@login03:~> module show gromacs
+[auser@login03:~] module show gromacs
 
   [...]
 ```
@@ -349,7 +363,7 @@ To load a module to use the `module load` command. For example, to load
 the default version of GROMACS into your environment, use:
 
 ```
-auser@login03:~> module load gromacs
+[auser@login03:~] module load gromacs
 ```
 
 Once you have done this, your environment will be setup to use GROMACS.
@@ -357,7 +371,7 @@ The above command will load the default version of GROMACS. If you need
 a specific version of the software, you can add more information:
 
 ```
-auser@login01:~> module load gromacs/2022.4 
+[auser@login01:~] module load gromacs/2022.4 
 ```
 
 will load GROMACS version 2022.4 into your environment,
@@ -372,7 +386,7 @@ If you want to remove software from your environment, `module remove`
 will remove a loaded module:
 
 ```
-auser@uan01:~> module remove gromacs
+[auser@uan01:~] module remove gromacs
 ```
 
 will unload what ever version of `gromacs` you might have loaded (even
