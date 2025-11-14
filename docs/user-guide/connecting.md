@@ -15,17 +15,12 @@ This section covers the basic connection methods.
 
 ## Access credentials: MFA
 
-To access Cirrus, you need to use two credentials (this is known as *multi-factor authentication*
-or *MFA*): your SSH
-key pair, protected by a passphrase, **and** a time-based one-time passcode (sometimes
-known as a *TOTP code*). You 
-can find more detailed instructions on
+To access Cirrus, you need to use two credentials (this is known as
+*multi-factor authentication* or *MFA*): your SSH key pair, protected by a
+passphrase, **and** a time-based one-time passcode (sometimes
+known as a *TOTP code*). You can find more detailed instructions on
 how to set up your credentials to access Cirrus from Windows, macOS and Linux
 below.
-
-!!! Note
-    The first time you log into a new account you will also need to enter a one-time
-    password from SAFE. This is described in more detail below.
 
 ### SSH Key Pairs
 
@@ -36,29 +31,32 @@ Using a terminal (the command line), set up a key pair that contains
 your e-mail address and enter a passphrase you will use to unlock the
 key:
 
-    $ ssh-keygen -t rsa -C "your@email.com"
-    ...
-    -bash-4.1$ ssh-keygen -t rsa -C "your@email.com"
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/Home/user/.ssh/id_rsa): [Enter]
-    Enter passphrase (empty for no passphrase): [Passphrase]
-    Enter same passphrase again: [Passphrase]
-    Your identification has been saved in /Home/user/.ssh/id_rsa.
-    Your public key has been saved in /Home/user/.ssh/id_rsa.pub.
-    The key fingerprint is:
-    03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.com
-    The key's randomart image is:
-    +--[ RSA 2048]----+
-    |    . ...+o++++. |
-    | . . . =o..      |
-    |+ . . .......o o |
-    |oE .   .         |
-    |o =     .   S    |
-    |.    +.+     .   |
-    |.  oo            |
-    |.  .             |
-    | ..              |
-    +-----------------+
+```bash
+$ ssh-keygen -t rsa -C "your@email.com"
+```
+
+```output
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Home/user/.ssh/id_rsa): [Enter]
+Enter passphrase (empty for no passphrase): [Passphrase]
+Enter same passphrase again: [Passphrase]
+Your identification has been saved in /Home/user/.ssh/id_rsa.
+Your public key has been saved in /Home/user/.ssh/id_rsa.pub.
+The key fingerprint is:
+03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.com
+The key's randomart image is:
++--[ RSA 2048]----+
+|    . ...+o++++. |
+| . . . =o..      |
+|+ . . .......o o |
+|oE .   .         |
+|o =     .   S    |
+|.    +.+     .   |
+|.  oo            |
+|.  .             |
+| ..              |
++-----------------+
+```
 
 (remember to replace "<your@email.com>" with your e-mail address).
 
@@ -69,29 +67,35 @@ by following the instructions at:
 
 [Login to SAFE](https://safe.epcc.ed.ac.uk/). Then:
 
- 1.  Go to the Menu *Login accounts* and select the Cirrus account you want to add the SSH key to
- 2.  On the subsequent Login account details page click the *Add     Credential* button
+ 1.  Go to the Menu *Login accounts* and select the Cirrus account you
+     want to add the SSH key to
+ 2.  On the subsequent Login account details page click the *Add Credential*
+     button
  3.  Select *SSH public key* as the Credential Type and click *Next*
- 4.  Either copy and paste the public part of your SSH key into the    *SSH Public key* box or use the button to select the public key    file on your computer.
+ 4.  Either copy and paste the public part of your SSH key into the
+     *SSH Public key* box or use the button to select the public key file
+     on your computer.
  5.  Click *Add* to associate the public SSH key part with your account
 
 Once you have done this, your SSH key will be added to your Cirrus
 account.
 
 !!! Tip
-    You can upload multiple public keys to SAFE to associate with your login account. This 
-    can be helpful if you want to log into Cirrus from multiple machines - you can have a different
-    SSH key pair on each machine.
+    You can upload multiple public keys to SAFE to associate with your
+    login account. This can be helpful if you want to log into Cirrus
+    from multiple machines - you can have a different SSH key pair on
+    each machine.
 
 ### Time-based one-time passcode (TOTP code)
 
-Remember, you will need to use both an SSH key and time-based one-time passcode (TOTP code) to log into Cirrus so you will
+Remember, you will need to use both an SSH key and time-based one-time
+passcode (TOTP code) to log into Cirrus so you will
 also need to [set up a method for generating a TOTP code](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account)
 before you can log into Cirrus. 
 
 <!--
 
-### First login: password required
+### First login: password required
 
 !!! Important
     You will **not** use your password when logging on to Cirrus after the first login for a new account.
@@ -133,7 +137,9 @@ folder within the Applications folder.
 You can use the following command from the terminal window to login into
 Cirrus:
 
-    ssh username@login.cirrus.ac.uk
+```
+ssh username@login.cirrus.ac.uk
+```
 
 You will first be prompted for the passphrase associated with your SSH
 key pair. Once you have entered your passphrase successfully, you will
@@ -143,14 +149,20 @@ be able to access Cirrus.
 
 !!! Note
 
-    If your SSH key pair is not stored in the default location (usually `~/.ssh/id_rsa`) on your local system, you may need to specify the path to the private part of the key with the `-i` option to `ssh`. For example, if your key is in a file called `keys/id_rsa_cirrus` you would use the command `ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk` to log in.
+    If your SSH key pair is not stored in the default location (usually
+    `~/.ssh/id_rsa`) on your local system, you may need to specify the
+    path to the private part of the key with the `-i` option to `ssh`.
+    For example, if your key is in a file called `keys/id_rsa_cirrus`
+    you would use the command `ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk` to log in.
 
 
 To allow remote programs, especially graphical applications to control
 your local display, such as being able to open up a new GUI window (such
 as for a debugger), use:
 
-    ssh -X username@login.cirrus.ac.uk
+```
+ssh -X username@login.cirrus.ac.uk
+```
 
 Some sites recommend using the `-Y` flag. While this can fix some
 compatibility issues, the `-X` flag is more secure.
@@ -189,11 +201,14 @@ sure to use -X option along with the ssh command (see above) to enable
 X11 forwarding, which allows you to run graphical clients on your local
 X server.
 
-
-
 ## Host Keys
 
-Adding the host keys to your SSH configuration file provides an extra level of security for your connections to Cirrus. The host keys are checked against the login nodes when you login to Cirrus and if the remote server key does not match the one in the configuration file, the connection will be refused. This provides protection against potential malicious servers masquerading as the Cirrus login nodes.
+Adding the host keys to your SSH configuration file provides an extra
+level of security for your connections to Cirrus. The host keys are
+checked against the login nodes when you login to Cirrus and if the
+remote server key does not match the one in the configuration file,
+the connection will be refused. This provides protection against potential
+malicious servers masquerading as the Cirrus login nodes.
 
 ### login.cirrus.ac.uk
 
@@ -206,8 +221,11 @@ login.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFk4UnY1DaS+LFSS8AFKbmAml
 
 ```
 
-Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts` and replacing it with the new key published here.  We recommend users should check this page for any key updates and not just accept a new key from the server without confirmation.
-
+Host key verification can fail if this key is out of date, a problem
+which can be fixed by removing the offending entry in `~/.ssh/known_hosts`
+and replacing it with the new key published here.  We recommend users
+should check this page for any key updates and not just accept a new key
+from the server without confirmation.
 
 ## Making access more convenient using the SSH configuration file
 
@@ -219,9 +237,11 @@ the SSH configuration file, usually located on your local machine at
 Each remote site (or group of sites) can have an entry in this file
 which may look something like:
 
-    Host cirrus
-      HostName login.cirrus.ac.uk
-      User username
+```
+Host cirrus
+    HostName login.cirrus.ac.uk
+    User username
+```
 
 (remember to replace `username` with your actual username!).
 
@@ -231,12 +251,15 @@ login nodes, you could use `ssh cirrus` instead. The remaining lines
 define the options for the `cirrus` host.
 
 - `Hostname login.cirrus.ac.uk` - defines the full address of the host
-- `User username` - defines the username to use by default for this host (replace `username` with your own username on the remote host)
+- `User username` - defines the username to use by default for this host
+  (replace `username` with your own username on the remote host)
 
 Now you can use SSH to access Cirrus without needing to enter your
 username or the full hostname every time:
 
-    -bash-4.1$ ssh cirrus
+```bash
+$ ssh cirrus
+```
 
 You can set up as many of these entries as you need in your local
 configuration file. Other options are available. See the ssh_config man
@@ -246,8 +269,6 @@ description of the SSH configuration file. You may find the
 pairs for different systems as this allows you to specify which SSH key
 to use for each system.
 
-
-
 !!! Note
 
     There is a known bug with Windows ssh-agent. If you get the error message:
@@ -255,8 +276,6 @@ to use for each system.
     you will need to either specify the path to your ssh key in the command
     line (using the `-i` option as described above) or add the path to your
     SSH config file by using the `IdentityFile` option.
-
-
 
 ## Accessing Cirrus from more than 1 machine
 
@@ -342,7 +361,7 @@ indicate a problem with your SSH key. Some things to check:
    `ls -al ~/.ssh`. This should give something similar to the following
    output:
 
-```
+```bash
     $ ls -al ~/.ssh/
     drwx------.  2 user group    48 Jul 15 20:24 .
     drwx------. 12 user group  4096 Oct 13 12:11 ..
@@ -364,34 +383,45 @@ indicate a problem with your SSH key. Some things to check:
    should exist for both public and private key files, and the
    containing folder.
 
-
-
-
 | Target      |	Permissions |	chmod Code |
 | ---         | ---        | ---          |
 | Directory   |	drwx------ |	700    |
 | Private Key |	-rw------- |	600    |
-|Public Key   |	-rw-r--r-- |	644    |
+| Public Key  |	-rw-r--r-- |	644    |
 
 `chmod` can be used to set permissions on the target in the following
 way: `chmod <code> <target>`. So for example to set correct permissions
 on the private key file `id_rsa_cirrus` one would use the command
 `chmod 600 id_rsa_cirrus`.
 
-
-
 !!! Note
 
-    Unix file permissions can be understood in the following way. There are three groups that can have file permissions: (owning) *users*, (owning)     *groups*, and *others*. The available permissions are *read*, *write*,    and *execute*. 
+    Unix file permissions can be understood in the following way.
+    There are three groups that can have file permissions: (owning)
+    *users*, (owning) *groups*, and *others*. The available
+    permissions are *read*, *write*, and *execute*. 
     
-    The first character indicates whether the target is a    file `-`, or directory `d`. The next three characters indicate the owning user's permissions. The first character is `r` if they have read permission, `-` if they don't, the second character is `w` if they have write permission, `-` if they don't, the third character is `x` if they have execute permission, `-` if they don't. This pattern is then repeated for *group*, and *other* permissions. 
+    The first character indicates whether the target is a file `-`,
+    or directory `d`. The next three characters indicate the owning
+    user's permissions. The first character is `r` if they have read
+    permission, `-` if they don't, the second character is `w` if
+    they have write permission, `-` if they don't, the third character
+    is `x` if they have execute permission, `-` if they don't. This
+    pattern is then repeated for *group*, and *other* permissions. 
     
-    For example the pattern `-rw-r--r--` indicates that the owning user can read and write the file, members of the owning group can read it, and anyone else can also read it. The `chmod` codes are constructed by treating the user, group, and owner permission strings as binary numbers, then converting them to decimal. For example the permission string `-rwx------` becomes `111 000 000` -\> `700`.
+    For example the pattern `-rw-r--r--` indicates that the owning
+    user can read and write the file, members of the owning group
+    can read it, and anyone else can also read it. The `chmod` codes
+    are constructed by treating the user, group, and owner permission
+    strings as binary numbers, then converting them to decimal. For
+    example the permission string `-rwx------` becomes `111 000 000` -\> `700`.
 
 
 ### MFA
 
-If your TOTP passcode is being consistently rejected, you can [remove MFA from your account](https://epcced.github.io/safe-docs/safe-for-users/#mfa_off) and then [re-enable it](https://epcced.github.io/safe-docs/safe-for-users/#mfa).
+If your TOTP passcode is being consistently rejected, you can
+[remove MFA from your account](https://epcced.github.io/safe-docs/safe-for-users/#mfa_off)
+and then [re-enable it](https://epcced.github.io/safe-docs/safe-for-users/#mfa).
 
 
 ### SSH verbose output
@@ -450,8 +480,10 @@ read the `$HOME/.bash_profile` file, so, if you wish to read a
 `$HOME/.bashrc` file, you can add the following to your
 `$HOME/.bash_profile` file (or create one, if it doesn't exist):
 
-    # $HOME/.bash_profile
-    # load $HOME/.bashrc, if it exists
-    if [ -f $HOME/.bashrc ]; then
-            . $HOME/.bashrc
-    fi
+```bash
+$ $HOME/.bash_profile
+$ load $HOME/.bashrc, if it exists
+if [ -f $HOME/.bashrc ]; then
+        . $HOME/.bashrc
+fi
+```

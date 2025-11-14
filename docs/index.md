@@ -6,7 +6,8 @@ Cirrus is a HPC and data science service hosted and run by
 [EPCC](http://www.epcc.ed.ac.uk) at [The University of
 Edinburgh](http://www.ed.ac.uk). It is supported by the [Edinburgh
 and South East Scotland City Region Deal](https://esescityregiondeal.org.uk)
-and by  [EPSRC](http://www.epsrc.ac.uk).
+and by  [EPSRC](http://www.epsrc.ac.uk). It is one of the
+[UKRI](http://www.ukri.org) Tier-2 National HPC Services.
 
 Cirrus is available to industry and academic researchers. For
 information on how to get access to the system please see the [Cirrus
@@ -27,15 +28,11 @@ The menu includes links to:
 - Software Libraries: compiling against specific libraries on
   Cirrus.
 - Software Tools: Information on using tools such as debuggers and
-  profilers on Cirrus
+  profilers on Cirrus.
 
 Information on using the SAFE web interface for managing and reporting
 on your usage on Cirrus, applying for user accounts, and more, can be found
 in the [EPCC SAFE Documentation](https://epcced.github.io/safe-docs/).
 
 If you have questions about Cirrus, please contact the service desk:
-`support@cirrus.ac.uk`
-
-This documentation draws on the
-documentation for the [ARCHER2 National Supercomputing
-Service](http://docs.archer2.ac.uk).
+`support@cirrus.ac.uk`.

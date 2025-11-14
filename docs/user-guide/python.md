@@ -1,472 +1,498 @@
 # Using Python
 
-Python on Cirrus is provided by a number of
-[Miniconda](https://conda.io/miniconda.html) modules and one
-[Anaconda](https://www.continuum.io) module. (Miniconda being a small
-bootstrap version of Anaconda).
+Python is supported on Cirrus both for running intensive parallel jobs
+and also as an analysis tool. This section describes how to use Python
+in either of these scenarios.
 
-The Anaconda module is called `anaconda3` and is suitable for
-running serial applications - for parallel applications using `mpi4py`
-see [mpi4py for CPU](#mpi4py-for-cpu).
+The Python installations on Cirrus contain some of the most commonly
+used packages. If you wish to install additional Python packages, we
+recommend that you use the `pip` command, see the section entitled
+[Installing your own Python packages (with pip)](./python.md#installing-your-own-python-packages-with-pip).
 
-You can list the Miniconda modules by running `module avail python` on a
-login node. There are also
-modules that extend these Python environments, e.g., `pyfr`, `tensorflow`
-and `pytorch` - simply run `module help <module name>` for further info.
+!!! important
+    Python 2 is not supported on Cirrus as it has been deprecated since
+    the start of 2020. 
 
-The Miniconda modules support Python-based parallel codes, i.e., each
-such `python` module provides a suite of packages pertinent to parallel
-processing and numerical analysis such as `dask`, `ipyparallel`,
-`jupyter`, `matplotlib`, `numpy`, `pandas` and `scipy`.
+!!! note
+    When you log onto Cirrus, no Python module is loaded by default. You
+    will generally need to load the `cray-python` module to access the
+    functionality described below.
 
-All the packages provided by a module can be obtained by running
-`pip list`. We now give some examples that show how the `python` modules
-can be used on the Cirrus CPU nodes.
+## HPE Cray Python distribution
 
-## mpi4py for CPU
+The recommended way to use Python on Cirrus is to use the HPE Cray
+Python distribution.
 
-The `python/3.9.13` module provides mpi4py 3.1.5 linked with OpenMPI
-4.1.6.
+The HPE Cray distribution provides Python 3 along with some of the most
+common packages used for scientific computation and data analysis. These
+include:
 
-See `numpy-broadcast.py` below which is a simple MPI Broadcast example,
-and the Slurm script `submit-broadcast.slurm` which demonstrates how to
-run across it two compute nodes.
+  - numpy and scipy - built using GCC against HPE Cray LibSci
+  - mpi4py - built using GCC against HPE Cray MPICH
+  - dask
 
-<details><summary><b>numpy-broadcast.py</b></summary>
+The HPE Cray Python distribution can be loaded (either on the front-end
+or in a submission script) using:
 
-``` python
-#!/usr/bin/env python
-
-"""
-Parallel Numpy Array Broadcast
-"""
-
-from mpi4py import MPI
-import numpy as np
-import sys
-
-comm = MPI.COMM_WORLD
-
-size = comm.Get_size()
-rank = comm.Get_rank()
-name = MPI.Get_processor_name()
-
-arraySize = 100
-if rank == 0:
-    data = np.arange(arraySize, dtype='i')
-else:
-    data = np.empty(arraySize, dtype='i')
-
-comm.Bcast(data, root=0)
-
-if rank == 0:
-    sys.stdout.write(
-        "Rank %d of %d (%s) has broadcast %d integers.\n"
-        % (rank, size, name, arraySize))
-else:
-    sys.stdout.write(
-        "Rank %d of %d (%s) has received %d integers.\n"
-        % (rank, size, name, arraySize))
-
-    arrayBad = False
-    for i in range(100):
-        if data[i] != i:
-            arrayBad = True
-            break
-
-    if arrayBad:
-        sys.stdout.write(
-            "Error, rank %d array is not as expected.\n"
-            % (rank))
-```
-
-</details><br>
-
-The MPI initialisation is done automatically as a result of calling
-`from mpi4py import MPI`.
-
-<details><summary><b>submit-broadcast.slurm</b></summary>
-
-``` bash
-#!/bin/bash
-
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=broadcast
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-#SBATCH --account=[budget code]
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=36
-#SBATCH --cpus-per-task=1
-
-module load python/3.9.13
-
-export OMPI_MCA_mca_base_component_show_load_errors=0
-
-srun numpy-broadcast.py
-```
-
-</details><br>
-
-The Slurm submission script (`submit-broadcast.slurm`) above sets a
-`OMPI_MCA` environment variable before launching the job. That
-particular variable suppresses warnings written to the job output file;
-it can of course be removed. Please see the [OpenMPI
-documentation](https://www.open-mpi.org/faq/?category=tuning#mca-def)
-for info on all `OMPI_MCA` variables.
-
-## Machine Learning frameworks
+    module load cray-python
+    
+!!! tip
+    The HPE Cray Python distribution is built using GCC compilers. If you wish
+    to compile your own Python, C/C++ or Fortran code to use with HPE Cray
+    Python, you should ensure that you compile using `PrgEnv-gnu` to make sure
+    they are compatible.
 
 ## Installing your own Python packages (with pip)
 
-This section shows how to setup a local custom Python environment such
-that it extends a centrally-installed `python` module. By extend, we
-mean being able to install packages locally that are not provided by the
-central `python`. This is needed because some packages such as `mpi4py`
-must be built specifically for the Cirrus system and so are best
-provided centrally.
+Sometimes, you may need to setup a local custom Python environment such that it extends a centrally-installed `cray-python` module.
+By extend, we mean being able to install packages locally that are not provided by `cray-python`. This is necessary because some Python
+packages such as `mpi4py` must be built specifically for the Cirrus system and so are best provided centrally.
 
-You can do this by creating a lightweight **virtual** environment where
-the local packages can be installed. Further, this environment is
-created on top of an existing Python installation, known as the
-environment's **base** Python.
+You can do this by creating a lightweight **virtual** environment where the local packages can be installed. This environment
+is created on top of an existing Python installation, known as the environment's **base** Python.
 
-Select the base Python by loading the `python` module you wish to
-extend, e.g., `python/3.9.13` (you can run `module avail python` to
-list all the available `python` modules).
+First, load the `PrgEnv-gnu` environment.
 
-``` bash
-[auser@cirrus-login1 auser]$ module load python/3.9.13
+    [auser@login01:~]$ module load PrgEnv-gnu
+
+This first step is necessary because subsequent `pip` installs may involve source code compilation and it is better that this be done using
+the GCC compilers to maintain consistency with how some base Python packages have been built.
+
+Second, select the base Python by loading the `cray-python` module that you wish to extend.
+
+    [auser@login01:~]$ module load cray-python
+
+Next, create the virtual environment within a designated folder.
+
+    python -m venv --system-site-packages /work/t01/t01/auser/myvenv
+
+In our example, the environment is created within a `myvenv` folder located on `/work`, which means the environment will be accessible
+from the compute nodes. The `--system-site-packages` option ensures this environment is based on the currently loaded `cray-python`
+module. See [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) for more details.
+
+You're now ready to *activate* your environment.
+
+    source /work/t01/t01/auser/myvenv/bin/activate
+
+!!! tip
+    The `myvenv` path uses a fictitious project code, `t01`, and username, `auser`. Please remember to replace those values
+    with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
+    That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
+
+Installing packages to your local environment can now be done as follows.
+
+    (myvenv) [auser@login01:~]$ python -m pip install <package name>
+
+Running `pip` directly as in `pip install <package name>` will also work, but we show the `python -m` approach
+as this is consistent with the way the virtual environment was created. Further, if the package installation
+will require code compilation, you should amend the command to ensure use of the Cirrus compiler wrappers.
+
+    (myvenv) [auser@login01:~]$ CC=cc CXX=CC FC=ftn python -m pip install <package name>
+
+And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
+
+    (myvenv) [auser@login01:~]$ deactivate
+    [auser@login01:~]$ 
+
+The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
+you must first activate the environment, by adding the activation command to the submission script, as shown below.
+
+```
+#!/bin/bash --login
+
+#SBATCH --job-name=myvenv
+#SBATCH --exclusive
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=288
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:10:00
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+source /work/t01/t01/auser/myvenv/bin/activate
+
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
+srun --distribution=block:block --hint=nomultithread python myvenv-script.py
 ```
 
 !!! tip
-    In the commands below, remember to replace `x01` with your project code
-    and `auser` with your username.
+    If you find that a module you've installed to a virtual environment on `/work` isn't found when running a job, it may be that it was previously installed to the default location of `$HOME/.local` which is not mounted on the compute nodes. This can be an issue as `pip` will reuse any modules found at this default location rather than reinstall them into a virtual environment. Thus, even if the virtual environment is on `/work`, a module you've asked for may actually be located on `/home`.
 
-Next, create the virtual environment within a designated folder:
+    You can check a module's install location and its dependencies with `pip show`, for example `pip show matplotlib`. You may then run `pip uninstall matplotlib` while no virtual environment is active to uninstall it from `$HOME/.local`, and then re-run `pip install matplotlib` while your virtual environment on `/work` is active to reinstall it there. You will need to do this for any modules installed on `/home` that will use either directly or indirectly. Remember you can check all your installed modules with `pip list`.
 
-``` bash
-python -m venv --system-site-packages /work/x01/x01/auser/myvenv
+## Conda on ARCHER2
+
+Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
+accessing software on many systems, including Cirrus. Although conda-based distributions can be used on Cirrus, 
+care is needed in how they are installed and configured so that the installation does not adversely effect your use
+of Cirrus. In particular, you should be careful of:
+
+- Where you install conda on Cirrus
+- Conda additions to shell configuration files such as `.bashrc`
+
+We cover each of these points in more detail below.
+
+### Conda install location
+
+If you only need to use the files and executables from your conda installation on the login and data analysis nodes
+(via the `serial` QoS) then the best place to install conda is in your home directory structure - this will usually
+be the default install location provided by the installation script.
+
+If you need to access the files and executables from conda on the compute nodes then you will need to install to a 
+different location as the home file systems are not available on the compute nodes. There are two main options for
+using conda from Cirrus compute nodes:
+
+1. Use a conda container image 
+2. Install conda on the work file system
+
+#### Use a conda container image
+
+You can pull official conda-based container images from Dockerhub that you can use if you want just the standard
+set of Python modules that come with the distribution. For example, to get the latest Anaconda distribution as an 
+Apptainer container image on the Cirrus work file system, you would use (on an Cirrus login node, from the
+directory on the work file system where you want to store the container image):
+
+```
+apptainer build anaconda3.sif docker://continuumio/anaconda3
 ```
 
-In our example, the environment is created within a `myvenv` folder
-located on `/work`, which means the environment will be accessible from
-the compute nodes. The `--system-site-packages` option ensures that this
-environment is based on the currently loaded `python` module. See
-<https://docs.python.org/3/library/venv.html> for more details.
+Once you have the container image, you can run scripts in it with a command like:
 
-``` bash
-extend-venv-activate /work/x01/x01/auser/myvenv
+```
+apptainer exec -B $PWD anaconda3.sif python my_script.py
 ```
 
-The `extend-venv-activate` command ensures that your virtual
-environment's activate script loads and unloads the base `python` module
-when appropriate. You're now ready to activate your environment.
+As the container image is a single large file, you end up doing a single large read from the work file system rather
+than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
+detrimental impact on the wider file system performance for all users.
 
-``` bash
-source /work/x01/x01/auser/myvenv/bin/activate
+We have pre-built a Apptainer container with the Anaconda distribution in on 
+ARCHER2. Users can access it at `$EPCC_CONTAINER_DIR/anaconda3.sif`. To run a Python
+script with the centrally-installed image, you can use:
+
+```
+apptainer exec -B $PWD $EPCC_CONTAINER_DIR/anaconda3.sif python my_script.py
 ```
 
-!!! Important
-	The path above uses a fictitious project code, `x01`, and username,
-	`auser`. Please remember to replace those values with your actual
-	project code and username. Alternatively, you could enter
-	`${HOME/home/work}` in place of `/work/x01/x01/auser`. That command
-	fragment expands `${HOME}` and then replaces the `home` part with
-	`work`.
+If you want additional packages that are not available in the standard container images then
+you will need to build your own container images. If you need help to do this, then please
+contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk)
 
+#### Install conda on the work file system
 
+To do this, specify an install location 
+in your directories on the work file system when prompted in the conda installation process.
 
-Installing packages to your local environment can now be done as
-follows.
+### Conda additions to shell configuration files
 
-``` bash
-(myvenv) [auser@cirrus-login1 auser]$ python -m pip install <package name>
+During the install process most conda-based distributions will ask a question like:
+
+> Do you wish the installer to initialize Miniconda3 by running conda init?
+
+If you are installing to the Cirrus work directories, you 
+should answer "no" to this question.
+
+Adding the initialisation to shell startup scripts (typically `.bashrc`) means that every time
+you login to Cirrus, the conda environment will try to initialise by reading lots of files
+within the conda installation. This approach was designed for the case where a user has installed
+conda on their personal device and so is the only user of the file system. For shared file systems
+such as those on Cirrus, this places a large load on the file system and will lead to you seeing 
+slow login times and slow response from your command line on Cirrus. It will also lead to degraded
+read/write performance from the work file systems for you and other users so should be avoided at 
+all costs.
+
+If you have previously installed a conda distribution and answered "yes" to the question about
+adding the initialisation to shell configuration files, you should edit your `~/.bashrc` file
+to remove the conda initialisation entries. This means deleting the lines that look something
+like:
+
+```
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/work/t01/t01/auser/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+eval "$__conda_setup"
+else
+if [ -f "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh" ]; then
+. "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh"
+else
+export PATH="/work/t01/t01/auser/miniconda3/bin:$PATH"
+fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 ```
 
-Running `pip` directly as in `pip install <package name>` will also
-work, but we show the `python -m` approach as this is consistent with
-the way the virtual environment was created. And when you have finished
-installing packages, you can deactivate your environment by issuing the
-`deactivate` command.
 
-``` bash
-(myvenv) [auser@cirrus-login1 auser]$ deactivate
-[auser@cirrus-login1 auser]$
+## Running Python
+
+### Example serial Python submission script
+
+```
+#!/bin/bash --login
+    
+#SBATCH --job-name=python_test
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+    
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+   
+# Load the Python module, ...
+module load cray-python
+
+# ..., or, if using local virtual environment
+source <<path to virtual environment>>/bin/activate
+    
+# Run your Python program
+python python_test.py
 ```
 
-The packages you have just installed locally will only be available once
-the local environment has been activated. So, when running code that
-requires these packages, you must first activate the environment, by
-adding the activation command to the submission script, as shown below.
+### Example mpi4py job submission script
 
-<details><summary><b>submit-myvenv.slurm</b></summary>
+Programs that have been parallelised with mpi4py can be run on the Cirrus compute nodes.
+Unlike the serial Python submission script however, we must launch the Python interpreter
+using `srun`. Failing to do so will result in Python running a single MPI rank only. 
 
-``` bash
-#!/bin/bash
-
-#SBATCH --job-name=myvenv
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
+```
+#!/bin/bash --login
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=mpi4py_test
 #SBATCH --nodes=2
-
-source /work/x01/x01/auser/myvenv/bin/activate
-
-srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
-```
-
-</details><br>
-
-Lastly, the environment being extended does not have to come from one of
-the centrally-installed `python` modules. You could just as easily
-create a local virtual environment based on one of the Machine Learning
-(ML) modules, e.g., `tensorflow` or `pytorch`. This means you would avoid
-having to install ML packages within your local area. Each of those ML
-modules is based on a `python` module. For example, `tensorflow/2.13.0`
-is itself an extension of `python/3.10.8.
-
-## Installing your own Python packages (with conda)
-
-This section shows you how to setup a local custom Python environment
-such that it duplicates a centrally-installed `python` module, ensuring
-that your local `conda` environment will contain packages that are
-compatible with the Cirrus system.
-
-Select the base Python by loading the `python` module you wish to
-duplicate, e.g., `python/3.9.13` (you can run `module avail python`
-to list all the available `python` modules).
-
-``` bash
-[auser@cirrus-login1 auser]$ module load python/3.9.13
-```
-
-Next, create the folder for holding your `conda` environments. This
-folder should be on the `/work` file system as `/home` is not accessible
-from the compute nodes.
-
-``` bash
-CONDA_ROOT=/work/x01/x01/auser/condaenvs
-mkdir -p ${CONDA_ROOT}
-```
-
-The following commands tell `conda` where to save your custom
-environments and packages.
-
-``` bash
-conda config --prepend envs_dirs ${CONDA_ROOT}/envs
-conda config --prepend pkgs_dirs ${CONDA_ROOT}/pkgs
-```
-
-The `conda config` commands are executed just once and the configuration
-details are held in a `.condarc` file located in your home directory.
-You now need to move this `.condarc` file to a directory visible from
-the compute nodes.
-
-``` bash
-mv ~/.condarc ${CONDA_ROOT}
-```
-
-You can now activate the `conda` configuration.
-
-``` bash
-export CONDARC=${CONDA_ROOT}/.condarc
-eval "$(conda shell.bash hook)"
-```
-
-These two lines need to be called each time you want to use your virtual
-`conda` environment. The next command creates that virtual environment.
-
-``` bash
-conda create --clone base --name myvenv
-```
-
-The above creates an environment called `myvenv` that will hold the same
-packages provided by the base `python` module. As this command involves
-a significant amount of file copying and downloading, it may take a long
-time to complete. When it has completed please activate the local
-`myvenv` conda environment.
-
-``` bash
-conda activate myvenv
-```
-
-You can now install packages using
-`conda install -p ${CONDA_ROOT}/envs/myvenv <package_name>`. And you can
-see the packages currently installed in the active environment with the
-command `conda list`. After all packages have been installed, simply run
-`conda deactivate` twice in order to restore the original command prompt.
-
-``` bash
-(myvenv) [auser@cirrus-login1 auser]$ conda deactivate
-(base) [auser@cirrus-login1 auser]$ conda deactivate
-[auser@cirrus-login1 auser]$
-```
-
-The submission script below shows how to use the conda environment
-within a job running on the compute nodes.
-
-<details><summary><b>submit-myvenv.slurm</b></summary>
-
-``` bash
-#!/bin/bash
-
-#SBATCH --job-name=myvenv
-#SBATCH --time=00:20:00
 #SBATCH --exclusive
-#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=288
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:10:0
 
-module load python/3.9.13
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-CONDA_ROOT=/work/x01/x01/auser/condaenvs
-export CONDARC=${CONDA_ROOT}/.condarc
-eval "$(conda shell.bash hook)"
+# Load the Python module, ...
+module load cray-python
 
-conda activate myvenv
+# ..., or, if using local virtual environment
+source <<path to virtual environment>>/bin/activate
 
-srun --ntasks=8 --tasks-per-node=4 --cpus-per-task=10 myvenv-script.py
+# Pass cpus-per-task setting to srun
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
+# Run your Python program
+#   Note that srun MUST be used to wrap the call to python,
+#   otherwise your code will run serially
+srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
 ```
 
-</details><br>
+!!! tip
+    If you have installed your own packages you will need to activate your local Python
+    environment within your job submission script as shown at the end of
+    [Installing your own Python packages (with pip)](./python.md#installing-your-own-python-packages-with-pip).
 
-You can see that using `conda` is less convenient compared to `pip`. In
-particular, the centrally-installed Python packages on copied in to the
-local `conda` environment, consuming some of the disk space allocated to
-your project. Secondly, activating the `conda` environment within a
-submission script is more involved: five commands are required
-(including an explicit load for the base `python` module), instead of
-the single `source` command that is sufficient for a `pip` environment.
+<!-- Comment out until spindle is available
 
-Further, `conda` cannot be used if the base environment is one of the
-Machine Learning (ML) modules, as `conda` is not flexible enough to
-gather Python packages from both the ML and base `python` modules (e.g.,
-the ML module `pytorch/1.13.1` is itself based on
-`python/3.10.8`, and so `conda` will only duplicate packages
-provided by the `python` module and not the ones supplied by `pytorch`).
+### Running Python at scale
 
-## Using JupyterLab on Cirrus
+The file system metadata server may become overloaded when running a parallel Python script over many fully populated nodes (i.e., 288 MPI ranks per node).
+Performance degrades due to the IO operations that accompany a high volume of Python import statements. Typically, each import will first require the module or
+library to be located by searching a number of file paths before the module is loaded into memory. Such a workload scales as *N<sub>p</sub>* x *N<sub>lib</sub>* x *N<sub>path</path>* ,
+where *N<sub>p</sub>* is the number of parallel processes, *N<sub>lib</sub>* is the number of libraries imported and *N<sub>path</path>* the number of file paths searched. And so, in this way
+much time can be lost during the initial phase of a large Python job, not to mention the fact that the IO contention will be impacting other users of the system.
 
-It is possible to view and run JupyterLab on both the login and compute
-nodes of Cirrus. Please note, you can test notebooks on the login nodes,
-but please don’t attempt to run any computationally intensive work (such
-jobs will be killed should they reach the login node CPU limit).
+[Spindle](https://computing.llnl.gov/projects/spindle) is a tool for improving the library-loading performance of dynamically linked HPC applications. It provides a
+mechanism for scalable loading of shared libraries, executables and Python files from a shared file system at scale without turning the file system into a bottleneck.
+This is achieved by caching libraries or their locations within node memory. Spindle takes a pure user-space approach: users do not need to configure new file systems,
+load particular OS kernels or build special system components. The tool operates on existing binaries &mdash; no application modification or special build flags are required.
 
-If you want to run your JupyterLab on a compute node, you will need to
-enter an [interactive session](batch.md#interactive-jobs); otherwise
-you can start from a login node prompt.
+The script below shows how to run Spindle with your Python code.
 
-1.  As described above, load the Anaconda module on Cirrus using
-    `module load anaconda3`.
+```
+#!/bin/bash --login
 
-2.  Run `export JUPYTER_RUNTIME_DIR=$(pwd)`. Jobs running in the
-    batch system may also need to set both `JUPYTER_CONFIG_DIR` and
-    `JUPYTER_DATA_DIR` is the same way. By default, these are related to
-    `${HOME}`, which is not available on the back end.
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=128
+...
 
-3.  Start the JupyterLab server by running
-    `jupyter lab --ip=0.0.0.0 --no-browser`
+module load cray-python
+module load spindle/0.13
 
-    - once it’s started, you will see some lines resembling the
-      following output.
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
-    <!-- -->
+spindle --slurm --python-prefix=/opt/cray/pe/python/${CRAY_PYTHON_LEVEL} \      
+    srun --overlap --distribution=block:block --hint=nomultithread \
+        python mpi4py_script.py
+```
 
-        Or copy and paste one of these URLs:
-            ...
-         or http://127.0.0.1:8888/lab?token=<string>
+The `--python-prefix` argument can be set to a list of colon-separated paths if necessary. In the example above,
+the `CRAY_PYTHON_LEVEL` environment variable is set as a conseqeunce of loading `cray-python`.
 
-    You will need the URL shown above for step 6.
+!!! note
+    The `srun --overlap` option is required for Spindle as the version of Slurm on ARCHER2 is newer than 20.11.
 
-4.  Please skip this step if you are connecting from Windows. If you are
-    connecting from Linux or macOS, open a new terminal window, and run
-    the following command.
+-->
 
-        ssh <username>@login.cirrus.ac.uk -L<port_number>:<node_id>:<port_number>
+## Using JupyterLab on ARCHER2
 
-    where \<username\> is your username, \<port_number\> is as shown in
-    the URL from the Jupyter output and \<node_id\> is the name of the
-    node we’re currently on. On a login node, this will be
-    `cirrus-login1`, or similar; on a compute node, it will be a mix of
-    numbers and letters such as `r2i5n5`.
+It is possible to view and run Jupyter notebooks from both login nodes 
+and compute nodes on Cirrus.
+
+!!! note
+    You can test such notebooks on the login nodes, but please do not attempt to
+    run any computationally intensive work. Jobs may get killed once they hit a
+    CPU limit on login nodes.
+
+Please follow these steps.
+
+1. Install JupyterLab in your work directory.
+   ```
+   module load cray-python
+   export PYTHONUSERBASE=/work/t01/t01/auser/.local
+   export PATH=$PYTHONUSERBASE/bin:$PATH
+   # source <<path to virtual environment>>/bin/activate  # If using a virtualenvironment uncomment this line and remove the --user flag from the next
+   
+   pip install --user jupyterlab
+   ```
+
+2. If you want to test JupyterLab on the login node please go straight to step 3.
+   To run your Jupyter notebook on a compute node, you first need to run an interactive session.
+   ```
+   srun --nodes=1 --exclusive --time=00:20:00 --account=<your_budget> \
+        --partition=standard --qos=short \
+        --pty /bin/bash
+   ```
+   Your prompt will change to something like below.
+   ```
+   [auser@cs-n0034:/tmp]$
+   ```
+   In this case, the node id is `cs-n0034`. Now execute the following on the compute node.
+   ```
+   cd /work/t01/t01/auser # Update the path to your work directory
+   export PYTHONUSERBASE=$(pwd)/.local
+   export PATH=$PYTHONUSERBASE/bin:$PATH
+   export HOME=$(pwd)
+   module load cray-python
+   # source <<path to virtual environment>>/bin/activate  # If using a virtualenvironment uncomment this line
+   ```
+
+3. Run the JupyterLab server.
+   ```
+   export JUPYTER_RUNTIME_DIR=$(pwd)
+   jupyter lab --ip=0.0.0.0 --no-browser
+   ```
+   Once it's started, you will see a URL printed in the terminal window of 
+   the form `http://127.0.0.1:<port_number>/lab?token=<string>`; we'll need this URL for
+   step 6.
+
+4. Please skip this step if you are connecting from a machine running Windows.
+   Open a new terminal window on your laptop and run the following command.
+   ```
+   ssh <username>@login.cirrus.ac.uk -L<port_number>:<node_id>:<port_number>
+   ```   
+   where `<username>` is your username, and `<node_id>` is the id of the node you're 
+   currently on (for a login node, this will be `login01`, or similar; on a compute 
+   node, it will be a mix of numbers and letters). In our example, `<node_id>`
+   is `cs-n0034`. Note, please use the same port number as that shown in the URL of
+   step 3. This number may vary, likely values are 8888 or 8889.
+
+5. Please skip this step if you are connecting from Linux or macOS. If you are connecting from Windows, you should use MobaXterm to configure an SSH tunnel as follows.
+    - Click on the `Tunnelling` button above the MobaXterm terminal. Create a new tunnel by clicking on `New SSH tunnel` in the window that opens.
+    - In the new window that opens, make sure the `Local port forwarding` radio button is selected.
+    - In the `forwarded port` text box on the left under `My computer with MobaXterm`, enter the port number indicated in the JupyterLab server output (e.g., 8888 or 8890).
+    - In the three text boxes on the bottom right under `SSH server` enter `login.archer2.ac.uk`, your ARCHER2 username and then `22`.
+    - At the top right, under `Remote server`, enter the id of the login or compute node running the JupyterLab server and the associated port number.
+    - Click on the `Save` button.
+    - In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it.
+    - Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to ARCHER2. You should tell it to use the same `.ppk` private key that you normally use when connecting to ARCHER2.
+    - The tunnel should now be configured. Click on the small start button (like a play '>' icon) for the new tunnel to open it. You'll be asked to enter your ARCHER2 account password -- please do so.
+
+6. Now, if you open a browser window locally, you should be able to navigate to the URL
+   from step 3, and this should display the JupyterLab server. If JupyterLab is running
+   on a compute node, the notebook will be available for the length of the interactive
+   session you have requested.
+
+!!! warning
+    Please do not use the other http address given by the JupyterLab output,
+    the one formatted `http://<node_id>:<port_number>/lab?token=<string>`. Your local
+    browser will not recognise the `<node_id>` part of the address.
+
+<!-- Comment out until Dask is tested
+
+## Using Dask Job-Queue
+
+The Dask-jobqueue project makes it easy to deploy Dask on Cirrus. 
+You can find more information in 
+[the Dask Job-Queue documentation](http://jobqueue.dask.org/en/latest/).
+
+Please follow these steps:
+
+1. Install Dask-Jobqueue
+
+```
+module load cray-python
+export PYTHONUSERBASE=/work/t01/t01/auser/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+
+pip install --user dask-jobqueue --upgrade
+```
+
+2. Using Dask
+
+Dask-jobqueue creates a Dask Scheduler in the Python process where the cluster
+object is instantiated. A script for running dask jobs on Cirrus
+might look something like this:
+
+```
+from dask_jobqueue import SLURMCluster
+cluster = SLURMCluster(cores=288, 
+                       processes=16,
+                       memory='768GB',
+                       queue='standard',
+                       header_skip=['--mem'],
+                       job_extra=['--qos="standard"'],
+                       python='srun python',
+                       project='z19',
+                       walltime="01:00:00",
+                       shebang="#!/bin/bash --login",
+                       local_directory='$PWD',
+                       interface='hsn0',
+                       env_extra=['module load cray-python',
+                                  'export PYTHONUSERBASE=/work/t01/t01/auser/.local/',
+                                  'export PATH=$PYTHONUSERBASE/bin:$PATH',
+                                  'export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH'])
 
 
 
-    !!! Note
+cluster.scale(jobs=2)    # Deploy two single-node jobs
 
-	    If, when you connect in the new terminal, you see a message of the
-	    form <span class="title-ref">channel_setup_fwd_listener_tcpip:
-	    cannot listen to port: 8888</span>, it means port 8888 is already in
-	    use. You need to go back to step 3 (kill the existing jupyter lab)
-	    and retry with a new explicit port number by adding the `--port=N`
-	    option. The port number `N` can be in the range 5000-65535. You
-	    should then use the same port number in place of 8888.
+from dask.distributed import Client
+client = Client(cluster)  # Connect this local process to remote workers
 
+# wait for jobs to arrive, depending on the queue, this may take some time
+import dask.array as da
+x = …              # Dask commands now use these distributed resources
+```
 
+This script can be run on the login nodes and it submits the Dask jobs
+to the job queue. Users should ensure that the computationally intensive
+work is done with the Dask commands which run on the compute nodes.
 
-5.  Please skip this step if you are connecting from Linux or macOS. If
-    you are connecting from Windows, you should use MobaXterm to
-    configure an SSH tunnel as follows.
+The cluster object parameters specify the characteristics for running on a single compute node.
+The header_skip option is required as we are running on exclusive nodes where you should not
+specify the memory requirements, however Dask requires you to supply this option.
 
-    5.1. Click on the `Tunnelling` button above the MobaXterm terminal.
-    Create a new tunnel by clicking on `New SSH tunnel` in the window
-    that opens.
+Jobs are be deployed with the cluster.scale command, where the jobs option sets
+the number of single node jobs requested. Job scripts are generated
+(from the cluster object) and these are submitted to the queue to begin 
+running once the resources are available. You can check the status of the jobs by 
+running `squeue -u $USER` in a separate terminal.
 
-    5.2. In the new window that opens, make sure the
-    `Local port forwarding` radio button is selected.
+If you wish to see the generated job script you can use:
 
-    5.3. In the `forwarded port` text box on the left under
-    `My computer with MobaXterm`, enter the port number indicated in the
-    Jupyter server output.
-
-    5.4. In the three text boxes on the bottom right under `SSH server`
-    enter `login.cirrus.ac.uk`, your Cirrus username, and then `22`.
-
-    5.5. At the top right, under `Remote server`, enter the name of the
-    Cirrus login or compute node that you noted earlier followed by the
-    port number (e.g. <span class="title-ref">8888</span>).
-
-    5.6. Click on the `Save` button.
-
-    5.7. In the tunnelling window, you will now see a new row for the
-    settings you just entered. If you like, you can give a name to the
-    tunnel in the leftmost column to identify it. Click on the small key
-    icon close to the right for the new connection to tell MobaXterm
-    which SSH private key to use when connecting to Cirrus. You should
-    tell it to use the same `.ppk` private key that you normally use.
-
-    5.8. The tunnel should now be configured. Click on the small start
-    button (like a play `>` icon) for the new tunnel to open it. You'll
-    be asked to enter your Cirrus password -- please do so.
-
-6.  Now, if you open a browser window on your local machine, you should
-    be able to navigate to the URL from step 3, and this should display
-    the JupyterLab server.
-
-    - Please note, you will get a connection error if you haven't used
-      the correct node name in step 4 or 5.
-
-!!! Note
-
-	If you have extended a central Python venv following the
-	instructions about for [Installing your own Python packages
-	(with pip)](#installing-your-own-python-packages-(with-pip)),
-	Jupyter Lab will load the central ipython kernel, not the one
-	for your venv. To enable loading of the ipython kernel for your
-	venv from within Jupyter Lab, first install the ipykernel module
-	and then use this to install the kernel for your venv.
-	```
-	source /work/x01/x01/auser/myvenv/bin/activate
-	python -m pip install ipykernel
-	python -m ipykernel install --user --name=myvenv
-	```
-	changing placeholder account and username as appropriate.
-	Thereafter, launch Jupyter Lab as above and select the `myvenv`
-	kernel.
-
-If you are on a compute node, the JupyterLab server will be available
-for the length of the interactive session you have requested.
-
-You can also run Jupyter sessions using the centrally-installed
-Miniconda3 modules available on Cirrus.
-
+```
+print(cluster.job_script())
+```
+-->
