@@ -76,17 +76,21 @@ such as `du` for reasons of efficiency.
 For example, the number of entries (files plus directories) in a home
 directory can be queried via
 
-    $ cd
-    $ getfattr -n ceph.dir.entries .
-    # file: .
-    ceph.dir.entries="33"
+```bash
+[auser@login01]$ cd
+[auser@login01]$ getfattr -n ceph.dir.entries .
+# file: .
+ceph.dir.entries="33"
+```
 
 The corresponding attribute `rentries` gives the recursive total in all
 subdirectories, that is, the total number of files and directories:
 
-    $ getfattr -n ceph.dir.rentries .
-    # file: .
-    ceph.dir.rentries="1619179"
+```bash
+[auser@login01]$ getfattr -n ceph.dir.rentries .
+# file: .
+ceph.dir.rentries="1619179"
+```
 
 Other useful attributes (all prefixed with `ceph.dir.`) include `files`
 which is the number of ordinary files, `subdirs` the number of
@@ -153,26 +157,29 @@ Change directory to the work directory where you want to check the
 quota. For example, if I wanted to check the quota for user `auser` in
 project `t01` then I would:
 
-    [auser@cirrus-login1 auser]$ cd /work/t01/t01/auser
+```bash
+[auser@login01:~]$ cd /work/t01/t01/auser
 
-    [auser@cirrus-login1 auser]$ lfs quota -hu auser .
-    Disk quotas for usr auser (uid 68826):
-         Filesystem    used   quota   limit   grace   files   quota   limit   grace
-                  .  5.915G      0k      0k       -   51652       0       0       -
-    uid 68826 is using default block quota setting
-    uid 68826 is using default file quota setting
+[auser@login01:auser]$ lfs quota -hu auser .
+Disk quotas for usr auser (uid 68826):
+        Filesystem    used   quota   limit   grace   files   quota   limit   grace
+                .  5.915G      0k      0k       -   51652       0       0       -
+uid 68826 is using default block quota setting
+uid 68826 is using default file quota setting
+```
 
 the quota and limit of 0k here indicate that no user quota is set for
 this user.
 
 To check your project quota, you would use the command:
 
-    [auser@cirrus-login1 auser]$ lfs quota -hp $(id -g)'01' .
-    Disk quotas for prj 3773301 (pid 3773301):
-     Filesystem    used   quota   limit   grace   files   quota   limit   grace
-              .   958.3G     0k  13.57T       - 9038326       0       0       -
-    pid 3773301 is using default file quota setting
-
+```bash
+[auser@login01:auser]$ lfs quota -hp $(id -g)'01' .
+Disk quotas for prj 3773301 (pid 3773301):
+    Filesystem    used   quota   limit   grace   files   quota   limit   grace
+            .   958.3G     0k  13.57T       - 9038326       0       0       -
+pid 3773301 is using default file quota setting
+```
 the limit of `13.57T` indicates the quota for the project.
 
 ## Archiving
@@ -217,7 +224,7 @@ To verify an existing tar file against a set of data, the `-d` (diff)
 option can be used. By default, no output will be given if a
 verification succeeds and an example of a failed verification follows:
 
-    $> tar -df mydata.tar mydata/*
+    [auser@login01:auser]$ tar -df mydata.tar mydata/*
     mydata/damaged_file: Mod time differs
     mydata/damaged_file: Size differs
 
@@ -271,7 +278,7 @@ Files in a zip archive are stored with a CRC checksum to help detect
 data loss. `unzip` provides options for verifying this checksum against
 the stored files. The relevant flag is `-t` and is used as follows:
 
-    $> unzip -t mydata.zip
+    [auser@login01:auser]$ unzip -t mydata.zip
     Archive:  mydata.zip
         testing: mydata/                 OK
         testing: mydata/file             OK
@@ -417,11 +424,11 @@ Configure rclone using `./rclone config`. This will guide you through an interac
 
 Please note that a token is required to connect from Cirrus to the cloud service. You need a web browser to get the token. The recommendation is to run rclone in your laptop using `rclone authorize`, get the token, and then copy the token from your laptop to Cirrus. The rclone website contains further instructions on [configuring rclone on a remote machine without web browser](https://rclone.org/remote_setup/).
 
-Once all the above is done, you’re ready to go. If you want to copy a directory, please use:
+Once all the above is done, you are ready to go. If you want to copy a directory, please use:
 
     rclone copy <cirrus_directory> remote:<cloud_directory>
 
-Please note that “remote” is the name that you have chosen when running rclone config`. To copy files, please use:
+Please note that "remote" is the name that you have chosen when running `rclone config`. To copy files, please use:
 
     rclone copyto <cirrus_file> remote:<cloud_file>
 
@@ -429,9 +436,12 @@ Please note that “remote” is the name that you have chosen when running rclo
 
     If the session times out while the data transfer takes place, adding the `-vv` flag to an rclone transfer forces rclone to output to the terminal and therefore avoids triggering the timeout process.
 
+<!-- No Globus yet
 ### Data transfer using Globus
 
 The Cirrus `/work` filesystem, which is hosted on the e1000 fileserver, has a Globus Collection (formerly known as an endpoint) with the name `e1000-fs1 directories`   
 
 [Full step-by-step guide for using Globus](../globus) to transfer files to/from Cirrus `/work`
+
+-->
 
