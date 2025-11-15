@@ -472,7 +472,7 @@ module load cray-mpich-abi/8.1.32
 export OMP_NUM_THREADS=1
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-# Set the LD_LIBRARY_PATH environment variable within the Singularity container
+# Set the LD_LIBRARY_PATH environment variable within the container
 # to ensure that it used the correct MPI libraries.
 export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich:/opt/cray/libfabric/1.22.0/lib64:/opt/cray/pals/1.6/lib:/opt/cray/pe/lib64:/opt/xpmem/lib64:/lib64"
 
@@ -482,7 +482,7 @@ export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.32/ofi/gnu/11
 
 # Launch the parallel job.
 srun --hint=nomultithread --distribution=block:block \
-    singularity run osu-benchmarks-7.5.1.sif \
+    apptainer run osu-benchmarks-7.5.1.sif \
         osu_allreduce
 ```
 
