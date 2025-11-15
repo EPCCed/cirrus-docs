@@ -352,7 +352,7 @@ changed by the time you are following these instructions.
 First, create a Dockerfile that describes how to build the image:
 
 ```docker
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -370,35 +370,38 @@ RUN apt-get install -y dkms
 RUN apt-get install -y autoconf automake build-essential numactl libnuma-dev autoconf automake gcc g++ git libtool
 
 # Download and build an ABI compatible MPICH
-RUN curl -sSLO http://www.mpich.org/static/downloads/3.4.3/mpich-3.4.3.tar.gz \
-   && tar -xzf mpich-3.4.3.tar.gz -C /root \
-   && cd /root/mpich-3.4.3 \
+RUN curl -sSLO http://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz \
+   && tar -xzf mpich-3.4.2.tar.gz -C /root \
+   && cd /root/mpich-3.4.2 \
    && ./configure --prefix=/usr --with-device=ch4:ofi --disable-fortran \
    && make -j8 install \
-   && rm -rf /root/mpich-3.4.3 \
-   && rm /mpich-3.4.3.tar.gz
+   && cd / \
+   && rm -rf /root/mpich-3.4.2 \
+   && rm /mpich-3.4.2.tar.gz
 
 # OSU benchmarks
-RUN curl -sSLO http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.8.1.tar.gz \
+RUN curl -sSLO http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.1.tar.gz \
    && tar -xzf osu-micro-benchmarks-7.5.1.tar.gz -C /root \
    && cd /root/osu-micro-benchmarks-7.5.1 \
    && ./configure --prefix=/usr/local CC=/usr/bin/mpicc CXX=/usr/bin/mpicxx \
-   && cd mpi \
    && make -j8 install \
+   && cd / \
    && rm -rf /root/osu-micro-benchmarks-7.5.1 \
    && rm /osu-micro-benchmarks-7.5.1.tar.gz
 
 # Add the OSU benchmark executables to the PATH
+ENV PATH=/usr/local/libexec/osu-micro-benchmarks/mpi/startup:$PATH
 ENV PATH=/usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt:$PATH
 ENV PATH=/usr/local/libexec/osu-micro-benchmarks/mpi/collective:$PATH
+ENV OSU_DIR=/usr/local/libexec/osu-micro-benchmarks/mpi
 
-# path to mlx libraries in Ubuntu
+# path to mlx IB libraries in Ubuntu
 ENV LD_LIBRARY_PATH=/usr/lib/libibverbs:$LD_LIBRARY_PATH
 ```
 
 A quick overview of what the above Dockerfile is doing:
 
- - The image is being bootstrapped from the `ubuntu:20.04` Docker image.
+ - The image is being bootstrapped from the `ubuntu:22.04` Docker image (this contains GLIBC compatible with the Cirrus Linux kernel).
  - The first set of `RUN` sections with `apt-get` commands: install the base packages required from the Ubuntu package repos
  - MPICH install: downloads and compiles the MPICH 3.4.3 in a way that is compatible with Cray MPICH on ARCHER2
  - OSU MPI benchmarks install: downloads and compiles the OSU micro benchmarks
@@ -427,7 +430,7 @@ to an Apptainer container image file. Log into Cirrus, move to the work file sys
 and then use a command like:
 
 ```bash
-auser@login01:/work/t01/t01/auser> apptainer build osu-benchmarks_7.5.1.sif docker://auser/osu-benchmarks:7.5.1
+auser@login01:/work/t01/t01/auser> apptainer build osu-benchmarks-7.5.1.sif docker://auser/osu-benchmarks:7.5.1
 ```
 
 !!! tip
@@ -452,7 +455,6 @@ MPI processes in total).
 ```bash
 #!/bin/bash
 
-# Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=apptainer_parallel
 #SBATCH --time=0:10:0
 #SBATCH --exclusive
@@ -460,28 +462,27 @@ MPI processes in total).
 #SBATCH --ntasks-per-node=288
 #SBATCH --cpus-per-task=1
 
-# Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 #SBATCH --account=[budget code]
 
 # Load the module to make the Cray MPICH ABI available
-module load cray-mpich-abi
+module load cray-mpich-abi/8.1.32
 
 export OMP_NUM_THREADS=1
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the LD_LIBRARY_PATH environment variable within the Singularity container
 # to ensure that it used the correct MPI libraries.
-export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib:/opt/cray/libfabric/1.12.1.2.2.0.0/lib64:/opt/cray/pe/gcc-libs:/opt/cray/pe/gcc-libs:/opt/cray/pe/lib64:/opt/xpmem/lib64:/usr/lib64/libibverbs:/usr/lib64:/usr/lib64"
+export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich:/opt/cray/libfabric/1.22.0/lib64:/opt/cray/pals/1.6/lib:/opt/cray/pe/lib64:/opt/xpmem/lib64:/lib64"
 
 # This makes sure HPE Cray Slingshot interconnect libraries are available
 # from inside the container.
-export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.12.1.2.2.0.0/lib64/libfabric.so.1,/opt/cray/pe/gcc-libs/libatomic.so.1,/opt/cray/pe/gcc-libs/libgcc_s.so.1,/opt/cray/pe/gcc-libs/libgfortran.so.5,/opt/cray/pe/gcc-libs/libquadmath.so.0,/opt/cray/pe/lib64/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/usr/lib64/libibverbs/libmlx5-rdmav34.so,/usr/lib64/libibverbs.so.1,/usr/lib64/libkeyutils.so.1,/usr/lib64/liblnetconfig.so.4,/usr/lib64/liblustreapi.so,/usr/lib64/libmunge.so.2,/usr/lib64/libnl-3.so.200,/usr/lib64/libnl-genl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/librdmacm.so.1,/usr/lib64/libyaml-0.so.2,/usr/lib64/libjansson.so.4"
+export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.22.0/lib64/libfabric.so.1,/lib64/libatomic.so.1,/lib64/libgcc_s.so.1,/lib64/libgfortran.so.5,/lib64/libquadmath.so.0,/opt/cray/pals/1.6/lib/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/lib64/libmunge.so.2,/lib64/libnl-3.so.200,/lib64/libnl-genl-3.so.200,/lib64/libnl-route-3.so.200,/lib64/librdmacm.so.1,/lib64/libcxi.so.1,/lib64/libm.so.6"
 
 # Launch the parallel job.
 srun --hint=nomultithread --distribution=block:block \
-    singularity run osu-benchmarks_7.5.1.sif \
+    singularity run osu-benchmarks-7.5.1.sif \
         osu_allreduce
 ```
 
@@ -499,29 +500,31 @@ If the job runs correctly, you should see output similar to the following in you
 file:
 
 ```
-Lmod is automatically replacing "cray-mpich/8.1.27" with
-"cray-mpich-abi/8.1.27".
+Lmod is automatically replacing "cray-mpich/8.1.32" with
+"cray-mpich-abi/8.1.32".
 
 
-# OSU MPI Allreduce Latency Test v5.4.1
+# OSU MPI Allreduce Latency Test v7.5
+# Datatype: MPI_INT.
 # Size       Avg Latency(us)
-4                       7.93
-8                       7.93
-16                      8.13
-32                      8.69
-64                      9.54
-128                    13.75
-256                    17.04
-512                    25.94
-1024                   29.43
-2048                   43.53
-4096                   46.53
-8192                   46.20
-16384                  55.85
-32768                  83.11
-65536                 136.90
-131072                257.13
-262144                486.50
-524288               1025.87
-1048576              2173.25
+4                      10.05
+8                      10.84
+16                     11.19
+32                     11.49
+64                     13.08
+128                    17.09
+256                    22.97
+512                    22.23
+1024                   23.24
+2048                   26.16
+4096                   60.79
+8192                   75.56
+16384                  80.11
+32768                 120.08
+65536                 214.08
+131072                378.17
+262144                764.93
+524288                515.50
+1048576              1064.92
+
 ```
