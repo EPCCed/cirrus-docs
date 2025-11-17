@@ -68,4 +68,3 @@ nav:
   - "Software Tools":
     - "Spack": software-tools/spack.md
     - "Likwid": software-tools/likwid.md
-  - "References and further reading": user-guide/reading.md
