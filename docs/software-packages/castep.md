@@ -30,7 +30,7 @@ of cores on a node or across multiple nodes (with exclusive node access).
 ### Example: multi-core CASTEP job 
 
 For example, the following script will run a CASTEP job using 36 cores on a 
-single node.
+single node. You may share node resources with other users.
 
 ```slurm
 #!/bin/bash
@@ -38,7 +38,6 @@ single node.
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=CASTEP_Example
 #SBATCH --time=1:0:0
-#SBATCH --exclusive
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=36
 #SBATCH --cpus-per-task=1
