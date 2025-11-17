@@ -11,9 +11,8 @@ and core level spectra.
 
 ## Useful Links
 
-- [CASTEP User Guides](http://www.castep.org/CASTEP/Documentation)
-- [CASTEP Tutorials](http://www.castep.org/CASTEP/OnlineTutorials)
-- [CASTEP Licensing](http://www.castep.org/CASTEP/GettingCASTEP)
+- [CASTEP Documentation and Tutorials](https://castep-docs.github.io/castep-docs/)
+- [CASTEP Licensing](https://www.castep.org/get_castep)
 
 ## Using CASTEP on Cirrus
 
@@ -23,45 +22,77 @@ If you have a CASTEP licence and wish to have access to CASTEP on Cirrus
 please [submit a request through the
 SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features).
 
-
-!!! Note
-
-
-	CASTEP versions 19 and above require a separate licence from CASTEP
-	versions 18 and below so these are treated as two separate access
-	requests.
-
-
 ## Running parallel CASTEP jobs
 
-CASTEP can exploit multiple nodes on Cirrus and will generally be run in
-exclusive mode over more than one node.
+CASTEP can exploit multiple nodes on Cirrus and can be run on a subset
+of cores on a node or across multiple nodes (with exclusive node access).
 
-For example, the following script will run a CASTEP job using 4 nodes
-(144 cores).
+### Example: multi-core CASTEP job 
 
-    #!/bin/bash
+For example, the following script will run a CASTEP job using 36 cores on a 
+single node.
 
-     # Slurm job options (name, compute nodes, job time)
-     #SBATCH --job-name=CASTEP_Example
-     #SBATCH --time=1:0:0
-     #SBATCH --exclusive
-     #SBATCH --nodes=4
-     #SBATCH --tasks-per-node=36
-     #SBATCH --cpus-per-task=1
+```slurm
+#!/bin/bash
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    # Replace [partition name] below with your partition name (e.g. standard)
-    #SBATCH --partition=[partition name]
-    # Replace [qos name] below with your qos name (e.g. standard,long)
-    #SBATCH --qos=[qos name]
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=CASTEP_Example
+#SBATCH --time=1:0:0
+#SBATCH --exclusive
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=36
+#SBATCH --cpus-per-task=1
 
-    # Load CASTEP version 18 module
-    module load castep/18
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+# Replace [partition name] below with your partition name (e.g. standard)
+#SBATCH --partition=[partition name]
+# Replace [qos name] below with your qos name (e.g. standard,long)
+#SBATCH --qos=[qos name]
 
-    # Set OMP_NUM_THREADS=1 to avoid unintentional threading
-    export OMP_NUM_THREADS=1
+# Load CASTEP module
+module load castep
 
-    # Run using input in test_calc.in
-    srun --distribution=block:block castep.mpi test_calc
+# Set OMP_NUM_THREADS=1 to avoid unintentional threading
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run using input in test_calc.in
+srun --distribution=block:block castep.mpi test_calc
+```
+
+### Example: multi-node CASTEP job
+
+For example, the following script will run a CASTEP job using 2 nodes
+(576 cores).
+
+```slurm
+#!/bin/bash
+
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=CASTEP_Example
+#SBATCH --time=1:0:0
+#SBATCH --exclusive
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=288
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+# Replace [partition name] below with your partition name (e.g. standard)
+#SBATCH --partition=[partition name]
+# Replace [qos name] below with your qos name (e.g. standard,long)
+#SBATCH --qos=[qos name]
+
+# Load CASTEP module
+module load castep
+
+# Set OMP_NUM_THREADS=1 to avoid unintentional threading
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run using input in test_calc.in
+srun --distribution=block:block castep.mpi test_calc
+```
