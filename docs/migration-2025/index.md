@@ -9,7 +9,7 @@ in Q4 2025.
 
 !!! important
     The date for the switch from old Cirrus system to the new Cirrus
-    system is 08:00 GMT on Monday 8 December 2025.
+    system is Monday 8 December 2025.
 
     After the switch you will no longer be able to access the old Cirrus login
     and compute nodes or the RPOOL (/scratch) solid state storage.

@@ -17,9 +17,12 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus EX4000?
 
-We anticipate that users will have access in early December 2025 but this 
-date is subject to change based on progress with setting up the new system. We will
-update the date on these pages and in emails to all users.
+We are planning a preview period in week beginning 24 Nov 2025 when all users and
+projects migrating to Cirrus EX4000 will have access to test use of the system in
+an uncharged mode.
+
+**Full service will start on Monday 8 December 2025.** At this point jobs will be 
+charged against budgets.
 
 ## Has my project been migrated to Cirrus EX4000?
 
