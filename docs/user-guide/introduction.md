@@ -55,11 +55,12 @@ For further storage details see
 ## Charging
 
 Cirrus is a CPU-only system and usage of the queue system (SLURM) is
-accounted for in "CPUh" (aka "core hours"). For example, a job requesting
-one node exclusively for one hour will be charged 288 CPUh (288 core hours)
+accounted for in core hours (referred to as "coreh" in SAFE).
+For example, a job requesting
+one node exclusively for one hour will be charged 288 core hours
 from the relevant budget if it completes in exactly 60 minutes. Jobs
 requesting less than a full node will be charged pro-rata according to
-the number of CPUs (cores) requested and time taken. Accounting takes
+the number of cores requested and time taken. Accounting takes
 place at job completion.
 
 Applications for access to the service should make estimates of computational
@@ -73,5 +74,6 @@ Please use the following phrase to acknowledge Cirrus in all
 research outputs that have used the facility:
 
 *This work used the Cirrus UK National Tier-2 HPC Service at EPCC
-(http://www.cirrus.ac.uk) funded by the University of Edinburgh and
+(http://www.cirrus.ac.uk) funded by The University of Edinburgh,
+the Edinburgh and South East Scotland City Region Deal, and UKRI via
 EPSRC.*
