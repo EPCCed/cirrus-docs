@@ -9,10 +9,6 @@
       
       
       
-        <link rel="prev" href="../data-migration/">
-      
-      
-        <link rel="next" href="../../user-guide/introduction/">
       
       
         
@@ -23,7 +19,7 @@
     
     
       
-        <title>Differences from old Cirrus - Cirrus User Documentation</title>
+        <title>Impacts for projects not migrating to Cirrus EX4000 - Cirrus User Documentation</title>
       
     
     
@@ -84,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#main-differences-on-cirrus-ex4000" class="md-skip">
+        <a href="#impacts-for-projects-not-migrating-to-cirrus-ex4000" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Differences from old Cirrus
+              Impacts for projects not migrating to Cirrus EX4000
             
           </span>
         </div>
@@ -262,20 +258,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -296,7 +290,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -395,37 +389,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Differences from old Cirrus
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../cirrus-differences/" class="md-nav__link">
         
   
   
@@ -441,59 +408,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hardware
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#software" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Software
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#slurm-scheduler-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Slurm scheduler configuration
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1616,10 +1530,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
+  <a href="#data-access" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hardware
+        Data access
       
     </span>
   </a>
@@ -1627,21 +1541,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#software" class="md-nav__link">
+  <a href="#getting-access-to-cirrus-ex4000" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Software
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#slurm-scheduler-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Slurm scheduler configuration
+        Getting access to Cirrus EX4000
       
     </span>
   </a>
@@ -1668,36 +1571,30 @@
   
 
 
-<h1 id="main-differences-on-cirrus-ex4000">Main differences on Cirrus EX4000</h1>
+<h1 id="impacts-for-projects-not-migrating-to-cirrus-ex4000">Impacts for projects not migrating to Cirrus EX4000</h1>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This information was last updated on 20 Nov 2025</p>
 </div>
-<p>This section provides an overview of the main differences between
-the current Cirrus system and Cirrus EX4000 along with links to more
-information where appropriate. It will be udated with more information
-as it becomes available.</p>
-<h2 id="hardware">Hardware</h2>
-<ul>
-<li>There are <strong>no</strong> GPU nodes on Cirrus EX4000</li>
-<li>There are 288 cores on a Cirrus EX4000 compute node rather than 36 on current Cirrus</li>
-<li>Cirrus EX4000 will use the HPE Cray Slingshot 11 interconnect rather than the 
-  Infiniband interconnect used on current Cirrus</li>
-</ul>
-<h2 id="software">Software</h2>
-<ul>
-<li>The software environment will completely change to be based on the
-  HPE Cray Programming Environment - no modules that were available
-  on old Cirrus system will be available in the same way on the new Cirrus
-  system. We will update the documentation to cover these changes in 
-  detail ahead of the switch between systems.</li>
-</ul>
-<h2 id="slurm-scheduler-configuration">Slurm scheduler configuration</h2>
-<ul>
-<li>Many of the partitions and QoS will be similar between the two systems
-  but limits will change. These will be documented in more detail ahead of 
-  the switch.</li>
-</ul>
+<p>This page summarises the impacts on users and projects who are not
+migrating to Cirrus EX4000 on 8 December 2025. It also highlights any
+actions you need to take.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you are unsure whether or not your project is migrating to 
+Cirrus EX4000, see the information on the
+<a href="https://docs.cirrus.ac.uk/migration-2025/account-migration/">account migration page</a>.</p>
+</div>
+<h2 id="data-access">Data access</h2>
+<p>Projects and user accounts that are not migrating to Cirrus EX4000
+will lose access to any data on Cirrus from <em>08:00 GMT on Monday 8 December 2025</em>.</p>
+<p><strong>Users and projects should copy any data they wish to keep off Cirrus before 
+08:00 on Monday 8 December 2025.</strong></p>
+<h2 id="getting-access-to-cirrus-ex4000">Getting access to Cirrus EX4000</h2>
+<p>If projects want to access Cirrus EX4000 for their research, there are a number
+of different access routes. Please consult the
+<a href="https://www.cirrus.ac.uk/support-access/access/">Access page on the Cirrus website</a>
+for details on how to do this.</p>
 
 
 
