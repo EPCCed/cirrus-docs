@@ -1,7 +1,7 @@
 # Migrating your account to Cirrus EX4000
 
 !!! important
-    This information was last updated on 12 Nov 2025
+    This information was last updated on 20 Nov 2025
 
 This section covers the following questions:
 
@@ -17,9 +17,12 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus EX4000?
 
-We anticipate that users will have access in early December 2025 but this 
-date is subject to change based on progress with setting up the new system. We will
-update the date on these pages and in emails to all users.
+We are planning a preview period in week beginning 24 Nov 2025 when all users and
+projects migrating to Cirrus EX4000 will have access to test use of the system in
+an uncharged mode.
+
+**Full service will start on Monday 8 December 2025.** At this point jobs will be 
+charged against budgets.
 
 ## Has my project been migrated to Cirrus EX4000?
 
@@ -28,10 +31,18 @@ then your project will very likely be migrated to Cirrus EX4000. If your project
 is migrated to Cirrus EX4000 then it will have the same project code as it had
 on old Cirrus.
 
-If your project has been migrated to Cirrus EX4000 then you will
-be able to see this on the Project page in SAFE. In particular, you
-will have a button labelled "Manage Group Time Allocations for CirrusEX (Allocations on Cirrus (2025 refresh))"
-in the "Time Budgets" section on the project page.
+### Checking if your project has been migrated
+
+How you check if your project has been migrated depends on whether you are a project
+PI/manager or user:
+
++ If you are a PI/manager: If your project has been migrated to Cirrus EX4000 then
+  you will be able to see this on the Project page in SAFE. In particular, you
+  will have a button labelled
+  "Manage Group Time Allocations for CirrusEX (Allocations on Cirrus (2025 refresh))"
+  in the "Time Budgets" section on the project page.
++ If you are a user: If your project has been migrated to Cirrus EX4000 then you will
+  see an project "CirrusEX" coreh allocation on your login account page in SAFE.
 
 ## How much resource will my project have on Cirrus EX4000?
 

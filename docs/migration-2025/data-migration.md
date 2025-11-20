@@ -1,5 +1,8 @@
 # Data migration to Cirrus EX4000
 
+!!! important
+    This information was last updated on 20 Nov 2025
+
 ## /home and /work file systems
 
 The same file systems that provided /home and /work on the old Cirrus system
@@ -18,5 +21,6 @@ in the same locations.
 The solid state /scratch file system on old Cirrus **will not** be available on 
 Cirrus EX4000 and there will be no way to retrieve data from it once old Cirrus 
 has ended. You should move any data you wish to keep on this file system to an
-alternative location before the end of the current Cirrus system.
+alternative location before the end of the current Cirrus system at 08:00 GMT
+on Monday 8 December 2025.
 
