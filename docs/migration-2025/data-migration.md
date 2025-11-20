@@ -1,5 +1,8 @@
 # Data migration to Cirrus EX4000
 
+!!! important
+    This information was last updated on 20 Nov 2025
+
 ## /home and /work file systems
 
 The same file systems that provided /home and /work on the old Cirrus system

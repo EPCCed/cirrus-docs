@@ -1,5 +1,8 @@
 # Main differences on Cirrus EX4000
 
+!!! important
+    This information was last updated on 20 Nov 2025
+
 This section provides an overview of the main differences between
 the current Cirrus system and Cirrus EX4000 along with links to more
 information where appropriate. It will be udated with more information

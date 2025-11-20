@@ -1,7 +1,7 @@
 # Migrating your account to Cirrus EX4000
 
 !!! important
-    This information was last updated on 12 Nov 2025
+    This information was last updated on 20 Nov 2025
 
 This section covers the following questions:
 
@@ -28,10 +28,18 @@ then your project will very likely be migrated to Cirrus EX4000. If your project
 is migrated to Cirrus EX4000 then it will have the same project code as it had
 on old Cirrus.
 
-If your project has been migrated to Cirrus EX4000 then you will
-be able to see this on the Project page in SAFE. In particular, you
-will have a button labelled "Manage Group Time Allocations for CirrusEX (Allocations on Cirrus (2025 refresh))"
-in the "Time Budgets" section on the project page.
+### Checking if your project has been migrated
+
+How you check if your project has been migrated depends on whether you are a project
+PI/manager or user:
+
++ If you are a PI/manager: If your project has been migrated to Cirrus EX4000 then
+  you will be able to see this on the Project page in SAFE. In particular, you
+  will have a button labelled
+  "Manage Group Time Allocations for CirrusEX (Allocations on Cirrus (2025 refresh))"
+  in the "Time Budgets" section on the project page.
++ If you are a user: If your project has been migrated to Cirrus EX4000 then you will
+  see an project "CirrusEX" coreh allocation on your login account page in SAFE.
 
 ## How much resource will my project have on Cirrus EX4000?
 
