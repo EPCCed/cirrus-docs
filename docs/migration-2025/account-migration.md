@@ -41,8 +41,27 @@ same number of coreh as old Cirrus allocations.
 
 ## How do I set up an Cirrus EX4000 account?
 
-You do not need to take any additional steps to setup an account on the Cirrus EX4000,
-your existing Cirrus account will work in the usual way to log into Cirrus EX4000.
+How you setup your account depends on whether you have an existing Cirrus account
+in the project you are using for access or if you need a new account.
+
+### Migrate an existing Cirrus account to Cirrus EX4000
+
+1. Login to [EPCC SAFE](https://safe.epcc.ed.ac.uk)
+2. Use the "Login accounts" menu to select your existing Cirrus account (this will be in the format `username@eidf`)
+3. At the bottom of the account page, click the "Add Machine" button
+4. Select "Cirrus: Cirrus 2025 refresh" from the dropdown list
+5. Click "Join"
+
+You should now be able to login to Cirrus EX4000 using the existing credentials 
+associated with this account.
+
+### Create a new account on Cirrus EX4000
+
+Use the [standard account creation process in SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-a-machine-account) and select "Cirrus: Cirrus 2025 refresh"
+for the machine to request an account on.
+
+You will need to setup credentials (MFA/TOTP token and SSH key) in the usual way to
+be able to login to Cirrus EX4000.
 
 ## How do I log into Cirrus EX4000 for the first time?
 
