@@ -38,6 +38,7 @@ nav:
   - "Overview": index.md
   - "New Cirrus EX4000 migration":
     - "Overview": migration-2025/index.md
+    - "Projects not continuing on Cirrus EX4000": migration-2025/not-migrating.md
     - "Account/Project Migration": migration-2025/account-migration.md
     - "Data Migration": migration-2025/data-migration.md
     - "Differences from old Cirrus": migration-2025/cirrus-differences.md
