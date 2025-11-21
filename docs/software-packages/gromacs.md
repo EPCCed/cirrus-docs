@@ -17,20 +17,24 @@ using it for research on non-biological systems, e.g. polymers.
 ## Using GROMACS on Cirrus
 
 GROMACS is Open Source software and is freely available to all Cirrus
-users. A number of versions are available:
+users. The central installation supports the single-precision version
+of GROMACS compiled with MPI and OpenMP support.
 
-- CPU-only:
-    - Serial/shared memory, single precision: `gmx`
-    - Parallel MPI/OpenMP, single precision: `gmx_mpi`
-    - Parallel MPI/OpenMP, doubld precision: `gmx_mpi_d`
+The `gmx_mpi` binary is available after loading a `gromacs` module.
 
-## Running parallel GROMACS jobs: pure MPI
+## Running parallel GROMACS jobs
 
-GROMACS can exploit multiple nodes on Cirrus and will generally be run
-in exclusive mode over more than one node.
+GROMACS can use full nodes in parallel (with the `--exclusive` option
+to `sbatch`) or run in parallel (or even serial) on a subset of the 
+cores on a node. GROMACS can make use of both distributed memory
+parallelism (via MPI) and shared memory parallelism via OpenMP.
+
+### Example: pure MPI using multiple nodes
+
+GROMACS can exploit multiple nodes on Cirrus.
 
 For example, the following script will run a GROMACS MD job using 2
-nodes (72 cores) with pure MPI.
+nodes (576 cores) with pure MPI.
 
 ```bash
 #!/bin/bash --login
@@ -38,7 +42,8 @@ nodes (72 cores) with pure MPI.
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=gmx_test
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=36
+#SBATCH --tasks-per-node=288
+#SBATCH --cpus-per-task=1
 #SBATCH --time=0:25:0
 # Make sure you are not sharing nodes with other users
 #SBATCH --exclusive
@@ -53,15 +58,17 @@ nodes (72 cores) with pure MPI.
 # Load GROMACS module
 module load gromacs
 
-# Run using input in test_calc.tpr
 export OMP_NUM_THREADS=1 
-srun gmx_mpi mdrun -s test_calc.tpr
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run using input in test_calc.tpr
+srun --hint=nomultithread --distribution=block:block gmx_mpi mdrun -s test_calc.tpr
 ```
 
-## Running parallel GROMACS jobs: hybrid MPI/OpenMP
+### Example: hybrid MPI/OpenMP across multiple nodes
 
-The following script will run a GROMACS MD job using 2 nodes (72 cores)
-with 6 MPI processes per node (12 MPI processes in total) and 6 OpenMP
+The following script will run a GROMACS MD job using 2 nodes (576 cores)
+with 24 MPI processes per node (48 MPI processes in total), one per CCD and 12 OpenMP
 threads per MPI process.
 
 ```bash
@@ -70,8 +77,8 @@ threads per MPI process.
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=gmx_test
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=6
-#SBATCH --cpus-per-task=6
+#SBATCH --tasks-per-node=24
+#SBATCH --cpus-per-task=12
 #SBATCH --time=0:25:0
 # Make sure you are not sharing nodes with other users
 #SBATCH --exclusive
@@ -83,13 +90,49 @@ threads per MPI process.
 # Replace [qos name] below with your qos name (e.g. standard,long)
 #SBATCH --qos=[qos name]
 
-# Load GROMACS and MPI modules
+# Load GROMACS module
 module load gromacs
 
 # Propagate --cpus-per-task to srun
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
+export OMP_PLACES=cores
 export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
 # Run using input in test_calc.tpr
-export OMP_NUM_THREADS=6
-srun gmx_mpi mdrun -s test_calc.tpr
+srun --hint=nomultithread --distribution=block:block gmx_mpi mdrun -s test_calc.tpr
+```
+
+### Example: pure MPI using a subset of a node
+
+GROMACS can run on a subset of cores in a node (potentially sharing a 
+node with other users)
+
+For example, the following script will run a GROMACS MD job using 36
+cores ona single node with pure MPI.
+
+```bash
+#!/bin/bash --login
+
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=gmx_test
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=36
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:25:0
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+# Replace [partition name] below with your partition name (e.g. standard)
+#SBATCH --partition=[partition name]
+# Replace [qos name] below with your qos name (e.g. standard,long)
+#SBATCH --qos=[qos name]
+
+# Load GROMACS module
+module load gromacs
+
+export OMP_NUM_THREADS=1 
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run using input in test_calc.tpr
+srun --hint=nomultithread --distribution=block:block gmx_mpi mdrun -s test_calc.tpr
 ```
