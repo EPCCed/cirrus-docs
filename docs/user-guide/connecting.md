@@ -30,6 +30,8 @@ below.
 You will need to generate an SSH key pair protected by a passphrase to
 access Cirrus.
 
+#### Generate SSH key pair
+
 Using a terminal (the command line), set up a key pair that contains
 your e-mail address and enter a passphrase you will use to unlock the
 key:
@@ -63,7 +65,7 @@ The key's randomart image is:
 
 (remember to replace "<your@email.com>" with your e-mail address).
 
-### Upload public part of key pair to SAFE
+#### Upload public part of key pair to SAFE
 
 You should now upload the public part of your SSH key pair to the SAFE
 by following the instructions at:
@@ -123,8 +125,6 @@ communication channel, Secure Shell version 2 (SSH-2). This allows
 command-line access to one of the login nodes of a Cirrus, from which
 you can run commands or use a command-line text editor to edit files.
 
-### Logging in
-
 Linux distributions, MacOS and Windows each come installed with a terminal
 application that can be use for SSH access to the login nodes.
 
@@ -138,6 +138,8 @@ folder within the Applications folder.
 
 *Windows users* can use Powershell (which has an SSH client installed)
 or a WSL2 terminal.
+
+## Logging in
 
 You can use the following command from the terminal window to login into
 Cirrus:
