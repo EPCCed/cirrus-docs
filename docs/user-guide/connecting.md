@@ -122,22 +122,21 @@ Interaction with Cirrus is done remotely, over an encrypted
 communication channel, Secure Shell version 2 (SSH-2). This allows
 command-line access to one of the login nodes of a Cirrus, from which
 you can run commands or use a command-line text editor to edit files.
-SSH can also be used to run graphical programs such as GUI text editors
-and debuggers when used in conjunction with an X client.
 
-### Logging in from Linux and MacOS
+### Logging in
 
-Linux distributions and MacOS each come installed with a terminal
-application that can be use for SSH access to the login nodes. Linux
-users will have different terminals depending on their distribution and
+Linux distributions, MacOS and Windows each come installed with a terminal
+application that can be use for SSH access to the login nodes.
+
+*Linux users* will have different terminals depending on their distribution and
 window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult
 your Linux distribution's documentation for details on how to load a
 terminal.
 
-MacOS users can use the Terminal application, located in the Utilities
+*MacOS users* can use the Terminal application, located in the Utilities
 folder within the Applications folder.
 
-Windows users can use Powershell (which has an SSH client installed)
+*Windows users* can use Powershell (which has an SSH client installed)
 or a WSL2 terminal.
 
 You can use the following command from the terminal window to login into
