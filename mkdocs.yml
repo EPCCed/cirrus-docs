@@ -58,7 +58,6 @@ nav:
   - "Software Applications":
     - "CASTEP": software-packages/castep.md
     - "CP2K": software-packages/cp2k.md
-    - "GROMACS": software-packages/gromacs.md
     - "LAMMPS": software-packages/lammps.md
     - "OpenFOAM": software-packages/openfoam.md
     - "Quantum Espresso (QE)": software-packages/qe.md

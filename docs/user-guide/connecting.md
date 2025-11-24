@@ -13,6 +13,9 @@ found at:
 
 This section covers the basic connection methods.
 
+!!! tip
+    The current login address for Cirrus is `preview.cirrus.ac.uk`.
+
 ## Access credentials: MFA
 
 To access Cirrus, you need to use two credentials (this is known as
@@ -134,16 +137,19 @@ terminal.
 MacOS users can use the Terminal application, located in the Utilities
 folder within the Applications folder.
 
+Windows users can use Powershell (which has an SSH client installed)
+or a WSL2 terminal.
+
 You can use the following command from the terminal window to login into
 Cirrus:
 
 ```
-ssh username@login.cirrus.ac.uk
+ssh username@preview.cirrus.ac.uk
 ```
 
 You will first be prompted for the passphrase associated with your SSH
 key pair. Once you have entered your passphrase successfully, you will
-then be prompted for your password. You need to enter both correctly to
+then be prompted for your MFA TOTP. You need to enter both correctly to
 be able to access Cirrus.
 
 
@@ -156,12 +162,13 @@ be able to access Cirrus.
     you would use the command `ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk` to log in.
 
 
+<!-- X is unntested
 To allow remote programs, especially graphical applications to control
 your local display, such as being able to open up a new GUI window (such
 as for a debugger), use:
 
 ```
-ssh -X username@login.cirrus.ac.uk
+ssh -X username@preview.cirrus.ac.uk
 ```
 
 Some sites recommend using the `-Y` flag. While this can fix some
@@ -173,33 +180,7 @@ MacOS systems:
 
 - [XQuartz website](http://www.xquartz.org/)
 
-### Logging in from Windows using MobaXterm
-
-A typical Windows installation will not include a terminal client,
-though there are various clients available. We recommend all our Windows
-users to download and install MobaXterm to access Cirrus. It is very
-easy to use and includes an integrated X server with SSH client to run
-any graphical applications on Cirrus.
-
-You can download MobaXterm Home Edition (Installer Edition) from the
-following link:
-
-- [Install
-  MobaXterm](http://mobaxterm.mobatek.net/download-home-edition.html)
-
-Double-click the downloaded Microsoft Installer file (.msi), and the
-Windows wizard will automatically guides you through the installation
-process. Note, you might need to have administrator rights to install on
-some Windows OS. Also make sure to check whether Windows Firewall hasn't
-blocked any features of this program after installation.
-
-Start MobaXterm using, for example, the icon added to the Start menu
-during the installation process.
-
-If you would like to run any small remote GUI applications, then make
-sure to use -X option along with the ssh command (see above) to enable
-X11 forwarding, which allows you to run graphical clients on your local
-X server.
+-->
 
 ## Host Keys
 
@@ -210,14 +191,14 @@ remote server key does not match the one in the configuration file,
 the connection will be refused. This provides protection against potential
 malicious servers masquerading as the Cirrus login nodes.
 
-### login.cirrus.ac.uk
+### preview.cirrus.ac.uk
 
 ```
-login.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOXYXQEFJfIBZRadNjVU9T0bYVlssht4Qz9Urliqor3L+S8rQojSQtPAjsxxgtD/yeaUWAaBZnXcbPFl2/uFPro=
+preview.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFBvqlziPNvqf4DRbTMi5RsdJB6x7sw6zNZKxAE0klnchuWvX3feLslEteKazfQ6NmtJ/bOanbtxAOLXR/Fv9+E=
 
-login.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4YJNc0yYfUPtiApGzzkwTYxUhFB1q1G2/vO8biwDL4W0LOcaBFCNTVst1IXQ6tZ9l0GfvlmYTb1LHYoTYLn5CyUL5KKS7X4FkhM9n2EExy/WK+H7kOvOwnWEAWM3GOwPYfhPWdddIHO7cI3CTd1kAL3NVzlt/yvx0CKGtw2QyL9gLGPJ23soDlIJYp/OC/f7E6U+JM6jx8QshQn0PiBPN3gB9MLWNX7ZsYXaSafIw1/txoh7D7CawsTrlKEHgEyNpQIgZFR7pLYlydRijbWEtD40DxlgaF1l/OuJrBfddRXC7VYHNvHq0jv0HCncCjxcHZmr3FW9B3PuRvBeWJpzV6Bv2pLGTPPwd8p7QgkAmTQ1Ews/Q4giUboZyqRcJAkFQtOBCmv43+qxWXKMAB7OdbjJL2oO9UIfPtUmE6oj+rnPxpJMhJuQX2aHIlS0Mev7NzaTUpQqNa4QgsI7Kj/m2JT0ZfQ0I33NO10Z3PLZghKqhTH5yy+2nSYLK6rnxZLU=
+preview.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEtumDZQYQFczLoAUOQRCkt+93mFEyTGtJLtOh8DXunogsQsc1S98XlaJMwn6j5LpAvUBzpdnqyDCOX3ksS+B6VvFc5A73c9SNt8Xvl+V8cW7V57fu/tK7PCWliboIF3WmL+cWTh5QGfbjLiOY6MZSjEBvJOPOZ+jS0K9jyUIIFuHOGGDpjq16n8FQTLcU/NXr5H1AJN61WCFWTdg4P5mcjwpVrbEes9gC6e5ecFXX616aLwAiSf4wTepVPy0YGCm5/QKpsbyRcAG6QA30+3SllvvC2sdOK0jqUnAFhBbeWaqBk51CmERek1+mwxjU/w0zs7ezDumhdbI40r2zHcfheT65k5NFhJkLoV7JxHxW2zOZoEAxIvt8cNojeMmZcYiBow0KWzfOdT80uoQySXsC1VWke1Nyw1a3gmDJ8HS8zhLBo+J840JIFjdGDDXLlp5+3oZAbv6whLab6lXRC2CkEtWKbzJmo0PDPadqjVChg3+ApCOuEgEOYsGj/vbPBDk=
 
-login.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFk4UnY1DaS+LFSS8AFKbmAmlevxShN4hGpn+gGGX8Io
+preview.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0Rb8J6LEilTRiglRytJRw3+Ak2t1JTFcMsF5NBucPe
 
 ```
 
@@ -239,18 +220,18 @@ which may look something like:
 
 ```
 Host cirrus
-    HostName login.cirrus.ac.uk
+    HostName preview.cirrus.ac.uk
     User username
 ```
 
 (remember to replace `username` with your actual username!).
 
 The `Host cirrus` line defines a short name for the entry. In this case,
-instead of typing `ssh username@login.cirrus.ac.uk` to access the Cirrus
+instead of typing `ssh username@preview.cirrus.ac.uk` to access the Cirrus
 login nodes, you could use `ssh cirrus` instead. The remaining lines
 define the options for the `cirrus` host.
 
-- `Hostname login.cirrus.ac.uk` - defines the full address of the host
+- `Hostname preview.cirrus.ac.uk` - defines the full address of the host
 - `User username` - defines the username to use by default for this host
   (replace `username` with your own username on the remote host)
 
@@ -309,7 +290,7 @@ cluster:
 Once on the intermediate cluster, you should be able to SSH to Cirrus
 directly:
 
-    ssh <user>@login.cirrus.ac.uk
+    ssh <user>@preview.cirrus.ac.uk
 
 ## SSH debugging tips
 
@@ -320,10 +301,10 @@ contacting the Cirrus service desk.
 
 ### Can you connect to the login node?
 
-Try the command `ping -c 3 login.cirrus.ac.uk`. If you successfully
+Try the command `ping -c 3 preview.cirrus.ac.uk`. If you successfully
 connect to the login node, the output should include:
 
-    --- login.dyn.cirrus.ac.uk ping statistics ---
+    --- preview.dyn.cirrus.ac.uk ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 38ms
 
 (the ping time '38ms' is not important). If not all packets are received
@@ -342,7 +323,7 @@ indicate a problem with your SSH key. Some things to check:
 - Is ssh using the correct key? You can check which keys are being
   found and offered by ssh using `ssh -vvv`. If your private key has a
   non-default name you can use the `-i` flag to provide it to ssh,
-   i.e. `ssh -i path/to/key username@login.cirrus.ac.uk`.
+   i.e. `ssh -i path/to/key username@preview.cirrus.ac.uk`.
 
 - Are you entering the passphrase correctly? You will be asked for
    your private key's passphrase first. If you enter it incorrectly you
@@ -432,7 +413,7 @@ with the SSH key and password - further details are given below. To
 enable verbose output add the `-vvv` flag to your SSH command. For
 example:
 
-    ssh -vvv username@login.cirrus.ac.uk
+    ssh -vvv username@preview.cirrus.ac.uk
 
 The output is lengthy, but somewhere in there you should see lines
 similar to the following:
