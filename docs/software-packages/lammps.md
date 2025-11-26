@@ -1,131 +1,162 @@
 # LAMMPS
 
-[LAMMPS](http://lammps.sandia.gov/), is a classical molecular dynamics
-code, and an acronym for Large-scale Atomic/Molecular Massively Parallel
-Simulator. LAMMPS has potentials for solid-state materials (metals,
-semiconductors) and soft matter (biomolecules, polymers) and
+[LAMMPS](http://lammps.sandia.gov/) (large-scale atomic/molecular massively
+parallel simulator) is a classical molecular dynamics
+code developed by Sandia Laboratories in the United States. LAMMPS includes
+potentials for solid-state materials (metals, semiconductors), soft
+matter (biomolecules, polymers) and
 coarse-grained or mesoscopic systems. It can be used to model atoms or,
-more generically, as a parallel particle simulator at the atomic, meso,
-or continuum scale.
+more generically, as a parallel particle simulator at the atomic scale,
+mesoscale, or continuum scale.
 
 ## Useful Links
 
-- [LAMMPS Documentation](https://lammps.sandia.gov/doc/Manual.html)
-- [LAMMPS Mailing list details](https://lammps.sandia.gov/mail.html)
+- [LAMMPS Home Page](https://www.lammps.org/)
+- [LAMMPS Documentation](https://docs.lammps.org/Manual.html)
 
 ## Using LAMMPS on Cirrus
 
 LAMMPS is Open Source software, and is freely available to all Cirrus
-users. A number of versions are available:
+users. Centrally installed versions are managed by
+[Spack on Cirrus](/software-tools/spack).
 
-- Parallel MPI: using intel-20.4 mpi
-- MPI+GPU version: using intel-20.4 mpi and CUDA11.8
+To see what versions are available in the current programming environment:
 
-To see what versions are currently available:
 ```
   $ module avail lammps
+
+---- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/cce/19.0.0 ----
+   lammps/20250612
 ```
-The current default central module is based on the ``15Dec2023`` release.
+indicating the release version of 12th June 2025 is available. (The `cce` in
+the module path indicates this is `PrgEnv-cray`.) Centrally installed versions
+are available in `PrgEnv-cray` and `PrgEnv-gnu`.
+
+### Optional LAMMPS packages
+
+The centrally installed module versions of LAMMPS has a limited standand set of
+packages compiled. For the full configuration, try
+```
+$ module load lammps
+$ lmp -h
+...
+Installed packages:
+
+KSPACE MANYBODY MOLECULE RIGID
+...
+```
+a list which includes available pair, bond, angle, etc, styles, and fix and
+compute styles (which is omitted here for brevity).
+
 
 ## Running parallel LAMMPS jobs (MPI)
 
 LAMMPS can exploit multiple nodes on Cirrus and will generally be run in
 exclusive mode over more than one node.
 
-For example, the following script will run a LAMMPS MD job using 4 nodes
-(144 cores) with pure MPI.
+For example, the following script will run a LAMMPS job using 2 nodes
+(576 cores) with MPI in the Cray programming environment.
 
-```bash
-#!/bin/bash --login
+??? info "Exclusive SLURM job submission script for LAMMPS"
+    ```{.yaml .copy}
+    #!/bin/bash
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=lammps_Example
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=36
-#SBATCH --cpus-per-task=1
+    #SBATCH --export=none
+    #SBATCH --time=00:20:00
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+    #SBATCH --nodes=2
+    #SBATCH --exclusive
 
-# Load LAMMPS module
-module load lammps
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Run using input in in.test
-srun lmp < in.test
-```
+    #SBATCH --distribution=block:block
+    #SBATCH --hint=nomultithread
 
-## Running parallel LAMMPS jobs (GPU)
+    module load PrgEnv-cray
+    module load lammps
 
-LAMMPS can exploit multiple GPUs, although the performance scaling
-depends heavily on the particular system, so each user should run
-benchmarks for their particular use-case. While not every LAMMPS
-forcefield/fix are available for GPU, a vast majority is, and more are
-added with each new version. Check the LAMMPS documentation for GPU
-compatibility with a specific command.
+    srun --ntasks=576 --ntasks-per-node=288 --cpus-per-task=1 lmp < in.test
 
-For example, the following script will run a LAMMPS MD job using 2 GPUs, 1 MPI thread per GPU:
+    ```
+    Here, SLURM is able to allocate resources by knowing 2 complete (exclusive)
+    nodes are required.
+    A relevant budget code may needed in the above script:
+    ```
+    #SBATCH --account=budget-code
+    ```
+    where an appropriate `budget-code` is needed.
 
-```bash
-#!/bin/bash --login
+### Non-exclusive jobs
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=lammps_Example
-#SBATCH --time=00:20:00
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:2
+Smaller jobs, requiring less than 288 cores (a full node), may be run in
+non-exclusive mode. Such a job might require only 36 MPI tasks.
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+??? info "Non-exclusive SLURM submission script for LAMMPS"
+    ```{.yaml .copy}
+    #!/bin/bash
 
-# Load LAMMPS module
-module load lammps-gpu
+    #SBATCH --export=none
+    #SBATCH --time=00:20:00
 
-# Run using input in in.test
-srun lmp -sf gpu -pk gpu 2 -in input.file -l log.file
-```
+    #SBATCH --ntasks=36
+    #SBATCH --cpus-per-task=1
 
-to increase the number of cores-per-gpu used, either use [OpenMP](https://docs.lammps.org/Speed_omp.html)
-or increase the number of MPI threads, using the `--ntasks` and `--ntasks-per-node` SBATCH flags:
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
+    #SBATCH --distribution=block:block
+    #SBATCH --hint=nomultithread
 
-```bash
-#!/bin/bash --login
+    module load PrgEnv-cray
+    module load lammps
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=lammps_Example
-#SBATCH --time=00:20:00
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:2
-
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
-
-# Load LAMMPS module
-module load lammps-gpu
-
-# --ntasks and --ntasks-per-node should be up to 10 x number of gpus requested.
-export PARAMS=" --ntasks-per-node=20 --ntasks=20 --exclusive"
-# Run using input in in.test
-srun ${PARAMS} lmp -sf gpu -pk gpu 2 -in in.ethanol_optimized
-```
-
+    srun lmp < in.test
+    ```
+    Here, SLURM is able to allocate resources by knowning that 36 tasks are
+    required, and each task requires 1 core (`--cpus-per-task=1`). Again,
+    a valid budget code may be required (see the previous example).
 
 ## Compiling LAMMPS on Cirrus
 
-Compile instructions for LAMMPS on Cirrus can be found on GitHub:
+LAMMPS supports a significant number of optional standard packages, and also
+provides a further large selection of unsupported ("USER") packages. If one
+or more of these are required, and not provided by the central installation,
+a separation compilation will be required.
 
-- [Cirrus LAMMPS compile instructions](https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS)
+### Using Spack
+
+LAMMPS may be installed using `spack`. For information on availability:
+```
+$ module load spack
+$ spack info lammps
+```
+See [using Spack on Cirrus](/software-tools/spack) for further information
+on `spack`.
+
+### Using CMake
+
+LAMMPS offers developers a relatively simple and robust build mechanism
+using CMake.
+
+A standard LAMMPS CMake configuration for "most" packages might look like,
+schematically:
+
+```
+module load PrgEnv-cray
+module load cray-fftw
+module load cray-python
+
+cmake -C ../cmake/presets/most.cmake                                       \
+      -D BUILD_MPI=on                                                      \
+      -D BUILD_SHARED_LIBS=yes                                             \
+      -D CMAKE_CXX_COMPILER=CC                                             \
+      -D CMAKE_CXX_FLAGS="-O2"                                             \
+      -D CMAKE_Fortran_COMPILER=ftn                                        \
+      -D CMAKE_INSTALL_PREFIX=${prefix}                                    \
+      ../cmake/
+```
+where the `${prefix}` environment variable is used to specify the location
+of the installation. See
+[Build LAMMPS with CMake](https://docs.lammps.org/Build_cmake.html) for
+further information.

@@ -3,8 +3,7 @@
 
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling tools
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
-(and also hydrid MPI/OpenMP). Debugging is also possible for CUDA applications
-on the GPU nodes. Forge DDT is the debugger and MAP is the profiler.
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.
 
 
 ### User interface
@@ -172,18 +171,6 @@ template file can then be specified in the dialog window.
 
 There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the [Linaro Forge documentation](https://docs.linaroforge.com/24.0/html/forge/ddt/index.html).
-
-#### GPU debugging
-
-This proceeds in the normal way on GPU nodes. We recommend that one sets, in
-the environment (e.g., via the `.qft` file, q.v.)
-```
-export TMPDIR=/tmp
-```
-If this is not set, the application may not start, or fail at the point
-of execution.
-
-See the Linaro Forge documentation for further comments on GPU debugging.
 
 
 ### Using MAP

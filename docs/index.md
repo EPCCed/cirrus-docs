@@ -1,41 +1,44 @@
-<img src="images/epcc_uoe_epsrc.png" class="align-right" alt="image" align="right" />
+<img src="images/logo-set.png" class="align-right" alt="image" align="right" />
 
 # Cirrus
 
 Cirrus is a HPC and data science service hosted and run by
 [EPCC](http://www.epcc.ed.ac.uk) at [The University of
-Edinburgh](http://www.ed.ac.uk). It is one of the
-[EPSRC](http://www.epsrc.ac.uk) Tier-2 National HPC Services.
+Edinburgh](http://www.ed.ac.uk). It is supported by the [Edinburgh
+and South East Scotland City Region Deal](https://esescityregiondeal.org.uk)
+and by  [EPSRC](http://www.epsrc.ac.uk). It is one of the
+[UKRI](http://www.ukri.org) Tier-2 National HPC Services.
 
 Cirrus is available to industry and academic researchers. For
 information on how to get access to the system please see the [Cirrus
 website](http://www.cirrus.ac.uk).
 
-The Cirrus facility is based around an SGI ICE XA system. There are 280
-standard compute nodes, 1 high memory compute node and 38 GPU compute
-nodes. Each standard compute node has 256 GiB of memory and contains two
-2.1 GHz, 18-core Intel Xeon (Broadwell) processors. Each high memory
-compute node has 3 TiB of memory and contains four 2.7 GHz, 28-core Intel
-Xeon (Platinum) processors. Each GPU compute node has 384 GiB of memory,
-contains two 2.4 GHz, 20-core Intel Xeon (Cascade Lake) processors and
-four NVIDIA Tesla V100-SXM2-16GB (Volta) GPU accelerators connected to
-the host processors and each other via PCIe. All nodes are connected
-using a single Infiniband fabric. This documentation covers:
+The Cirrus service is an HPE Cray EX4000 CPU-based system. There are
+192 standard compute nodes with 768 GB per node DDR5 memory and 64
+high memory nodes with 1,536 GB per node. All compute nodes have dual AMD
+EPYC 9825 processors with 144 physical cores each (288 physical
+cores per node). In total the system has 256 compute nodes with
+72,728 cores. Nodes are connected by a high-performance Slingshot 11 network.
 
-- Cirrus User Guide: general information on how to use Cirrus
-- Software Applications: notes on using specific software applications
-  on Cirrus
-- Software Libraries: notes on compiling against specific libraries on
-  Cirrus. Most libraries work *as expected* so no additional notes are
-  required however a small number require specific documentation
+!!! important
+    This documentation is for the new Cirrus EX4000 system that started
+    service on 24 November 2025. The old Cirrus SIG ICE will continue
+    running in parallel for a short time (until 8 December 2025).
+    [Documentation for the older Cirrus system is still available](https://epcced.github.io/legacy-cirrus-docs/).
+
+The menu includes links to:
+
+- General User Guide: information on how to use Cirrus.
+- Software Applications: using specific software applications
+  on Cirrus.
+- Software Libraries: compiling against specific libraries on
+  Cirrus.
 - Software Tools: Information on using tools such as debuggers and
-  profilers on Cirrus
+  profilers on Cirrus.
 
 Information on using the SAFE web interface for managing and reporting
-on your usage on Cirrus can be found on the [Tier-2 SAFE
-Documentation](http://tier2-safe.readthedocs.io/en/latest/)
+on your usage on Cirrus, applying for user accounts, and more, can be found
+in the [EPCC SAFE Documentation](https://epcced.github.io/safe-docs/).
 
-This documentation draws on the
-documentation for the [ARCHER2 National Supercomputing
-Service](http://docs.archer2.ac.uk).
-
+If you have questions about Cirrus, please contact the service desk:
+`support@cirrus.ac.uk`.

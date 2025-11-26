@@ -3,8 +3,8 @@ theme:
   favicon: favicon.ico
   logo: images/cirrus_logo_white-Transparent-Background.png
   palette:
-    primary: teal
-    accent:  teal
+    primary: blue
+    accent:  blue
   features:
     - tabs
   icon:
@@ -29,6 +29,8 @@ extra:
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tabbed:
@@ -44,36 +46,28 @@ nav:
     - "Differences from old Cirrus": migration-2025/cirrus-differences.md
   - "User Guide":
     - "Introduction": user-guide/introduction.md
+    - "Hardware": user-guide/hardware.md
     - "Connecting to Cirrus": user-guide/connecting.md
     - "Data Management and Transfer": user-guide/data.md
     - "File and Resource Management": user-guide/resource_management.md
+    - "Software environment": user-guide/sw-environment.md
+    - "Scheduler and Running Jobs": user-guide/batch.md
     - "Application Development Environment": user-guide/development.md
-    - "Running Jobs on Cirrus": user-guide/batch.md
-    - "Singularity Containers": user-guide/singularity.md
+    - "Using Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
-    - "Using the Cirrus GPU Nodes": user-guide/gpu.md
-    - "Solid state storage": user-guide/solidstate.md
   - "Software Applications":
-    - "Castep": software-packages/castep.md
+    - "CASTEP": software-packages/castep.md
     - "CP2K": software-packages/cp2k.md
-    - "ELEMENTS": software-packages/elements.md
-    - "FLACS": software-packages/flacs.md
-    - "Gaussian": software-packages/gaussian.md
-    - "GROMACS": software-packages/gromacs.md
-    - "HELYX&reg;": software-packages/helyx.md
+    - "Gromacs": software-packages/gromacs.md
     - "LAMMPS": software-packages/lammps.md
-    - "MATLAB": software-packages/MATLAB.md
-    - "NAMD": software-packages/namd.md
     - "OpenFOAM": software-packages/openfoam.md
-    - "ORCA": software-packages/orca.md
     - "Quantum Espresso (QE)": software-packages/qe.md
-    - "STAR-CCM+": software-packages/starccm+.md
     - "VASP": software-packages/vasp.md
   - "Software Libraries":
-    - "Intel MKL: BLAS, LAPACK, ScaLAPACK": software-libraries/intel_mkl.md
+    - "Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
+    - "FFTW": software-libraries/fftw.md
     - "HDF5": software-libraries/hdf5.md
+    - "NetCDF": software-libraries/netcdf.md
   - "Software Tools":
-    - "Linaro Forge": software-tools/forge.md
-    - "Profiling using Scalasca": software-tools/scalasca.md
-    - "Intel VTune": software-tools/intel-vtune.md
-  - "References and further reading": user-guide/reading.md
+    - "Spack": software-tools/spack.md
+    - "Likwid": software-tools/likwid.md

@@ -88,9 +88,9 @@ particular case would be :
 
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
+# Replace [partition name] below with your partition name (e.g. standard)
 #SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
+# Replace [qos name] below with your qos name (e.g. standard,long)
 #SBATCH --qos=[qos name]
 
 module load matlab
@@ -246,10 +246,6 @@ c.AdditionalProperties.JobPlacement = 'pack';
 % Request to run in a particular queue.  Usually the default (no
 % specific queue requested) will route the job to the correct queue.
 c.AdditionalProperties.QueueName = 'queue-name';
-
-% If you are using GPUs, request up to 4 GPUs per node (this will
-% override a requested queue name and will use the 'gpu' queue).
-c.AdditionalProperties.GpusPerNode = 4;
 ```
 
 Save changes after modifying *AdditionalProperties* fields :
@@ -525,12 +521,3 @@ these resources:
   Videos](http://www.mathworks.com/products/parallel-computing/videos.html)
 - [Parallel Computing
   Webinars](http://www.mathworks.com/products/parallel-computing/webinars.html)
-
-## GPUs
-
-Calculations using GPUs can be done using the `GPU nodes
-<../user-guide/gpu>`. This can be done using MATLAB within a Slurm job
-script, similar to `using the local cluster <local>`, or can be done
-using the `MDCS profile <MDCS>`. The GPUs are shared unless you request
-exclusive access to the node (4 GPUs), so you may find that you share a
-GPU with another user.

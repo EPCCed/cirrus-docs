@@ -1,20 +1,17 @@
 # Data Management and Transfer
 
 This section covers the storage and file systems available on the
-system; the different ways that you can transfer data to and from
-Cirrus; and how to transfer backed up data from prior to the March 2022
-Cirrus upgrade.
+system and the different ways that you can transfer data to and from
+Cirrus.
 
 In all cases of data transfer, users should use the Cirrus login nodes.
 
 ## Cirrus file systems and storage
 
-The Cirrus service, like many HPC systems, has a complex structure.
-There are a number of different data storage types available to users:
+There are two different data storage types available to users:
 
-- Home file system
-- Work file systems
-- Solid state storage
+- Home file system (CephFS)
+- Work file systems (Lustre)
 
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
@@ -32,9 +29,14 @@ node types:
 |-------------|-------------|---------------|-----------|
 | Home        | yes         | no            | No backup |
 | Work        | yes         | yes           | No backup |
-| Solid state | yes         | yes           | No backup |
+
 
 ### Home file system
+
+!!! Important
+    There are no backups of any data on the home file system. You should
+    ensure you have copies of any critical data in a secure location to
+    protect against loss of data from hardware failures.
 
 Every project has an allocation on the home file system and your
 project's space can always be accessed via the path
@@ -43,8 +45,6 @@ size and is implemented using the Ceph technology. This means that this
 storage is not particularly high performance but are well suited to
 standard operations like compilation and file editing. This file systems
 is visible from the Cirrus login nodes.
-
-There are currently no backups of any data on the home file system.
 
 #### Quotas on home file system
 
@@ -76,17 +76,21 @@ such as `du` for reasons of efficiency.
 For example, the number of entries (files plus directories) in a home
 directory can be queried via
 
-    $ cd
-    $ getfattr -n ceph.dir.entries .
-    # file: .
-    ceph.dir.entries="33"
+```bash
+[auser@login01]$ cd
+[auser@login01]$ getfattr -n ceph.dir.entries .
+# file: .
+ceph.dir.entries="33"
+```
 
 The corresponding attribute `rentries` gives the recursive total in all
 subdirectories, that is, the total number of files and directories:
 
-    $ getfattr -n ceph.dir.rentries .
-    # file: .
-    ceph.dir.rentries="1619179"
+```bash
+[auser@login01]$ getfattr -n ceph.dir.rentries .
+# file: .
+ceph.dir.rentries="1619179"
+```
 
 Other useful attributes (all prefixed with `ceph.dir.`) include `files`
 which is the number of ordinary files, `subdirs` the number of
@@ -98,6 +102,11 @@ A full path name can be specified if required.
 
 ### Work file system
 
+!!! Important
+    There are no backups of any data on the work file system. You should
+    ensure you have copies of any critical data in a secure location to
+    protect against loss of data from hardware failures.
+
 Every project has an allocation on the work file system and your
 project's space can always be accessed via the path
 `/work/[project-code]`. The work file system is approximately 1 PB in
@@ -105,8 +114,6 @@ size and is implemented using the Lustre parallel file system
 technology. They are designed to support data in large files. The
 performance for data stored in large numbers of small files is probably
 not going to be as good.
-
-There are currently no backups of any data on the work file system.
 
 Ideally, the work file system should only contain data that is:
 
@@ -124,7 +131,6 @@ If you have data on the work file system that you are not going to need
 in the future please delete it.
 
 #### Quotas on the work file system
-
 
 As for the home file system, all projects are assigned a quota on the
 work file system. The project PI or manager can split this quota up
@@ -151,68 +157,30 @@ Change directory to the work directory where you want to check the
 quota. For example, if I wanted to check the quota for user `auser` in
 project `t01` then I would:
 
-    [auser@cirrus-login1 auser]$ cd /work/t01/t01/auser
+```bash
+[auser@login01:~]$ cd /work/t01/t01/auser
 
-    [auser@cirrus-login1 auser]$ lfs quota -hu auser .
-    Disk quotas for usr auser (uid 68826):
-         Filesystem    used   quota   limit   grace   files   quota   limit   grace
-                  .  5.915G      0k      0k       -   51652       0       0       -
-    uid 68826 is using default block quota setting
-    uid 68826 is using default file quota setting
+[auser@login01:auser]$ lfs quota -hu auser .
+Disk quotas for usr auser (uid 68826):
+        Filesystem    used   quota   limit   grace   files   quota   limit   grace
+                .  5.915G      0k      0k       -   51652       0       0       -
+uid 68826 is using default block quota setting
+uid 68826 is using default file quota setting
+```
 
 the quota and limit of 0k here indicate that no user quota is set for
 this user.
 
 To check your project quota, you would use the command:
 
-    [auser@cirrus-login1 auser]$ lfs quota -hp $(id -g)'01' .
-    Disk quotas for prj 3773301 (pid 3773301):
-     Filesystem    used   quota   limit   grace   files   quota   limit   grace
-              .   958.3G     0k  13.57T       - 9038326       0       0       -
-    pid 3773301 is using default file quota setting
-
+```bash
+[auser@login01:auser]$ lfs quota -hp $(id -g)'01' .
+Disk quotas for prj 3773301 (pid 3773301):
+    Filesystem    used   quota   limit   grace   files   quota   limit   grace
+            .   958.3G     0k  13.57T       - 9038326       0       0       -
+pid 3773301 is using default file quota setting
+```
 the limit of `13.57T` indicates the quota for the project.
-
-### Solid state storage
-
-More information on using the solid state storage can be found in the
-[`/user-guide/solidstate`](https://docs.cirrus.ac.uk/user-guide/solidstate/) section of the user guide.
-
-The solid state storage is not backed up.
-
-## Accessing Cirrus data from before March 2022
-
-Prior to the March 2022 Cirrus upgrade,all user date on the `/lustre/sw`
-filesystem was archived. Users can access their archived data from the
-Cirrus login nodes in the `/home-archive` directory. Assuming you are
-user `auser` from project `x01`, your pre-rebuild archived data can be
-found in:
-
-    /home-archive/x01/auser
-
-The data in the `/home-archive` file system is **read only** meaning
-that you will not be able to create, edit, or copy new information to
-this file system.
-
-To make archived data visible from the compute nodes, you will need to
-copy the data from the `/home-archive` file system to the `/home` file
-system. Assuming again that you are user `auser` from project `x01` and
-that you were wanting to copy data from
-`/home-archive/x01/auser/directory_to_copy` to
-`/home/x01/x01/auser/destination_directory`, you would do this by
-running:
-
-    cp -r /home-archive/x01/auser/directory_to_copy \
-       /home/x01/x01/auser/destination_directory
-
-Note that the project code appears once in the path for the old home
-archive and twice in the path on the new /home file system.
-
-
-
-!!! Note
-
-    The capacity of the home file system is much larger than the work file system so you should move data to home rather than work.
 
 ## Archiving
 
@@ -256,7 +224,7 @@ To verify an existing tar file against a set of data, the `-d` (diff)
 option can be used. By default, no output will be given if a
 verification succeeds and an example of a failed verification follows:
 
-    $> tar -df mydata.tar mydata/*
+    [auser@login01:auser]$ tar -df mydata.tar mydata/*
     mydata/damaged_file: Mod time differs
     mydata/damaged_file: Size differs
 
@@ -310,7 +278,7 @@ Files in a zip archive are stored with a CRC checksum to help detect
 data loss. `unzip` provides options for verifying this checksum against
 the stored files. The relevant flag is `-t` and is used as follows:
 
-    $> unzip -t mydata.zip
+    [auser@login01:auser]$ unzip -t mydata.zip
     Archive:  mydata.zip
         testing: mydata/                 OK
         testing: mydata/file             OK
@@ -456,11 +424,11 @@ Configure rclone using `./rclone config`. This will guide you through an interac
 
 Please note that a token is required to connect from Cirrus to the cloud service. You need a web browser to get the token. The recommendation is to run rclone in your laptop using `rclone authorize`, get the token, and then copy the token from your laptop to Cirrus. The rclone website contains further instructions on [configuring rclone on a remote machine without web browser](https://rclone.org/remote_setup/).
 
-Once all the above is done, you’re ready to go. If you want to copy a directory, please use:
+Once all the above is done, you are ready to go. If you want to copy a directory, please use:
 
     rclone copy <cirrus_directory> remote:<cloud_directory>
 
-Please note that “remote” is the name that you have chosen when running rclone config`. To copy files, please use:
+Please note that "remote" is the name that you have chosen when running `rclone config`. To copy files, please use:
 
     rclone copyto <cirrus_file> remote:<cloud_file>
 
@@ -468,9 +436,12 @@ Please note that “remote” is the name that you have chosen when running rclo
 
     If the session times out while the data transfer takes place, adding the `-vv` flag to an rclone transfer forces rclone to output to the terminal and therefore avoids triggering the timeout process.
 
+<!-- No Globus yet
 ### Data transfer using Globus
 
 The Cirrus `/work` filesystem, which is hosted on the e1000 fileserver, has a Globus Collection (formerly known as an endpoint) with the name `e1000-fs1 directories`   
 
 [Full step-by-step guide for using Globus](../globus) to transfer files to/from Cirrus `/work`
+
+-->
 

@@ -2,9 +2,9 @@
 
 This section covers some of the tools and technical knowledge that will
 be key to maximising the usage of the Cirrus system, such as the online
-administration tool SAFE and calculating the CPU-time available.
+administration tool SAFE and checking resources available.
 
-The default file permissions are then outlined, along with a description
+Default file permissions are then outlined, along with a description
 of changing these permissions to the desired setting. This leads on to
 the sharing of data between users and systems often a vital tool for
 project groups and collaboration.
@@ -20,44 +20,37 @@ usage of the Cirrus system, including:
 
 - Account details - password reset, change contact details
 - Project details - project code, start and end dates
-- CPUh balance - how much time is left in each project you are a member
+- Resource balance - how much time is left in each project you are a member
   of
-- Filesystem details - current usage and quotas
+- File system details - current usage and quotas
 - Reports - generate reports on your usage over a specified period,
   including individual job records
-- Helpdesk - raise queries and track progress of open queries
+- Service desk - raise queries and track progress of open queries
 
-## Checking your CPU/GPU time allocations
+## Checking your resource allocation
 
-You can view these details by logging into the SAFE
-(<https://safe.epcc.ed.ac.uk>).
+You can view these details by [logging into the SAFE](https://safe.epcc.ed.ac.uk).
 
 Use the *Login accounts* menu to select the user account that you wish
 to query. The page for the login account will summarise the resources
 available to account.
 
 You can also generate reports on your usage over a particular period and
-examine the details of how many CPUh or GPUh individual jobs on the
-system cost. To do this use the *Service information* menu and selet
+examine the details of how much resource individual jobs on the
+system cost. To do this use the *Service information* menu and select
 *Report generator*.
 
-## Disk quotas
+## Storage quotas
 
-Disk quotas on Cirrus are managed via [SAFE](https://safe.epcc.ed.ac.uk)
+Storage quotas on Cirrus are managed via [SAFE](https://safe.epcc.ed.ac.uk).
 
-For live disk usage figures on the Lustre `/work` file system, use
-
-    lfs quota -hu <username> /work
-
-    lfs quota -hg <groupname> /work 
+For information on how to query quotas and use live on the system see the
+descriptions in the [Data Management and Transfer section](data.md)
 
 ## Backup policies
 
-The `/home` file system is not backed up.
-
-The `/work` file system is not backed up.
-
-The solid-state storage `/scratch/space1` file system is not backed up.
+- The `/home` file system is not backed up.
+- The `/work` file system is not backed up.
 
 We strongly advise that you keep copies of any critical data on on an
 alternative system that is fully backed up.
@@ -172,16 +165,18 @@ WRITE statements would result in slightly larger files with GNU
 compiler. Therefore it is recommended to use the same compiler for your
 simulations and related pre- and post-processing jobs.
 
-Other options for file formats include:
+### Other file formats
 
-Direct access files  
+#### Direct access files 
+
 Fortran unformatted files with specified record lengths. These may be
 more portable between different systems than ordinary (i.e. sequential
 IO) unformatted files, with significantly better performance than
 formatted (or ASCII) files. The "endian" issue will, however, still be a
 potential problem.
 
-Portable data formats  
+#### Portable data formats 
+
 These machine-independent formats for representing scientific data are
 specifically designed to enable the same data files to be used on a wide
 variety of different hardware and operating systems. The most common
@@ -306,7 +301,7 @@ that all output files inherit the settings.
 
 #### Default configuration
 
-The file system on Cirrus has the following default stripe settings:
+The work (Lustre) file system on Cirrus has the following default stripe settings:
 
 - A default stripe count of 1
 - A default stripe size of 1 MiB (1048576 bytes)
@@ -318,7 +313,7 @@ command to query the stripe settings for a directory (or file) is
 `lfs getstripe`. For example, to query the stripe settings of an already
 created directory `res_dir`:
 
-    $ lfs getstripe res_dir/
+    [auser@login01:auser]$ lfs getstripe res_dir/
     res_dir
     stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
 
@@ -340,4 +335,4 @@ Users can set stripe settings for a directory (or file) using the
 For example, to set a stripe size of 4 MiB for the existing directory
 `res_dir`, along with maximum striping count you would use:
 
-    $ lfs setstripe -s 4m -c -1 res_dir/
+    [auser@login01:auser]$ lfs setstripe -s 4m -c -1 res_dir/
