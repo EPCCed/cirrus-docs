@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../development/">
+        <link rel="prev" href="../sw-environment/">
       
       
-        <link rel="next" href="../singularity/">
+        <link rel="next" href="../development/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>Running Jobs on Cirrus - Cirrus User Documentation</title>
+        <title>Scheduler and Running Jobs - Cirrus User Documentation</title>
       
     
     
@@ -75,7 +75,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running Jobs on Cirrus
+              Scheduler and Running Jobs
             
           </span>
         </div>
@@ -536,6 +536,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../connecting/" class="md-nav__link">
         
   
@@ -620,14 +648,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../development/" class="md-nav__link">
+      <a href="../sw-environment/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Application Development Environment
+    Software environment
   
 
     
@@ -664,7 +692,7 @@
   <span class="md-ellipsis">
     
   
-    Running Jobs on Cirrus
+    Scheduler and Running Jobs
   
 
     
@@ -682,7 +710,7 @@
   <span class="md-ellipsis">
     
   
-    Running Jobs on Cirrus
+    Scheduler and Running Jobs
   
 
     
@@ -792,32 +820,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#primary-resources-on-standard-cpu-compute-nodes" class="md-nav__link">
+  <a href="#primary-resources-on-cpu-compute-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Primary resources on standard (CPU) compute nodes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#primary-resources-on-gpu-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Primary resources on GPU nodes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#primary-resources-on-high-memory-cpu-compute-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Primary resources on high memory (CPU) compute nodes
+        Primary resources on CPU compute nodes
       
     </span>
   </a>
@@ -1184,14 +1190,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../singularity/" class="md-nav__link">
+      <a href="../development/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Singularity Containers
+    Application Development Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../containers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Containers
   
 
     
@@ -1220,62 +1254,6 @@
     
   
     Using Python
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gpu/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Using the Cirrus GPU Nodes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../solidstate/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Solid state storage
   
 
     
@@ -1357,7 +1335,7 @@
   <span class="md-ellipsis">
     
   
-    Castep
+    CASTEP
   
 
     
@@ -1406,90 +1384,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/elements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ELEMENTS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/flacs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FLACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/gaussian/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gaussian
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/gromacs/" class="md-nav__link">
         
   
@@ -1497,35 +1391,7 @@
   <span class="md-ellipsis">
     
   
-    GROMACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/helyx/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    HELYX&reg;
+    Gromacs
   
 
     
@@ -1574,62 +1440,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/MATLAB/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MATLAB
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/namd/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NAMD
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/openfoam/" class="md-nav__link">
         
   
@@ -1658,34 +1468,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/orca/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ORCA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/qe/" class="md-nav__link">
         
   
@@ -1694,34 +1476,6 @@
     
   
     Quantum Espresso (QE)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/starccm%2B/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    STAR-CCM+
   
 
     
@@ -1824,14 +1578,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Intel MKL: BLAS, LAPACK, ScaLAPACK
+    Cray LibSci: BLAS, LAPACK, ScaLAPACK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FFTW
   
 
     
@@ -1860,6 +1642,34 @@
     
   
     HDF5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NetCDF
   
 
     
@@ -1934,14 +1744,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/forge/" class="md-nav__link">
+      <a href="../../software-tools/spack/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linaro Forge
+    Spack
   
 
     
@@ -1962,42 +1772,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/scalasca/" class="md-nav__link">
+      <a href="../../software-tools/likwid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Profiling using Scalasca
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-tools/intel-vtune/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Intel VTune
+    Likwid
   
 
     
@@ -2014,33 +1796,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reading/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    References and further reading
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -2156,32 +1911,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#primary-resources-on-standard-cpu-compute-nodes" class="md-nav__link">
+  <a href="#primary-resources-on-cpu-compute-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Primary resources on standard (CPU) compute nodes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#primary-resources-on-gpu-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Primary resources on GPU nodes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#primary-resources-on-high-memory-cpu-compute-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Primary resources on high memory (CPU) compute nodes
+        Primary resources on CPU compute nodes
       
     </span>
   </a>
@@ -2564,7 +2297,8 @@ explanations) for the most common job types are provided below.</p>
 developing and debugging applications. More details are available below.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>If you have any questions on how to run jobs on Cirrus do not hesitate to contact the <a href="mailto:support@cirrus.ac.uk">Cirrus Service Desk</a>.</p>
+<p>If you have any questions on how to run jobs on Cirrus do not hesitate to contact the
+<a href="mailto:support@cirrus.ac.uk">Cirrus Service Desk</a>.</p>
 </div>
 <p>You typically interact with Slurm by issuing Slurm commands from the
 login nodes (to submit, check and cancel jobs), and by specifying Slurm
@@ -2591,12 +2325,15 @@ command line:</p>
 <p><code>sinfo</code> is used to query information about available resources and
 partitions. Without any options, <code>sinfo</code> lists the status of all
 resources and partitions, e.g.</p>
-<pre><code>[auser@cirrus-login3 ~]$ sinfo
+<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@login01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sinfo
 
-PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
-standard       up   infinite    280   idle r1i0n[0-35],r1i1n[0-35],r1i2n[0-35],r1i3n[0-35],r1i4n[0-35],r1i5n[0-35],r1i6n[0-35],r1i7n[0-6,9-15,18-24,27-33]
-gpu            up   infinite     36   idle r2i4n[0-8],r2i5n[0-8],r2i6n[0-8],r2i7n[0-8]
-</code></pre>
+PARTITION<span class="w"> </span>AVAIL<span class="w">  </span>TIMELIMIT<span class="w">  </span>NODES<span class="w">  </span>STATE<span class="w"> </span>NODELIST
+Compute*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">4</span><span class="w"> </span>drain*<span class="w"> </span>cs-n<span class="o">[</span><span class="m">0086</span>-0087,0112-0113<span class="o">]</span>
+Compute*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">3</span><span class="w">  </span>down*<span class="w"> </span>cs-n<span class="o">[</span><span class="m">0050</span>-0051,0170<span class="o">]</span>
+Compute*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">4</span><span class="w">  </span>drain<span class="w"> </span>cs-n<span class="o">[</span><span class="m">0019</span>,0104,0165,0239<span class="o">]</span>
+Compute*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">  </span>alloc<span class="w"> </span>cs-n0166
+Compute*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">    </span><span class="m">244</span><span class="w">   </span>idle<span class="w"> </span>cs-n<span class="o">[</span><span class="m">0000</span>-0018,0020-0049,0052-0085,0088-0103,0105-0111,0114-0164,0167-0169,0171-0238,0240-0255<span class="o">]</span>
+</code></pre></div>
 <h3 id="sbatch-submitting-jobs"><code>sbatch</code>: submitting jobs</h3>
 <p><code>sbatch</code> is used to submit a job script to the job submission system.
 The script will typically contain one or more <code>srun</code> commands to launch
@@ -2604,34 +2341,34 @@ parallel tasks.</p>
 <p>When you submit the job, the scheduler provides the job ID, which is
 used to identify this job in other Slurm commands and when looking at
 resource usage in SAFE.</p>
-<pre><code>[auser@cirrus-login3 ~]$ sbatch test-job.slurm
-Submitted batch job 12345
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@login01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sbatch<span class="w"> </span>test-job.slurm
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">12345</span>
+</code></pre></div>
 <h3 id="squeue-monitoring-jobs"><code>squeue</code>: monitoring jobs</h3>
 <p><code>squeue</code> without any options or arguments shows the current status of
 all jobs known to the scheduler. For example:</p>
-<pre><code>[auser@cirrus-login3 ~]$ squeue
-          JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-          1554  comp-cse CASTEP_a  auser  R       0:03      2 r2i0n[18-19]
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@login01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>squeue
+<span class="w">          </span>JOBID<span class="w"> </span>PARTITION<span class="w">     </span>NAME<span class="w">     </span>USER<span class="w"> </span>ST<span class="w">       </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="w">          </span><span class="m">1554</span><span class="w">  </span>comp-cse<span class="w"> </span>CASTEP_a<span class="w">  </span>auser<span class="w">  </span>R<span class="w">       </span><span class="m">0</span>:03<span class="w">      </span><span class="m">2</span><span class="w"> </span>cs-n01<span class="o">[</span><span class="m">18</span>-19<span class="o">]</span>
+</code></pre></div>
 <p>will list all jobs on Cirrus.</p>
 <p>The output of this is often overwhelmingly large. You can restrict the
-output to just your jobs by adding the <code>-u $USER</code> option:</p>
-<pre><code>[auser@cirrus-login3 ~]$ squeue -u $USER
-</code></pre>
+output to just your jobs by adding the <code>--me</code> option:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@login01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>squeue<span class="w"> </span>--me
+</code></pre></div>
 <h3 id="scancel-deleting-jobs"><code>scancel</code>: deleting jobs</h3>
 <p><code>scancel</code> is used to delete a jobs from the scheduler. If the job is
 waiting to run it is simply cancelled, if it is a running job then it is
 stopped immediately. You need to provide the job ID of the job you wish
 to cancel/stop. For example:</p>
-<pre><code>[auser@cirrus-login3 ~]$ scancel 12345
-</code></pre>
+<p>[auser@login01 ~]$ scancel 12345</p>
 <p>will cancel (if waiting) or stop (if running) the job with ID <code>12345</code>.</p>
 <h2 id="resource-limits">Resource Limits</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you have requirements which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements.</p>
+<p>If you have requirements which do not fit within the current QoS, please</p>
 </div>
+<p>contact the Service Desk and we can discuss how to accommodate your requirements.</p>
 <p>There are different resource limits on Cirrus for different purposes.
 There are three different things you need to specify for each job:</p>
 <ul>
@@ -2643,81 +2380,23 @@ There are three different things you need to specify for each job:</p>
   the job limits that apply</li>
 </ul>
 <p>Each of these aspects are described in more detail below.</p>
-<p>The <em>primary resources</em> you request are <em>compute</em> resources: either CPU
-cores on the standard compute nodes or GPU cards on the GPU compute
-nodes. Other node resources: memory on the standard compute nodes;
-memory and CPU cores on the GPU nodes are assigned pro rata based on the
-primary resource that you request.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>On Cirrus, you cannot specify the memory for a job using the <code>--mem</code>
-options to Slurm (e.g. <code>--mem</code>, <code>--mem-per-cpu</code>, <code>--mem-per-gpu</code>). The
+options to Slurm (e.g. <code>--mem</code>, <code>--mem-per-cpu</code>). The
 amount of memory you are assigned is calculated from the amount of
 primary resource you request.</p>
 </div>
-<h3 id="primary-resources-on-standard-cpu-compute-nodes">Primary resources on standard (CPU) compute nodes</h3>
+<h3 id="primary-resources-on-cpu-compute-nodes">Primary resources on CPU compute nodes</h3>
 <p>The <em>primary resource</em> you request on standard compute nodes are CPU
 cores. The maximum amount of memory you are allocated is computed as the
-number of CPU cores you requested multiplied by 1/36th of the total
-memory available (as there are 36 CPU cores per node). So, if you
-request the full node (36 cores), then you will be allocated a maximum
-of all of the memory (256 GB) available on the node; however, if you
-request 1 core, then you will be assigned a maximum of 256/36 = 7.1 GB
-of the memory available on the node.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Using the <code>--exclusive</code> option in jobs will give you access to the full
-node memory even if you do not explicitly request all of the CPU cores
-on the node.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Using the <code>--exclusive</code> option will charge your account for the usage of
-the entire node, even if you don't request all the cores in your
-scripts.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You will not generally have access to the full amount of memory resource
-on the the node as some is retained for running the operating system and
-other system processes.</p>
-</div>
-<h3 id="primary-resources-on-gpu-nodes">Primary resources on GPU nodes</h3>
-<p>The <em>primary resource</em> you request on standard compute nodes are GPU
-cards. The maximum amount of memory and CPU cores you are allocated is
-computed as the number of GPU cards you requested multiplied by 1/4 of
-the total available (as there are 4 GPU cards per node). So, if you
-request the full node (4 GPU cards), then you will be allocated a
-maximum of all of the memory (384 GB) available on the node; however, if
-you request 1 GPU card, then you will be assigned a maximum of 384/4 =
-96 GB of the memory available on the node.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Using the <code>--exclusive</code> option in jobs will give you access to all of
-the CPU cores and the full node memory even if you do not explicitly
-request all of the GPU cards on the node.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In order to run jobs on the GPU nodes your budget must have positive GPU
-hours <em>and</em> core hours associated with it. However, only your GPU hours
-will be consumed when running these jobs.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Using the <code>--exclusive</code> option will charge your account for the usage of
-the entire node, <em>i.e.</em>, 4 GPUs, even if you don't request all the GPUs
-in your submission script.</p>
-</div>
-<h3 id="primary-resources-on-high-memory-cpu-compute-nodes">Primary resources on high memory (CPU) compute nodes</h3>
-<p>The <em>primary resource</em> you request on the high memory compute node is CPU
-cores. The maximum amount of memory you are allocated is computed as the
-number of CPU cores you requested multiplied by 1/112th of the total
-memory available (as there are 112 CPU cores per node). So, if you
-request the full node (112 cores), then you will be allocated a maximum
-of all of the memory (3 TB) available on the node; however, if you
-request 1 core, then you will be assigned a maximum of 3000/112 = 26.8 GB
-of the memory available on the node.</p>
+number of CPU cores you requested multiplied by 1/288th of the total
+memory available (as there are 288 CPU cores per node). So, if you
+request the full node (288 cores), then you will be allocated a maximum
+of all of the memory (768 GB or 1,536 GB) available on the node; however,
+if you request 1 core, then you will be assigned a maximum of 768/288 = 2.66 GB
+of the memory available on a standard memory node or 5.33 GB on a high 
+memory node.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Using the <code>--exclusive</code> option in jobs will give you access to the full
@@ -2752,31 +2431,24 @@ script. The following table has a list of active partitions on Cirrus.</p>
 <tbody>
 <tr>
 <td>standard</td>
-<td>CPU nodes with 2x 18-core Intel Broadwell processors, 256 GB memory</td>
-<td>352</td>
+<td>CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory</td>
+<td>256</td>
 <td></td>
 </tr>
 <tr>
 <td>highmem</td>
-<td>CPU node with 4x 28-core Intel Xeon Platinum processors, 3 TB memory</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>gpu</td>
-<td>GPU nodes with 4x Nvidia V100 GPU and 2x 20-core Intel Cascade Lake processors, 384 GB memory</td>
-<td>36</td>
+<td>CPU nodes with 2x 144-core AMD EPYC 9825 processors, 1,536 GB memory</td>
+<td>64</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>Cirrus Partitions</p>
 <p>You can list the active partitions using</p>
 <pre><code>sinfo
 </code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>you may not have access to all the available partitions.</p>
+<p>You may not have access to all the available partitions.</p>
 </div>
 <h3 id="quality-of-service-qos">Quality of Service (QoS)</h3>
 <p>On Cirrus Quality of Service (QoS) is used alongside partitions to set
@@ -2799,74 +2471,65 @@ jobs.</p>
 <tr>
 <td>standard</td>
 <td>No limit</td>
-<td>500 jobs</td>
-<td>4 days</td>
-<td>88 nodes (3168 cores/25%)</td>
-<td>standard</td>
-<td></td>
-</tr>
-<tr>
-<td>highmem</td>
-<td>1 job</td>
-<td>2 jobs</td>
+<td>512 jobs</td>
 <td>48 hours</td>
-<td>1 node</td>
-<td>highmem</td>
-<td></td>
+<td>64 nodes</td>
+<td>standard, highmem</td>
+<td>Maximum of 64 nodes in use by any one user at any time.</td>
 </tr>
 <tr>
 <td>largescale</td>
 <td>1 job</td>
 <td>4 jobs</td>
 <td>24 hours</td>
-<td>228 nodes (8192+ cores/65%) or 144 GPUs</td>
-<td>standard, gpu</td>
+<td>192 nodes</td>
+<td>standard</td>
 <td></td>
 </tr>
 <tr>
 <td>long</td>
-<td>5 jobs</td>
-<td>20 jobs</td>
-<td>14 days</td>
-<td>16 nodes or 8 GPUs</td>
-<td>standard, gpu</td>
-<td></td>
-</tr>
-<tr>
-<td>highpriority</td>
-<td>10 jobs</td>
-<td>20 jobs</td>
-<td>4 days</td>
-<td>140 nodes</td>
-<td>standard</td>
-<td>charged at 1.5 x normal rate</td>
-</tr>
-<tr>
-<td>gpu</td>
 <td>No limit</td>
 <td>128 jobs</td>
 <td>4 days</td>
-<td>64 GPUs (16 nodes/40%)</td>
-<td>gpu</td>
-<td></td>
+<td>16 nodes</td>
+<td>standard</td>
+<td>Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.</td>
+</tr>
+<tr>
+<td>highpriority</td>
+<td>No limit</td>
+<td>256 jobs</td>
+<td>48 hours</td>
+<td>128 nodes</td>
+<td>standard, highmem</td>
+<td>Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.</td>
 </tr>
 <tr>
 <td>short</td>
 <td>1 job</td>
 <td>2 jobs</td>
 <td>20 minutes</td>
-<td>2 nodes or 4 GPUs</td>
-<td>standard, gpu</td>
+<td>2 nodes</td>
+<td>standard</td>
 <td></td>
 </tr>
 <tr>
 <td>lowpriority</td>
 <td>No limit</td>
 <td>100 jobs</td>
-<td>2 days</td>
-<td>36 nodes (1296 cores/10%) or 16 GPUs</td>
-<td>standard, gpu</td>
-<td>usage is not charged</td>
+<td>24 hours</td>
+<td>64 nodes</td>
+<td>standard</td>
+<td>Usage is not charged. Not available to industrial projects.</td>
+</tr>
+<tr>
+<td>reservation</td>
+<td>No limit</td>
+<td>No limit</td>
+<td>No limit</td>
+<td>No limit</td>
+<td>standard, highmem</td>
+<td>Only usable within reservation.</td>
 </tr>
 </tbody>
 </table>
@@ -2881,7 +2544,7 @@ command:</p>
 <p>Users of MPI codes may wish to ensure termination of all tasks on the
 failure of one individual task by specifying the <code>--kill-on-bad-exit</code>
 argument to <code>srun</code>. E.g.,</p>
-<div class="highlight"><pre><span></span><code>srun<span class="w"> </span>-n<span class="w"> </span><span class="m">36</span><span class="w"> </span>--kill-on-bad-exit<span class="w"> </span>./my-mpi-program
+<div class="highlight"><pre><span></span><code>srun<span class="w"> </span>-n<span class="w"> </span><span class="m">288</span><span class="w"> </span>--kill-on-bad-exit<span class="w"> </span>./my-mpi-program
 </code></pre></div>
 <p>This can prevent effective "hanging" of the job until the wall time
 limit is reached.</p>
@@ -3135,7 +2798,7 @@ directive <code>#SBATCH</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Options provided using <code>#SBATCH</code> directives can also be specified as
-command line options to <code>srun</code>.</p>
+command line options to <code>sbatch</code>.</p>
 </div>
 <p>If you do not specify any options, then the default for each option will
 be applied. As a minimum, all job submissions must specify the budget
@@ -3148,7 +2811,7 @@ the QoS they want to use with the options:</p>
 <li><code>--partition=&lt;partition&gt;</code> The partition specifies the set of nodes
    you want to run on. More information on available partitions is
    given above.</li>
-<li><code>--qos="QoS"</code> The QoS specifies the limits to apply to your job.
+<li><code>--qos=&lt;QoS&gt;</code> The QoS specifies the limits to apply to your job.
    More information on available QoS are given above.</li>
 </ul>
 <p>Other common options that are used are:</p>
@@ -3157,16 +2820,6 @@ the QoS they want to use with the options:</p>
    6.5 hour walltime, you would use <code>--time=6:30:0</code>.</li>
 <li><code>--job-name=&lt;jobname&gt;</code> set a name for the job to help identify it in
    Slurm command output.</li>
-</ul>
-<p>Other not so common options that are used are:</p>
-<ul>
-<li><code>--switches=max-switches{@max-time-to-wait}</code> optimum switches and
-   max time to wait for them. The scheduler will wait indefinitely when
-   attempting to place these jobs. Users can override this indefinite
-   wait. The scheduler will deliberately place work to clear space for
-   these jobs, so we don't foresee the indefinite wait nature to be an
-   issue. For the Cirrus CPU partition, the maximum number of nodes per
-   switch is 18.</li>
 </ul>
 <p>In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.</p>
@@ -3186,17 +2839,17 @@ parallel processes and threads they require.</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For parallel jobs, you should request exclusive node access with the
+<p>For parallel jobs, you should generally request exclusive node access with the
 <code>--exclusive</code> option to ensure you get the expected resources and
 performance.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When submitting your job, the scheduler will check that the requested resources are available e.g. that your account
-is a member of the requested budget, that the requested QoS exists.<br>
-If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
-then the job will not be able to start. <br>
-In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.</p>
+is a member of the requested budget, that the requested QoS exists.</p>
+<p>If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
+then the job will not be able to start.</p>
+<p>In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.</p>
 </div>
 <h2 id="srun-launching-parallel-jobs"><code>srun</code>: Launching parallel jobs</h2>
 <p>If you are running parallel jobs, your job submission script should
@@ -3225,16 +2878,16 @@ this might work under special circumstances, it is not guaranteed and
 therefore not supported.</p>
 </div>
 <h3 id="example-job-submission-script-for-mpi-parallel-job">Example: job submission script for MPI parallel job</h3>
-<p>A simple MPI job submission script to submit a job using 4 compute nodes
-and 36 MPI ranks per node for 20 minutes would look like:</p>
+<p>A simple MPI job submission script to submit a job using 2 compute nodes
+and 576 MPI processes per node for 20 minutes would look like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
 <span class="c1">#SBATCH --job-name=Example_MPI_Job</span>
 <span class="c1">#SBATCH --time=0:20:0</span>
 <span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --nodes=4</span>
-<span class="c1">#SBATCH --tasks-per-node=36</span>
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --tasks-per-node=288</span>
 <span class="c1">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3244,12 +2897,6 @@ and 36 MPI ranks per node for 20 minutes would look like:</p>
 <span class="c1"># We use the &quot;standard&quot; QoS as our runtime is less than 4 days</span>
 <span class="c1">#SBATCH --qos=standard</span>
 
-<span class="c1"># Load the default HPE MPI environment</span>
-module<span class="w"> </span>load<span class="w"> </span>mpt
-
-<span class="c1"># Change to the submission directory</span>
-<span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
-
 <span class="c1"># Set the number of threads to 1</span>
 <span class="c1">#   This prevents any threaded system libraries from automatically</span>
 <span class="c1">#   using threading.</span>
@@ -3257,132 +2904,134 @@ module<span class="w"> </span>load<span class="w"> </span>mpt
 
 <span class="c1"># Launch the parallel job</span>
 <span class="c1">#   Using 144 MPI processes and 36 MPI processes per node</span>
-<span class="c1">#   srun picks up the distribution from the sbatch options</span>
-srun<span class="w"> </span>./my_mpi_executable.x
+<span class="c1">#   srun picks up the distribution from the sbatch options</span>
+srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./my_mpi_executable.x
 </code></pre></div>
-<p>This will run your executable "my_mpi_executable.x" in parallel on 144
-MPI processes using 4 nodes (36 cores per node, i.e. not using
-hyper-threading). Slurm will allocate 4 nodes to your job and srun will
-place 36 MPI processes on each node (one per physical core).</p>
+<p>This will run your executable "my_mpi_executable.x" in parallel on 576
+MPI processes using 2 nodes (288 cores per node, i.e. not using
+SMT). Slurm will allocate 2 nodes to your job and srun will
+place 288 MPI processes on each node (one per physical core).</p>
 <p>By default, srun will launch an MPI job that uses all of the cores you
 have requested via the "nodes" and "tasks-per-node" options. If you want
 to run fewer MPI processes than cores you will need to change the
 script.</p>
-<p>For example, to run this program on 128 MPI processes you have two
+<p>For example, to run this program on 512 MPI processes you have two
 options:</p>
 <ul>
-<li>set <code>--tasks-per-node=32</code> for an even distribution across nodes
+<li>set <code>--tasks-per-node=256</code> for an even distribution across nodes
    (this may not always be possible depending on the exact combination
    of nodes requested and MPI tasks required)</li>
-<li>set the number of MPI tasks explicitly using <code>#SBATCH --ntasks=128</code></li>
+<li>set the number of MPI tasks explicitly using <code>#SBATCH --ntasks=512</code></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you specify <code>--ntasks</code> explicitly and it is not compatible with the
 value of <code>tasks-per-node</code> then you will get a warning message from
-srun such as <code>srun: Warning: can't honor --ntasks-per-node set to 36</code>.</p>
+srun such as <code>srun: Warning: can't honor --ntasks-per-node set to 288</code>.</p>
 <p>In this case, srun does the sensible thing and allocates MPI processes
 as evenly as it can across nodes. For example, the second option above
-would result in 32 MPI processes on each of the 4 nodes.</p>
+would result in 256 MPI processes on each of the 2 nodes.</p>
 </div>
 <p>See above for a more detailed discussion of the different <code>sbatch</code>
 options.</p>
 <h4 id="note-on-mpt-task-placement">Note on MPT task placement</h4>
-<p>By default, <code>mpt</code> will distribute processss to physical cores (cores
-0-17 on socket 0, and cores 18-35 on socket 1) in a cyclic fashion. That
-is, rank 0 would be placed on core 0, task 1 on core 18, rank 2 on core
-1, and so on (in a single-node job). This may be undesirable. Block,
+<p>By default, Slurm will distribute processss to physical cores (cores
+0-35 on NUMA region 0, cores 36-71 on NUMA region 1, etc.) in a cyclic fashion. That
+is, rank 0 would be placed on core 0, rank 1 on core 36, rank 2 on core
+72, and so on (in a single-node job). This may be undesirable. Block,
 rather than cyclic, distribution can be obtained with</p>
 <div class="highlight"><pre><span></span><code><span class="c1">#SBATCH --distribution=block:block</span>
 </code></pre></div>
 <p>The <code>block:block</code> here refers to the distribution on both nodes and
-sockets. This will distribute rank 0 for core 0, rank 1 to core 1, rank
+NUMA regions (Slurm on Cirrus is configured to treat NUMA regions as
+separate sockets). This will distribute rank 0 for core 0, rank 1 to core 1, rank
 2 to core 2, and so on.</p>
 <h3 id="example-job-submission-script-for-mpiopenmp-mixed-mode-parallel-job">Example: job submission script for MPI+OpenMP (mixed mode) parallel job</h3>
 <p>Mixed mode codes that use both MPI (or another distributed memory
 parallel model) and OpenMP should take care to ensure that the shared
 memory portion of the process/thread placement does not span more than
 one node. This means that the number of shared memory threads should be
-a factor of 36.</p>
-<p>In the example below, we are using 4 nodes for 6 hours. There are 8 MPI
-processes in total (2 MPI processes per node) and 18 OpenMP threads per
-MPI process. This results in all 36 physical cores per node being used.</p>
+a factor of 288.</p>
+<p>In the example below, we are using 2 nodes for 6 hours. There are 48 MPI
+processes in total (24 MPI processes per node) and 12 OpenMP threads per
+MPI process. This results in all 288 physical cores per node being used.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Using 24 MPI processes per node (1 per CCD) and 12 OpenMP processes
+per MPI process is likely to be the highest number of OpenMP threads
+that will produce good performance as each 12-core CCD shares L3 
+cache.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>the use of the <code>--cpu-bind=cores</code> option to generate the correct
 affinity settings.</p>
 </div>
-<p><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=Example_MPI_Job</span>
-<span class="c1">#SBATCH --time=0:20:0</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --nodes=4</span>
-<span class="c1">#SBATCH --ntasks=8</span>
-<span class="c1">#SBATCH --tasks-per-node=2</span>
-<span class="c1">#SBATCH --cpus-per-task=18</span>
+<span class="kp">#SBATCH --job-name=Example_MPI_Job</span>
+<span class="kp">#SBATCH --time=0:20:0</span>
+<span class="kp">#SBATCH --exclusive</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --ntasks=48</span>
+<span class="kp">#SBATCH --tasks-per-node=24</span>
+<span class="kp">#SBATCH --cpus-per-task=12</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="c1"># We use the &quot;standard&quot; partition as we are running on CPU nodes</span>
-<span class="c1">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --partition=standard</span>
 <span class="c1"># We use the &quot;standard&quot; QoS as our runtime is less than 4 days</span>
-<span class="c1">#SBATCH --qos=standard</span>
-
-<span class="c1"># Load the default HPE MPI environment</span>
-module<span class="w"> </span>load<span class="w"> </span>mpt
+<span class="kp">#SBATCH --qos=standard</span>
 
 <span class="c1"># Change to the submission directory</span>
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
 
-<span class="c1"># Set the number of threads to 18</span>
-<span class="c1">#   There are 18 OpenMP threads per MPI process</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">18</span>
+<span class="c1"># Set the number of threads to 12</span>
+<span class="c1">#   There are 12 OpenMP threads per MPI process</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">12</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
 <span class="c1"># Launch the parallel job</span>
-<span class="c1">#   Using 8 MPI processes</span>
-<span class="c1">#   2 MPI processes per node</span>
-<span class="c1">#   18 OpenMP threads per MPI process</span>
+<span class="c1">#   Using 48 MPI processes</span>
+<span class="c1">#   24 MPI processes per node</span>
+<span class="c1">#   12 OpenMP threads per MPI process</span>
 
-srun<span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">18</span><span class="w"> </span>./my_mixed_executable.x<span class="w"> </span>arg1<span class="w"> </span>arg2
+<span class="nb">srun</span><span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">12</span><span class="w"> </span>./my_mixed_executable.x<span class="w"> </span>arg1<span class="w"> </span>arg2
 </code></pre></div>
-In the above we add <code>--cpus-per-task=18</code> to the <code>srun</code> command to be
+<p>In the above we add <code>--cpus-per-task=12</code> to the <code>srun</code> command to be
 consistent with that specified to <code>#SBATCH</code>. This is required to ensure
 that the correct assignment of threads to physical cores takes place.
 The reason for this duplication is that the value specified to <code>SBATCH</code>
 does not propagate automatically to <code>srun</code>. The alternative is to
-specify:
+specify:</p>
 <div class="highlight"><pre><span></span><code>export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 </code></pre></div>
-in the script before the <code>srun</code> command. This will allow the <code>--cpus-per-task</code> value specified at submission (<code>SBATCH</code>) to propagate to <code>srun</code>
+<p>in the script before the <code>srun</code> command. This will allow the <code>--cpus-per-task</code> value specified at submission (<code>SBATCH</code>) to propagate to <code>srun</code>
 (the default value would be <code>--cpus-per-task=1</code> at the <code>srun</code> stage).
 Failure to use either of these
 approaches may result in threads using the same physical core, which
 will cause a significant degradation in performance compared with
 that expected.</p>
 <h3 id="example-job-submission-script-for-openmp-parallel-job">Example: job submission script for OpenMP parallel job</h3>
-<p>A simple OpenMP job submission script to submit a job using 1 compute
-nodes and 36 threads for 20 minutes would look like:</p>
+<p>A simple OpenMP job submission script to submit a job using 1 CCD
+nodes and 12 threads for 20 minutes would look like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=Example_OpenMP_Job</span>
-<span class="c1">#SBATCH --time=0:20:0</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --tasks-per-node=1</span>
-<span class="c1">#SBATCH --cpus-per-task=36</span>
+<span class="kp">#SBATCH --job-name=Example_OpenMP_Job</span>
+<span class="kp">#SBATCH --time=0:20:0</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=1</span>
+<span class="kp">#SBATCH --cpus-per-task=12</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="c1"># We use the &quot;standard&quot; partition as we are running on CPU nodes</span>
-<span class="c1">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --partition=standard</span>
 <span class="c1"># We use the &quot;standard&quot; QoS as our runtime is less than 4 days</span>
-<span class="c1">#SBATCH --qos=standard</span>
-
-<span class="c1"># Load any required modules</span>
-module<span class="w"> </span>load<span class="w"> </span>mpt
+<span class="kp">#SBATCH --qos=standard</span>
 
 <span class="c1"># Change to the submission directory</span>
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
@@ -3390,15 +3039,16 @@ module<span class="w"> </span>load<span class="w"> </span>mpt
 <span class="c1"># Set the number of threads to the CPUs per task</span>
 <span class="c1"># and propagate `--cpus-per-task` value to srun</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 <span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
 <span class="c1"># Launch the parallel job</span>
-<span class="c1">#   Using 36 threads per node</span>
-<span class="c1">#   srun picks up the distribution from the sbatch options</span>
-srun<span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>./my_openmp_executable.x
+<span class="c1">#   Using 12 threads</span>
+<span class="c1">#   srun picks up the distribution from the sbatch options</span>
+<span class="nb">srun</span><span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>./my_openmp_executable.x
 </code></pre></div>
-<p>This will run your executable <code>my_openmp_executable.x</code> in parallel on 36
-threads. Slurm will allocate 1 node to your job and srun will place 36
+<p>This will run your executable <code>my_openmp_executable.x</code> in parallel on 12
+threads. Slurm will allocate 1 CCD to your job and srun will place 12
 threads (one per physical core).</p>
 <p>See above for a more detailed discussion of the different <code>sbatch</code>
 options</p>
@@ -3416,28 +3066,25 @@ individual subjobs or used to select the input data per subjob.</p>
 <h3 id="job-script-for-a-job-array">Job script for a job array</h3>
 <p>As an example, the following script runs 56 subjobs, with the subjob
 index as the only argument to the executable. Each subjob requests a
-single node and uses all 36 cores on the node by placing 1 MPI process
+single node and uses all 288 cores on the node by placing 1 MPI process
 per core and specifies 4 hours maximum runtime per subjob:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
 
-<span class="c1">#SBATCH --name=Example_Array_Job</span>
-<span class="c1">#SBATCH --time=04:00:00</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --tasks-per-node=36</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --array=0-55</span>
+<span class="kp">#SBATCH --name=Example_Array_Job</span>
+<span class="kp">#SBATCH --time=04:00:00</span>
+<span class="kp">#SBATCH --exclusive</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=288</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --array=0-55</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="c1"># We use the &quot;standard&quot; partition as we are running on CPU nodes</span>
-<span class="c1">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --partition=standard</span>
 <span class="c1"># We use the &quot;standard&quot; QoS as our runtime is less than 4 days</span>
-<span class="c1">#SBATCH --qos=standard</span>
-
-<span class="c1"># Load the default HPE MPI environment</span>
-module<span class="w"> </span>load<span class="w"> </span>mpt
+<span class="kp">#SBATCH --qos=standard</span>
 
 <span class="c1"># Change to the submission directory</span>
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
@@ -3447,13 +3094,13 @@ module<span class="w"> </span>load<span class="w"> </span>mpt
 <span class="c1">#   using threading.</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-srun<span class="w"> </span>/path/to/exe<span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
+<span class="nb">srun</span><span class="w"> </span>/path/to/exe<span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
 </code></pre></div>
 <h3 id="submitting-a-job-array">Submitting a job array</h3>
 <p>Job arrays are submitted using <code>sbatch</code> in the same way as for standard
 jobs:</p>
-<pre><code>sbatch job_script.pbs
-</code></pre>
+<div class="highlight"><pre><span></span><code>sbatch job_script.slurm
+</code></pre></div>
 <h2 id="job-chaining">Job chaining</h2>
 <p>Job dependencies can be used to construct complex pipelines or chain
 together long simulations requiring multiple steps.</p>
@@ -3464,15 +3111,15 @@ dependencies. It returns the job ID in a format that can be used as the
 input to other commands.</p>
 </div>
 <p>For example:</p>
-<pre><code>jobid=$(sbatch --parsable first_job.sh)
+<div class="highlight"><pre><span></span><code>jobid=$(sbatch --parsable first_job.sh)
 sbatch --dependency=afterok:$jobid second_job.sh
-</code></pre>
+</code></pre></div>
 <p>or for a longer chain:</p>
-<pre><code>jobid1=$(sbatch --parsable first_job.sh)
+<div class="highlight"><pre><span></span><code>jobid1=$(sbatch --parsable first_job.sh)
 jobid2=$(sbatch --parsable --dependency=afterok:$jobid1 second_job.sh)
 jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
 sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
-</code></pre>
+</code></pre></div>
 <h2 id="interactive-jobs">Interactive Jobs</h2>
 <p>When you are developing or debugging code you often want to run many
 short jobs with a small amount of editing the code between runs. This
@@ -3489,53 +3136,50 @@ second uses both <code>salloc</code> and <code>srun</code>.</p>
 from the command line without using a job submission script, and to see
 the output from your program directly in the terminal.</p>
 <p>A convenient way to do this is as follows.</p>
-<pre><code>[user@cirrus-login1]$ srun --exclusive --nodes=1 --time=00:20:00 --partition=standard --qos=standard --account=z04 --pty /usr/bin/bash --login
-[user@r1i0n14]$
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--exclusive<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>standard<span class="w"> </span>--account<span class="o">=</span>z04<span class="w"> </span>--pty<span class="w"> </span>/usr/bin/bash<span class="w"> </span>--login
+</code></pre></div>
 <p>This requests the exclusive use of one node for the given time (here, 20
 minutes). The <code>--pty /usr/bin/bash --login</code> requests an interactive
 login shell be started. (Note the prompt has changed.) Interactive
 commands can then be used as normal and will execute on the compute
 node. When no longer required, you can type <code>exit</code> or CTRL-D to release
 the resources and return control to the front end shell.</p>
-<pre><code>[user@r1i0n14]$ exit
-logout
-[user@cirrus-login1]$
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@cs-n0035<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">logout</span>
+<span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$
+</code></pre></div>
 <p>Note that the new interactive shell will reflect the environment of the
 original login shell. If you do not wish this, add the <code>--export=none</code>
 argument to <code>srun</code> to provide a clean login environment.</p>
 <p>Within an interactive job, one can use <code>srun</code> to launch parallel jobs in
 the normal way, e.g.,</p>
-<pre><code>[user@r1i0n14]$ srun -n 2 ./a.out
-</code></pre>
-<p>In this context, one could also use <code>mpirun</code> directly. Note we are
-limited to the 36 cores of our original <code>--nodes=1</code> <code>srun</code> request.</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@cs-n0035<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span>./a.out
+</code></pre></div>
 <h3 id="using-salloc-with-srun">Using <code>salloc</code> with <code>srun</code></h3>
 <p>This approach uses the<code>salloc</code> command to reserve compute nodes and then
 <code>srun</code> to launch relevant work.</p>
 <p>To submit a request for a job reserving 2 nodes (72 physical cores) for
 1 hour you would issue the command:</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>user@cirrus-login1<span class="o">]</span>$<span class="w"> </span>salloc<span class="w"> </span>--exclusive<span class="w"> </span>--nodes<span class="o">=</span><span class="m">2</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">36</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span>--time<span class="o">=</span><span class="m">01</span>:00:00<span class="w">  </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>standard<span class="w"> </span>--account<span class="o">=</span>t01
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>salloc<span class="w"> </span>--exclusive<span class="w"> </span>--nodes<span class="o">=</span><span class="m">2</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">288</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span>--time<span class="o">=</span><span class="m">01</span>:00:00<span class="w">  </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>standard<span class="w"> </span>--account<span class="o">=</span>t01
 salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">8699</span>
 salloc:<span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resource<span class="w"> </span>configuration
-salloc:<span class="w"> </span>Nodes<span class="w"> </span>r1i7n<span class="o">[</span><span class="m">13</span>-14<span class="o">]</span><span class="w"> </span>are<span class="w"> </span>ready<span class="w"> </span><span class="k">for</span><span class="w"> </span>job
-<span class="o">[</span>user@cirrus-login1<span class="o">]</span>$
+salloc:<span class="w"> </span>Nodes<span class="w"> </span>cs-n00<span class="o">[</span><span class="m">35</span>-36<span class="o">]</span><span class="w"> </span>are<span class="w"> </span>ready<span class="w"> </span><span class="k">for</span><span class="w"> </span>job
+<span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$
 </code></pre></div>
 <p>Note that this starts a new shell on the login node associated with the
 allocation (the prompt has not changed). The allocation may be released
 by exiting this new shell.</p>
-<pre><code>[user@cirrus-login1]$ exit
-salloc: Relinquishing job allocation 8699
-[user@cirrus-login1]$
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+salloc:<span class="w"> </span>Relinquishing<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">8699</span>
+<span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$
+</code></pre></div>
 <p>While the allocation lasts you will be able to run parallel jobs on the
 compute nodes by issuing the <code>srun</code> command in the normal way. The
 resources available are those specified in the original <code>salloc</code>
 command. For example, with the above allocation,</p>
-<pre><code>$ srun ./mpi-code.out
-</code></pre>
-<p>will run 36 MPI tasks per node on two nodes.</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>./mpi-code.out
+</code></pre></div>
+<p>will run 576 MPI tasks per node on two nodes.</p>
 <p>If your allocation reaches its time limit, it will automatically be
 termintated and the associated shell will exit. To check that the
 allocation is still running, use <code>squeue</code>:</p>
@@ -3546,7 +3190,7 @@ allocation is still running, use <code>squeue</code>:</p>
 <p>Choose a time limit long enough to allow the relevant work to be
 completed.</p>
 <p>The <code>salloc</code> method may be useful if one wishes to associate operations
-on the login node (e.g., via a GUI) with work in the allocation itself.</p>
+on the login node with work in the allocation itself.</p>
 <h2 id="reservations">Reservations</h2>
 <p>Reservations are available on Cirrus. These allow users to reserve a
 number of nodes for a specified length of time starting at a particular
@@ -3558,9 +3202,15 @@ demonstration or course.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Reservation requests must be submitted at least 120 hours in advance of
-the reservation start time. We cannot guarantee to meet all reservation
-requests due to potential conflicts with other demands on the service
-but will do our best to meet all requests.</p>
+  the reservation start time. We cannot guarantee to meet all reservation
+  requests due to potential conflicts with other demands on the service
+  but will do our best to meet all requests.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The minimum unit of reservation is a <em>full node</em> (288 cores). It is
+not possible to request reservations smaller than this. Reservation
+sizes are in increments of full nodes.</p>
 </div>
 <p>Reservations will be charged at 1.5 times the usual rate and our policy
 is that they will be charged the full rate for the entire reservation at
@@ -3592,20 +3242,15 @@ if approved, you will be provided a reservation ID which can be used on
 the system. To submit jobs to a reservation, you need to add
 <code>--reservation=&lt;reservation ID&gt;</code> and <code>--qos=reservation</code> options to your
 job submission script or Slurm job submission command.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You must have at least 1 CPUh - and 1 GPUh for reservations on GPU
-nodes - to be able to submit jobs to reservations.</p>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can submit jobs to a reservation as soon as the reservation has been
-set up; jobs will remain queued until the reservation starts.</p>
+  set up; jobs will remain queued until the reservation starts.</p>
 </div>
 <h2 id="serial-jobs">Serial jobs</h2>
 <p>Unlike parallel jobs, serial jobs will generally not need to specify the
 number of nodes and exclusive access (unless they want access to all of
-the memory on a node. You usually only need the <code>--ntasks=1</code> specifier.
+the memory on a node). You usually only need the <code>--ntasks=1</code> specifier.
 For example, a serial job submission script could look like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
@@ -3634,7 +3279,8 @@ srun<span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Remember that you will be allocated memory based on the number of tasks
-(i.e. CPU cores) that you request. You will get ~7.1 GB per task/core.
+(i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on 
+standard memory nodess and ~5.3 GB per task/core on high memory nodes.
 If you need more than this for your serial job then you should ask for
 the number of tasks you need for the required memory (or use the
 <code>--exclusive</code> option to get access to all the memory on a node) and
@@ -3645,23 +3291,11 @@ launch specifying a single task using
 <p>Applications which normally read and write temporary files from <code>/tmp</code>
 may require some care in batch jobs on Cirrus. As the size of <code>/tmp</code> on
 backend nodes is relatively small (\&lt; 150 MB), applications should use a
-different location to prevent possible failures. This is relevant for
-both CPU and GPU nodes.</p>
+different location to prevent possible failures.</p>
 <p>Note also that the default value of the variable <code>TMPDIR</code> in batch jobs
 is a memory-resident file system location specific to the current job
 (typically in the <code>/dev/shm</code> directory). Files here reduce the available
 capacity of main memory on the node.</p>
-<p>It is recommended that applications with significant temporary file
-space requirement should use the <code>/user-guide/solidstate</code>. E.g., a
-submission script might contain:</p>
-<pre><code>export TMPDIR="/scratch/space1/x01/auser/$SLURM_JOBID.tmp"
-mkdir -p $TMPDIR
-</code></pre>
-<p>to set the standard temporary directory to a unique location in the
-solid state storage. You will also probably want to add a line to clean
-up the temporary directory at the end of your job script, e.g.</p>
-<pre><code>rm -r $TMPDIR
-</code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Applications should not hard-code specific locations such as <code>/tmp</code>.

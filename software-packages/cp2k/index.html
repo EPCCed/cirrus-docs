@@ -12,7 +12,7 @@
         <link rel="prev" href="../castep/">
       
       
-        <link rel="next" href="../elements/">
+        <link rel="next" href="../gromacs/">
       
       
         
@@ -75,7 +75,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -534,6 +534,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/connecting/" class="md-nav__link">
         
   
@@ -618,6 +646,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/sw-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduler and Running Jobs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/development/" class="md-nav__link">
         
   
@@ -646,42 +730,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/batch/" class="md-nav__link">
+      <a href="../../user-guide/containers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Running Jobs on Cirrus
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/singularity/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Singularity Containers
+    Using Containers
   
 
     
@@ -710,62 +766,6 @@
     
   
     Using Python
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/gpu/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Using the Cirrus GPU Nodes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/solidstate/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Solid state storage
   
 
     
@@ -849,7 +849,7 @@
   <span class="md-ellipsis">
     
   
-    Castep
+    CASTEP
   
 
     
@@ -949,16 +949,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-cp2k-jobs-mpiopenmp-hybrid-mode" class="md-nav__link">
+    <nav class="md-nav" aria-label="Using CP2K on Cirrus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
+        Optional packages
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-cp2k-jobs-mpiopenmp-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running parallel CP2K jobs (MPI/OpenMP hybrid)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-and-testing-cp2k-on-cirrus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiling and testing CP2K on Cirrus
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling and testing CP2K on Cirrus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-spack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Spack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#builds-using-the-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Builds using the toolchain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -978,90 +1034,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../elements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ELEMENTS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../flacs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FLACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gaussian/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gaussian
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../gromacs/" class="md-nav__link">
         
   
@@ -1069,35 +1041,7 @@
   <span class="md-ellipsis">
     
   
-    GROMACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../helyx/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    HELYX&reg;
+    Gromacs
   
 
     
@@ -1146,62 +1090,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../MATLAB/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MATLAB
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../namd/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NAMD
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../openfoam/" class="md-nav__link">
         
   
@@ -1230,34 +1118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../orca/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ORCA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../qe/" class="md-nav__link">
         
   
@@ -1266,34 +1126,6 @@
     
   
     Quantum Espresso (QE)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../starccm%2B/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    STAR-CCM+
   
 
     
@@ -1396,14 +1228,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Intel MKL: BLAS, LAPACK, ScaLAPACK
+    Cray LibSci: BLAS, LAPACK, ScaLAPACK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FFTW
   
 
     
@@ -1432,6 +1292,34 @@
     
   
     HDF5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NetCDF
   
 
     
@@ -1506,14 +1394,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/forge/" class="md-nav__link">
+      <a href="../../software-tools/spack/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linaro Forge
+    Spack
   
 
     
@@ -1534,42 +1422,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/scalasca/" class="md-nav__link">
+      <a href="../../software-tools/likwid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Profiling using Scalasca
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-tools/intel-vtune/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Intel VTune
+    Likwid
   
 
     
@@ -1586,33 +1446,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/reading/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    References and further reading
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1663,16 +1496,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-cp2k-jobs-mpiopenmp-hybrid-mode" class="md-nav__link">
+    <nav class="md-nav" aria-label="Using CP2K on Cirrus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode
+        Optional packages
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-cp2k-jobs-mpiopenmp-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running parallel CP2K jobs (MPI/OpenMP hybrid)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-and-testing-cp2k-on-cirrus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiling and testing CP2K on Cirrus
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling and testing CP2K on Cirrus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-spack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Spack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#builds-using-the-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Builds using the toolchain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1716,44 +1605,110 @@ state optimisation using NEB or dimer method.</p>
 </ul>
 <h2 id="using-cp2k-on-cirrus">Using CP2K on Cirrus</h2>
 <p>CP2K is available through the <code>cp2k</code> module. Loading this module
-provides access to the MPI/OpenMP hybrid <code>cp2k.psmp</code> executable.</p>
-<p>To run CP2K after loading this module you should also source the
-environment setup script that was generated by CP2K's toolchain (see
-example job script below)</p>
-<h2 id="running-parallel-cp2k-jobs-mpiopenmp-hybrid-mode">Running Parallel CP2K Jobs - MPI/OpenMP Hybrid Mode</h2>
+provides access to the MPI/OpenMP hybrid <code>cp2k.psmp</code> executable.
+To see which versions are available:
+<div class="highlight"><pre><span></span><code>$ module avail cp2k
+...
+   cp2k/2025.2
+</code></pre></div></p>
+<h3 id="optional-packages">Optional packages</h3>
+<p>The centrally installed module versions of CP2K are managed by Spack.
+To see the list of optional packages built, along with the compiler
+details, one can use, e.g.:
+<div class="highlight"><pre><span></span><code>$ module load cp2k
+$ cp2k.psmp --version
+ CP2K version 2025.2
+ Source code revision
+ cp2kflags: omp libint fftw3 libxc parallel scalapack xsmm
+ compiler: GCC version 14.2.1 20240801 (Red Hat 14.2.1-1)
+...
+</code></pre></div>
+showing that CP2K has been built with OpenMP, libint, FFTW3, and so on.</p>
+<h2 id="running-parallel-cp2k-jobs-mpiopenmp-hybrid">Running parallel CP2K jobs (MPI/OpenMP hybrid)</h2>
 <p>To run CP2K using MPI and OpenMP, load the <code>cp2k</code> module and use the
-<code>cp2k.psmp</code> executable. </p>
-<p>For example, the following script will run a CP2K job using 8 nodes,
-with 2 OpenMP threads per MPI process:</p>
-<pre><code>#!/bin/bash
+<code>cp2k.psmp</code> executable.</p>
+<p>For larger jobs requiing one or more nodes, an exclusive SLURM submission
+is appropriate. For example, a job using two nodes (576 cores), with
+two cores (OpenMP threads) for each MPI process:</p>
+<details class="info">
+<summary>Exclusive SLURM job submission script for CP2K</summary>
+<p><div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
 
-# Slurm job options (name, compute nodes, job time)
-#SBATCH --job-name=CP2K_test
-#SBATCH --time=0:20:0
-#SBATCH --exclusive
-#SBATCH --nodes=8
-#SBATCH --tasks-per-node=18
-#SBATCH --cpus-per-task=2
+<span class="c1">#SBATCH --export=none</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --exclusive</span>
 
-# Load CP2K
-module load cp2k
+<span class="c1">#SBATCH --ntasks-per-node=188</span>
+<span class="c1">#SBATCH --cpus-per-task=2</span>
 
-# Source the environment setup script generated by CP2K's install toolchain
-source $CP2K/tools/toolchain/install/setup
+<span class="c1">#SBATCH --partition=standard</span>
+<span class="c1">#SBATCH --qos=standard</span>
 
-# Set the number of threads to the value specified for --cpus-per-task above
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<span class="c1">#SBATCH --distribution=block:block</span>
+<span class="c1">#SBATCH --hint=nomultithread</span>
 
-# Run using input in test.inp
-srun cp2k.psmp -i test.inp
-</code></pre>
+<span class="l l-Scalar l-Scalar-Plain">module load cp2k</span>
+
+<span class="l l-Scalar l-Scalar-Plain">export OMP_NUM_THREADS=2</span>
+<span class="l l-Scalar l-Scalar-Plain">export OMP_PLACES=cores</span>
+
+<span class="l l-Scalar l-Scalar-Plain">srun cp2k.psmp -i H2O-0512.inp</span>
+</code></pre></div>
+In this example, SLURM allocates two nodes based on <code>--nodes=2</code> and
+<code>--exclusive</code>, and the <code>srun parameters are controlled via</code>--ntasks-per-node=188<code>and</code>--cpus-per-task=2<code>inherited from
+the environment, together with</code>OMP_NUM_THREADS=2`.</p>
+<p>A valid budget may be required, e.g.,
+<div class="highlight"><pre><span></span><code>#SBATCH --account=z00`
+</code></pre></div></p>
+</details>
+<p>A relatively small CP2K job requiring less than a full nude should be
+run in non-exclusive mode. E.g., A job requiring 18 MPI processes each
+with two threads might be:</p>
+<details class="info">
+<summary>Non-exclusive SLURM job submission for CP2K</summary>
+<p><div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
+
+<span class="c1">#SBATCH --export=none</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+
+<span class="c1">#SBATCH --partition=standard</span>
+<span class="c1">#SBATCH --qos=standard</span>
+
+<span class="c1">#SBATCH --ntasks=18</span>
+<span class="c1">#SBATCH --cpus-per-task=2</span>
+
+<span class="c1">#SBATCH --distribution=block:block</span>
+<span class="c1">#SBATCH --hint=nomultithread</span>
+
+<span class="l l-Scalar l-Scalar-Plain">module load cp2k</span>
+
+<span class="l l-Scalar l-Scalar-Plain">export OMP_NUM_THREADS=2</span>
+<span class="l l-Scalar l-Scalar-Plain">export OMP_PLACES=cores</span>
+
+<span class="l l-Scalar l-Scalar-Plain">srun cp2k.psmp -i H2O-0064.inp</span>
+</code></pre></div>
+This job will use a total of 36 cores.</p>
+</details>
+<p>See <a href="/user-guide/batch">Running Jobs on Cirrus</a> for further general
+information on SLURM submissions.</p>
+<h2 id="compiling-and-testing-cp2k-on-cirrus">Compiling and testing CP2K on Cirrus</h2>
+<h3 id="using-spack">Using Spack</h3>
+<p>If a specific version of CP2K is required, and this is not available as
+a central module, it is possible to build CP2K using Spack.
+<div class="highlight"><pre><span></span><code>$ module load spack
+# spack info cp2k
+</code></pre></div></p>
+<p>For further information, see</p>
+<ul>
+<li><a href="/software-tools/spack">Using Spack on Cirrus</a></li>
+<li><a href="]https://manual.cp2k.org/trunk/getting-started/build-with-spack.html">Building CP2K using Spack</a> from the CP2K documentation</li>
+</ul>
+<h3 id="builds-using-the-toolchain">Builds using the toolchain</h3>
+<p>The recommendation for developers who wish to build their own version is
+to use the toolchain build process.</p>
+<p>FURTHER INFORMATION PENDING</p>
 
 
 

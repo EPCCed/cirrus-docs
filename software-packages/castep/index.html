@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../../user-guide/solidstate/">
+        <link rel="prev" href="../../user-guide/python/">
       
       
         <link rel="next" href="../cp2k/">
@@ -23,7 +23,7 @@
     
     
       
-        <title>Castep - Cirrus User Documentation</title>
+        <title>CASTEP - Cirrus User Documentation</title>
       
     
     
@@ -75,7 +75,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Castep
+              CASTEP
             
           </span>
         </div>
@@ -534,6 +534,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/connecting/" class="md-nav__link">
         
   
@@ -618,6 +646,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/sw-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduler and Running Jobs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/development/" class="md-nav__link">
         
   
@@ -646,42 +730,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/batch/" class="md-nav__link">
+      <a href="../../user-guide/containers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Running Jobs on Cirrus
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/singularity/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Singularity Containers
+    Using Containers
   
 
     
@@ -710,62 +766,6 @@
     
   
     Using Python
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/gpu/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Using the Cirrus GPU Nodes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/solidstate/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Solid state storage
   
 
     
@@ -858,7 +858,7 @@
   <span class="md-ellipsis">
     
   
-    Castep
+    CASTEP
   
 
     
@@ -876,7 +876,7 @@
   <span class="md-ellipsis">
     
   
-    Castep
+    CASTEP
   
 
     
@@ -932,6 +932,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Running parallel CASTEP jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-multi-core-castep-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: multi-core CASTEP job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-multi-node-castep-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: multi-node CASTEP job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -978,90 +1006,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../elements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ELEMENTS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../flacs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FLACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gaussian/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gaussian
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../gromacs/" class="md-nav__link">
         
   
@@ -1069,35 +1013,7 @@
   <span class="md-ellipsis">
     
   
-    GROMACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../helyx/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    HELYX&reg;
+    Gromacs
   
 
     
@@ -1146,62 +1062,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../MATLAB/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MATLAB
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../namd/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NAMD
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../openfoam/" class="md-nav__link">
         
   
@@ -1230,34 +1090,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../orca/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ORCA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../qe/" class="md-nav__link">
         
   
@@ -1266,34 +1098,6 @@
     
   
     Quantum Espresso (QE)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../starccm%2B/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    STAR-CCM+
   
 
     
@@ -1396,14 +1200,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Intel MKL: BLAS, LAPACK, ScaLAPACK
+    Cray LibSci: BLAS, LAPACK, ScaLAPACK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FFTW
   
 
     
@@ -1432,6 +1264,34 @@
     
   
     HDF5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NetCDF
   
 
     
@@ -1506,14 +1366,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/forge/" class="md-nav__link">
+      <a href="../../software-tools/spack/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linaro Forge
+    Spack
   
 
     
@@ -1534,42 +1394,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/scalasca/" class="md-nav__link">
+      <a href="../../software-tools/likwid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Profiling using Scalasca
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-tools/intel-vtune/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Intel VTune
+    Likwid
   
 
     
@@ -1586,33 +1418,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/reading/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    References and further reading
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1674,6 +1479,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Running parallel CASTEP jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-multi-core-castep-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: multi-core CASTEP job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-multi-node-castep-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: multi-node CASTEP job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1707,52 +1540,78 @@ directly to experiment, such as infra-red and Raman spectroscopies, NMR,
 and core level spectra.</p>
 <h2 id="useful-links">Useful Links</h2>
 <ul>
-<li><a href="http://www.castep.org/CASTEP/Documentation">CASTEP User Guides</a></li>
-<li><a href="http://www.castep.org/CASTEP/OnlineTutorials">CASTEP Tutorials</a></li>
-<li><a href="http://www.castep.org/CASTEP/GettingCASTEP">CASTEP Licensing</a></li>
+<li><a href="https://castep-docs.github.io/castep-docs/">CASTEP Documentation and Tutorials</a></li>
+<li><a href="https://www.castep.org/get_castep">CASTEP Licensing</a></li>
 </ul>
 <h2 id="using-castep-on-cirrus">Using CASTEP on Cirrus</h2>
 <p><strong>CASTEP is only available to users who have a valid CASTEP licence.</strong></p>
 <p>If you have a CASTEP licence and wish to have access to CASTEP on Cirrus
 please <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features">submit a request through the
 SAFE</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>CASTEP versions 19 and above require a separate licence from CASTEP
-versions 18 and below so these are treated as two separate access
-requests.</p>
-</div>
 <h2 id="running-parallel-castep-jobs">Running parallel CASTEP jobs</h2>
-<p>CASTEP can exploit multiple nodes on Cirrus and will generally be run in
-exclusive mode over more than one node.</p>
-<p>For example, the following script will run a CASTEP job using 4 nodes
-(144 cores).</p>
-<pre><code>#!/bin/bash
+<p>CASTEP can exploit multiple nodes on Cirrus and can be run on a subset
+of cores on a node or across multiple nodes (with exclusive node access).</p>
+<h3 id="example-multi-core-castep-job">Example: multi-core CASTEP job</h3>
+<p>For example, the following script will run a CASTEP job using 36 cores on a 
+single node. You may share node resources with other users.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
- # Slurm job options (name, compute nodes, job time)
- #SBATCH --job-name=CASTEP_Example
- #SBATCH --time=1:0:0
- #SBATCH --exclusive
- #SBATCH --nodes=4
- #SBATCH --tasks-per-node=36
- #SBATCH --cpus-per-task=1
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=CASTEP_Example</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=36</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-# Replace [partition name] below with your partition name (e.g. standard,gpu)
-#SBATCH --partition=[partition name]
-# Replace [qos name] below with your qos name (e.g. standard,long,gpu)
-#SBATCH --qos=[qos name]
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard)</span>
+<span class="kp">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long)</span>
+<span class="kp">#SBATCH --qos=[qos name]</span>
 
-# Load CASTEP version 18 module
-module load castep/18
+<span class="c1"># Load CASTEP module</span>
+module<span class="w"> </span>load<span class="w"> </span>castep
 
-# Set OMP_NUM_THREADS=1 to avoid unintentional threading
-export OMP_NUM_THREADS=1
+<span class="c1"># Set OMP_NUM_THREADS=1 to avoid unintentional threading</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-# Run using input in test_calc.in
-srun --distribution=block:block castep.mpi test_calc
-</code></pre>
+<span class="c1"># Run using input in test_calc.in</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>castep.mpi<span class="w"> </span>test_calc
+</code></pre></div>
+<h3 id="example-multi-node-castep-job">Example: multi-node CASTEP job</h3>
+<p>For example, the following script will run a CASTEP job using 2 nodes
+(576 cores).</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=CASTEP_Example</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --exclusive</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=288</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="c1"># Replace [partition name] below with your partition name (e.g. standard)</span>
+<span class="kp">#SBATCH --partition=[partition name]</span>
+<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long)</span>
+<span class="kp">#SBATCH --qos=[qos name]</span>
+
+<span class="c1"># Load CASTEP module</span>
+module<span class="w"> </span>load<span class="w"> </span>castep
+
+<span class="c1"># Set OMP_NUM_THREADS=1 to avoid unintentional threading</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Run using input in test_calc.in</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>castep.mpi<span class="w"> </span>test_calc
+</code></pre></div>
 
 
 

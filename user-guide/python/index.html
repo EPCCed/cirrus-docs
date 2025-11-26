@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../singularity/">
+        <link rel="prev" href="../containers/">
       
       
-        <link rel="next" href="../gpu/">
+        <link rel="next" href="../../software-packages/castep/">
       
       
         
@@ -75,7 +75,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -536,6 +536,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../connecting/" class="md-nav__link">
         
   
@@ -620,6 +648,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../sw-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduler and Running Jobs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../development/" class="md-nav__link">
         
   
@@ -648,42 +732,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../batch/" class="md-nav__link">
+      <a href="../containers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Running Jobs on Cirrus
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../singularity/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Singularity Containers
+    Using Containers
   
 
     
@@ -764,32 +820,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mpi4py-for-cpu" class="md-nav__link">
+  <a href="#hpe-cray-python-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        mpi4py for CPU
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mpi4py-for-gpu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mpi4py for GPU
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#machine-learning-frameworks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Machine Learning frameworks
+        HPE Cray Python distribution
       
     </span>
   </a>
@@ -808,21 +842,116 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-your-own-python-packages-with-conda" class="md-nav__link">
+  <a href="#conda-on-archer2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing your own Python packages (with conda)
+        Conda on ARCHER2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conda on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conda-install-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda install location
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conda install location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-a-conda-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use a conda container image
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#using-jupyterlab-on-cirrus" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#install-conda-on-the-work-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using JupyterLab on Cirrus
+        Install conda on the work file system
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-additions-to-shell-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda additions to shell configuration files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-serial-python-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example serial Python submission script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-mpi4py-job-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example mpi4py job submission script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-jupyterlab-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using JupyterLab on ARCHER2
       
     </span>
   </a>
@@ -833,62 +962,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gpu/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Using the Cirrus GPU Nodes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../solidstate/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Solid state storage
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -962,7 +1035,7 @@
   <span class="md-ellipsis">
     
   
-    Castep
+    CASTEP
   
 
     
@@ -1011,90 +1084,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/elements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ELEMENTS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/flacs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FLACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/gaussian/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gaussian
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/gromacs/" class="md-nav__link">
         
   
@@ -1102,35 +1091,7 @@
   <span class="md-ellipsis">
     
   
-    GROMACS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/helyx/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    HELYX&reg;
+    Gromacs
   
 
     
@@ -1179,62 +1140,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/MATLAB/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MATLAB
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/namd/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NAMD
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/openfoam/" class="md-nav__link">
         
   
@@ -1263,34 +1168,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-packages/orca/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ORCA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../software-packages/qe/" class="md-nav__link">
         
   
@@ -1299,34 +1176,6 @@
     
   
     Quantum Espresso (QE)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-packages/starccm%2B/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    STAR-CCM+
   
 
     
@@ -1429,14 +1278,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-libraries/intel_mkl/" class="md-nav__link">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Intel MKL: BLAS, LAPACK, ScaLAPACK
+    Cray LibSci: BLAS, LAPACK, ScaLAPACK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FFTW
   
 
     
@@ -1465,6 +1342,34 @@
     
   
     HDF5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NetCDF
   
 
     
@@ -1539,14 +1444,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/forge/" class="md-nav__link">
+      <a href="../../software-tools/spack/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linaro Forge
+    Spack
   
 
     
@@ -1567,42 +1472,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/scalasca/" class="md-nav__link">
+      <a href="../../software-tools/likwid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Profiling using Scalasca
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../software-tools/intel-vtune/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Intel VTune
+    Likwid
   
 
     
@@ -1619,33 +1496,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reading/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    References and further reading
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1677,32 +1527,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mpi4py-for-cpu" class="md-nav__link">
+  <a href="#hpe-cray-python-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        mpi4py for CPU
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mpi4py-for-gpu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mpi4py for GPU
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#machine-learning-frameworks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Machine Learning frameworks
+        HPE Cray Python distribution
       
     </span>
   </a>
@@ -1721,21 +1549,116 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-your-own-python-packages-with-conda" class="md-nav__link">
+  <a href="#conda-on-archer2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing your own Python packages (with conda)
+        Conda on ARCHER2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conda on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conda-install-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda install location
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conda install location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-a-conda-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use a conda container image
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#using-jupyterlab-on-cirrus" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#install-conda-on-the-work-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using JupyterLab on Cirrus
+        Install conda on the work file system
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-additions-to-shell-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda additions to shell configuration files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-serial-python-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example serial Python submission script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-mpi4py-job-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example mpi4py job submission script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-jupyterlab-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using JupyterLab on ARCHER2
       
     </span>
   </a>
@@ -1763,495 +1686,453 @@
 
 
 <h1 id="using-python">Using Python</h1>
-<p>Python on Cirrus is provided by a number of
-<a href="https://conda.io/miniconda.html">Miniconda</a> modules and one
-<a href="https://www.continuum.io">Anaconda</a> module. (Miniconda being a small
-bootstrap version of Anaconda).</p>
-<p>The Anaconda module is called <code>anaconda3</code> and is suitable for
-running serial applications - for parallel applications using <code>mpi4py</code>
-see <a href="#mpi4py-for-cpu">mpi4py for CPU</a> or <a href="#mpi4py-for-gpu">mpi4py for GPU</a>.</p>
-<p>You can list the Miniconda modules by running <code>module avail python</code> on a
-login node. Those module versions that have the <code>gpu</code> suffix are
-suitable for use on the <a href="../gpu/">Cirrus GPU nodes</a>. There are also
-modules that extend these Python environments, e.g., <code>pyfr</code>, <code>tensorflow</code>
-and <code>pytorch</code> - simply run <code>module help &lt;module name&gt;</code> for further info.</p>
-<p>The Miniconda modules support Python-based parallel codes, i.e., each
-such <code>python</code> module provides a suite of packages pertinent to parallel
-processing and numerical analysis such as <code>dask</code>, <code>ipyparallel</code>,
-<code>jupyter</code>, <code>matplotlib</code>, <code>numpy</code>, <code>pandas</code> and <code>scipy</code>.</p>
-<p>All the packages provided by a module can be obtained by running
-<code>pip list</code>. We now give some examples that show how the <code>python</code> modules
-can be used on the Cirrus CPU/GPU nodes.</p>
-<h2 id="mpi4py-for-cpu">mpi4py for CPU</h2>
-<p>The <code>python/3.9.13</code> module provides mpi4py 3.1.5 linked with OpenMPI
-4.1.6.</p>
-<p>See <code>numpy-broadcast.py</code> below which is a simple MPI Broadcast example,
-and the Slurm script <code>submit-broadcast.slurm</code> which demonstrates how to
-run across it two compute nodes.</p>
-<details><summary><b>numpy-broadcast.py</b></summary>
-
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Parallel Numpy Array Broadcast</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-
-<span class="n">comm</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span>
-
-<span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()</span>
-<span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">Get_processor_name</span><span class="p">()</span>
-
-<span class="n">arraySize</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">arraySize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">arraySize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
-
-<span class="n">comm</span><span class="o">.</span><span class="n">Bcast</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-        <span class="s2">&quot;Rank </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) has broadcast </span><span class="si">%d</span><span class="s2"> integers.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="o">%</span> <span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">arraySize</span><span class="p">))</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-        <span class="s2">&quot;Rank </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) has received </span><span class="si">%d</span><span class="s2"> integers.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="o">%</span> <span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">arraySize</span><span class="p">))</span>
-
-    <span class="n">arrayBad</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">arrayBad</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">break</span>
-
-    <span class="k">if</span> <span class="n">arrayBad</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-            <span class="s2">&quot;Error, rank </span><span class="si">%d</span><span class="s2"> array is not as expected.</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="o">%</span> <span class="p">(</span><span class="n">rank</span><span class="p">))</span>
-</code></pre></div>
-
-</details>
-<p><br></p>
-<p>The MPI initialisation is done automatically as a result of calling
-<code>from mpi4py import MPI</code>.</p>
-<details><summary><b>submit-broadcast.slurm</b></summary>
-
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-
-<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=broadcast</span>
-<span class="c1">#SBATCH --time=00:20:00</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --partition=standard</span>
-<span class="c1">#SBATCH --qos=standard</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --tasks-per-node=36</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-
-module<span class="w"> </span>load<span class="w"> </span>python/3.9.13
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMPI_MCA_mca_base_component_show_load_errors</span><span class="o">=</span><span class="m">0</span>
-
-srun<span class="w"> </span>numpy-broadcast.py
-</code></pre></div>
-
-</details>
-<p><br></p>
-<p>The Slurm submission script (<code>submit-broadcast.slurm</code>) above sets a
-<code>OMPI_MCA</code> environment variable before launching the job. That
-particular variable suppresses warnings written to the job output file;
-it can of course be removed. Please see the <a href="https://www.open-mpi.org/faq/?category=tuning#mca-def">OpenMPI
-documentation</a>
-for info on all <code>OMPI_MCA</code> variables.</p>
-<h2 id="mpi4py-for-gpu">mpi4py for GPU</h2>
-<p>There's also an mpi4py module (again using OpenMPI 4.1.4) that is
-tailored for CUDA 11.6 on the Cirrus GPU nodes, <code>python/3.9.13-gpu</code>. We
-show below an example that features an MPI reduction performed on a
-<a href="https://docs.cupy.dev/en/stable/overview.html">CuPy array</a>
-(<code>cupy-allreduce.py</code>).</p>
-<details><summary><b>cupy-allreduce.py</b></summary>
-
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Reduce-to-all CuPy Arrays</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-
-<span class="n">comm</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span>
-
-<span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()</span>
-<span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">Get_processor_name</span><span class="p">()</span>
-
-<span class="n">sendbuf</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
-<span class="n">recvbuf</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">,</span> <span class="s1">&#39;__cuda_array_interface__&#39;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">recvbuf</span><span class="p">,</span> <span class="s1">&#39;__cuda_array_interface__&#39;</span><span class="p">)</span>
-<span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_current_stream</span><span class="p">()</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
-<span class="n">comm</span><span class="o">.</span><span class="n">Allreduce</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">,</span> <span class="n">recvbuf</span><span class="p">)</span>
-
-<span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">recvbuf</span><span class="p">,</span> <span class="n">sendbuf</span><span class="o">*</span><span class="n">size</span><span class="p">)</span>
-
-<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-    <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">): recvbuf = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="o">%</span> <span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">recvbuf</span><span class="p">)))</span>
-</code></pre></div>
-
-</details>
-<p><br></p>
-<p>By default, the CuPy cache will be located within the user's home
-directory. And so, as <code>/home</code> is not accessible from the GPU nodes, it
-is necessary to set <code>CUPY_CACHE_DIR</code> such that the cache is on the
-<code>/work</code> file system instead.</p>
-<details><summary><b>submit-allreduce.slurm</b></summary>
-
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-
-<span class="c1">#SBATCH --job-name=allreduce</span>
-<span class="c1">#SBATCH --time=00:20:00</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --partition=gpu</span>
-<span class="c1">#SBATCH --qos=gpu</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --gres=gpu:4</span>
-
-module<span class="w"> </span>load<span class="w"> </span>python/3.9.13-gpu
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">CUPY_CACHE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/.cupy/kernel_cache
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMPI_MCA_mpi_warn_on_fork</span><span class="o">=</span><span class="m">0</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMPI_MCA_mca_base_component_show_load_errors</span><span class="o">=</span><span class="m">0</span>
-
-srun<span class="w"> </span>--ntasks<span class="o">=</span><span class="m">8</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span>cupy-allreduce.py
-</code></pre></div>
-
-</details>
-<p><br></p>
-<p>Again, the submission script (<code>submit-allreduce.slurm</code>) is the place to
-set <code>OMPI_MCA</code> variables - the two shown are optional, see the link
-below for further details.</p>
-<p><a href="https://www.open-mpi.org/faq/?category=tuning#mca-def">https://www.open-mpi.org/faq/?category=tuning#mca-def</a></p>
-<h2 id="machine-learning-frameworks">Machine Learning frameworks</h2>
-<p>There are several more Python-based modules that also target the Cirrus
-GPU nodes. These include two machine learning frameworks,
-<code>pytorch/1.13.1-gpu</code> and <code>tensorflow/2.13.0-gpu</code>. Both modules are Python
-virtual environments that extend <code>python/3.10.8-gpu</code>. The MPI comms is
-handled by the <a href="https://horovod.readthedocs.io/en/stable/">Horovod</a>
-0.28.1 package along with the <a href="https://developer.nvidia.com/nccl">NVIDIA Collective Communications
-Library</a> v2.11.4.</p>
-<p>A full package list for these environments can be obtained by loading
-the module of interest and then running <code>pip list</code>.</p>
-<p>Please click on the link indicated to see examples of how to use the
-<a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/ml/run_ml_workloads_cirrus_gpu.md">PyTorch and TensorFlow
-modules</a>
-.</p>
+<p>Python is supported on Cirrus both for running intensive parallel jobs
+and also as an analysis tool. This section describes how to use Python
+in either of these scenarios.</p>
+<p>The Python installations on Cirrus contain some of the most commonly
+used packages. If you wish to install additional Python packages, we
+recommend that you use the <code>pip</code> command, see the section entitled
+<a href="./#installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Python 2 is not supported on Cirrus as it has been deprecated since
+the start of 2020. </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you log onto Cirrus, no Python module is loaded by default. You
+will generally need to load the <code>cray-python</code> module to access the
+functionality described below.</p>
+</div>
+<h2 id="hpe-cray-python-distribution">HPE Cray Python distribution</h2>
+<p>The recommended way to use Python on Cirrus is to use the HPE Cray
+Python distribution.</p>
+<p>The HPE Cray distribution provides Python 3 along with some of the most
+common packages used for scientific computation and data analysis. These
+include:</p>
+<ul>
+<li>numpy and scipy - built using GCC against HPE Cray LibSci</li>
+<li>mpi4py - built using GCC against HPE Cray MPICH</li>
+<li>dask</li>
+</ul>
+<p>The HPE Cray Python distribution can be loaded (either on the front-end
+or in a submission script) using:</p>
+<pre><code>module load cray-python
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The HPE Cray Python distribution is built using GCC compilers. If you wish
+to compile your own Python, C/C++ or Fortran code to use with HPE Cray
+Python, you should ensure that you compile using <code>PrgEnv-gnu</code> to make sure
+they are compatible.</p>
+</div>
 <h2 id="installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</h2>
-<p>This section shows how to setup a local custom Python environment such
-that it extends a centrally-installed <code>python</code> module. By extend, we
-mean being able to install packages locally that are not provided by the
-central <code>python</code>. This is needed because some packages such as <code>mpi4py</code>
-must be built specifically for the Cirrus system and so are best
-provided centrally.</p>
-<p>You can do this by creating a lightweight <strong>virtual</strong> environment where
-the local packages can be installed. Further, this environment is
-created on top of an existing Python installation, known as the
-environment's <strong>base</strong> Python.</p>
-<p>Select the base Python by loading the <code>python</code> module you wish to
-extend, e.g., <code>python/3.9.13-gpu</code> (you can run <code>module avail python</code> to
-list all the available <code>python</code> modules).</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>python/3.9.13
+<p>Sometimes, you may need to setup a local custom Python environment such that it extends a centrally-installed <code>cray-python</code> module.
+By extend, we mean being able to install packages locally that are not provided by <code>cray-python</code>. This is necessary because some Python
+packages such as <code>mpi4py</code> must be built specifically for the Cirrus system and so are best provided centrally.</p>
+<p>You can do this by creating a lightweight <strong>virtual</strong> environment where the local packages can be installed. This environment
+is created on top of an existing Python installation, known as the environment's <strong>base</strong> Python.</p>
+<p>First, load the <code>PrgEnv-gnu</code> environment.</p>
+<pre><code>[auser@login01:~]$ module load PrgEnv-gnu
+</code></pre>
+<p>This first step is necessary because subsequent <code>pip</code> installs may involve source code compilation and it is better that this be done using
+the GCC compilers to maintain consistency with how some base Python packages have been built.</p>
+<p>Second, select the base Python by loading the <code>cray-python</code> module that you wish to extend.</p>
+<pre><code>[auser@login01:~]$ module load cray-python
+</code></pre>
+<p>Next, create the virtual environment within a designated folder.</p>
+<pre><code>python -m venv --system-site-packages /work/t01/t01/auser/myvenv
+</code></pre>
+<p>In our example, the environment is created within a <code>myvenv</code> folder located on <code>/work</code>, which means the environment will be accessible
+from the compute nodes. The <code>--system-site-packages</code> option ensures this environment is based on the currently loaded <code>cray-python</code>
+module. See <a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a> for more details.</p>
+<p>You're now ready to <em>activate</em> your environment.</p>
+<pre><code>source /work/t01/t01/auser/myvenv/bin/activate
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code>myvenv</code> path uses a fictitious project code, <code>t01</code>, and username, <code>auser</code>. Please remember to replace those values
+with your actual project code and username. Alternatively, you could enter <code>${HOME/home/work}</code> in place of <code>/work/t01/t01/auser</code>.
+That command fragment expands <code>${HOME}</code> and then replaces the <code>home</code> part with <code>work</code>.</p>
+</div>
+<p>Installing packages to your local environment can now be done as follows.</p>
+<pre><code>(myvenv) [auser@login01:~]$ python -m pip install &lt;package name&gt;
+</code></pre>
+<p>Running <code>pip</code> directly as in <code>pip install &lt;package name&gt;</code> will also work, but we show the <code>python -m</code> approach
+as this is consistent with the way the virtual environment was created. Further, if the package installation
+will require code compilation, you should amend the command to ensure use of the Cirrus compiler wrappers.</p>
+<pre><code>(myvenv) [auser@login01:~]$ CC=cc CXX=CC FC=ftn python -m pip install &lt;package name&gt;
+</code></pre>
+<p>And when you have finished installing packages, you can deactivate the environment by running the <code>deactivate</code> command.</p>
+<pre><code>(myvenv) [auser@login01:~]$ deactivate
+[auser@login01:~]$
+</code></pre>
+<p>The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
+you must first activate the environment, by adding the activation command to the submission script, as shown below.</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash --login
+
+#SBATCH --job-name=myvenv
+#SBATCH --exclusive
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=288
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:10:00
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+source /work/t01/t01/auser/myvenv/bin/activate
+
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
+srun --distribution=block:block --hint=nomultithread python myvenv-script.py
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>In the commands below, remember to replace <code>x01</code> with your project code
-and <code>auser</code> with your username.</p>
+<p>If you find that a module you've installed to a virtual environment on <code>/work</code> isn't found when running a job, it may be that it was previously installed to the default location of <code>$HOME/.local</code> which is not mounted on the compute nodes. This can be an issue as <code>pip</code> will reuse any modules found at this default location rather than reinstall them into a virtual environment. Thus, even if the virtual environment is on <code>/work</code>, a module you've asked for may actually be located on <code>/home</code>.</p>
+<p>You can check a module's install location and its dependencies with <code>pip show</code>, for example <code>pip show matplotlib</code>. You may then run <code>pip uninstall matplotlib</code> while no virtual environment is active to uninstall it from <code>$HOME/.local</code>, and then re-run <code>pip install matplotlib</code> while your virtual environment on <code>/work</code> is active to reinstall it there. You will need to do this for any modules installed on <code>/home</code> that will use either directly or indirectly. Remember you can check all your installed modules with <code>pip list</code>.</p>
 </div>
-<p>Next, create the virtual environment within a designated folder:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>--system-site-packages<span class="w"> </span>/work/x01/x01/auser/myvenv
+<h2 id="conda-on-archer2">Conda on ARCHER2</h2>
+<p>Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
+accessing software on many systems, including Cirrus. Although conda-based distributions can be used on Cirrus, 
+care is needed in how they are installed and configured so that the installation does not adversely effect your use
+of Cirrus. In particular, you should be careful of:</p>
+<ul>
+<li>Where you install conda on Cirrus</li>
+<li>Conda additions to shell configuration files such as <code>.bashrc</code></li>
+</ul>
+<p>We cover each of these points in more detail below.</p>
+<h3 id="conda-install-location">Conda install location</h3>
+<p>If you only need to use the files and executables from your conda installation on the login and data analysis nodes
+(via the <code>serial</code> QoS) then the best place to install conda is in your home directory structure - this will usually
+be the default install location provided by the installation script.</p>
+<p>If you need to access the files and executables from conda on the compute nodes then you will need to install to a 
+different location as the home file systems are not available on the compute nodes. There are two main options for
+using conda from Cirrus compute nodes:</p>
+<ol>
+<li>Use a conda container image </li>
+<li>Install conda on the work file system</li>
+</ol>
+<h4 id="use-a-conda-container-image">Use a conda container image</h4>
+<p>You can pull official conda-based container images from Dockerhub that you can use if you want just the standard
+set of Python modules that come with the distribution. For example, to get the latest Anaconda distribution as an 
+Apptainer container image on the Cirrus work file system, you would use (on an Cirrus login node, from the
+directory on the work file system where you want to store the container image):</p>
+<div class="highlight"><pre><span></span><code>apptainer build anaconda3.sif docker://continuumio/anaconda3
 </code></pre></div>
-<p>In our example, the environment is created within a <code>myvenv</code> folder
-located on <code>/work</code>, which means the environment will be accessible from
-the compute nodes. The <code>--system-site-packages</code> option ensures that this
-environment is based on the currently loaded <code>python</code> module. See
-<a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a> for more details.</p>
-<div class="highlight"><pre><span></span><code>extend-venv-activate<span class="w"> </span>/work/x01/x01/auser/myvenv
+<p>Once you have the container image, you can run scripts in it with a command like:</p>
+<div class="highlight"><pre><span></span><code>apptainer exec -B $PWD anaconda3.sif python my_script.py
 </code></pre></div>
-<p>The <code>extend-venv-activate</code> command ensures that your virtual
-environment's activate script loads and unloads the base <code>python</code> module
-when appropriate. You're now ready to activate your environment.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/work/x01/x01/auser/myvenv/bin/activate
+<p>As the container image is a single large file, you end up doing a single large read from the work file system rather
+than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
+detrimental impact on the wider file system performance for all users.</p>
+<p>We have pre-built a Apptainer container with the Anaconda distribution in on 
+ARCHER2. Users can access it at <code>$EPCC_CONTAINER_DIR/anaconda3.sif</code>. To run a Python
+script with the centrally-installed image, you can use:</p>
+<div class="highlight"><pre><span></span><code>apptainer exec -B $PWD $EPCC_CONTAINER_DIR/anaconda3.sif python my_script.py
 </code></pre></div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The path above uses a fictitious project code, <code>x01</code>, and username,
-<code>auser</code>. Please remember to replace those values with your actual
-project code and username. Alternatively, you could enter
-<code>${HOME/home/work}</code> in place of <code>/work/x01/x01/auser</code>. That command
-fragment expands <code>${HOME}</code> and then replaces the <code>home</code> part with
-<code>work</code>.</p>
+<p>If you want additional packages that are not available in the standard container images then
+you will need to build your own container images. If you need help to do this, then please
+contact the <a href="mailto:support@cirrus.ac.uk">Cirrus Service Desk</a></p>
+<h4 id="install-conda-on-the-work-file-system">Install conda on the work file system</h4>
+<p>To do this, specify an install location 
+in your directories on the work file system when prompted in the conda installation process.</p>
+<h3 id="conda-additions-to-shell-configuration-files">Conda additions to shell configuration files</h3>
+<p>During the install process most conda-based distributions will ask a question like:</p>
+<blockquote>
+<p>Do you wish the installer to initialize Miniconda3 by running conda init?</p>
+</blockquote>
+<p>If you are installing to the Cirrus work directories, you 
+should answer "no" to this question.</p>
+<p>Adding the initialisation to shell startup scripts (typically <code>.bashrc</code>) means that every time
+you login to Cirrus, the conda environment will try to initialise by reading lots of files
+within the conda installation. This approach was designed for the case where a user has installed
+conda on their personal device and so is the only user of the file system. For shared file systems
+such as those on Cirrus, this places a large load on the file system and will lead to you seeing 
+slow login times and slow response from your command line on Cirrus. It will also lead to degraded
+read/write performance from the work file systems for you and other users so should be avoided at 
+all costs.</p>
+<p>If you have previously installed a conda distribution and answered "yes" to the question about
+adding the initialisation to shell configuration files, you should edit your <code>~/.bashrc</code> file
+to remove the conda initialisation entries. This means deleting the lines that look something
+like:</p>
+<div class="highlight"><pre><span></span><code># &gt;&gt;&gt; conda initialize &gt;&gt;&gt;
+# !! Contents within this block are managed by &#39;conda init&#39; !!
+__conda_setup=&quot;$(&#39;/work/t01/t01/auser/miniconda3/bin/conda&#39; &#39;shell.bash&#39; &#39;hook&#39; 2&gt; /dev/null)&quot;
+if [ $? -eq 0 ]; then
+eval &quot;$__conda_setup&quot;
+else
+if [ -f &quot;/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh&quot; ]; then
+. &quot;/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh&quot;
+else
+export PATH=&quot;/work/t01/t01/auser/miniconda3/bin:$PATH&quot;
+fi
+fi
+unset __conda_setup
+# &lt;&lt;&lt; conda initialize &lt;&lt;&lt;
+</code></pre></div>
+<h2 id="running-python">Running Python</h2>
+<h3 id="example-serial-python-submission-script">Example serial Python submission script</h3>
+<div class="highlight"><pre><span></span><code>#!/bin/bash --login
+
+#SBATCH --job-name=python_test
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the Python module, ...
+module load cray-python
+
+# ..., or, if using local virtual environment
+source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
+
+# Run your Python program
+python python_test.py
+</code></pre></div>
+<h3 id="example-mpi4py-job-submission-script">Example mpi4py job submission script</h3>
+<p>Programs that have been parallelised with mpi4py can be run on the Cirrus compute nodes.
+Unlike the serial Python submission script however, we must launch the Python interpreter
+using <code>srun</code>. Failing to do so will result in Python running a single MPI rank only. </p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash --login
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=mpi4py_test
+#SBATCH --nodes=2
+#SBATCH --exclusive
+#SBATCH --ntasks-per-node=288
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:10:0
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the Python module, ...
+module load cray-python
+
+# ..., or, if using local virtual environment
+source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
+
+# Pass cpus-per-task setting to srun
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
+# Run your Python program
+#   Note that srun MUST be used to wrap the call to python,
+#   otherwise your code will run serially
+srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you have installed your own packages you will need to activate your local Python
+environment within your job submission script as shown at the end of
+<a href="./#installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</a>.</p>
 </div>
-<p>Installing packages to your local environment can now be done as
-follows.</p>
-<div class="highlight"><pre><span></span><code><span class="o">(</span>myvenv<span class="o">)</span><span class="w"> </span><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>&lt;package<span class="w"> </span>name&gt;
-</code></pre></div>
-<p>Running <code>pip</code> directly as in <code>pip install &lt;package name&gt;</code> will also
-work, but we show the <code>python -m</code> approach as this is consistent with
-the way the virtual environment was created. And when you have finished
-installing packages, you can deactivate your environment by issuing the
-<code>deactivate</code> command.</p>
-<div class="highlight"><pre><span></span><code><span class="o">(</span>myvenv<span class="o">)</span><span class="w"> </span><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>deactivate
-<span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$
-</code></pre></div>
-<p>The packages you have just installed locally will only be available once
-the local environment has been activated. So, when running code that
-requires these packages, you must first activate the environment, by
-adding the activation command to the submission script, as shown below.</p>
-<details><summary><b>submit-myvenv.slurm</b></summary>
+<!-- Comment out until spindle is available
 
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+### Running Python at scale
 
-<span class="c1">#SBATCH --job-name=myvenv</span>
-<span class="c1">#SBATCH --time=00:20:00</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --partition=gpu</span>
-<span class="c1">#SBATCH --qos=gpu</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --gres=gpu:4</span>
+The file system metadata server may become overloaded when running a parallel Python script over many fully populated nodes (i.e., 288 MPI ranks per node).
+Performance degrades due to the IO operations that accompany a high volume of Python import statements. Typically, each import will first require the module or
+library to be located by searching a number of file paths before the module is loaded into memory. Such a workload scales as *N<sub>p</sub>* x *N<sub>lib</sub>* x *N<sub>path</path>* ,
+where *N<sub>p</sub>* is the number of parallel processes, *N<sub>lib</sub>* is the number of libraries imported and *N<sub>path</path>* the number of file paths searched. And so, in this way
+much time can be lost during the initial phase of a large Python job, not to mention the fact that the IO contention will be impacting other users of the system.
 
-<span class="nb">source</span><span class="w"> </span>/work/x01/x01/auser/myvenv/bin/activate
+[Spindle](https://computing.llnl.gov/projects/spindle) is a tool for improving the library-loading performance of dynamically linked HPC applications. It provides a
+mechanism for scalable loading of shared libraries, executables and Python files from a shared file system at scale without turning the file system into a bottleneck.
+This is achieved by caching libraries or their locations within node memory. Spindle takes a pure user-space approach: users do not need to configure new file systems,
+load particular OS kernels or build special system components. The tool operates on existing binaries &mdash; no application modification or special build flags are required.
 
-srun<span class="w"> </span>--ntasks<span class="o">=</span><span class="m">8</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">10</span><span class="w"> </span>myvenv-script.py
-</code></pre></div>
+The script below shows how to run Spindle with your Python code.
 
-</details>
-<p><br></p>
-<p>Lastly, the environment being extended does not have to come from one of
-the centrally-installed <code>python</code> modules. You could just as easily
-create a local virtual environment based on one of the Machine Learning
-(ML) modules, e.g., <code>tensorflow</code> or <code>pytorch</code>. This means you would avoid
-having to install ML packages within your local area. Each of those ML
-modules is based on a <code>python</code> module. For example, <code>tensorflow/2.13.0-gpu</code>
-is itself an extension of <code>python/3.10.8-gpu</code>.</p>
-<h2 id="installing-your-own-python-packages-with-conda">Installing your own Python packages (with conda)</h2>
-<p>This section shows you how to setup a local custom Python environment
-such that it duplicates a centrally-installed <code>python</code> module, ensuring
-that your local <code>conda</code> environment will contain packages that are
-compatible with the Cirrus system.</p>
-<p>Select the base Python by loading the <code>python</code> module you wish to
-duplicate, e.g., <code>python/3.9.13-gpu</code> (you can run <code>module avail python</code>
-to list all the available <code>python</code> modules).</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>python/3.9.13
-</code></pre></div>
-<p>Next, create the folder for holding your <code>conda</code> environments. This
-folder should be on the <code>/work</code> file system as <code>/home</code> is not accessible
-from the compute nodes.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">CONDA_ROOT</span><span class="o">=</span>/work/x01/x01/auser/condaenvs
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>
-</code></pre></div>
-<p>The following commands tell <code>conda</code> where to save your custom
-environments and packages.</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>config<span class="w"> </span>--prepend<span class="w"> </span>envs_dirs<span class="w"> </span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>/envs
-conda<span class="w"> </span>config<span class="w"> </span>--prepend<span class="w"> </span>pkgs_dirs<span class="w"> </span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>/pkgs
-</code></pre></div>
-<p>The <code>conda config</code> commands are executed just once and the configuration
-details are held in a <code>.condarc</code> file located in your home directory.
-You now need to move this <code>.condarc</code> file to a directory visible from
-the compute nodes.</p>
-<div class="highlight"><pre><span></span><code>mv<span class="w"> </span>~/.condarc<span class="w"> </span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>
-</code></pre></div>
-<p>You can now activate the <code>conda</code> configuration.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CONDARC</span><span class="o">=</span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>/.condarc
-<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>conda<span class="w"> </span>shell.bash<span class="w"> </span>hook<span class="k">)</span><span class="s2">&quot;</span>
-</code></pre></div>
-<p>These two lines need to be called each time you want to use your virtual
-<code>conda</code> environment. The next command creates that virtual environment.</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>--clone<span class="w"> </span>base<span class="w"> </span>--name<span class="w"> </span>myvenv
-</code></pre></div>
-<p>The above creates an environment called <code>myvenv</code> that will hold the same
-packages provided by the base <code>python</code> module. As this command involves
-a significant amount of file copying and downloading, it may take a long
-time to complete. When it has completed please activate the local
-<code>myvenv</code> conda environment.</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>myvenv
-</code></pre></div>
-<p>You can now install packages using
-<code>conda install -p ${CONDA_ROOT}/envs/myvenv &lt;package_name&gt;</code>. And you can
-see the packages currently installed in the active environment with the
-command <code>conda list</code>. After all packages have been installed, simply run
-<code>conda deactivate</code> twice in order to restore the original command prompt.</p>
-<div class="highlight"><pre><span></span><code><span class="o">(</span>myvenv<span class="o">)</span><span class="w"> </span><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>conda<span class="w"> </span>deactivate
-<span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$<span class="w"> </span>conda<span class="w"> </span>deactivate
-<span class="o">[</span>auser@cirrus-login1<span class="w"> </span>auser<span class="o">]</span>$
-</code></pre></div>
-<p>The submission script below shows how to use the conda environment
-within a job running on the compute nodes.</p>
-<details><summary><b>submit-myvenv.slurm</b></summary>
+<div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=128
+...
 
-<span class="c1">#SBATCH --job-name=myvenv</span>
-<span class="c1">#SBATCH --time=00:20:00</span>
-<span class="c1">#SBATCH --exclusive</span>
-<span class="c1">#SBATCH --partition=gpu</span>
-<span class="c1">#SBATCH --qos=gpu</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --gres=gpu:4</span>
+module load cray-python
+module load spindle/0.13
 
-module<span class="w"> </span>load<span class="w"> </span>python/3.9.13
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
-<span class="nv">CONDA_ROOT</span><span class="o">=</span>/work/x01/x01/auser/condaenvs
-<span class="nb">export</span><span class="w"> </span><span class="nv">CONDARC</span><span class="o">=</span><span class="si">${</span><span class="nv">CONDA_ROOT</span><span class="si">}</span>/.condarc
-<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>conda<span class="w"> </span>shell.bash<span class="w"> </span>hook<span class="k">)</span><span class="s2">&quot;</span>
-
-conda<span class="w"> </span>activate<span class="w"> </span>myvenv
-
-srun<span class="w"> </span>--ntasks<span class="o">=</span><span class="m">8</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">10</span><span class="w"> </span>myvenv-script.py
+spindle --slurm --python-prefix=/opt/cray/pe/python/${CRAY_PYTHON_LEVEL} \      
+    srun --overlap --distribution=block:block --hint=nomultithread \
+        python mpi4py_script.py
 </code></pre></div>
 
-</details>
-<p><br></p>
-<p>You can see that using <code>conda</code> is less convenient compared to <code>pip</code>. In
-particular, the centrally-installed Python packages on copied in to the
-local <code>conda</code> environment, consuming some of the disk space allocated to
-your project. Secondly, activating the <code>conda</code> environment within a
-submission script is more involved: five commands are required
-(including an explicit load for the base <code>python</code> module), instead of
-the single <code>source</code> command that is sufficient for a <code>pip</code> environment.</p>
-<p>Further, <code>conda</code> cannot be used if the base environment is one of the
-Machine Learning (ML) modules, as <code>conda</code> is not flexible enough to
-gather Python packages from both the ML and base <code>python</code> modules (e.g.,
-the ML module <code>pytorch/1.13.1-gpu</code> is itself based on
-<code>python/3.10.8-gpu</code>, and so <code>conda</code> will only duplicate packages
-provided by the <code>python</code> module and not the ones supplied by <code>pytorch</code>).</p>
-<h2 id="using-jupyterlab-on-cirrus">Using JupyterLab on Cirrus</h2>
-<p>It is possible to view and run JupyterLab on both the login and compute
-nodes of Cirrus. Please note, you can test notebooks on the login nodes,
-but please don’t attempt to run any computationally intensive work (such
-jobs will be killed should they reach the login node CPU limit).</p>
-<p>If you want to run your JupyterLab on a compute node, you will need to
-enter an <a href="../batch/#interactive-jobs">interactive session</a>; otherwise
-you can start from a login node prompt.</p>
+The `--python-prefix` argument can be set to a list of colon-separated paths if necessary. In the example above,
+the `CRAY_PYTHON_LEVEL` environment variable is set as a conseqeunce of loading `cray-python`.
+
+!!! note
+    The `srun --overlap` option is required for Spindle as the version of Slurm on ARCHER2 is newer than 20.11.
+
+-->
+
+<h2 id="using-jupyterlab-on-archer2">Using JupyterLab on ARCHER2</h2>
+<p>It is possible to view and run Jupyter notebooks from both login nodes 
+and compute nodes on Cirrus.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can test such notebooks on the login nodes, but please do not attempt to
+run any computationally intensive work. Jobs may get killed once they hit a
+CPU limit on login nodes.</p>
+</div>
+<p>Please follow these steps.</p>
 <ol>
 <li>
-<p>As described above, load the Anaconda module on Cirrus using
-    <code>module load anaconda3</code>.</p>
+<p>Install JupyterLab in your work directory.
+   <div class="highlight"><pre><span></span><code>module load cray-python
+export PYTHONUSERBASE=/work/t01/t01/auser/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+# source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate  # If using a virtualenvironment uncomment this line and remove the --user flag from the next
+
+pip install --user jupyterlab
+</code></pre></div></p>
 </li>
 <li>
-<p>Run <code>export JUPYTER_RUNTIME_DIR=$(pwd)</code>. Jobs running in the
-    batch system may also need to set both <code>JUPYTER_CONFIG_DIR</code> and
-    <code>JUPYTER_DATA_DIR</code> is the same way. By default, these are related to
-    <code>${HOME}</code>, which is not available on the back end.</p>
+<p>If you want to test JupyterLab on the login node please go straight to step 3.
+   To run your Jupyter notebook on a compute node, you first need to run an interactive session.
+   <div class="highlight"><pre><span></span><code>srun --nodes=1 --exclusive --time=00:20:00 --account=&lt;your_budget&gt; \
+     --partition=standard --qos=short \
+     --pty /bin/bash
+</code></pre></div>
+   Your prompt will change to something like below.
+   <div class="highlight"><pre><span></span><code>[auser@cs-n0034:/tmp]$
+</code></pre></div>
+   In this case, the node id is <code>cs-n0034</code>. Now execute the following on the compute node.
+   <div class="highlight"><pre><span></span><code>cd /work/t01/t01/auser # Update the path to your work directory
+export PYTHONUSERBASE=$(pwd)/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+export HOME=$(pwd)
+module load cray-python
+# source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate  # If using a virtualenvironment uncomment this line
+</code></pre></div></p>
 </li>
 <li>
-<p>Start the JupyterLab server by running
-    <code>jupyter lab --ip=0.0.0.0 --no-browser</code></p>
+<p>Run the JupyterLab server.
+   <div class="highlight"><pre><span></span><code>export JUPYTER_RUNTIME_DIR=$(pwd)
+jupyter lab --ip=0.0.0.0 --no-browser
+</code></pre></div>
+   Once it's started, you will see a URL printed in the terminal window of 
+   the form <code>http://127.0.0.1:&lt;port_number&gt;/lab?token=&lt;string&gt;</code>; we'll need this URL for
+   step 6.</p>
+</li>
+<li>
+<p>Please skip this step if you are connecting from a machine running Windows.
+   Open a new terminal window on your laptop and run the following command.
+   <div class="highlight"><pre><span></span><code>ssh &lt;username&gt;@login.cirrus.ac.uk -L&lt;port_number&gt;:&lt;node_id&gt;:&lt;port_number&gt;
+</code></pre></div>
+   where <code>&lt;username&gt;</code> is your username, and <code>&lt;node_id&gt;</code> is the id of the node you're 
+   currently on (for a login node, this will be <code>login01</code>, or similar; on a compute 
+   node, it will be a mix of numbers and letters). In our example, <code>&lt;node_id&gt;</code>
+   is <code>cs-n0034</code>. Note, please use the same port number as that shown in the URL of
+   step 3. This number may vary, likely values are 8888 or 8889.</p>
+</li>
+<li>
+<p>Please skip this step if you are connecting from Linux or macOS. If you are connecting from Windows, you should use MobaXterm to configure an SSH tunnel as follows.</p>
 <ul>
-<li>once it’s started, you will see some lines resembling the
-  following output.</li>
+<li>Click on the <code>Tunnelling</code> button above the MobaXterm terminal. Create a new tunnel by clicking on <code>New SSH tunnel</code> in the window that opens.</li>
+<li>In the new window that opens, make sure the <code>Local port forwarding</code> radio button is selected.</li>
+<li>In the <code>forwarded port</code> text box on the left under <code>My computer with MobaXterm</code>, enter the port number indicated in the JupyterLab server output (e.g., 8888 or 8890).</li>
+<li>In the three text boxes on the bottom right under <code>SSH server</code> enter <code>login.archer2.ac.uk</code>, your ARCHER2 username and then <code>22</code>.</li>
+<li>At the top right, under <code>Remote server</code>, enter the id of the login or compute node running the JupyterLab server and the associated port number.</li>
+<li>Click on the <code>Save</code> button.</li>
+<li>In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it.</li>
+<li>Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to ARCHER2. You should tell it to use the same <code>.ppk</code> private key that you normally use when connecting to ARCHER2.</li>
+<li>The tunnel should now be configured. Click on the small start button (like a play '&gt;' icon) for the new tunnel to open it. You'll be asked to enter your ARCHER2 account password -- please do so.</li>
 </ul>
-<!-- -->
-<pre><code>Or copy and paste one of these URLs:
-    ...
- or http://127.0.0.1:8888/lab?token=&lt;string&gt;
-</code></pre>
-<p>You will need the URL shown above for step 6.</p>
 </li>
 <li>
-<p>Please skip this step if you are connecting from Windows. If you are
-    connecting from Linux or macOS, open a new terminal window, and run
-    the following command.</p>
-<pre><code>ssh &lt;username&gt;@login.cirrus.ac.uk -L&lt;port_number&gt;:&lt;node_id&gt;:&lt;port_number&gt;
-</code></pre>
-<p>where \&lt;username&gt; is your username, \&lt;port_number&gt; is as shown in
-the URL from the Jupyter output and \&lt;node_id&gt; is the name of the
-node we’re currently on. On a login node, this will be
-<code>cirrus-login1</code>, or similar; on a compute node, it will be a mix of
-numbers and letters such as <code>r2i5n5</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If, when you connect in the new terminal, you see a message of the
-form <span class="title-ref">channel_setup_fwd_listener_tcpip:
-cannot listen to port: 8888</span>, it means port 8888 is already in
-use. You need to go back to step 3 (kill the existing jupyter lab)
-and retry with a new explicit port number by adding the <code>--port=N</code>
-option. The port number <code>N</code> can be in the range 5000-65535. You
-should then use the same port number in place of 8888.</p>
-</div>
-</li>
-<li>
-<p>Please skip this step if you are connecting from Linux or macOS. If
-    you are connecting from Windows, you should use MobaXterm to
-    configure an SSH tunnel as follows.</p>
-<p>5.1. Click on the <code>Tunnelling</code> button above the MobaXterm terminal.
-Create a new tunnel by clicking on <code>New SSH tunnel</code> in the window
-that opens.</p>
-<p>5.2. In the new window that opens, make sure the
-<code>Local port forwarding</code> radio button is selected.</p>
-<p>5.3. In the <code>forwarded port</code> text box on the left under
-<code>My computer with MobaXterm</code>, enter the port number indicated in the
-Jupyter server output.</p>
-<p>5.4. In the three text boxes on the bottom right under <code>SSH server</code>
-enter <code>login.cirrus.ac.uk</code>, your Cirrus username, and then <code>22</code>.</p>
-<p>5.5. At the top right, under <code>Remote server</code>, enter the name of the
-Cirrus login or compute node that you noted earlier followed by the
-port number (e.g. <span class="title-ref">8888</span>).</p>
-<p>5.6. Click on the <code>Save</code> button.</p>
-<p>5.7. In the tunnelling window, you will now see a new row for the
-settings you just entered. If you like, you can give a name to the
-tunnel in the leftmost column to identify it. Click on the small key
-icon close to the right for the new connection to tell MobaXterm
-which SSH private key to use when connecting to Cirrus. You should
-tell it to use the same <code>.ppk</code> private key that you normally use.</p>
-<p>5.8. The tunnel should now be configured. Click on the small start
-button (like a play <code>&gt;</code> icon) for the new tunnel to open it. You'll
-be asked to enter your Cirrus password -- please do so.</p>
-</li>
-<li>
-<p>Now, if you open a browser window on your local machine, you should
-    be able to navigate to the URL from step 3, and this should display
-    the JupyterLab server.</p>
-<ul>
-<li>Please note, you will get a connection error if you haven't used
-  the correct node name in step 4 or 5.</li>
-</ul>
+<p>Now, if you open a browser window locally, you should be able to navigate to the URL
+   from step 3, and this should display the JupyterLab server. If JupyterLab is running
+   on a compute node, the notebook will be available for the length of the interactive
+   session you have requested.</p>
 </li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you have extended a central Python venv following the
-instructions about for <a href="#installing-your-own-python-packages-(with-pip)">Installing your own Python packages
-(with pip)</a>,
-Jupyter Lab will load the central ipython kernel, not the one
-for your venv. To enable loading of the ipython kernel for your
-venv from within Jupyter Lab, first install the ipykernel module
-and then use this to install the kernel for your venv.
-<div class="highlight"><pre><span></span><code>source /work/x01/x01/auser/myvenv/bin/activate
-python -m pip install ipykernel
-python -m ipykernel install --user --name=myvenv
-</code></pre></div>
-changing placeholder account and username as appropriate.
-Thereafter, launch Jupyter Lab as above and select the <code>myvenv</code>
-kernel.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please do not use the other http address given by the JupyterLab output,
+the one formatted <code>http://&lt;node_id&gt;:&lt;port_number&gt;/lab?token=&lt;string&gt;</code>. Your local
+browser will not recognise the <code>&lt;node_id&gt;</code> part of the address.</p>
 </div>
-<p>If you are on a compute node, the JupyterLab server will be available
-for the length of the interactive session you have requested.</p>
-<p>You can also run Jupyter sessions using the centrally-installed
-Miniconda3 modules available on Cirrus. For example, the following link
-provides instructions for how to setup a Jupyter server on a GPU node.</p>
-<p><a href="https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel">https://github.com/hpc-uk/build-instructions/tree/main/pyenvs/ipyparallel</a></p>
+<!-- Comment out until Dask is tested
+
+## Using Dask Job-Queue
+
+The Dask-jobqueue project makes it easy to deploy Dask on Cirrus. 
+You can find more information in 
+[the Dask Job-Queue documentation](http://jobqueue.dask.org/en/latest/).
+
+Please follow these steps:
+
+1. Install Dask-Jobqueue
+
+<div class="highlight"><pre><span></span><code>module load cray-python
+export PYTHONUSERBASE=/work/t01/t01/auser/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+
+pip install --user dask-jobqueue --upgrade
+</code></pre></div>
+
+2. Using Dask
+
+Dask-jobqueue creates a Dask Scheduler in the Python process where the cluster
+object is instantiated. A script for running dask jobs on Cirrus
+might look something like this:
+
+<div class="highlight"><pre><span></span><code>from dask_jobqueue import SLURMCluster
+cluster = SLURMCluster(cores=288, 
+                       processes=16,
+                       memory=&#39;768GB&#39;,
+                       queue=&#39;standard&#39;,
+                       header_skip=[&#39;--mem&#39;],
+                       job_extra=[&#39;--qos=&quot;standard&quot;&#39;],
+                       python=&#39;srun python&#39;,
+                       project=&#39;z19&#39;,
+                       walltime=&quot;01:00:00&quot;,
+                       shebang=&quot;#!/bin/bash --login&quot;,
+                       local_directory=&#39;$PWD&#39;,
+                       interface=&#39;hsn0&#39;,
+                       env_extra=[&#39;module load cray-python&#39;,
+                                  &#39;export PYTHONUSERBASE=/work/t01/t01/auser/.local/&#39;,
+                                  &#39;export PATH=$PYTHONUSERBASE/bin:$PATH&#39;,
+                                  &#39;export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH&#39;])
+
+
+
+cluster.scale(jobs=2)    # Deploy two single-node jobs
+
+from dask.distributed import Client
+client = Client(cluster)  # Connect this local process to remote workers
+
+# wait for jobs to arrive, depending on the queue, this may take some time
+import dask.array as da
+x = …              # Dask commands now use these distributed resources
+</code></pre></div>
+
+This script can be run on the login nodes and it submits the Dask jobs
+to the job queue. Users should ensure that the computationally intensive
+work is done with the Dask commands which run on the compute nodes.
+
+The cluster object parameters specify the characteristics for running on a single compute node.
+The header_skip option is required as we are running on exclusive nodes where you should not
+specify the memory requirements, however Dask requires you to supply this option.
+
+Jobs are be deployed with the cluster.scale command, where the jobs option sets
+the number of single node jobs requested. Job scripts are generated
+(from the cluster object) and these are submitted to the queue to begin 
+running once the resources are available. You can check the status of the jobs by 
+running `squeue -u $USER` in a separate terminal.
+
+If you wish to see the generated job script you can use:
+
+<div class="highlight"><pre><span></span><code>print(cluster.job_script())
+</code></pre></div>
+-->
 
 
 
