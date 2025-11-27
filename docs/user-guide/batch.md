@@ -502,7 +502,7 @@ options:
 See above for a more detailed discussion of the different `sbatch`
 options.
 
-#### Note on MPT task placement
+#### Note task placement
 
 By default, Slurm will distribute processss to physical cores (cores
 0-35 on NUMA region 0, cores 36-71 on NUMA region 1, etc.) in a cyclic fashion. That
