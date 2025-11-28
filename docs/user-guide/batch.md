@@ -417,13 +417,18 @@ also allows you to specify the distribution and placement (or *pinning*)
 of the parallel processes and threads.
 
 If you are running MPI jobs that do not also use OpenMP threading, then
-you should use `srun` with no additional options. `srun` will use the
-specification of nodes and tasks from your job script, `sbatch` or
-`salloc` command to launch the correct number of parallel tasks.
+you typically use `srun` with the following options:
 
-If you are using OpenMP threads then you will generally add the
-`--cpu-bind=cores` option to `srun` to bind threads to cores to obtain
-the best performance.
+- `--hint=nomultithread` - Use physical cores only and ignore SMT on logical
+  cores
+- `--distribution=block:block` - Place parallel (usually MPI) processes sequentially
+  on cores on the node. This typically gives the best parallel performance for
+  MPI collective communications. 
+
+`srun` will use the specification of nodes and tasks from your job script, `sbatch` or
+`salloc` command to launch the correct number of parallel tasks so these should not
+be specified again for the `srun` command unless you want to use resources in a 
+different way from the original specification.
 
 !!! Note
     See the example job submission scripts below for examples of using
@@ -569,27 +574,28 @@ cd $SLURM_SUBMIT_DIR
 export OMP_NUM_THREADS=12
 export OMP_PLACES=cores
 
+# Make sure the cpus-per-task option is passed to srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # Launch the parallel job
 #   Using 48 MPI processes
 #   24 MPI processes per node
 #   12 OpenMP threads per MPI process
 
-srun --cpu-bind=cores --cpus-per-task=12 ./my_mixed_executable.x arg1 arg2
+srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
 ```
 
-In the above we add `--cpus-per-task=12` to the `srun` command to be
-consistent with that specified to `#SBATCH`. This is required to ensure
+In the above we add `export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK` to
+the job script. This is required to ensure
 that the correct assignment of threads to physical cores takes place.
-The reason for this duplication is that the value specified to `SBATCH`
+The reason for this is that the value specified to `SBATCH`
 does not propagate automatically to `srun`. The alternative is to
-specify:
+specify an additional option to `srun`, e.g.:
 
 ```
-export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+srun --hint=nomultithread --distribution=block:block --cpus-per-task=12
 ```
 
-in the script before the `srun` command. This will allow the `--cpus-per-task` value specified at submission (`SBATCH`) to propagate to `srun`
-(the default value would be `--cpus-per-task=1` at the `srun` stage).
 Failure to use either of these
 approaches may result in threads using the same physical core, which
 will cause a significant degradation in performance compared with
@@ -629,7 +635,7 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 # Launch the parallel job
 #   Using 12 threads
 #   srun picks up the distribution from the sbatch options
-srun --cpu-bind=cores ./my_openmp_executable.x
+srun --hint=nomultithread --distribution=block:block ./my_openmp_executable.x
 ```
 
 This will run your executable `my_openmp_executable.x` in parallel on 12
@@ -688,7 +694,7 @@ cd $SLURM_SUBMIT_DIR
 #   using threading.
 export OMP_NUM_THREADS=1
 
-srun /path/to/exe $SLURM_ARRAY_TASK_ID
+srun --hint=nomultithread --distribution=block:block /path/to/exe $SLURM_ARRAY_TASK_ID
 ```
 
 ### Submitting a job array
@@ -810,7 +816,7 @@ resources available are those specified in the original `salloc`
 command. For example, with the above allocation,
 
 ```bash
-[user@login04 ~]$ srun ./mpi-code.out
+[user@login04 ~]$ srun --hint=nomultithread --distribution=block:block ./mpi-code.out
 ```
 
 will run 576 MPI tasks per node on two nodes.
@@ -919,7 +925,7 @@ export OMP_NUM_THREADS=1
 
 # Launch the serial job
 #   Using 1 thread
-srun --cpu-bind=cores ./my_serial_executable.x
+srun ./my_serial_executable.x
 ```
 
 !!! Note
