@@ -2858,12 +2858,18 @@ across the compute nodes. As well as launching the executable, <code>srun</code>
 also allows you to specify the distribution and placement (or <em>pinning</em>)
 of the parallel processes and threads.</p>
 <p>If you are running MPI jobs that do not also use OpenMP threading, then
-you should use <code>srun</code> with no additional options. <code>srun</code> will use the
-specification of nodes and tasks from your job script, <code>sbatch</code> or
-<code>salloc</code> command to launch the correct number of parallel tasks.</p>
-<p>If you are using OpenMP threads then you will generally add the
-<code>--cpu-bind=cores</code> option to <code>srun</code> to bind threads to cores to obtain
-the best performance.</p>
+you typically use <code>srun</code> with the following options:</p>
+<ul>
+<li><code>--hint=nomultithread</code> - Use physical cores only and ignore SMT on logical
+  cores</li>
+<li><code>--distribution=block:block</code> - Place parallel (usually MPI) processes sequentially
+  on cores on the node. This typically gives the best parallel performance for
+  MPI collective communications. </li>
+</ul>
+<p><code>srun</code> will use the specification of nodes and tasks from your job script, <code>sbatch</code> or
+<code>salloc</code> command to launch the correct number of parallel tasks so these should not
+be specified again for the <code>srun</code> command unless you want to use resources in a 
+different way from the original specification.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>See the example job submission scripts below for examples of using
@@ -2993,24 +2999,25 @@ affinity settings.</p>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">12</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
+<span class="c1"># Make sure the cpus-per-task option is passed to srun</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
 <span class="c1"># Launch the parallel job</span>
 <span class="c1">#   Using 48 MPI processes</span>
 <span class="c1">#   24 MPI processes per node</span>
 <span class="c1">#   12 OpenMP threads per MPI process</span>
 
-<span class="nb">srun</span><span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">12</span><span class="w"> </span>./my_mixed_executable.x<span class="w"> </span>arg1<span class="w"> </span>arg2
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./my_mixed_executable.x<span class="w"> </span>arg1<span class="w"> </span>arg2
 </code></pre></div>
-<p>In the above we add <code>--cpus-per-task=12</code> to the <code>srun</code> command to be
-consistent with that specified to <code>#SBATCH</code>. This is required to ensure
+<p>In the above we add <code>export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK</code> to
+the job script. This is required to ensure
 that the correct assignment of threads to physical cores takes place.
-The reason for this duplication is that the value specified to <code>SBATCH</code>
+The reason for this is that the value specified to <code>SBATCH</code>
 does not propagate automatically to <code>srun</code>. The alternative is to
-specify:</p>
-<div class="highlight"><pre><span></span><code>export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+specify an additional option to <code>srun</code>, e.g.:</p>
+<div class="highlight"><pre><span></span><code>srun --hint=nomultithread --distribution=block:block --cpus-per-task=12
 </code></pre></div>
-<p>in the script before the <code>srun</code> command. This will allow the <code>--cpus-per-task</code> value specified at submission (<code>SBATCH</code>) to propagate to <code>srun</code>
-(the default value would be <code>--cpus-per-task=1</code> at the <code>srun</code> stage).
-Failure to use either of these
+<p>Failure to use either of these
 approaches may result in threads using the same physical core, which
 will cause a significant degradation in performance compared with
 that expected.</p>
@@ -3045,7 +3052,7 @@ nodes and 12 threads for 20 minutes would look like:</p>
 <span class="c1"># Launch the parallel job</span>
 <span class="c1">#   Using 12 threads</span>
 <span class="c1">#   srun picks up the distribution from the sbatch options</span>
-<span class="nb">srun</span><span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>./my_openmp_executable.x
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./my_openmp_executable.x
 </code></pre></div>
 <p>This will run your executable <code>my_openmp_executable.x</code> in parallel on 12
 threads. Slurm will allocate 1 CCD to your job and srun will place 12
@@ -3094,7 +3101,7 @@ per core and specifies 4 hours maximum runtime per subjob:</p>
 <span class="c1">#   using threading.</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-<span class="nb">srun</span><span class="w"> </span>/path/to/exe<span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>/path/to/exe<span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
 </code></pre></div>
 <h3 id="submitting-a-job-array">Submitting a job array</h3>
 <p>Job arrays are submitted using <code>sbatch</code> in the same way as for standard
@@ -3177,7 +3184,7 @@ salloc:<span class="w"> </span>Relinquishing<span class="w"> </span>job<span cla
 compute nodes by issuing the <code>srun</code> command in the normal way. The
 resources available are those specified in the original <code>salloc</code>
 command. For example, with the above allocation,</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>./mpi-code.out
+<div class="highlight"><pre><span></span><code><span class="o">[</span>user@login04<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./mpi-code.out
 </code></pre></div>
 <p>will run 576 MPI tasks per node on two nodes.</p>
 <p>If your allocation reaches its time limit, it will automatically be
@@ -3274,7 +3281,7 @@ For example, a serial job submission script could look like:</p>
 
 <span class="c1"># Launch the serial job</span>
 <span class="c1">#   Using 1 thread</span>
-srun<span class="w"> </span>--cpu-bind<span class="o">=</span>cores<span class="w"> </span>./my_serial_executable.x
+srun<span class="w"> </span>./my_serial_executable.x
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
