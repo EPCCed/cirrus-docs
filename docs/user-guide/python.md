@@ -122,7 +122,7 @@ srun --distribution=block:block --hint=nomultithread python myvenv-script.py
 
     You can check a module's install location and its dependencies with `pip show`, for example `pip show matplotlib`. You may then run `pip uninstall matplotlib` while no virtual environment is active to uninstall it from `$HOME/.local`, and then re-run `pip install matplotlib` while your virtual environment on `/work` is active to reinstall it there. You will need to do this for any modules installed on `/home` that will use either directly or indirectly. Remember you can check all your installed modules with `pip list`.
 
-## Conda on ARCHER2
+## Conda on Cirrus
 
 Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
 accessing software on many systems, including Cirrus. Although conda-based distributions can be used on Cirrus, 
@@ -182,8 +182,8 @@ contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk)
 
 #### Install conda on the work file system
 
-To do this, specify an install location 
-in your directories on the work file system when prompted in the conda installation process.
+To do this, specify an install location in your directories on the work file system when
+prompted in the conda installation process.
 
 ### Conda additions to shell configuration files
 
@@ -225,6 +225,11 @@ unset __conda_setup
 # <<< conda initialize <<<
 ```
 
+The effect of not having this section in your `~/.bashrc` is that conda must be initialised
+manually and the specific conda environment must be activated before it can be used. The 
+submission script below shows how this can be done. It can also be done with the same commands 
+in an interactive shell.
+
 
 ## Running Python
 
@@ -245,8 +250,12 @@ unset __conda_setup
 # Load the Python module, ...
 module load cray-python
 
-# ..., or, if using local virtual environment
+# ..., or, if using a python venv with user-installed packages
 source <<path to virtual environment>>/bin/activate
+
+# ..., or, if using a conda environment installed on the /work filesystem
+eval "$('/work/t01/t01/auser/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+conda activate mycondaenv
     
 # Run your Python program
 python python_test.py
