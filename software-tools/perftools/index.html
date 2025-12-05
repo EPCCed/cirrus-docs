@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../likwid/">
+      
+      
+        <link rel="next" href="../spack/">
       
       
         
@@ -19,7 +23,7 @@
     
     
       
-        <title>Ddt - Cirrus User Documentation</title>
+        <title>PerfTools - Cirrus User Documentation</title>
       
     
     
@@ -80,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#debugging-using-linaro-ddt" class="md-skip">
+        <a href="#profiling-using-perftools" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ddt
+              PerfTools
             
           </span>
         </div>
@@ -1202,18 +1206,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1234,7 +1240,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1252,14 +1258,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../spack/" class="md-nav__link">
+      <a href="../forge/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Spack
+    Forge
   
 
     
@@ -1301,6 +1307,298 @@
 
               
             
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PerfTools
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PerfTools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-a-profile-with-pat_run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating a profile with pat_run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating a profile with pat_run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#existing-executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing executable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profiling-following-re-compilation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profiling following re-compilation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profiling following re-compilation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perftools-lite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        perftools-lite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perftools-lite-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        perftools-lite-events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewing-profiling-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewing profiling data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Viewing profiling data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-pat_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using pat_report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-apprentice-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the Apprentice GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-perftools-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General perftools instrumentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="General perftools instrumentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sampling-via-pat_build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling via pat_build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targeted-event-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targeted event profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-event-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual event specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-counter-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware counter groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further information
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1325,6 +1623,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1333,10 +1633,188 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#debugging-using-linaro-ddt" class="md-nav__link">
+  <a href="#generating-a-profile-with-pat_run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Debugging using Linaro DDT
+        Generating a profile with pat_run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating a profile with pat_run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#existing-executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing executable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profiling-following-re-compilation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profiling following re-compilation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profiling following re-compilation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perftools-lite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        perftools-lite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perftools-lite-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        perftools-lite-events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewing-profiling-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewing profiling data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Viewing profiling data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-pat_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using pat_report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-apprentice-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the Apprentice GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-perftools-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General perftools instrumentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="General perftools instrumentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sampling-via-pat_build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling via pat_build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targeted-event-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targeted event profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-event-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual event specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-counter-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware counter groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further information
       
     </span>
   </a>
@@ -1363,13 +1841,390 @@
   
 
 
-  <h1>Ddt</h1>
+<h1 id="profiling-using-perftools">Profiling using PerfTools</h1>
+<p>In this section, we discuss the HPE Cray PerfTools performance
+measurement and analysis tool, accessed via various <code>perftools</code> modules.
+These tools are also referred to as CrayPat-lite or CrayPat (from an
+earlier name Performance Analysis Toolkit).</p>
+<p>PerfTools can be used with compiled programs (typically C/C++ or Fortran),
+interpreted python, and for executables where the source code is not
+available. The PerfTools modules admit a very general and flexible
+approach to profiling, depending on the level of user experience. We
+start with the least invasive approach, and then describe methods
+requiring increasing levels of user intervention.</p>
+<h2 id="generating-a-profile-with-pat_run">Generating a profile with <code>pat_run</code></h2>
+<p>For an existing executable, or for a python script, a simple profile
+can be generated with minimal intervention using <code>pat_run</code>. This is
+also relevant for executables for which the source code is not
+available (but are dynamically linked).</p>
+<h3 id="existing-executable">Existing executable</h3>
+<ol>
+<li>
+<p>Make sure the <code>perftools-base</code> module is loaded. This provides the
+   common underlying functionality of PerfTools, and should be present
+   by default.</p>
+</li>
+<li>
+<p>Run the application in the usual way, but insert <code>pat_run</code> just
+   before the executable name:
+   <div class="highlight"><pre><span></span><code>srun --ntasks=36 pat_run ./myapp.x
+</code></pre></div></p>
+</li>
+<li>
+<p>At the start of execution, a new directory will appear in the current
+   working directory which contains
+   the profiling data files. The default directory name is that of the
+   executable followed by a unique series of numbers for each profiling
+   instance, e.g., <code>myapp.x+2048522-1010655545s</code>.</p>
+</li>
+<li>
+<p>To produce a summary report of the profiling data, run <code>pat_report</code>
+   with the new directory name as the argument, e.g.,
+   <div class="highlight"><pre><span></span><code>pat_report myapp.x+2048522-1010655545s
+</code></pre></div></p>
+</li>
+</ol>
+<p>The typical output will provide a summary, and a series of tables which
+   are discussed in more detail in the following sections.</p>
+<details class="info">
+<summary>Typical PerfTools summary output using <code>pat_run</code></summary>
+<p><div class="highlight"><pre><span></span><code>CrayPat/X:  Version 25.03.0 Revision 5ef9ac5bb rhel9.5_x86_64  01/22/25 23:09:16
+Number of PEs (MPI ranks):    36
+Number of Nodes:               1
+Numbers of PEs per Node:      36
+Numbers of Threads per PE:     1
+Number of Cores per Socket:  144
+Execution start time:  Wed Dec  3 14:28:07 2025
+System name and speed:  cs-n0000  2.326 GHz (nominal)
+AMD   Turin                CPU  Family: 26  Model: 17  Stepping:  0
+Core Performance Boost:  288 PEs have CPB capability
+...
+...
+</code></pre></div>
+Further output is omitted.</p>
+</details>
+<h3 id="python">Python</h3>
+<p>Support for python profiling when using module <code>cray-python</code> is
+available. For example,
+<div class="highlight"><pre><span></span><code>module load cray-python
+srun --ntasks=36 pat_run $(which python3) myapp.py
+</code></pre></div>
+Note that the absolute path to the python interpreter is used after <code>pat_run</code>.
+Again, a summary report can be generated with <code>pat_report</code>, e.g.:
+<div class="highlight"><pre><span></span><code>module load cray-python
+pat_report myapp.py+2048522-1010655545s
+</code></pre></div></p>
+<h2 id="profiling-following-re-compilation">Profiling following re-compilation</h2>
+<p>To allow PerfTools access to fuller information about a compiled program,
+re-compilation is required to allow the introduction of instrumentation.
+There are a number of ways to do this using PerfTools. A lightweight
+starting point is to use the <code>perftools-lite</code> module.</p>
+<h3 id="perftools-lite">perftools-lite</h3>
+<ol>
+<li>
+<p>Make sure the <code>perftools-base</code> module is loaded (it should be present
+    by default), and load <code>perftools-lite</code> in addition:
+    <div class="highlight"><pre><span></span><code>module load perftools-lite
+</code></pre></div></p>
+</li>
+<li>
+<p>Compile your application normally (make sure any existing objects are
+    removed). A message will appear at the link stage
+    indicating that the executable has been instrumented. For example:</p>
+<p><div class="highlight"><pre><span></span><code>cc -o myapp.x myapp.c
+INFO: creating the PerfTools-instrumented executable &#39;myapp.x&#39; (lite-samples)
+</code></pre></div>
+You must use the compiler wrappers <code>cc</code>, <code>CC</code> or <code>ftn</code>.</p>
+</li>
+<li>
+<p>Run the new executable by submitting a job in the usual way.
+    There are no special additions related to profiling once
+    the executable exists. E.g.,
+    <div class="highlight"><pre><span></span><code>srun --ntasks=36 ./myapp.x
+</code></pre></div></p>
+</li>
+<li>
+<p>At the start of execution, a new directory will be created to hold
+    the profiling data files. The directory name is based on the
+    executable name and a unique string of numbers for each profiling
+    run, e.g., <code>myapp.x+1607079-1010655545s</code>. Note the <code>s</code> at the end,
+    indicating this was a sampling exercise.</p>
+</li>
+<li>
+<p>When the job finishes executing, summary profile report will be
+    directed to standard output (i.e., at the end of the job's output file).</p>
+<p>The <code>perftools</code> report is structured as a series of tables which are
+designed to be self-explanatory.</p>
+</li>
+</ol>
+<details class="info">
+<summary>Typical PerfTools sampling output via <code>perftools-lite</code></summary>
+<p><div class="highlight"><pre><span></span><code>...
+Summary output omitted
+...
+Table 1:  Sample Profile by Function
 
-<h2 id="debugging-using-linaro-ddt">Debugging using Linaro DDT</h2>
-<p>Please see the <a href="../forge/">Forge page</a> for details of how to run debugging and
-profiling jobs on Cirrus.</p>
-<p>You can find more detailed information in the
-<a href="https://docs.linaroforge.com/24.0.2/html/forge/forge/connecting_to_a_remote_system/connecting_remotely.html">Linaro documentation</a>.</p>
+Samp%     |    Samp |  Imb. |  Imb. | Group
+          |         |  Samp | Samp% |  Function
+          |         |       |       |   PE=HIDE
+
+   100.0% | 6,113.2 |    -- |    -- | Total
+ |-----------------------------------------------------------------
+ |  92.5% | 5,654.4 |    -- |    -- | USER
+||----------------------------------------------------------------
+||  22.4% | 1,371.3 |  86.7 |  6.1% | function_a
+||  11.0% |   674.6 |  61.4 |  8.6% | function_b
+||   8.9% |   545.9 |  59.1 | 10.0% | function_c
+||   8.2% |   502.8 |  26.2 |  5.1% | function_d
+||   7.8% |   474.5 |  18.5 |  3.9% | function_e
+||================================================================
+ |   3.9% |   235.7 |    -- |    -- | MPI
+||----------------------------------------------------------------
+||   3.6% |   222.8 | 213.2 | 50.3% | MPI_Waitall
+||================================================================
+...
+...
+</code></pre></div>
+In this incomplete example, the table provides an overview of the
+propartion of the time (i.e., the samples) spent in different parts
+of the code. Over 90% of the time is spent in the user code, and 3.9%
+of time is spent in message passing (MPI). By default, only a subset
+of the most significant functions are shown. Further output is omitted.</p>
+</details>
+<p>For <code>perftools-lite</code> the default profiling is a sampling exercise,
+where a statistical picture of performance is obtained based on the
+proportion of samples taken in different parts of the program.
+The report should include the default sampling interval:
+<div class="highlight"><pre><span></span><code>Sampling interval:  10000 microsecs
+</code></pre></div>
+This choice should keep the overhead of profiling low compared to running
+the program without profiling.</p>
+<h3 id="perftools-lite-events"><code>perftools-lite-events</code></h3>
+<p>In the bare <code>perftools-lite</code> sampling approach, a statistical picture
+of performance is obtained. If more detailed information is required,
+an event-based approach can be employed. This is typically based on
+the time-stamp of events such as the entry to and exit from a
+particular function. This comes at the cost of higher overhead in time
+taken and the size of the report files generated.</p>
+<p>To prepare an executable for event profiling, follow the same process
+as for sampling, that is:</p>
+<ol>
+<li>
+<p>Make sure the <code>perftools-base</code> module is loaded and load the
+    <code>perftools-lite-events</code> module</p>
+<p><code>module load perftools-lite-events</code></p>
+</li>
+<li>
+<p>Compile your application normally. For example:</p>
+<div class="highlight"><pre><span></span><code>ftn -o myapp.x myapp.f90
+INFO: creating the PerfTools-instrumented executable &#39;myapp.x&#39; (lite-events)
+</code></pre></div>
+</li>
+<li>
+<p>Run the new executable by submitting a job in the usual way.</p>
+</li>
+<li>
+<p>Analyse the data. Again, a summary will appear at the end of execution
+   in the standard output. As this is now event-based, additional information
+   such as the exact number of calls to a given function can be presented.</p>
+</li>
+</ol>
+<details class="info">
+<summary>Example PerfTools event output via <code>perftools-lite-events</code></summary>
+<p><div class="highlight"><pre><span></span><code>...
+Summary output omitted
+...
+
+Table 1:  Profile by Function Group and Function
+
+Time%     |      Time |     Imb. |  Imb. |        Calls | Group
+          |           |     Time | Time% |              |  Function=[MAX10]
+          |           |          |       |              |   PE=HIDE
+          |           |          |       |              |    Thread=HIDE
+
+   100.0% | 15.801060 |       -- |    -- | 10,958,605.4 | Total
+|-----------------------------------------------------------------------------
+|   89.9% | 14.203748 |       -- |    -- | 10,932,614.3 | USER
+||----------------------------------------------------------------------------
+||  13.9% |  2.191225 | 0.094256 |  4.3% |  1,621,433.3 | function_a
+||  11.3% |  1.781757 | 0.029626 |  1.7% |        100.0 | function_b.LOOP@li.164
+||   8.3% |  1.311064 | 0.045393 |  3.5% |  1,621,433.3 | function_c
+||   6.7% |  1.054684 | 0.050999 |  4.8% |        100.0 | function_d.LOOP@li.264
+||============================================================================
+|    5.4% |  0.856573 |       -- |    -- |     23,434.0 | MPI
+||----------------------------------------------------------------------------
+||   5.0% |  0.792062 | 0.297903 | 28.5% |        313.0 | MPI_Waitall
+||============================================================================
+|    2.5% |  0.388409 |       -- |    -- |      2,030.0 | OMP
+|=============================================================================
+</code></pre></div>
+In contrast to the sampling approach, event-based profiling can provide
+the actual time (seconds) spent in various parts of the program, along
+with the exact number of calls to particlular functions. As compile
+time information is available based on the source code, the profiler is
+also be able to associate time with specific line numbers in the code.</p>
+</details>
+<p>Profiling with events can generate large amounts of data, so it is
+best to start with a small problem size of short duration. Additional
+measures to reduce the overhead of profiling by targeting specific
+part of a program are also discussed below.</p>
+<h2 id="viewing-profiling-data">Viewing profiling data</h2>
+<h3 id="using-pat_report">Using <code>pat_report</code></h3>
+<p>The default reports produced by <code>perftools-lite</code> and <code>perftools-lite-events</code>
+give information on a relatively small number of the most significant
+routines in the instrumented program in terms of samples, or time taken.
+The <code>pat_report</code>
+utility can be used to interrogate the profiling data to give additional
+information, particularly when event tracing is used.</p>
+<p>The report format can be controlled with the <code>-O</code> flag to <code>pat_report</code>.
+A number of examples are:</p>
+<ul>
+<li><code>-O calltree</code>
+  Show top-down call tree with inclusive times (or samples).</li>
+<li><code>-O callers</code>
+  Show the calls leading to the routines that have a high use in the
+  report (bottom-up).</li>
+<li><code>-O callers+src</code>
+  Append the relevant source code line numbers in the callers list.</li>
+<li><code>-O load_balance</code>
+  Show load-balance statistics for the high-use routines in the program.
+  Parallel processes with minimum, maximum and median times for routines
+  will be displayed. Only available with event profiling.</li>
+<li><code>-O mpi_callers</code>
+  Show MPI message statistics. Only available with event profiling.</li>
+</ul>
+<p>Other <code>pat_report</code> options include:</p>
+<ul>
+<li><code>-T</code> Set threshold for reporting to zero; this will show all functions
+    called by the program.</li>
+<li><code>-v</code> Give verbose information and suggestions in the Table notes.</li>
+</ul>
+<p>See <code>man pat_report</code> for further information.</p>
+<h3 id="using-the-apprentice-gui">Using the Apprentice GUI</h3>
+<p>A graphical user interface to PerfTools results is provided by Apprentice,
+for which a suitable X-windows LINK PENING connection will be required.</p>
+<p>Apprentice is invoked with, e.g.,
+<div class="highlight"><pre><span></span><code>module load perftools-base
+app3 myapp.x+606388-1010655545t
+</code></pre></div>
+where the <code>myapp.x+606388-1010655545t</code> is the relevant profiling directory.
+The text report (cf <code>pat_report</code>) or various graphical representations can
+be explored.</p>
+<h2 id="general-perftools-instrumentation">General <code>perftools</code> instrumentation</h2>
+<p>The <code>perftools-lite</code> and <code>perftools-lite-events</code> modules provide a simple
+way to generate sampling and event-based profiles, respectively. However,
+for a large production run, event sampling might come with an unduly
+large overhead. In this situation, it would be disirable to be able to
+combine the low overhead of the sampling approach with the detail generated
+by the event-based profile. This can be done using the general <code>perftools</code>
+module.</p>
+<h3 id="sampling-via-pat_build">Sampling via <code>pat_build</code></h3>
+<ol>
+<li>
+<p>Ensure the <code>perftools-base</code> module is loaded, and load the <code>perftools</code>
+    module:
+    <div class="highlight"><pre><span></span><code>module load perftools
+</code></pre></div></p>
+</li>
+<li>
+<p>Compile or re-compile your code using the compiler
+    wrappers (<code>cc</code>, <code>CC</code> or <code>ftn</code>). Object files (or libraries) need to be
+    made available to PerfTools to be able to build an instrumented
+    executable for profiling.
+    This may mean that the compile and link stage need to be
+    separated, e.g..
+    <div class="highlight"><pre><span></span><code>cc -c myapp.c
+cc -o myapp.x myapp.o
+</code></pre></div></p>
+</li>
+<li>
+<p>To instrument the binary, use the <code>pat_build</code> command. This will
+    generate a new executable with <code>+pat</code> appended, e.g.:
+    <div class="highlight"><pre><span></span><code>pat_build myapp.x
+</code></pre></div>
+    will generate a new executable <code>myapp.x+pat</code> (it will leave the
+    original unchanged).</p>
+</li>
+<li>
+<p>Run the new executable with <code>+pat</code> extension to generate a sampling
+    result. This will produce a new directory with the raw sampling
+    results, e.g., <code>myapp.x+pat+540878-1010655545s</code>.</p>
+</li>
+<li>
+<p>At this point the sampling results directory will contain a single
+    subdirectory with the raw results (typically <code>xf-files</code>). Use
+    <code>pat_report</code> to generate a report in the usual way. This will
+    also create a new file in the results directory called
+    <code>build-options.apa</code>.</p>
+</li>
+</ol>
+<h3 id="targeted-event-profiling">Targeted event profiling</h3>
+<p>What we can now do is to use the sampling information produced by the
+program with the <code>+pat</code> extension to generate an event based profile
+which consists of only those routines identified in the sampling as
+significant. This reduces the overhead of the event profiling.</p>
+<ol>
+<li>
+<p>Generate a further executable using <code>pat_build</code> from the build options
+   file produced at the previous sampling report stage, e.g.:
+   <div class="highlight"><pre><span></span><code>pat_build -O myapp.x+pat+540878-1010655545s/build-options.apa
+</code></pre></div>
+   The new execytable will have the exetension <code>myapp.x+apa</code> (for
+   automatic program analysis).</p>
+</li>
+<li>
+<p>Run the new executable with the <code>.apa</code> extension to produce a
+   new event-based profile. This with create a new results
+   directory, e.g., <code>myapp.x+apa+933004-1010655545t</code>. The <code>t</code> at
+   the end of the directory name indicates this is a trace, or
+   event-based profile.</p>
+</li>
+<li>
+<p>A report on the new event-based profile can now be generated
+   in the usual way using <code>pat_report</code>.</p>
+</li>
+</ol>
+<h3 id="manual-event-specification">Manual event specification</h3>
+<p>If the automatic program analysis does not produce the correct events,
+<code>pat_build</code> can be used to specify explicitly the set to be collected.
+The are a number of options to do this, e.g.:</p>
+<ol>
+<li>
+<p><code>pat_build -w myapp.x</code> selects all functions/events.</p>
+</li>
+<li>
+<p><code>pat_build -w -g mpi myapp.x</code> selects a group of functions (here MPI
+   calls). Other groups include <code>libsci</code>, <code>lapack</code>, <code>omp</code> (for OpenMP
+   runtime API functions).</p>
+</li>
+<li><code>pat_build -T function1 myapp.x</code> selects a named function (this is
+   the mangled name for Fortran and C++).</li>
+</ol>
+<p>See the manual page for <code>pat_build</code> for further details.</p>
+<h3 id="hardware-counter-groups">Hardware counter groups</h3>
+<p>Profiling will collect a default set of hardware counters
+which will appear int the report, e.g.,
+<div class="highlight"><pre><span></span><code>  PAPI_TOT_CYC      2,664,774,564,580   # Total number of CPU cycles
+  PAPI_TOT_INS      5,310,155,653,321   # Instructions completed
+  PAPI_TLB_DM             125,957,932   # Translation lookaside buffer misses
+  PAPI_FP_OPS       3,437,814,054,580   # Floating point operations
+</code></pre></div>
+(the annonations are added here). A number of different groups are
+available which can be selected via the environment variable, e.g.,
+<div class="highlight"><pre><span></span><code>export PAT_RT_PERFCTR=fp_stats
+</code></pre></div>
+to select floating point operations. Only one counter group can be
+selected in any one profileing run. A full list of individual
+counter descriptions is given by
+<div class="highlight"><pre><span></span><code>papi_avail
+</code></pre></div>
+which also indicates whether the counters are available or not.</p>
+<h2 id="further-information">Further information</h2>
+<p>Additional information is available interactively via <code>pat_help</code>, and via
+man pages for <code>pat_report</code>, <code>pat_build</code> etc.</p>
+<ul>
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=a00123563en_us">HPE Performance Analysis Tools User Guide</a></li>
+</ul>
 
 
 

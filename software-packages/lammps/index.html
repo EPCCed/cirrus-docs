@@ -1411,14 +1411,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/spack/" class="md-nav__link">
+      <a href="../../software-tools/forge/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Spack
+    Forge
   
 
     
@@ -1447,6 +1447,62 @@
     
   
     Likwid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/perftools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PerfTools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/spack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spack
   
 
     
@@ -1636,19 +1692,17 @@ mesoscale, or continuum scale.</p>
 <h2 id="using-lammps-on-cirrus">Using LAMMPS on Cirrus</h2>
 <p>LAMMPS is Open Source software, and is freely available to all Cirrus
 users. Centrally installed versions are managed by
-<a href="/software-tools/spack">Spack on Cirrus</a>.</p>
+<a href="../../software-tools/spack/">Spack on Cirrus</a>.</p>
 <p>To see what versions are available in the current programming environment:</p>
 <p><div class="highlight"><pre><span></span><code>  $ module avail lammps
-
----- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/cce/19.0.0 ----
+...
    lammps/20250612
 </code></pre></div>
-indicating the release version of 12th June 2025 is available. (The <code>cce</code> in
-the module path indicates this is <code>PrgEnv-cray</code>.) Centrally installed versions
-are available in <code>PrgEnv-cray</code> and <code>PrgEnv-gnu</code>.</p>
+indicating the release version of 12th June 2025 is available. Centrally
+installed versions are available in <code>PrgEnv-cray</code> and <code>PrgEnv-gnu</code>.</p>
 <h3 id="optional-lammps-packages">Optional LAMMPS packages</h3>
-<p>The centrally installed module versions of LAMMPS has a limited standand set of
-packages compiled. For the full configuration, try
+<p>The centrally installed module versions of LAMMPS have a limited standand
+set of packages compiled. For the full configuration, try
 <div class="highlight"><pre><span></span><code>$ module load lammps
 $ lmp -h
 ...
@@ -1660,9 +1714,9 @@ KSPACE MANYBODY MOLECULE RIGID
 a list which includes available pair, bond, angle, etc, styles, and fix and
 compute styles (which is omitted here for brevity).</p>
 <h2 id="running-parallel-lammps-jobs-mpi">Running parallel LAMMPS jobs (MPI)</h2>
-<p>LAMMPS can exploit multiple nodes on Cirrus and will generally be run in
-exclusive mode over more than one node.</p>
-<p>For example, the following script will run a LAMMPS job using 2 nodes
+<p>LAMMPS scales well for appropriate problem sizes and can make use of more
+than one node.
+For example, the following script will run a LAMMPS job using 2 nodes
 (576 cores) with MPI in the Cray programming environment.</p>
 <details class="info">
 <summary>Exclusive SLURM job submission script for LAMMPS</summary>
@@ -1693,8 +1747,8 @@ A relevant budget code may needed in the above script:
 where an appropriate <code>budget-code</code> is needed.</p>
 </details>
 <h3 id="non-exclusive-jobs">Non-exclusive jobs</h3>
-<p>Smaller jobs, requiring less than 288 cores (a full node), may be run in
-non-exclusive mode. Such a job might require only 36 MPI tasks.</p>
+<p>Smaller problem sizes, requiring less than 288 cores (a full node), may be
+run in non-exclusive mode. Such a job might require only 36 MPI tasks.</p>
 <details class="info">
 <summary>Non-exclusive SLURM submission script for LAMMPS</summary>
 <p><div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
@@ -1726,12 +1780,12 @@ provides a further large selection of unsupported ("USER") packages. If one
 or more of these are required, and not provided by the central installation,
 a separation compilation will be required.</p>
 <h3 id="using-spack">Using Spack</h3>
-<p>LAMMPS may be installed using <code>spack</code>. For information on availability:
+<p>LAMMPS may be installed using Spack. For information on availability:
 <div class="highlight"><pre><span></span><code>$ module load spack
 $ spack info lammps
 </code></pre></div>
-See <a href="/software-tools/spack">using Spack on Cirrus</a> for further information
-on <code>spack</code>.</p>
+See <a href="../../software-tools/spack/">using Spack on Cirrus</a> for further information
+on Spack.</p>
 <h3 id="using-cmake">Using CMake</h3>
 <p>LAMMPS offers developers a relatively simple and robust build mechanism
 using CMake.</p>

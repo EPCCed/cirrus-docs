@@ -1011,6 +1011,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Builds using the toolchain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -1394,14 +1411,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../software-tools/spack/" class="md-nav__link">
+      <a href="../../software-tools/forge/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Spack
+    Forge
   
 
     
@@ -1430,6 +1447,62 @@
     
   
     Likwid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/perftools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PerfTools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-tools/spack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spack
   
 
     
@@ -1558,6 +1631,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Builds using the toolchain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -1627,7 +1717,7 @@ showing that CP2K has been built with OpenMP, libint, FFTW3, and so on.</p>
 <h2 id="running-parallel-cp2k-jobs-mpiopenmp-hybrid">Running parallel CP2K jobs (MPI/OpenMP hybrid)</h2>
 <p>To run CP2K using MPI and OpenMP, load the <code>cp2k</code> module and use the
 <code>cp2k.psmp</code> executable.</p>
-<p>For larger jobs requiing one or more nodes, an exclusive SLURM submission
+<p>For larger jobs requiring one or more nodes, an exclusive SLURM submission
 is appropriate. For example, a job using two nodes (576 cores), with
 two cores (OpenMP threads) for each MPI process:</p>
 <details class="info">
@@ -1691,7 +1781,7 @@ with two threads might be:</p>
 </code></pre></div>
 This job will use a total of 36 cores.</p>
 </details>
-<p>See <a href="/user-guide/batch">Running Jobs on Cirrus</a> for further general
+<p>See <a href="../../user-guide/batch/">Running Jobs on Cirrus</a> for further general
 information on SLURM submissions.</p>
 <h2 id="compiling-and-testing-cp2k-on-cirrus">Compiling and testing CP2K on Cirrus</h2>
 <h3 id="using-spack">Using Spack</h3>
@@ -1702,13 +1792,54 @@ a central module, it is possible to build CP2K using Spack.
 </code></pre></div></p>
 <p>For further information, see</p>
 <ul>
-<li><a href="/software-tools/spack">Using Spack on Cirrus</a></li>
-<li><a href="]https://manual.cp2k.org/trunk/getting-started/build-with-spack.html">Building CP2K using Spack</a> from the CP2K documentation</li>
+<li><a href="../../software-tools/spack/">Using Spack on Cirrus</a></li>
+<li><a href="https://manual.cp2k.org/trunk/getting-started/build-with-spack.html">Building CP2K using Spack</a> from the CP2K documentation</li>
 </ul>
 <h3 id="builds-using-the-toolchain">Builds using the toolchain</h3>
 <p>The recommendation for developers who wish to build their own version is
 to use the toolchain build process.</p>
-<p>FURTHER INFORMATION PENDING</p>
+<p>Use a starting point which is <code>PrgEnv-gnu</code>, and use
+MKL for linear algebra. This involves unloading the the default <code>cray-libsci</code>
+module and loading MKL, e.g.,
+<div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
+module load cray-python
+module load cray-fftw
+
+module unload cray-libsci
+export MKLROOT=/opt/intel/oneapi/mkl/2025.0
+
+source ${MKLROOT}/env/vars.sh
+</code></pre></div>
+One should then be able to run the toochain build via, e.g.,
+<div class="highlight"><pre><span></span><code>./install_cp2k_toolchain.sh --enable-cray --with-mkl=system
+</code></pre></div></p>
+<h4 id="testing">Testing</h4>
+<p>The entire regression test suite can be run using, schematically,
+<div class="highlight"><pre><span></span><code>CP2K_DIR=$(pwd)/cp2k
+
+source ${CP2K_DIR}/tools/toolchain/install/setup
+
+export OMP_NUM_THREADS=2
+export OMP_PLACES=cores
+
+${CP2K_DIR}/tests/do_regtest.py \
+        --workbasedir=$(pwd) \
+        --maxtasks=36 \
+        --mpiranks=2 \
+        --ompthreads=${OMP_NUM_THREADS} \
+        --mpiexec=&quot;srun --ntasks=2 --cpus-per-task=${OMP_NUM_THREADS}&quot; \
+        ${CP2K_DIR}/exe/local psmp
+</code></pre></div>
+All tests should pass. One should see, e.g.,
+<div class="highlight"><pre><span></span><code>------------------------------- Summary --------------------------------
+Number of FAILED  tests 0
+Number of WRONG   tests 0
+Number of CORRECT tests 4261
+Total number of   tests 4261
+
+Summary: correct: 4261 / 4261; 11min
+Status: OK
+</code></pre></div></p>
 
 
 
