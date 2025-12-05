@@ -69,6 +69,7 @@ nav:
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
   - "Software Tools":
+    - "Forge": software-tools/forge.md
     - "Likwid": software-tools/likwid.md
     - "PerfTools": software-tools/perftools.md
     - "Spack": software-tools/spack.md
