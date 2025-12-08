@@ -20,12 +20,6 @@ EPYC 9825 processors with 144 physical cores each (288 physical
 cores per node). In total the system has 256 compute nodes with
 72,728 cores. Nodes are connected by a high-performance Slingshot 11 network.
 
-!!! important
-    This documentation is for the new Cirrus EX4000 system that started
-    service on 24 November 2025. The old Cirrus SIG ICE will continue
-    running in parallel for a short time (until 8 December 2025).
-    [Documentation for the older Cirrus system is still available](https://epcced.github.io/legacy-cirrus-docs/).
-
 The menu includes links to:
 
 - General User Guide: information on how to use Cirrus.

@@ -12,21 +12,23 @@ as it becomes available.
 
 - There are **no** GPU nodes on Cirrus EX4000
 - There are 288 cores on a Cirrus EX4000 compute node rather than 36 on current Cirrus
-- Cirrus EX4000 will use the HPE Cray Slingshot 11 interconnect rather than the 
+- Cirrus EX4000 uses the HPE Cray Slingshot 11 interconnect rather than the 
   Infiniband interconnect used on current Cirrus
+- For more information see [the Hardware section in the User Guide](../user-guide/hardware.md)
 
 ## Software
 
-- The software environment will completely change to be based on the
+- The software environment has completely changed to be based on the
   HPE Cray Programming Environment - no modules that were available
-  on old Cirrus system will be available in the same way on the new Cirrus
-  system. We will update the documentation to cover these changes in 
-  detail ahead of the switch between systems.
+  on old Cirrus system are available in the same way on the new Cirrus
+  system. The documentation has been updated to cover these changes in 
+  details. See:
+    - [Software Environment](../user-guide/sw-environment.md))
+    - [Application Development Environment](../user-guide/development.md))
 
 ## Slurm scheduler configuration
 
-- Many of the partitions and QoS will be similar between the two systems
-  but limits will change. These will be documented in more detail ahead of 
-  the switch.
+- Many of the partitions and QoS aresimilar between the two systems
+  but limits will change. See the [Scheduler secion of the User Guide](../user-guide/scheduler.md))
 
 

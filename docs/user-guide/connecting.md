@@ -14,7 +14,7 @@ found at:
 This section covers the basic connection methods.
 
 !!! tip
-    The current login address for Cirrus is `preview.cirrus.ac.uk`.
+    The current login address for Cirrus is `login.cirrus.ac.uk`.
 
 ## Access credentials: MFA
 
@@ -145,7 +145,7 @@ You can use the following command from the terminal window to login into
 Cirrus:
 
 ```
-ssh username@preview.cirrus.ac.uk
+ssh username@login.cirrus.ac.uk
 ```
 
 You will first be prompted for the passphrase associated with your SSH
@@ -169,7 +169,7 @@ your local display, such as being able to open up a new GUI window (such
 as for a debugger), use:
 
 ```
-ssh -X username@preview.cirrus.ac.uk
+ssh -X username@login.cirrus.ac.uk
 ```
 
 Some sites recommend using the `-Y` flag. While this can fix some
@@ -192,14 +192,14 @@ remote server key does not match the one in the configuration file,
 the connection will be refused. This provides protection against potential
 malicious servers masquerading as the Cirrus login nodes.
 
-### preview.cirrus.ac.uk
+### login.cirrus.ac.uk
 
 ```
-preview.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFBvqlziPNvqf4DRbTMi5RsdJB6x7sw6zNZKxAE0klnchuWvX3feLslEteKazfQ6NmtJ/bOanbtxAOLXR/Fv9+E=
+login.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFBvqlziPNvqf4DRbTMi5RsdJB6x7sw6zNZKxAE0klnchuWvX3feLslEteKazfQ6NmtJ/bOanbtxAOLXR/Fv9+E=
 
-preview.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEtumDZQYQFczLoAUOQRCkt+93mFEyTGtJLtOh8DXunogsQsc1S98XlaJMwn6j5LpAvUBzpdnqyDCOX3ksS+B6VvFc5A73c9SNt8Xvl+V8cW7V57fu/tK7PCWliboIF3WmL+cWTh5QGfbjLiOY6MZSjEBvJOPOZ+jS0K9jyUIIFuHOGGDpjq16n8FQTLcU/NXr5H1AJN61WCFWTdg4P5mcjwpVrbEes9gC6e5ecFXX616aLwAiSf4wTepVPy0YGCm5/QKpsbyRcAG6QA30+3SllvvC2sdOK0jqUnAFhBbeWaqBk51CmERek1+mwxjU/w0zs7ezDumhdbI40r2zHcfheT65k5NFhJkLoV7JxHxW2zOZoEAxIvt8cNojeMmZcYiBow0KWzfOdT80uoQySXsC1VWke1Nyw1a3gmDJ8HS8zhLBo+J840JIFjdGDDXLlp5+3oZAbv6whLab6lXRC2CkEtWKbzJmo0PDPadqjVChg3+ApCOuEgEOYsGj/vbPBDk=
+login.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEtumDZQYQFczLoAUOQRCkt+93mFEyTGtJLtOh8DXunogsQsc1S98XlaJMwn6j5LpAvUBzpdnqyDCOX3ksS+B6VvFc5A73c9SNt8Xvl+V8cW7V57fu/tK7PCWliboIF3WmL+cWTh5QGfbjLiOY6MZSjEBvJOPOZ+jS0K9jyUIIFuHOGGDpjq16n8FQTLcU/NXr5H1AJN61WCFWTdg4P5mcjwpVrbEes9gC6e5ecFXX616aLwAiSf4wTepVPy0YGCm5/QKpsbyRcAG6QA30+3SllvvC2sdOK0jqUnAFhBbeWaqBk51CmERek1+mwxjU/w0zs7ezDumhdbI40r2zHcfheT65k5NFhJkLoV7JxHxW2zOZoEAxIvt8cNojeMmZcYiBow0KWzfOdT80uoQySXsC1VWke1Nyw1a3gmDJ8HS8zhLBo+J840JIFjdGDDXLlp5+3oZAbv6whLab6lXRC2CkEtWKbzJmo0PDPadqjVChg3+ApCOuEgEOYsGj/vbPBDk=
 
-preview.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0Rb8J6LEilTRiglRytJRw3+Ak2t1JTFcMsF5NBucPe
+login.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0Rb8J6LEilTRiglRytJRw3+Ak2t1JTFcMsF5NBucPe
 
 ```
 
@@ -221,18 +221,18 @@ which may look something like:
 
 ```
 Host cirrus
-    HostName preview.cirrus.ac.uk
+    HostName login.cirrus.ac.uk
     User username
 ```
 
 (remember to replace `username` with your actual username!).
 
 The `Host cirrus` line defines a short name for the entry. In this case,
-instead of typing `ssh username@preview.cirrus.ac.uk` to access the Cirrus
+instead of typing `ssh username@login.cirrus.ac.uk` to access the Cirrus
 login nodes, you could use `ssh cirrus` instead. The remaining lines
 define the options for the `cirrus` host.
 
-- `Hostname preview.cirrus.ac.uk` - defines the full address of the host
+- `Hostname login.cirrus.ac.uk` - defines the full address of the host
 - `User username` - defines the username to use by default for this host
   (replace `username` with your own username on the remote host)
 
@@ -291,7 +291,7 @@ cluster:
 Once on the intermediate cluster, you should be able to SSH to Cirrus
 directly:
 
-    ssh <user>@preview.cirrus.ac.uk
+    ssh <user>@login.cirrus.ac.uk
 
 ## SSH debugging tips
 
@@ -302,10 +302,10 @@ contacting the Cirrus service desk.
 
 ### Can you connect to the login node?
 
-Try the command `ping -c 3 preview.cirrus.ac.uk`. If you successfully
+Try the command `ping -c 3 login.cirrus.ac.uk`. If you successfully
 connect to the login node, the output should include:
 
-    --- preview.dyn.cirrus.ac.uk ping statistics ---
+    --- login.dyn.cirrus.ac.uk ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 38ms
 
 (the ping time '38ms' is not important). If not all packets are received
@@ -324,7 +324,7 @@ indicate a problem with your SSH key. Some things to check:
 - Is ssh using the correct key? You can check which keys are being
   found and offered by ssh using `ssh -vvv`. If your private key has a
   non-default name you can use the `-i` flag to provide it to ssh,
-   i.e. `ssh -i path/to/key username@preview.cirrus.ac.uk`.
+   i.e. `ssh -i path/to/key username@login.cirrus.ac.uk`.
 
 - Are you entering the passphrase correctly? You will be asked for
    your private key's passphrase first. If you enter it incorrectly you
@@ -414,7 +414,7 @@ with the SSH key and password - further details are given below. To
 enable verbose output add the `-vvv` flag to your SSH command. For
 example:
 
-    ssh -vvv username@preview.cirrus.ac.uk
+    ssh -vvv username@login.cirrus.ac.uk
 
 The output is lengthy, but somewhere in there you should see lines
 similar to the following:
