@@ -980,22 +980,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-parallel-gromacs-jobs" class="md-nav__link">
+  <a href="#running-gromacs-jobs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running parallel GROMACS jobs
+        Running GROMACS jobs
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Running parallel GROMACS jobs">
+    <nav class="md-nav" aria-label="Running GROMACS jobs">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-pure-mpi-using-multiple-nodes" class="md-nav__link">
+  <a href="#example-an-exclusive-gromacs-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: pure MPI using multiple nodes
+        Example: an exclusive GROMACS job
       
     </span>
   </a>
@@ -1003,10 +1003,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-hybrid-mpiopenmp-across-multiple-nodes" class="md-nav__link">
+  <a href="#example-a-hybrid-mpiopenmp-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: hybrid MPI/OpenMP across multiple nodes
+        Example: a hybrid MPI/OpenMP job
       
     </span>
   </a>
@@ -1014,10 +1014,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-pure-mpi-using-a-subset-of-a-node" class="md-nav__link">
+  <a href="#example-a-non-exclusive-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: pure MPI using a subset of a node
+        Example: a non-exclusive job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warning message
       
     </span>
   </a>
@@ -1026,6 +1037,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-gromacs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiling Gromacs
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1538,22 +1560,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-parallel-gromacs-jobs" class="md-nav__link">
+  <a href="#running-gromacs-jobs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running parallel GROMACS jobs
+        Running GROMACS jobs
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Running parallel GROMACS jobs">
+    <nav class="md-nav" aria-label="Running GROMACS jobs">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-pure-mpi-using-multiple-nodes" class="md-nav__link">
+  <a href="#example-an-exclusive-gromacs-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: pure MPI using multiple nodes
+        Example: an exclusive GROMACS job
       
     </span>
   </a>
@@ -1561,10 +1583,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-hybrid-mpiopenmp-across-multiple-nodes" class="md-nav__link">
+  <a href="#example-a-hybrid-mpiopenmp-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: hybrid MPI/OpenMP across multiple nodes
+        Example: a hybrid MPI/OpenMP job
       
     </span>
   </a>
@@ -1572,10 +1594,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-pure-mpi-using-a-subset-of-a-node" class="md-nav__link">
+  <a href="#example-a-non-exclusive-job" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: pure MPI using a subset of a node
+        Example: a non-exclusive job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warning message
       
     </span>
   </a>
@@ -1584,6 +1617,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-gromacs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiling Gromacs
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1625,106 +1669,131 @@ using it for research on non-biological systems, e.g. polymers.</p>
 <p>GROMACS is Open Source software and is freely available to all Cirrus
 users. The central installation supports the single-precision version
 of GROMACS compiled with MPI and OpenMP support.</p>
-<p>The <code>gmx_mpi</code> binary is available after loading a <code>gromacs</code> module.</p>
-<h2 id="running-parallel-gromacs-jobs">Running parallel GROMACS jobs</h2>
+<p>GROMACS is installed centrally on Cirrus as a module via Spack. To
+obtain information on which versions are available use, e.g.,
+<div class="highlight"><pre><span></span><code>module avail gromacs
+...
+   gromacs/2025.2 (D)
+</code></pre></div>
+The <code>gmx_mpi</code> binary is available after loading a <code>gromacs</code> module.
+To see details of the build one can use, e.g.,
+<div class="highlight"><pre><span></span><code>module load gromacs
+gmx_mpi -version
+</code></pre></div>
+This should show that GROMACS is compiled with the GNU Compiler Collection,
+along with other compile-time information.</p>
+<h2 id="running-gromacs-jobs">Running GROMACS jobs</h2>
 <p>GROMACS can use full nodes in parallel (with the <code>--exclusive</code> option
-to <code>sbatch</code>) or run in parallel (or even serial) on a subset of the 
-cores on a node. GROMACS can make use of both distributed memory
-parallelism (via MPI) and shared memory parallelism via OpenMP.</p>
-<h3 id="example-pure-mpi-using-multiple-nodes">Example: pure MPI using multiple nodes</h3>
-<p>GROMACS can exploit multiple nodes on Cirrus.</p>
-<p>For example, the following script will run a GROMACS MD job using 2
-nodes (576 cores) with pure MPI.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
+to <code>sbatch</code>) for larger problem sizes, or run in parallel (or even serial)
+on a subset of the  cores on a node if the problem size is smaller.</p>
+<p>For general information on running SLURM jobs, see
+<a href="../../user-guide/batch/">Running jobs on Cirrus</a>.</p>
+<h3 id="example-an-exclusive-gromacs-job">Example: an exclusive GROMACS job</h3>
+<p>The following script will run a GROMACS MD job using 2
+nodes (576 cores) with MPI only (<code>OMP_NUM_THREADS=1</code>).</p>
+<details class="info">
+<summary>Exclusive SLURM job submission for GROMACS (MPI)</summary>
+<div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
 
-<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=gmx_test</span>
-<span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --tasks-per-node=288</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --time=0:25:0</span>
-<span class="c1"># Make sure you are not sharing nodes with other users</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --export=none</span>
+
 <span class="c1">#SBATCH --exclusive</span>
-
-<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1"># Replace [partition name] below with your partition name (e.g. standard)</span>
-<span class="c1">#SBATCH --partition=[partition name]</span>
-<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long)</span>
-<span class="c1">#SBATCH --qos=[qos name]</span>
-
-<span class="c1"># Load GROMACS module</span>
-module<span class="w"> </span>load<span class="w"> </span>gromacs
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
-
-<span class="c1"># Run using input in test_calc.tpr</span>
-srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
-</code></pre></div>
-<h3 id="example-hybrid-mpiopenmp-across-multiple-nodes">Example: hybrid MPI/OpenMP across multiple nodes</h3>
-<p>The following script will run a GROMACS MD job using 2 nodes (576 cores)
-with 24 MPI processes per node (48 MPI processes in total), one per CCD and 12 OpenMP
-threads per MPI process.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
-
-<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=gmx_test</span>
 <span class="c1">#SBATCH --nodes=2</span>
-<span class="c1">#SBATCH --tasks-per-node=24</span>
-<span class="c1">#SBATCH --cpus-per-task=12</span>
-<span class="c1">#SBATCH --time=0:25:0</span>
-<span class="c1"># Make sure you are not sharing nodes with other users</span>
-<span class="c1">#SBATCH --exclusive</span>
-
-<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1"># Replace [partition name] below with your partition name (e.g. standard)</span>
-<span class="c1">#SBATCH --partition=[partition name]</span>
-<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long)</span>
-<span class="c1">#SBATCH --qos=[qos name]</span>
-
-<span class="c1"># Load GROMACS module</span>
-module<span class="w"> </span>load<span class="w"> </span>gromacs
-
-<span class="c1"># Propagate --cpus-per-task to srun</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
-
-<span class="c1"># Run using input in test_calc.tpr</span>
-srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
-</code></pre></div>
-<h3 id="example-pure-mpi-using-a-subset-of-a-node">Example: pure MPI using a subset of a node</h3>
-<p>GROMACS can run on a subset of cores in a node (potentially sharing a 
-node with other users)</p>
-<p>For example, the following script will run a GROMACS MD job using 36
-cores ona single node with pure MPI.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
-
-<span class="c1"># Slurm job options (name, compute nodes, job time)</span>
-<span class="c1">#SBATCH --job-name=gmx_test</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --tasks-per-node=36</span>
+<span class="c1">#SBATCH --ntasks-per-node=288</span>
 <span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --time=0:25:0</span>
 
-<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1"># Replace [partition name] below with your partition name (e.g. standard)</span>
-<span class="c1">#SBATCH --partition=[partition name]</span>
-<span class="c1"># Replace [qos name] below with your qos name (e.g. standard,long)</span>
-<span class="c1">#SBATCH --qos=[qos name]</span>
+<span class="c1">#SBATCH --partition=standard</span>
+<span class="c1">#SBATCH --qos=short</span>
 
-<span class="c1"># Load GROMACS module</span>
-module<span class="w"> </span>load<span class="w"> </span>gromacs
+<span class="c1">#SBATCH --distribution=block:block</span>
+<span class="c1">#SBATCH --hint=nomultithread</span>
 
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="l l-Scalar l-Scalar-Plain">module load PrgEnv-gnu</span>
+<span class="l l-Scalar l-Scalar-Plain">module load gromacs</span>
 
-<span class="c1"># Run using input in test_calc.tpr</span>
-srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
+<span class="l l-Scalar l-Scalar-Plain">export OMP_NUM_THREADS=1</span>
+
+<span class="l l-Scalar l-Scalar-Plain">srun gmx_mpi mdrun -s problem-initial-condition.tpr</span>
 </code></pre></div>
+</details>
+<h3 id="example-a-hybrid-mpiopenmp-job">Example: a hybrid MPI/OpenMP job</h3>
+<p>The following SLURM submission will run a GROMACS MD job using 2 nodes
+with 48 MPI processes per node (96 MPI processes in total),
+and 6 OpenMP threads per MPI process (576 cores in total). Gromacs
+typically recommends between 1 and 8 OpenMP threads per MPI process.</p>
+<details class="info">
+<summary>Exclusive SLURM job submission for GROMACS (hybrid OpenMP/MPI)</summary>
+<div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
+
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --export=none</span>
+
+<span class="c1">#SBATCH --exclusive</span>
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --ntasks-per-node=48</span>
+<span class="c1">#SBATCH --cpus-per-task=6</span>
+
+<span class="c1">#SBATCH --partition=standard</span>
+<span class="c1">#SBATCH --qos=short</span>
+
+<span class="c1">#SBATCH --distribution=block:block</span>
+<span class="c1">#SBATCH --hint=nomultithread</span>
+
+<span class="l l-Scalar l-Scalar-Plain">module load PrgEnv-gnu</span>
+<span class="l l-Scalar l-Scalar-Plain">module load gromacs</span>
+
+<span class="l l-Scalar l-Scalar-Plain">export OMP_NUM_THREADS=6</span>
+<span class="l l-Scalar l-Scalar-Plain">export OMP_PLACES=cores</span>
+
+<span class="l l-Scalar l-Scalar-Plain">srun gmx_mpi mdrun -s problem-initial-condition.tpr</span>
+</code></pre></div>
+</details>
+<h3 id="example-a-non-exclusive-job">Example: a non-exclusive job</h3>
+<p>GROMACS can run on a subset of cores in a node. The following script will
+run a GROMACS MD job using 36 cores on a single node.</p>
+<details class="info">
+<summary>Non-exclusive SLURM job submission for GROMACS (MPI)</summary>
+<div class="copy highlight"><pre><span></span><code><span class="c1">#!/bin/bash</span>
+
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --export=none</span>
+
+<span class="c1">#SBATCH --ntasks=36</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+
+<span class="c1">#SBATCH --partition=standard</span>
+<span class="c1">#SBATCH --qos=short</span>
+
+<span class="c1">#SBATCH --distribution=block:block</span>
+<span class="c1">#SBATCH --hint=nomultithread</span>
+
+<span class="l l-Scalar l-Scalar-Plain">module load PrgEnv-gnu</span>
+<span class="l l-Scalar l-Scalar-Plain">module load gromacs</span>
+
+<span class="l l-Scalar l-Scalar-Plain">export OMP_NUM_THREADS=1</span>
+
+<span class="l l-Scalar l-Scalar-Plain">srun gmx_mpi mdrun -s problem-initial-condition.tpr</span>
+</code></pre></div>
+</details>
+<p>You may need to add a budget code to the above examples
+<div class="highlight"><pre><span></span><code>#SBATCH --account=&lt;code&gt;
+</code></pre></div>
+using the relevant project budget code.</p>
+<h3 id="warning-message">Warning message</h3>
+<p>The warning message
+<div class="highlight"><pre><span></span><code>[CRAYBLAS_WARNING] Application linked against multiple cray-libsci libraries
+</code></pre></div>
+may appear in the standard error channel when running the centrally installed
+version. The warning is benign and may be ignored.</p>
+<h2 id="compiling-gromacs">Compiling Gromacs</h2>
+<p>If you require a version of GROMACS which is not available via a central
+module, other versions may be installed via Spack. For information us, e.g.,
+<div class="highlight"><pre><span></span><code>module load spack
+spack info gromacs
+</code></pre></div>
+See using <a href="../../software-tools/spack/">Spack on Cirrus</a> for further
+information on Spack.</p>
 
 
 
