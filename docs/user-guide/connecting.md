@@ -162,6 +162,28 @@ be able to access Cirrus.
     For example, if your key is in a file called `keys/id_rsa_cirrus`
     you would use the command `ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk` to log in.
 
+!!! Tip
+    If you logged into Cirrus with your account before the change to Cirrus EX4000, you
+    may see a warning such as:
+
+    ```
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+    Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+    It is also possible that a host key has just been changed.
+    The fingerprint for the ED25519 key sent by the remote host is
+    SHA256:WX5NbmOOYZdcm0HN3KgSkkI67+cSudpll0E1R6n9nto.
+    Please contact your system administrator.
+    Add correct host key in /Users/auser/.ssh/known_hosts to get rid of this message.
+    Offending ECDSA key in /Users/auser/.ssh/known_hosts:2
+    Host key for login.cirrus.ac.uk has changed and you have requested strict checking.
+    Host key verification failed.
+    ```
+
+    If you see this, you should delete the offending host key from your ~/.ssh/known_hosts file
+    (in the example above the offending line is line #2)
 
 <!-- X is unntested
 To allow remote programs, especially graphical applications to control
