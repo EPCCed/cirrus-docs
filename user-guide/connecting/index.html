@@ -725,10 +725,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#previewcirrusacuk" class="md-nav__link">
+  <a href="#logincirrusacuk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        preview.cirrus.ac.uk
+        login.cirrus.ac.uk
       
     </span>
   </a>
@@ -1767,10 +1767,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#previewcirrusacuk" class="md-nav__link">
+  <a href="#logincirrusacuk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        preview.cirrus.ac.uk
+        login.cirrus.ac.uk
       
     </span>
   </a>
@@ -1919,7 +1919,7 @@ found at:</p>
 <p>This section covers the basic connection methods.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>The current login address for Cirrus is <code>preview.cirrus.ac.uk</code>.</p>
+<p>The current login address for Cirrus is <code>login.cirrus.ac.uk</code>.</p>
 </div>
 <h2 id="access-credentials-mfa">Access credentials: MFA</h2>
 <p>To access Cirrus, you need to use two credentials (this is known as
@@ -2026,7 +2026,7 @@ or a WSL2 terminal.</p>
 <h2 id="logging-in">Logging in</h2>
 <p>You can use the following command from the terminal window to login into
 Cirrus:</p>
-<div class="highlight"><pre><span></span><code>ssh username@preview.cirrus.ac.uk
+<div class="highlight"><pre><span></span><code>ssh username@login.cirrus.ac.uk
 </code></pre></div>
 <p>You will first be prompted for the passphrase associated with your SSH
 key pair. Once you have entered your passphrase successfully, you will
@@ -2045,7 +2045,7 @@ To allow remote programs, especially graphical applications to control
 your local display, such as being able to open up a new GUI window (such
 as for a debugger), use:
 
-<div class="highlight"><pre><span></span><code>ssh -X username@preview.cirrus.ac.uk
+<div class="highlight"><pre><span></span><code>ssh -X username@login.cirrus.ac.uk
 </code></pre></div>
 
 Some sites recommend using the `-Y` flag. While this can fix some
@@ -2066,12 +2066,12 @@ checked against the login nodes when you login to Cirrus and if the
 remote server key does not match the one in the configuration file,
 the connection will be refused. This provides protection against potential
 malicious servers masquerading as the Cirrus login nodes.</p>
-<h3 id="previewcirrusacuk">preview.cirrus.ac.uk</h3>
-<div class="highlight"><pre><span></span><code>preview.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFBvqlziPNvqf4DRbTMi5RsdJB6x7sw6zNZKxAE0klnchuWvX3feLslEteKazfQ6NmtJ/bOanbtxAOLXR/Fv9+E=
+<h3 id="logincirrusacuk">login.cirrus.ac.uk</h3>
+<div class="highlight"><pre><span></span><code>login.cirrus.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFBvqlziPNvqf4DRbTMi5RsdJB6x7sw6zNZKxAE0klnchuWvX3feLslEteKazfQ6NmtJ/bOanbtxAOLXR/Fv9+E=
 
-preview.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEtumDZQYQFczLoAUOQRCkt+93mFEyTGtJLtOh8DXunogsQsc1S98XlaJMwn6j5LpAvUBzpdnqyDCOX3ksS+B6VvFc5A73c9SNt8Xvl+V8cW7V57fu/tK7PCWliboIF3WmL+cWTh5QGfbjLiOY6MZSjEBvJOPOZ+jS0K9jyUIIFuHOGGDpjq16n8FQTLcU/NXr5H1AJN61WCFWTdg4P5mcjwpVrbEes9gC6e5ecFXX616aLwAiSf4wTepVPy0YGCm5/QKpsbyRcAG6QA30+3SllvvC2sdOK0jqUnAFhBbeWaqBk51CmERek1+mwxjU/w0zs7ezDumhdbI40r2zHcfheT65k5NFhJkLoV7JxHxW2zOZoEAxIvt8cNojeMmZcYiBow0KWzfOdT80uoQySXsC1VWke1Nyw1a3gmDJ8HS8zhLBo+J840JIFjdGDDXLlp5+3oZAbv6whLab6lXRC2CkEtWKbzJmo0PDPadqjVChg3+ApCOuEgEOYsGj/vbPBDk=
+login.cirrus.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEtumDZQYQFczLoAUOQRCkt+93mFEyTGtJLtOh8DXunogsQsc1S98XlaJMwn6j5LpAvUBzpdnqyDCOX3ksS+B6VvFc5A73c9SNt8Xvl+V8cW7V57fu/tK7PCWliboIF3WmL+cWTh5QGfbjLiOY6MZSjEBvJOPOZ+jS0K9jyUIIFuHOGGDpjq16n8FQTLcU/NXr5H1AJN61WCFWTdg4P5mcjwpVrbEes9gC6e5ecFXX616aLwAiSf4wTepVPy0YGCm5/QKpsbyRcAG6QA30+3SllvvC2sdOK0jqUnAFhBbeWaqBk51CmERek1+mwxjU/w0zs7ezDumhdbI40r2zHcfheT65k5NFhJkLoV7JxHxW2zOZoEAxIvt8cNojeMmZcYiBow0KWzfOdT80uoQySXsC1VWke1Nyw1a3gmDJ8HS8zhLBo+J840JIFjdGDDXLlp5+3oZAbv6whLab6lXRC2CkEtWKbzJmo0PDPadqjVChg3+ApCOuEgEOYsGj/vbPBDk=
 
-preview.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0Rb8J6LEilTRiglRytJRw3+Ak2t1JTFcMsF5NBucPe
+login.cirrus.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0Rb8J6LEilTRiglRytJRw3+Ak2t1JTFcMsF5NBucPe
 </code></pre></div>
 <p>Host key verification can fail if this key is out of date, a problem
 which can be fixed by removing the offending entry in <code>~/.ssh/known_hosts</code>
@@ -2086,16 +2086,16 @@ the SSH configuration file, usually located on your local machine at
 <p>Each remote site (or group of sites) can have an entry in this file
 which may look something like:</p>
 <div class="highlight"><pre><span></span><code>Host cirrus
-    HostName preview.cirrus.ac.uk
+    HostName login.cirrus.ac.uk
     User username
 </code></pre></div>
 <p>(remember to replace <code>username</code> with your actual username!).</p>
 <p>The <code>Host cirrus</code> line defines a short name for the entry. In this case,
-instead of typing <code>ssh username@preview.cirrus.ac.uk</code> to access the Cirrus
+instead of typing <code>ssh username@login.cirrus.ac.uk</code> to access the Cirrus
 login nodes, you could use <code>ssh cirrus</code> instead. The remaining lines
 define the options for the <code>cirrus</code> host.</p>
 <ul>
-<li><code>Hostname preview.cirrus.ac.uk</code> - defines the full address of the host</li>
+<li><code>Hostname login.cirrus.ac.uk</code> - defines the full address of the host</li>
 <li><code>User username</code> - defines the username to use by default for this host
   (replace <code>username</code> with your own username on the remote host)</li>
 </ul>
@@ -2142,7 +2142,7 @@ cluster:</p>
 </code></pre>
 <p>Once on the intermediate cluster, you should be able to SSH to Cirrus
 directly:</p>
-<pre><code>ssh &lt;user&gt;@preview.cirrus.ac.uk
+<pre><code>ssh &lt;user&gt;@login.cirrus.ac.uk
 </code></pre>
 <h2 id="ssh-debugging-tips">SSH debugging tips</h2>
 <p>If you find you are unable to connect via SSH there are a number of ways
@@ -2150,9 +2150,9 @@ you can try and diagnose the issue. Some of these are collected below -
 if you are having difficulties connecting we suggest trying these before
 contacting the Cirrus service desk.</p>
 <h3 id="can-you-connect-to-the-login-node">Can you connect to the login node?</h3>
-<p>Try the command <code>ping -c 3 preview.cirrus.ac.uk</code>. If you successfully
+<p>Try the command <code>ping -c 3 login.cirrus.ac.uk</code>. If you successfully
 connect to the login node, the output should include:</p>
-<pre><code>--- preview.dyn.cirrus.ac.uk ping statistics ---
+<pre><code>--- login.dyn.cirrus.ac.uk ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 38ms
 </code></pre>
 <p>(the ping time '38ms' is not important). If not all packets are received
@@ -2171,7 +2171,7 @@ indicate a problem with your SSH key. Some things to check:</p>
 <p>Is ssh using the correct key? You can check which keys are being
   found and offered by ssh using <code>ssh -vvv</code>. If your private key has a
   non-default name you can use the <code>-i</code> flag to provide it to ssh,
-   i.e. <code>ssh -i path/to/key username@preview.cirrus.ac.uk</code>.</p>
+   i.e. <code>ssh -i path/to/key username@login.cirrus.ac.uk</code>.</p>
 </li>
 <li>
 <p>Are you entering the passphrase correctly? You will be asked for
@@ -2272,7 +2272,7 @@ the issue. In particular, it can be used to distinguish between problems
 with the SSH key and password - further details are given below. To
 enable verbose output add the <code>-vvv</code> flag to your SSH command. For
 example:</p>
-<pre><code>ssh -vvv username@preview.cirrus.ac.uk
+<pre><code>ssh -vvv username@login.cirrus.ac.uk
 </code></pre>
 <p>The output is lengthy, but somewhere in there you should see lines
 similar to the following:</p>
