@@ -168,14 +168,6 @@ As the container image is a single large file, you end up doing a single large r
 than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
 detrimental impact on the wider file system performance for all users.
 
-We have pre-built a Apptainer container with the Anaconda distribution in on 
-ARCHER2. Users can access it at `$EPCC_CONTAINER_DIR/anaconda3.sif`. To run a Python
-script with the centrally-installed image, you can use:
-
-```
-apptainer exec -B $PWD $EPCC_CONTAINER_DIR/anaconda3.sif python my_script.py
-```
-
 If you want additional packages that are not available in the standard container images then
 you will need to build your own container images. If you need help to do this, then please
 contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk)
