@@ -2040,6 +2040,27 @@ path to the private part of the key with the <code>-i</code> option to <code>ssh
 For example, if your key is in a file called <code>keys/id_rsa_cirrus</code>
 you would use the command <code>ssh -i keys/id_rsa_cirrus username@login.cirrus.ac.uk</code> to log in.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you logged into Cirrus with your account before the change to Cirrus EX4000, you
+may see a warning such as:</p>
+<div class="highlight"><pre><span></span><code>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:WX5NbmOOYZdcm0HN3KgSkkI67+cSudpll0E1R6n9nto.
+Please contact your system administrator.
+Add correct host key in /Users/auser/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /Users/auser/.ssh/known_hosts:2
+Host key for login.cirrus.ac.uk has changed and you have requested strict checking.
+Host key verification failed.
+</code></pre></div>
+<p>If you see this, you should delete the offending host key from your ~/.ssh/known_hosts file
+(in the example above the offending line is line #2)</p>
+</div>
 <!-- X is unntested
 To allow remote programs, especially graphical applications to control
 your local display, such as being able to open up a new GUI window (such
