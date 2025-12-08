@@ -1,7 +1,7 @@
 # Migrating your account to Cirrus EX4000
 
 !!! important
-    This information was last updated on 20 Nov 2025
+    This information was last updated on 8 Dec 2025
 
 This section covers the following questions:
 
@@ -17,12 +17,7 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus EX4000?
 
-We are planning a preview period in week beginning 24 Nov 2025 when all users and
-projects migrating to Cirrus EX4000 will have access to test use of the system in
-an uncharged mode.
-
-**Full service will start on Monday 8 December 2025.** At this point jobs will be 
-charged against budgets.
+**Full service started on Monday 8 December 2025.**
 
 ## Has my project been migrated to Cirrus EX4000?
 
