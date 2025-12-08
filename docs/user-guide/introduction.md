@@ -8,7 +8,7 @@ runs a version of Red Hat Enterprise Linux (RHEL).
 ## Overview of the Cirrus system
 
 <figure markdown="span">
-   ![Overview of the Cirrus system](/images/overview.svg){ width="90%" }
+   ![Overview of the Cirrus system](../images/overview.svg){ width="90%" }
    <figcaption>A schematic of the Cirrus system, where users login into
    the front end nodes, and work on the back end is managed by SLURM.
    </figcaption>
@@ -32,7 +32,7 @@ although SLURM itself does not have the exact concept of queues.
 Work is submitted to _partitions_ with a given _quality of service_ (QoS).
 
 For further details of the compute node hardware and network, see the
-[hardware description](/user-guide/hardware).
+[hardware description](../user-guide/hardware.md).
 
 ### Storage
 
@@ -50,7 +50,7 @@ Storage is provided by two file systems:
   home directories.
 
 For further storage details see
-[Data Management and Transfer](/user-guide/data).
+[Data Management and Transfer](../user-guide/data.md).
 
 ## Charging
 
