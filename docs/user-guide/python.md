@@ -217,6 +217,84 @@ unset __conda_setup
 # <<< conda initialize <<<
 ```
 
+You can manually activate your distribution by sourcing its `activate` script as
+follows, where you would replace the path to `miniconda3` with the path you
+chose for your own installation:
+
+```
+source /work/t01/t01/auser/miniconda3/bin/activate
+```
+
+### Using Cray Python packages in Conda
+
+Conda will by default install all the packages you request from its own
+repositories. This can cause issues on Cirrus if those packages make use of MPI
+in any way, as Conda installations of MPI will typically not be set up to use
+Cirrus's Slingshot interconnect. You may be unable to run jobs over more than
+one node, or at all. To bypass this issue, Conda should be be configured to
+reuse the packages provided by the central Cray Python installation which are
+intended for use on Cirrus. These include mpi4py, NumPy, SciPy, pandas and Dask.
+
+Once you have installed and activated your Conda-based distribution as described
+above, you should see the name of the `base` Conda environment prepended to your
+prompt, for example:
+```
+(base) [auser@login01 ~]$
+```
+At this point you should create a new Conda environment which you will layer on
+top of the Cray Python packages. You can give it a name such as `cray-python`,
+as is shown in the following example, but you will probably wish to name it
+something that is more meaningful to your work. You may notice that we set the
+version of Python itself to be the same as that provided by Cray Python, to
+ensure compatibility between our new installation and the existing centrally
+installed packages.
+```
+(base) [auser@login01 ~]$ conda create --name=cray-python python=3.11
+```
+
+To configure this environment to use the centrally installed packages, rather
+than install new ones from external sources, we will place a new `.pth` file in
+the environment. Any paths in a file with this extension at the location below
+will be checked by conda for external packages (*i.e.* it does not need to be
+named `cray-python.pth` as we do here -- anything ending in `.pth` will work --
+but this name makes sense). If you installed Conda at
+`/work/t01/t01/auser/miniconda3`, then you should open
+`/work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth`
+in the text editor of your choice, such as `nano`, `vim` or `emacs`:
+```
+(base) [auser@login01 ~]$ vim /work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth
+```
+In this file, add a single line which is the path to the location of the Cray
+Python packages:
+```
+/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages
+```
+Once you have added this line, save and close the file.
+
+At this point Conda should be able to detect and use the Cray Python packages
+when your new environment is activated. Do so with the following command, again
+changing the environment name to whatever you chose previously. You will see
+that the prompt name changes to reflect this.
+```
+(base) [auser@login01 ~]$ conda activate cray-python
+(cray-python) [auser@login01 ~]$
+```
+With your environment active, all the Cray Python packages are available for you
+to use. You can test this by starting the Python interpreter and trying to
+import some of the packages, checking that the locations of their components are
+in the `/opt/cray/pe/python` directories:
+```
+(cray-python) [auser@login01 ~]$ python
+Python 3.11.14 (main, Oct 21 2025, 18:31:21) [GCC 11.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import numpy as np
+>>> np.__file__
+'/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/numpy/__init__.py'
+>>> from mpi4py import MPI
+>>> MPI.__file__
+'/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/mpi4py/MPI.cpython-311-x86_64-linux-gnu.so'
+```
+
 
 ## Running Python
 
@@ -239,6 +317,10 @@ module load cray-python
 
 # ..., or, if using local virtual environment
 source <<path to virtual environment>>/bin/activate
+
+# ..., or, if using a Conda installation
+source <<path to Conda installation>>/bin/activate
+conda activate <<name of your conda environment>>
     
 # Run your Python program
 python python_test.py
@@ -270,6 +352,10 @@ module load cray-python
 
 # ..., or, if using local virtual environment
 source <<path to virtual environment>>/bin/activate
+
+# ..., or, if using a Conda installation
+source <<path to Conda installation>>/bin/activate
+conda activate <<name of your conda environment>>
 
 # Pass cpus-per-task setting to srun
 export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
