@@ -842,15 +842,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#conda-on-archer2" class="md-nav__link">
+  <a href="#conda-on-cirrus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conda on ARCHER2
+        Conda on Cirrus
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Conda on ARCHER2">
+    <nav class="md-nav" aria-label="Conda on Cirrus">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -903,6 +903,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#using-cray-python-packages-in-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Cray Python packages in Conda
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -948,10 +959,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-jupyterlab-on-archer2" class="md-nav__link">
+  <a href="#using-jupyterlab-on-cirrus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using JupyterLab on ARCHER2
+        Using JupyterLab on Cirrus
       
     </span>
   </a>
@@ -1605,15 +1616,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#conda-on-archer2" class="md-nav__link">
+  <a href="#conda-on-cirrus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conda on ARCHER2
+        Conda on Cirrus
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Conda on ARCHER2">
+    <nav class="md-nav" aria-label="Conda on Cirrus">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1666,6 +1677,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#using-cray-python-packages-in-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Cray Python packages in Conda
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1711,10 +1733,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-jupyterlab-on-archer2" class="md-nav__link">
+  <a href="#using-jupyterlab-on-cirrus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using JupyterLab on ARCHER2
+        Using JupyterLab on Cirrus
       
     </span>
   </a>
@@ -1848,7 +1870,7 @@ srun --distribution=block:block --hint=nomultithread python myvenv-script.py
 <p>If you find that a module you've installed to a virtual environment on <code>/work</code> isn't found when running a job, it may be that it was previously installed to the default location of <code>$HOME/.local</code> which is not mounted on the compute nodes. This can be an issue as <code>pip</code> will reuse any modules found at this default location rather than reinstall them into a virtual environment. Thus, even if the virtual environment is on <code>/work</code>, a module you've asked for may actually be located on <code>/home</code>.</p>
 <p>You can check a module's install location and its dependencies with <code>pip show</code>, for example <code>pip show matplotlib</code>. You may then run <code>pip uninstall matplotlib</code> while no virtual environment is active to uninstall it from <code>$HOME/.local</code>, and then re-run <code>pip install matplotlib</code> while your virtual environment on <code>/work</code> is active to reinstall it there. You will need to do this for any modules installed on <code>/home</code> that will use either directly or indirectly. Remember you can check all your installed modules with <code>pip list</code>.</p>
 </div>
-<h2 id="conda-on-archer2">Conda on ARCHER2</h2>
+<h2 id="conda-on-cirrus">Conda on Cirrus</h2>
 <p>Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
 accessing software on many systems, including Cirrus. Although conda-based distributions can be used on Cirrus, 
 care is needed in how they are installed and configured so that the installation does not adversely effect your use
@@ -1922,6 +1944,70 @@ fi
 unset __conda_setup
 # &lt;&lt;&lt; conda initialize &lt;&lt;&lt;
 </code></pre></div>
+<p>You can manually activate your distribution by sourcing its <code>activate</code> script as
+follows, where you would replace the path to <code>miniconda3</code> with the path you
+chose for your own installation:</p>
+<div class="highlight"><pre><span></span><code>source /work/t01/t01/auser/miniconda3/bin/activate
+</code></pre></div>
+<h3 id="using-cray-python-packages-in-conda">Using Cray Python packages in Conda</h3>
+<p>Conda will by default install all the packages you request from its own
+repositories. This can cause issues on Cirrus if those packages make use of MPI
+in any way, as Conda installations of MPI will typically not be set up to use
+Cirrus's Slingshot interconnect. You may be unable to run jobs over more than
+one node, or at all. To bypass this issue, Conda should be be configured to
+reuse the packages provided by the central Cray Python installation which are
+intended for use on Cirrus. These include mpi4py, NumPy, SciPy, pandas and Dask.</p>
+<p>Once you have installed and activated your Conda-based distribution as described
+above, you should see the name of the <code>base</code> Conda environment prepended to your
+prompt, for example:
+<div class="highlight"><pre><span></span><code>(base) [auser@login01 ~]$
+</code></pre></div>
+At this point you should create a new Conda environment which you will layer on
+top of the Cray Python packages. You can give it a name such as <code>cray-python</code>,
+as is shown in the following example, but you will probably wish to name it
+something that is more meaningful to your work. You may notice that we set the
+version of Python itself to be the same as that provided by Cray Python, to
+ensure compatibility between our new installation and the existing centrally
+installed packages.
+<div class="highlight"><pre><span></span><code>(base) [auser@login01 ~]$ conda create --name=cray-python python=3.11
+</code></pre></div></p>
+<p>To configure this environment to use the centrally installed packages, rather
+than install new ones from external sources, we will place a new <code>.pth</code> file in
+the environment. Any paths in a file with this extension at the location below
+will be checked by conda for external packages (<em>i.e.</em> it does not need to be
+named <code>cray-python.pth</code> as we do here -- anything ending in <code>.pth</code> will work --
+but this name makes sense). If you installed Conda at
+<code>/work/t01/t01/auser/miniconda3</code>, then you should open
+<code>/work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth</code>
+in the text editor of your choice, such as <code>nano</code>, <code>vim</code> or <code>emacs</code>:
+<div class="highlight"><pre><span></span><code>(base) [auser@login01 ~]$ vim /work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth
+</code></pre></div>
+In this file, add a single line which is the path to the location of the Cray
+Python packages:
+<div class="highlight"><pre><span></span><code>/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages
+</code></pre></div>
+Once you have added this line, save and close the file.</p>
+<p>At this point Conda should be able to detect and use the Cray Python packages
+when your new environment is activated. Do so with the following command, again
+changing the environment name to whatever you chose previously. You will see
+that the prompt name changes to reflect this.
+<div class="highlight"><pre><span></span><code>(base) [auser@login01 ~]$ conda activate cray-python
+(cray-python) [auser@login01 ~]$
+</code></pre></div>
+With your environment active, all the Cray Python packages are available for you
+to use. You can test this by starting the Python interpreter and trying to
+import some of the packages, checking that the locations of their components are
+in the <code>/opt/cray/pe/python</code> directories:
+<div class="highlight"><pre><span></span><code>(cray-python) [auser@login01 ~]$ python
+Python 3.11.14 (main, Oct 21 2025, 18:31:21) [GCC 11.2.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; np.__file__
+&#39;/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/numpy/__init__.py&#39;
+&gt;&gt;&gt; from mpi4py import MPI
+&gt;&gt;&gt; MPI.__file__
+&#39;/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/mpi4py/MPI.cpython-311-x86_64-linux-gnu.so&#39;
+</code></pre></div></p>
 <h2 id="running-python">Running Python</h2>
 <h3 id="example-serial-python-submission-script">Example serial Python submission script</h3>
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
@@ -1940,6 +2026,10 @@ module load cray-python
 
 # ..., or, if using local virtual environment
 source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
+
+# ..., or, if using a Conda installation
+source &lt;&lt;path to Conda installation&gt;&gt;/bin/activate
+conda activate &lt;&lt;name of your conda environment&gt;&gt;
 
 # Run your Python program
 python python_test.py
@@ -1967,6 +2057,10 @@ module load cray-python
 
 # ..., or, if using local virtual environment
 source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
+
+# ..., or, if using a Conda installation
+source &lt;&lt;path to Conda installation&gt;&gt;/bin/activate
+conda activate &lt;&lt;name of your conda environment&gt;&gt;
 
 # Pass cpus-per-task setting to srun
 export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
@@ -2023,7 +2117,7 @@ the `CRAY_PYTHON_LEVEL` environment variable is set as a conseqeunce of loading 
 
 -->
 
-<h2 id="using-jupyterlab-on-archer2">Using JupyterLab on ARCHER2</h2>
+<h2 id="using-jupyterlab-on-cirrus">Using JupyterLab on Cirrus</h2>
 <p>It is possible to view and run Jupyter notebooks from both login nodes 
 and compute nodes on Cirrus.</p>
 <div class="admonition note">
@@ -2089,12 +2183,12 @@ jupyter lab --ip=0.0.0.0 --no-browser
 <li>Click on the <code>Tunnelling</code> button above the MobaXterm terminal. Create a new tunnel by clicking on <code>New SSH tunnel</code> in the window that opens.</li>
 <li>In the new window that opens, make sure the <code>Local port forwarding</code> radio button is selected.</li>
 <li>In the <code>forwarded port</code> text box on the left under <code>My computer with MobaXterm</code>, enter the port number indicated in the JupyterLab server output (e.g., 8888 or 8890).</li>
-<li>In the three text boxes on the bottom right under <code>SSH server</code> enter <code>login.archer2.ac.uk</code>, your ARCHER2 username and then <code>22</code>.</li>
+<li>In the three text boxes on the bottom right under <code>SSH server</code> enter <code>login.cirrus.ac.uk</code>, your Cirrus username and then <code>22</code>.</li>
 <li>At the top right, under <code>Remote server</code>, enter the id of the login or compute node running the JupyterLab server and the associated port number.</li>
 <li>Click on the <code>Save</code> button.</li>
 <li>In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it.</li>
-<li>Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to ARCHER2. You should tell it to use the same <code>.ppk</code> private key that you normally use when connecting to ARCHER2.</li>
-<li>The tunnel should now be configured. Click on the small start button (like a play '&gt;' icon) for the new tunnel to open it. You'll be asked to enter your ARCHER2 account password -- please do so.</li>
+<li>Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to Cirrus. You should tell it to use the same <code>.ppk</code> private key that you normally use when connecting to Cirrus.</li>
+<li>The tunnel should now be configured. Click on the small start button (like a play '&gt;' icon) for the new tunnel to open it. You'll be asked to enter your Cirrus account password -- please do so.</li>
 </ul>
 </li>
 <li>
