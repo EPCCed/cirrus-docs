@@ -61,6 +61,7 @@ nav:
     - "Gromacs": software-packages/gromacs.md
     - "LAMMPS": software-packages/lammps.md
     - "OpenFOAM": software-packages/openfoam.md
+    - "ORCA": software-packages/orca.md
     - "Quantum Espresso (QE)": software-packages/qe.md
     - "VASP": software-packages/vasp.md
   - "Software Libraries":
