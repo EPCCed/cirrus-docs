@@ -29,6 +29,6 @@ as it becomes available.
 ## Slurm scheduler configuration
 
 - Many of the partitions and QoS aresimilar between the two systems
-  but limits will change. See the [Scheduler secion of the User Guide](../user-guide/scheduler.md))
+  but limits will change. See the [Scheduler secion of the User Guide](../user-guide/batch.md))
 
 
