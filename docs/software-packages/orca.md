@@ -11,12 +11,18 @@ ORCA is an ab initio quantum chemistry program package that contains modern elec
 
 ## Useful Links
 
+- [ORCA Website](https://www.faccts.de/orca/)
 - [ORCA Forum](https://orcaforum.kofo.mpg.de/app.php/portal)
 
 ## Using ORCA on Cirrus
 
 ORCA is available for academic use only on Cirrus. If you wish to use ORCA for commercial
 applications, you must contact the ORCA developers.
+
+!!! tip "Register for ORCA"
+    You should register for use of ORCA on the [ORCA Forums](https://orcaforum.kofo.mpg.de).
+    This also gives you access to ORCA support and visibility of previous questions and
+    answers.
 
 ## Running parallel ORCA jobs
 
