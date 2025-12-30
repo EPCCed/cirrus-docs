@@ -55,6 +55,7 @@ nav:
     - "Application Development Environment": user-guide/development.md
     - "Using Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
+    - "Using R": user-guide/r.md
   - "Software Applications":
     - "CASTEP": software-packages/castep.md
     - "CP2K": software-packages/cp2k.md
