@@ -1749,13 +1749,12 @@ mesoscale, or continuum scale.</p>
 <p>LAMMPS is Open Source software, and is freely available to all Cirrus
 users. Centrally installed versions are managed by
 <a href="../../software-tools/spack/">Spack on Cirrus</a>.</p>
-<p>To see what versions are available in the current programming environment:</p>
+<p>To see what versions are available:</p>
 <p><div class="highlight"><pre><span></span><code>  $ module avail lammps
 ...
    lammps/20250612
 </code></pre></div>
-indicating the release version of 12th June 2025 is available. Centrally
-installed versions are available in <code>PrgEnv-cray</code> and <code>PrgEnv-gnu</code>.</p>
+indicating the release version of 12th June 2025 is available.</p>
 <h3 id="optional-lammps-packages">Optional LAMMPS packages</h3>
 <p>The centrally installed module versions of LAMMPS have a limited standand
 set of packages compiled. For the full configuration, try
@@ -1764,7 +1763,13 @@ $ lmp -h
 ...
 Installed packages:
 
-KSPACE MANYBODY MOLECULE RIGID
+AMOEBA ASPHERE BOCS BODY BPM BROWNIAN CG-DNA CG-SPICA CLASS2 COLLOID COLVARS 
+COMPRESS CORESHELL DIELECTRIC DIFFRACTION DIPOLE DPD-BASIC DPD-MESO DPD-REACT 
+DPD-SMOOTH DRUDE EFF ELECTRODE EXTRA-COMMAND EXTRA-COMPUTE EXTRA-DUMP 
+EXTRA-FIX EXTRA-MOLECULE EXTRA-PAIR FEP GRANULAR INTERLAYER KSPACE LEPTON 
+MACHDYN MANYBODY MC MEAM MESONT MISC ML-IAP ML-POD ML-SNAP ML-UF3 MOFFF 
+MOLECULE OPT ORIENT PERI PHONON PLUGIN QEQ REACTION REAXFF REPLICA RHEO RIGID 
+SHOCK SPH SPIN SRD TALLY UEF VORONOI YAFF 
 ...
 </code></pre></div>
 a list which includes available pair, bond, angle, etc, styles, and fix and
@@ -1790,7 +1795,6 @@ For example, the following script will run a LAMMPS job using 2 nodes
 <span class="c1">#SBATCH --distribution=block:block</span>
 <span class="c1">#SBATCH --hint=nomultithread</span>
 
-<span class="l l-Scalar l-Scalar-Plain">module load PrgEnv-cray</span>
 <span class="l l-Scalar l-Scalar-Plain">module load lammps</span>
 
 <span class="l l-Scalar l-Scalar-Plain">srun --ntasks=576 --ntasks-per-node=288 --cpus-per-task=1 lmp &lt; in.test</span>
@@ -1845,6 +1849,9 @@ on Spack.</p>
 <h3 id="using-cmake">Using CMake</h3>
 <p>LAMMPS offers developers a relatively simple and robust build mechanism
 using CMake.</p>
+<p>!!! tip "Central install is equivalent to <code>most.cmake</code>
+    The central install of LAMMPS on Cirrus has been built with the same
+    packages enabled as you would get from using <code>most.cmake</code>.</p>
 <p>A standard LAMMPS CMake configuration for "most" packages might look like,
 schematically:</p>
 <p><div class="highlight"><pre><span></span><code>module load PrgEnv-cray
