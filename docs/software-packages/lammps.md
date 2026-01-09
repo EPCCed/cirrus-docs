@@ -140,9 +140,9 @@ on Spack.
 LAMMPS offers developers a relatively simple and robust build mechanism
 using CMake.
 
-!!! tip "Central install is equivalent to `most.cmake`
-    The central install of LAMMPS on Cirrus has been built with the same
-    packages enabled as you would get from using `most.cmake`.
+!!!tip "Central install is equivalent to `most.cmake`
+   The central install of LAMMPS on Cirrus has been built with the same
+   packages enabled as you would get from using `most.cmake`.
 
 A standard LAMMPS CMake configuration for "most" packages might look like,
 schematically:
