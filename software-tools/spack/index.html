@@ -1490,6 +1490,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#available-compiler-toolchains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available compiler toolchains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#using-spack-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1693,6 +1704,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#available-compiler-toolchains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available compiler toolchains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#using-spack-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1858,7 +1880,7 @@ documentation</a>.</p>
 <h2 id="activating-spack">Activating Spack</h2>
 <p>Several modules with <code>spack</code> in their name are visible to you. You
 should load the <code>spack</code> module:</p>
-<pre><code>auser@login01:~&gt; module load spack
+<pre><code>[auser@login03 ~]$ module load spack
 </code></pre>
 <p>This configures Spack to place its cache on and install software to a directory
 called <code>.spack</code> in your base work directory, e.g. at
@@ -1870,15 +1892,20 @@ package's installation.</p>
 <h2 id="using-spack-on-cirrus">Using Spack on Cirrus</h2>
 <h3 id="installing-software">Installing software</h3>
 <p>At its simplest, Spack installs software with the <code>spack install</code> command:</p>
-<pre><code>auser@login01:~&gt; spack install gromacs
+<pre><code>[auser@login03 ~]$ spack install gromacs
 </code></pre>
 <p>This very simple <code>gromacs</code> installation specification, or spec, would install
 GROMACS using the default options given by the Spack <code>gromacs</code> package. The spec
 can be expanded to include which options you like. For example, the command</p>
-<pre><code>auser@login01:~&gt; spack install gromacs@2024.2%gcc+mpi
+<pre><code>[auser@login03 ~]$ spack install gromacs@2024.2 +mpi %gcc_all
 </code></pre>
-<p>would use the GCC compiler to install an MPI-enabled version of GROMACS version
-2024.2.</p>
+<p>would use the GCC compiler toolchain (<code>%gcc_all</code>) to install an MPI-enabled
+version (<code>+mpi</code>) of GROMACS version 2024.2.</p>
+<div class="admonition important">
+<p class="admonition-title">Compilier/toolchain definition comes last in the Spack spec</p>
+<p>The compiler/toolchain definition (beginning with <code>%</code>) will generally be the last 
+part of the spec definition.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Spack needs to bootstrap the installation of some extra software in order to
@@ -1890,7 +1917,7 @@ use.</p>
 </div>
 <p>You can find information about any Spack package and the options
 available to use with the <code>spack info</code> command:</p>
-<pre><code>auser@login01:~&gt; spack info gromacs
+<pre><code>[auser@login03 ~]$ spack info gromacs
 </code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1906,7 +1933,7 @@ also install those, marking them as implicitly installed, as opposed to the
 explicit installation of the package you requested. If you want to see the
 dependencies of a package before you install it, you can use <code>spack spec</code> to see
 the full concretised set of packages:</p>
-<pre><code>auser@login01:~&gt; spack spec gromacs@2024.2%gcc+mpi
+<pre><code>[auser@login03 ~]$ spack spec gromacs@2024.2 +mpi %gcc_all
 </code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1917,22 +1944,33 @@ and Cray MPICH will provide MPI. It is also configured to allow it to re-use
 as dependencies any packages that the Cirrus CSE team has <code>spack install</code>ed
 centrally, potentially helping to save you build time and storage quota.</p>
 </div>
+<h3 id="available-compiler-toolchains">Available compiler toolchains</h3>
+<p>There is a toolchain available for each compiler environment on Cirrus:</p>
+<p>| Compiler environment | Compiler version | Toolchain name |
+|---|---|
+| GCC (<code>PrgEnv-gnu</code>) | 14.2.0 | <code>%gcc_all</code> |
+| CCE (<code>PrgEnv-cray</code>) | 19.0.0 | <code>%cce_all</code> |
+| Intel (<code>PrgEnv-intel</code>) | 2025.0.4 | <code>%intel_all</code> |
+| AMD (<code>PrgEnv-aocc</code>) | 5.0.0 | <code>%aocc_all</code> |</p>
+<p>You can always list the available toolchains with:</p>
+<div class="highlight"><pre><span></span><code>[auser@login03 ~]$ spack config get toolchains
+</code></pre></div>
 <h3 id="using-spack-packages">Using Spack packages</h3>
 <p>Spack provides a module-like way of making software that you have installed
 available to use. If you have a GROMACS installation, you can make it
 available to use with <code>spack load</code>:</p>
-<pre><code>auser@login01:~&gt; spack load gromacs
+<pre><code>[auser@login03 ~]$ spack load gromacs
 </code></pre>
 <p>At this point you should be able to use the software as normal. You can then
 remove it once again from the environment with <code>spack unload</code>:</p>
-<pre><code>auser@login01:~&gt; spack unload gromacs
+<pre><code>[auser@login03 ~]$ spack unload gromacs
 </code></pre>
 <p>If you have multiple variants of the same package installed, you can use the
 spec to distinguish between them. You can always check what packages have been
 installed using the <code>spack find</code> command. If no other arguments are given it
 will simply list all installed packages, or you can give a package name to
 narrow it down:</p>
-<pre><code>auser@login01:~&gt; spack find gromacs
+<pre><code>[auser@login03 ~]$ spack find gromacs
 </code></pre>
 <p>You can see your packages' install locations using <code>spack find --paths</code> or
 <code>spack find -p</code>.</p>
@@ -1944,14 +1982,14 @@ see the first part of the hash by running <code>spack find -l</code>, or the ful
 slash, e.g. <code>wjy5dus</code> becomes <code>/wjy5dus</code>.</p>
 <p>If you have two packages installed which appear identical in <code>spack find</code> apart
 from their hash, you can differentiate them with <code>spack diff</code>:</p>
-<pre><code>auser@login01:~&gt; spack diff /wjy5dus /bleelvs
+<pre><code>[auser@login03 ~]$ spack diff /wjy5dus /bleelvs
 </code></pre>
 <p>You can uninstall your packages with <code>spack uninstall</code>:</p>
-<pre><code>auser@login01:~&gt; spack uninstall gromacs@2024.2
+<pre><code>[auser@login03 ~]$ spack uninstall gromacs@2024.2
 </code></pre>
 <p>and of course, to be absolutely certain that you are uninstalling the correct
 package, you can provide the hash:</p>
-<pre><code>auser@login01:~&gt; spack uninstall /wjy5dus
+<pre><code>[auser@login03 ~]$ spack uninstall /wjy5dus
 </code></pre>
 <p>Uninstalling a package will leave behind any implicitly installed packages that
 were installed to support it. Spack may have also installed build-time
@@ -1959,7 +1997,7 @@ dependencies that aren't actually needed any more -- these are often packages
 like <code>autoconf</code>, <code>cmake</code> and <code>m4</code>. You can run the garbage collection command to
 uninstall any build dependencies and implicit dependencies that are no longer
 required:</p>
-<pre><code>auser@login01:~&gt; spack gc
+<pre><code>[auser@login03 ~]$ spack gc
 </code></pre>
 <p>If you commonly use a set of Spack packages together you may want to consider
 using a Spack environment to assist you in their installation and management.
@@ -1977,14 +2015,14 @@ configured to, by default, place and look for your configuration files in your
 work directory at e.g. <code>/work/t01/t01/auser/.spack</code>. You can however override
 this to have Spack use any directory you choose by setting the
 <code>SPACK_USER_CONFIG_PATH</code> environment variable, for example:</p>
-<pre><code>auser@login01:~&gt; export SPACK_USER_CONFIG_PATH=/work/t01/t01/auser/spack-config
+<pre><code>[auser@login03 ~]$ export SPACK_USER_CONFIG_PATH=/work/t01/t01/auser/spack-config
 </code></pre>
 <p>Of course this will need to be a directory where you have write permissions,
 such in your home or work directories, or in one of your project's <code>shared</code>
 directories.</p>
 <p>You can edit the configuration files directly in a text editor or by
 running, for example:</p>
-<pre><code>auser@login01:~&gt; spack config edit repos
+<pre><code>[auser@login03 ~]$ spack config edit repos
 </code></pre>
 <p>which would open your <code>repos.yaml</code> in <code>vim</code>.</p>
 <div class="admonition tip">
@@ -1996,13 +2034,13 @@ Spack by setting the <code>SPACK_EDITOR</code> environment variable.</p>
 Spack defaults which are overridden by the Cirrus system configuration files,
 which can then be overridden in turn by your own configurations. You can see
 what options are in use at any point by running, for example:</p>
-<pre><code>auser@login01:~&gt; spack config get config
+<pre><code>[auser@login03 ~]$ spack config get config
 </code></pre>
 <p>which goes through any and all <code>config.yaml</code> files known to Spack and sets
 the options according to those files' level of precedence. You can also get more
 information on which files are responsible for which lines in the final active
 configuration by running, for example to check <code>packages.yaml</code>:</p>
-<pre><code>auser@login01:~&gt; spack config blame packages
+<pre><code>[auser@login03 ~]$ spack config blame packages
 </code></pre>
 <p>Unless you have already written a <code>packages.yaml</code> of your own, this will show a
 mix of options originating from the Spack defaults and also from an
@@ -2035,19 +2073,19 @@ provided our own in a repository located at
 and another directory called <code>packages</code>. Directories within the latter are named
 for the package they provide, for example <code>cp2k</code>, and contain in turn a
 <code>package.py</code>. You can create a repository from scratch with the command</p>
-<pre><code>auser@login01:~&gt; spack repo create dirname
+<pre><code>[auser@login03 ~]$ spack repo create dirname
 </code></pre>
 <p>where <code>dirname</code> is the name of the directory holding the repository. This
 command will create the directory in your current working directory, but you can
 choose to instead provide a path to its location. You can then make the new
 repository available to Spack by running:</p>
-<pre><code>auser@login01:~&gt; spack repo add dirname
+<pre><code>[auser@login03 ~]$ spack repo add dirname
 </code></pre>
 <p>This adds the path to <code>dirname</code> to the <code>repos.yaml</code> file in your user scope
 configuration directory <a href="#custom-configuration">as described above</a>. If your
 <code>repos.yaml</code> doesn't yet exist, it will be created.</p>
 <p>A Spack repository can similarly be removed from the config using:</p>
-<pre><code>auser@login01:~&gt; spack repo rm dirname
+<pre><code>[auser@login03 ~]$ spack repo rm dirname
 </code></pre>
 <h3 id="namespaces-and-repository-priority">Namespaces and repository priority</h3>
 <p>A package can exist in several repositories. For example, the Quantum Espresso
@@ -2063,7 +2101,7 @@ the directory it was created in, but Spack does allow it to be different. Both
 <p>If you want your repository namespace to be different from the name of
 the directory, you can change it either by editing the repository's
 <code>repo.yaml</code> or by providing an extra argument to <code>spack repo create</code>:</p>
-<pre><code>auser@login01:~&gt; spack repo create dirname namespace
+<pre><code>[auser@login03 ~]$ spack repo create dirname namespace
 </code></pre>
 </div>
 <p>Running <code>spack find -N</code> will return the list of installed packages with their
@@ -2075,7 +2113,7 @@ spec with a repository namespace.</p>
 repositories it has been configured to use until it finds a matching
 package, which it will then use. The earlier in the list of repositories, the
 higher the priority. You can check this with:</p>
-<pre><code>auser@login01:~&gt; spack repo list
+<pre><code>[auser@login03 ~]$ spack repo list
 </code></pre>
 <p>If you run this without having added any repositories of your own, you will see
 that the two available repositories are <code>cirrus</code> and <code>builtin</code>, in this order.
@@ -2088,14 +2126,14 @@ builtin.quantum-espresso</code>.</p>
 store within it. Spack has a <code>spack create</code> command which will do the initial
 setup and create a boilerplate <code>package.py</code>. To create an empty package called
 <code>packagename</code> you would run:</p>
-<pre><code>auser@login01:~&gt; spack create --name packagename
+<pre><code>[auser@login03 ~]$ spack create --name packagename
 </code></pre>
 <p>However, it will very often be more efficient if you instead provide a download
 URL for your software as the argument. For example, the Code_Saturne 8.0.3
 source is obtained from
 <code>https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz</code>,
 so you can run:</p>
-<pre><code>auser@login01:~&gt; spack create https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz
+<pre><code>[auser@login03 ~]$ spack create https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz
 </code></pre>
 <p>Spack will determine from this the package name, the download URLs for all
 versions X.Y.Z matching the
@@ -2106,7 +2144,7 @@ checksums, then place all this information in the initial version of the package
 for you. This takes away a lot of the initial work!</p>
 <p>At this point you can get to work on the package. You can edit an existing
 package by running</p>
-<pre><code>auser@login01:~&gt; spack edit packagename
+<pre><code>[auser@login03 ~]$ spack edit packagename
 </code></pre>
 <p>or by directly opening <code>packagename/package.py</code> within the repository with a
 text editor.</p>
