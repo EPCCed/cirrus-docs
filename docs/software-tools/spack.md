@@ -97,7 +97,7 @@ the full concretised set of packages:
 There is a toolchain available for each compiler environment on Cirrus:
 
 | Compiler environment | Compiler version | Toolchain name |
-|---|---|
+|---|---|---|
 | GCC (`PrgEnv-gnu`) | 14.2.0 | `%gcc_all` |
 | CCE (`PrgEnv-cray`) | 19.0.0 | `%cce_all` |
 | Intel (`PrgEnv-intel`) | 2025.0.4 | `%intel_all` |
