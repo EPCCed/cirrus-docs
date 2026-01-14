@@ -1946,12 +1946,37 @@ centrally, potentially helping to save you build time and storage quota.</p>
 </div>
 <h3 id="available-compiler-toolchains">Available compiler toolchains</h3>
 <p>There is a toolchain available for each compiler environment on Cirrus:</p>
-<p>| Compiler environment | Compiler version | Toolchain name |
-|---|---|
-| GCC (<code>PrgEnv-gnu</code>) | 14.2.0 | <code>%gcc_all</code> |
-| CCE (<code>PrgEnv-cray</code>) | 19.0.0 | <code>%cce_all</code> |
-| Intel (<code>PrgEnv-intel</code>) | 2025.0.4 | <code>%intel_all</code> |
-| AMD (<code>PrgEnv-aocc</code>) | 5.0.0 | <code>%aocc_all</code> |</p>
+<table>
+<thead>
+<tr>
+<th>Compiler environment</th>
+<th>Compiler version</th>
+<th>Toolchain name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GCC (<code>PrgEnv-gnu</code>)</td>
+<td>14.2.0</td>
+<td><code>%gcc_all</code></td>
+</tr>
+<tr>
+<td>CCE (<code>PrgEnv-cray</code>)</td>
+<td>19.0.0</td>
+<td><code>%cce_all</code></td>
+</tr>
+<tr>
+<td>Intel (<code>PrgEnv-intel</code>)</td>
+<td>2025.0.4</td>
+<td><code>%intel_all</code></td>
+</tr>
+<tr>
+<td>AMD (<code>PrgEnv-aocc</code>)</td>
+<td>5.0.0</td>
+<td><code>%aocc_all</code></td>
+</tr>
+</tbody>
+</table>
 <p>You can always list the available toolchains with:</p>
 <div class="highlight"><pre><span></span><code>[auser@login03 ~]$ spack config get toolchains
 </code></pre></div>
