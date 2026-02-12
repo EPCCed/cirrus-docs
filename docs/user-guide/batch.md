@@ -671,7 +671,6 @@ per core and specifies 4 hours maximum runtime per subjob:
 #!/bin/bash
 # Slurm job options (name, compute nodes, job time)
 
-#SBATCH --name=Example_Array_Job
 #SBATCH --time=04:00:00
 #SBATCH --exclusive
 #SBATCH --nodes=1
@@ -697,14 +696,51 @@ export OMP_NUM_THREADS=1
 srun --hint=nomultithread --distribution=block:block /path/to/exe $SLURM_ARRAY_TASK_ID
 ```
 
+### Non-exclusive array elements for smaller jobs
+
+In the previous example, the `--exclusive` flag was used to reserve an
+entire node per array element. If the individual elements were smaller
+(e.g., an element used only 12 cores), this would be wasteful. In this
+case the `--exclusive` should be removed. Schematically, this might
+include, for an OpenMP application using threads:
+
+```
+#!/bin/bash
+
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=12
+...
+#SBATCH --array=0-255
+
+export OMP_NUM_THREADS=12
+
+srun ./my_threaded_application
+
+```
+
+There is one caveat to this advice. If one is particularly concerned with
+placement of tasks/threads on a node, one may have to return to the
+`--exclusive` picture to have full control of this placement.
+A non-exclusive job will not guarantee a contiguous set of physical cores
+is allocated.
+
+
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
 ```
-sbatch job_script.slurm
+$ sbatch job_script.slurm
+Submitted batch job 42123
 ```
+The single parent job id (that returned at the point of submission) is
+available from within the script as `SLURM_ARRAY_JOB_ID`. Each separate
+element has a unique `SLURM_JOB_ID` and `SLURM_ARRAY_TASK_ID`, the later
+being the array element index counting from zero. The standard
+SLURM output files for each element of the job will be `slurm_42123_0.out`,
+`slurm_42123_1.out` and so on (using the example parent id).
+
 
 ## Job chaining
 
