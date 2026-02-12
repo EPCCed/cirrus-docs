@@ -147,7 +147,7 @@ memory available (as there are 288 CPU cores per node). So, if you
 request the full node (288 cores), then you will be allocated a maximum
 of all of the memory (768 GB or 1,536 GB) available on the node; however,
 if you request 1 core, then you will be assigned a maximum of 768/288 = 2.66 GB
-of the memory available on a standard memory node or 5.33 GB on a high 
+of the memory available on a standard memory node or 5.33 GB on a high
 memory node.
 
 !!! Note
@@ -423,11 +423,11 @@ you typically use `srun` with the following options:
   cores
 - `--distribution=block:block` - Place parallel (usually MPI) processes sequentially
   on cores on the node. This typically gives the best parallel performance for
-  MPI collective communications. 
+  MPI collective communications.
 
 `srun` will use the specification of nodes and tasks from your job script, `sbatch` or
 `salloc` command to launch the correct number of parallel tasks so these should not
-be specified again for the `srun` command unless you want to use resources in a 
+be specified again for the `srun` command unless you want to use resources in a
 different way from the original specification.
 
 !!! Note
@@ -539,7 +539,7 @@ MPI process. This results in all 288 physical cores per node being used.
 !!! important
     Using 24 MPI processes per node (1 per CCD) and 12 OpenMP processes
     per MPI process is likely to be the highest number of OpenMP threads
-    that will produce good performance as each 12-core CCD shares L3 
+    that will produce good performance as each 12-core CCD shares L3
     cache.
 
 !!! Note
@@ -966,8 +966,8 @@ srun ./my_serial_executable.x
 
 !!! Note
     Remember that you will be allocated memory based on the number of tasks
-    (i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on 
-    standard memory nodess and ~5.3 GB per task/core on high memory nodes.
+    (i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on
+    standard memory nodes and ~5.3 GB per task/core on high memory nodes.
     If you need more than this for your serial job then you should ask for
     the number of tasks you need for the required memory (or use the
     `--exclusive` option to get access to all the memory on a node) and
