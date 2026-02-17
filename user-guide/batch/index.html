@@ -1076,6 +1076,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#non-exclusive-array-elements-for-smaller-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-exclusive array elements for smaller jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#submitting-a-job-array" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2279,6 +2290,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#non-exclusive-array-elements-for-smaller-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-exclusive array elements for smaller jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#submitting-a-job-array" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2507,7 +2529,7 @@ memory available (as there are 288 CPU cores per node). So, if you
 request the full node (288 cores), then you will be allocated a maximum
 of all of the memory (768 GB or 1,536 GB) available on the node; however,
 if you request 1 core, then you will be assigned a maximum of 768/288 = 2.66 GB
-of the memory available on a standard memory node or 5.33 GB on a high 
+of the memory available on a standard memory node or 5.33 GB on a high
 memory node.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2976,11 +2998,11 @@ you typically use <code>srun</code> with the following options:</p>
   cores</li>
 <li><code>--distribution=block:block</code> - Place parallel (usually MPI) processes sequentially
   on cores on the node. This typically gives the best parallel performance for
-  MPI collective communications. </li>
+  MPI collective communications.</li>
 </ul>
 <p><code>srun</code> will use the specification of nodes and tasks from your job script, <code>sbatch</code> or
 <code>salloc</code> command to launch the correct number of parallel tasks so these should not
-be specified again for the <code>srun</code> command unless you want to use resources in a 
+be specified again for the <code>srun</code> command unless you want to use resources in a
 different way from the original specification.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3077,7 +3099,7 @@ MPI process. This results in all 288 physical cores per node being used.</p>
 <p class="admonition-title">Important</p>
 <p>Using 24 MPI processes per node (1 per CCD) and 12 OpenMP processes
 per MPI process is likely to be the highest number of OpenMP threads
-that will produce good performance as each 12-core CCD shares L3 
+that will produce good performance as each 12-core CCD shares L3
 cache.</p>
 </div>
 <div class="admonition note">
@@ -3190,7 +3212,6 @@ per core and specifies 4 hours maximum runtime per subjob:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
 
-<span class="kp">#SBATCH --name=Example_Array_Job</span>
 <span class="kp">#SBATCH --time=04:00:00</span>
 <span class="kp">#SBATCH --exclusive</span>
 <span class="kp">#SBATCH --nodes=1</span>
@@ -3215,11 +3236,40 @@ per core and specifies 4 hours maximum runtime per subjob:</p>
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>/path/to/exe<span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
 </code></pre></div>
+<h3 id="non-exclusive-array-elements-for-smaller-jobs">Non-exclusive array elements for smaller jobs</h3>
+<p>In the previous example, the <code>--exclusive</code> flag was used to reserve an
+entire node per array element. If the individual elements were smaller
+(e.g., an element used only 12 cores), this would be wasteful. In this
+case the <code>--exclusive</code> should be removed. Schematically, this might
+include, for an OpenMP application using threads:</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=12
+...
+#SBATCH --array=0-255
+
+export OMP_NUM_THREADS=12
+
+srun ./my_threaded_application
+</code></pre></div>
+<p>There is one caveat to this advice. If one is particularly concerned with
+placement of tasks/threads on a node, one may have to return to the
+<code>--exclusive</code> picture to have full control of this placement.
+A non-exclusive job will not guarantee a contiguous set of physical cores
+is allocated.</p>
 <h3 id="submitting-a-job-array">Submitting a job array</h3>
 <p>Job arrays are submitted using <code>sbatch</code> in the same way as for standard
 jobs:</p>
-<div class="highlight"><pre><span></span><code>sbatch job_script.slurm
+<p><div class="highlight"><pre><span></span><code>$ sbatch job_script.slurm
+Submitted batch job 42123
 </code></pre></div>
+The single parent job id (that returned at the point of submission) is
+available from within the script as <code>SLURM_ARRAY_JOB_ID</code>. Each separate
+element has a unique <code>SLURM_JOB_ID</code> and <code>SLURM_ARRAY_TASK_ID</code>, the latter
+being the array element index counting from zero. The standard
+SLURM output files for each element of the job will be <code>slurm_42123_0.out</code>,
+<code>slurm_42123_1.out</code> and so on (using the example parent id).</p>
 <h2 id="job-chaining">Job chaining</h2>
 <p>Job dependencies can be used to construct complex pipelines or chain
 together long simulations requiring multiple steps.</p>
@@ -3398,8 +3448,8 @@ srun<span class="w"> </span>./my_serial_executable.x
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Remember that you will be allocated memory based on the number of tasks
-(i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on 
-standard memory nodess and ~5.3 GB per task/core on high memory nodes.
+(i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on
+standard memory nodes and ~5.3 GB per task/core on high memory nodes.
 If you need more than this for your serial job then you should ask for
 the number of tasks you need for the required memory (or use the
 <code>--exclusive</code> option to get access to all the memory on a node) and
