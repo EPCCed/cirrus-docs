@@ -736,7 +736,7 @@ Submitted batch job 42123
 ```
 The single parent job id (that returned at the point of submission) is
 available from within the script as `SLURM_ARRAY_JOB_ID`. Each separate
-element has a unique `SLURM_JOB_ID` and `SLURM_ARRAY_TASK_ID`, the later
+element has a unique `SLURM_JOB_ID` and `SLURM_ARRAY_TASK_ID`, the latter
 being the array element index counting from zero. The standard
 SLURM output files for each element of the job will be `slurm_42123_0.out`,
 `slurm_42123_1.out` and so on (using the example parent id).
