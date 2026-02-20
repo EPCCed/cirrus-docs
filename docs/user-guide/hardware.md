@@ -70,7 +70,7 @@ AMD 9825 is a 64-bit x86 server microprocessor. A partial list of instructions a
 Each core:
 
 * Can sustain execution of four x86 instructions per cycle, using features such as the micro-op cache, advanced branch prediction, and prefetching. The prefetcher works on streaming data and on variable strides, allowing it to accelerate many different data structures.
-* Has two 256-bit Fused Multiply-Add (FMA) units and can deliver up to 16 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 128 cores x 2.25 GHz x 16 = 4.6 teraflops.
+* Has two 512-bit Fused Multiply-Add (FMA) units and can deliver up to 32 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 244 cores x 2.2 GHz x 32 = 17.2 teraflops.
 * Can support Simultaneous Multi-threading (SMT), allowing two threads to execute simultaneously per core. SMT is available on Cirrus compute nodes but example submission scripts all use physical cores only as SMT is not usually beneficial for HPC applications.
 
 <!-- Need to check details from here
