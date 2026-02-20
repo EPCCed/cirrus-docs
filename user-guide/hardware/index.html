@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
@@ -1753,7 +1753,7 @@ There are 192 standard memory nodes and 64 high memory nodes.</p>
 <p>Each core:</p>
 <ul>
 <li>Can sustain execution of four x86 instructions per cycle, using features such as the micro-op cache, advanced branch prediction, and prefetching. The prefetcher works on streaming data and on variable strides, allowing it to accelerate many different data structures.</li>
-<li>Has two 256-bit Fused Multiply-Add (FMA) units and can deliver up to 16 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 128 cores x 2.25 GHz x 16 = 4.6 teraflops.</li>
+<li>Has two 512-bit Fused Multiply-Add (FMA) units and can deliver up to 32 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 244 cores x 2.2 GHz x 32 = 17.2 teraflops.</li>
 <li>Can support Simultaneous Multi-threading (SMT), allowing two threads to execute simultaneously per core. SMT is available on Cirrus compute nodes but example submission scripts all use physical cores only as SMT is not usually beneficial for HPC applications.</li>
 </ul>
 <!-- Need to check details from here
