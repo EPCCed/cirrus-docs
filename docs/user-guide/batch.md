@@ -332,6 +332,7 @@ Slurm Job Reasons
 For a full list of see [Job
 Reasons](https://slurm.schedmd.com/squeue.html#lbAF)
 
+
 ## Output from Slurm jobs
 
 Slurm places standard output (STDOUT) and standard error (STDERR) for
@@ -870,6 +871,22 @@ completed.
 
 The `salloc` method may be useful if one wishes to associate operations
 on the login node with work in the allocation itself.
+
+
+### Using `srun --unbuffered`
+
+It is sometimes possible that a job will fail or be cancelled and
+produce no output, e.g., to the standard output file. This may be
+because output units are buffered before actually being written
+to file, and the contents cannot be flushed at the point of
+failure/cancellation. To ensure all output is immediately flushed
+to file, one can specify
+```
+srun --unbuffered ...
+```
+in the SLURM submission script. This can help solve problems where
+there is apparently no output.
+
 
 ## Reservations
 
