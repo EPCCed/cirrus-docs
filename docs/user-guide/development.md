@@ -461,6 +461,15 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
+##### CMake projects
+
+When building a project using `CMake` it may fail due to a change in the submodule naming convention, a potential solution to this is to add
+```
+set(CMAKE_Fortran_SUBMODULE_SEP ".")
+set(CMAKE_Fortran_SUBMODULE_EXT ".smod")
+```
+in your CMake script.
+
 #### CCE Reference Documentation
 
 * [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
