@@ -463,8 +463,6 @@ Miscellaneous options:
 
 ##### CMake projects
 
-CCE has a default module extension of .MOD (or whatever), which can cause default CMake builds to fail with some-error-or-other. A solution is
-
 When building a project using `CMake` it expects the `crayftn` compiler to generate `SUBMODULE.mod` files for submodules.
 Newer CCE versions (such as installed on Cirrus) instead generate `MODULE.SUBMODULE.smod` files for submodules, breaking `CMake` build systems for Fortran programs featuring submodules.
 This problem can be resolved by adding
