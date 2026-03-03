@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
     
       
@@ -911,6 +911,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Useful CCE Fortran options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmake-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMake projects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2054,6 +2071,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Useful CCE Fortran options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmake-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMake projects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2885,6 +2919,17 @@ useful:</p>
 </tr>
 </tbody>
 </table>
+<h5 id="cmake-projects">CMake projects</h5>
+<p>When building a project using <code>CMake</code> it expects the <code>crayftn</code> compiler to generate <code>SUBMODULE.mod</code> files for submodules.
+Newer CCE versions (such as installed on Cirrus) instead generate <code>MODULE.SUBMODULE.smod</code> files for submodules, breaking <code>CMake</code> build systems for Fortran programs featuring submodules.
+This problem can be resolved by adding
+<div class="highlight"><pre><span></span><code>if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 19.0.0)
+  message(STATUS &quot;Setting submodules for new CrayFTN&quot;)
+  set(CMAKE_Fortran_SUBMODULE_SEP &quot;.&quot;)
+  set(CMAKE_Fortran_SUBMODULE_EXT &quot;.smod&quot;)
+endif()
+</code></pre></div>
+in your CMake script.</p>
 <h4 id="cce-reference-documentation">CCE Reference Documentation</h4>
 <ul>
 <li><a href="https://clang.llvm.org/docs/UsersManual.html">Clang/Clang++ documentation</a>, CCE-specific 
