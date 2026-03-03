@@ -461,6 +461,20 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
+##### CMake projects
+
+When building a project using `CMake` it expects the `crayftn` compiler to generate `SUBMODULE.mod` files for submodules.
+Newer CCE versions (such as installed on Cirrus) instead generate `MODULE.SUBMODULE.smod` files for submodules, breaking `CMake` build systems for Fortran programs featuring submodules.
+This problem can be resolved by adding
+```
+if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 19.0.0)
+  message(STATUS "Setting submodules for new CrayFTN")
+  set(CMAKE_Fortran_SUBMODULE_SEP ".")
+  set(CMAKE_Fortran_SUBMODULE_EXT ".smod")
+endif()
+```
+in your CMake script.
+
 #### CCE Reference Documentation
 
 * [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
