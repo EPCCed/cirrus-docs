@@ -1,0 +1,77 @@
+theme:
+  name: material
+  favicon: favicon.ico
+  logo: images/cirrus_logo_white-Transparent-Background.png
+  palette:
+    primary: blue
+    accent:  blue
+  features:
+    - tabs
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:  [stylesheets/cirrus.css]
+
+site_name: Cirrus User Documentation
+repo_url: https://github.com/EPCCed/cirrus-docs
+repo_name: EPCCed/cirrus-docs
+edit_uri: edit/main/docs/
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/EPCCed
+  analytics:
+    provider: google
+    property: 
+  analytics:
+    provider: google
+    property: G-3T9RVR5FTP
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - "Overview": index.md
+  - "New Cirrus EX4000 migration":
+    - "Overview": migration-2025/index.md
+    - "Projects not continuing on Cirrus EX4000": migration-2025/not-migrating.md
+    - "Account/Project Migration": migration-2025/account-migration.md
+    - "Data Migration": migration-2025/data-migration.md
+    - "Differences from old Cirrus": migration-2025/cirrus-differences.md
+  - "User Guide":
+    - "Introduction": user-guide/introduction.md
+    - "Hardware": user-guide/hardware.md
+    - "Connecting to Cirrus": user-guide/connecting.md
+    - "Data Management and Transfer": user-guide/data.md
+    - "File and Resource Management": user-guide/resource_management.md
+    - "Software environment": user-guide/sw-environment.md
+    - "Scheduler and Running Jobs": user-guide/batch.md
+    - "Application Development Environment": user-guide/development.md
+    - "Using Containers": user-guide/containers.md
+    - "Using Python": user-guide/python.md
+    - "Using R": user-guide/r.md
+  - "Software Applications":
+    - "CASTEP": software-packages/castep.md
+    - "CP2K": software-packages/cp2k.md
+    - "Gromacs": software-packages/gromacs.md
+    - "LAMMPS": software-packages/lammps.md
+    - "OpenFOAM": software-packages/openfoam.md
+    - "ORCA": software-packages/orca.md
+    - "Quantum Espresso (QE)": software-packages/qe.md
+    - "VASP": software-packages/vasp.md
+  - "Software Libraries":
+    - "Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
+    - "FFTW": software-libraries/fftw.md
+    - "HDF5": software-libraries/hdf5.md
+    - "NetCDF": software-libraries/netcdf.md
+  - "Software Tools":
+    - "Forge": software-tools/forge.md
+    - "Likwid": software-tools/likwid.md
+    - "PerfTools": software-tools/perftools.md
+    - "Spack": software-tools/spack.md
