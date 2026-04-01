@@ -191,9 +191,9 @@ resource limits. The following table has a list of active QoS on Cirrus.
 Note that the number of jobs queued includes both pending and running
 jobs.
 
-| QoS Name     | Jobs Running Per User | Jobs Queued Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
+| QoS Name     | Jobs Running Per User | Jobs Submitted Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
-| standard     | No limit              | 512 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes in use by any one user at any time.      |
+| standard     | No limit              | 256 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes or 18,432 cores in use by any one user at any time.      |
 | largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         |       |
 | long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS. |
