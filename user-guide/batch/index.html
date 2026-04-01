@@ -850,23 +850,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Quality of Service (QoS)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cirrus-qos" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cirrus QoS
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -2064,23 +2047,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Quality of Service (QoS)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cirrus-qos" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cirrus QoS
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -2618,7 +2584,7 @@ jobs.</p>
 <td>24 hours</td>
 <td>192 nodes</td>
 <td>standard</td>
-<td></td>
+<td>Minimum job size of 65 nodes</td>
 </tr>
 <tr>
 <td>long</td>
@@ -2627,7 +2593,7 @@ jobs.</p>
 <td>4 days</td>
 <td>16 nodes</td>
 <td>standard</td>
-<td>Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.</td>
+<td>Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.</td>
 </tr>
 <tr>
 <td>highpriority</td>
@@ -2636,7 +2602,7 @@ jobs.</p>
 <td>48 hours</td>
 <td>128 nodes</td>
 <td>standard, highmem</td>
-<td>Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.</td>
+<td>Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS.</td>
 </tr>
 <tr>
 <td>short</td>
@@ -2654,7 +2620,7 @@ jobs.</p>
 <td>24 hours</td>
 <td>64 nodes</td>
 <td>standard</td>
-<td>Usage is not charged. Not available to industrial projects.</td>
+<td>Usage is not charged. Not available to industrial projects. Maximum of 64 nodes or 18,432 cores in use by any one user at any time.</td>
 </tr>
 <tr>
 <td>reservation</td>
@@ -2667,7 +2633,6 @@ jobs.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="cirrus-qos">Cirrus QoS</h4>
 <p>You can find out the QoS that you can use by running the following
 command:</p>
 <pre><code>sacctmgr show assoc user=$USER cluster=cirrus format=cluster,account,user,qos%50
