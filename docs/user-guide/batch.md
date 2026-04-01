@@ -194,14 +194,12 @@ jobs.
 | QoS Name     | Jobs Running Per User | Jobs Submitted Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
 | standard     | No limit              | 256 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes or 18,432 cores in use by any one user at any time.      |
-| largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         |       |
-| long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
-| highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS. |
+| largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         | Minimum job size of 65 nodes      |
+| long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
+| highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to industrial projects. |
+| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to industrial projects. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
 | reservation  | No limit              | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
-
-#### Cirrus QoS
 
 You can find out the QoS that you can use by running the following
 command:
