@@ -470,7 +470,6 @@ and 576 MPI processes per node for 20 minutes would look like:
 export OMP_NUM_THREADS=1
 
 # Launch the parallel job
-#   Using 144 MPI processes and 36 MPI processes per node
 #   srun picks up the distribution from the sbatch options
 srun --hint=nomultithread --distribution=block:block ./my_mpi_executable.x
 ```
