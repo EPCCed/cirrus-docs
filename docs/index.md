@@ -7,7 +7,7 @@ Cirrus is a HPC and data science service hosted and run by
 Edinburgh](http://www.ed.ac.uk). It is supported by the [Edinburgh
 and South East Scotland City Region Deal](https://esescityregiondeal.org.uk)
 and by  [EPSRC](http://www.epsrc.ac.uk). It is one of the
-[UKRI](http://www.ukri.org) Tier-2 National HPC Services.
+[UKRI](http://www.ukri.org) National Compute Resources.
 
 Cirrus is available to industry and academic researchers. For
 information on how to get access to the system please see the [Cirrus
