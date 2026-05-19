@@ -198,7 +198,7 @@ jobs.
 | long         | Not set              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | Not set               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | Not set             | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to industrial projects. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
+| lowpriority  | Not set             | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to paying projects. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
 | reservation  | Not set             | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
 
 !!! Note
