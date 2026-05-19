@@ -646,6 +646,33 @@ threads (one per physical core).
 See above for a more detailed discussion of the different `sbatch`
 options
 
+## Low priority access
+
+Low priority jobs are not charged against your allocation but will only run when
+other, higher-priority, jobs cannot be run. Although jobs are not
+charged, you do need a valid, positive budget to be able to submit and run low
+priority jobs, i.e. you need at least 1 coreh in your budget.
+
+!!! note "Low priority only available for academic research projects"
+    Low priority access is only available for academic research projects. Other projects
+    will not be able to use the low priority facility.
+
+!!! important "Limits for low priority use in Pump Priming projects"
+    While we allow Pump Priming projects to take advantage of low priority, projects should
+    take care to ensure that they do not abuse this facility to run extremely large amounts
+    of uncharged work. As a rough guide, we expect that Pump Priming projects should use a
+    maximum of 80,000 coreh of low priority use over the duration of the project.
+
+Low priority access is always available. Consult the QoS table above for limits on low priority jobs.
+
+You submit a low priority job on Cirrus by using the `lowpriority` QoS. For example,
+you would usually have the following line in your job submission script sbatch
+options:
+
+```slurm
+#SBATCH --qos=lowpriority
+```
+
 ## Job arrays
 
 The Slurm job scheduling system offers the *job array* concept, for
