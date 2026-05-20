@@ -2,7 +2,7 @@
 site_name = "Cirrus User Documentation"
 docs_dir = "docs"
 extra_css = ["stylesheets/cirrus.css"]
-repo_url = "https =//github.com/EPCCed/cirrus-docs"
+repo_url = "https://github.com/EPCCed/cirrus-docs"
 repo_name = "EPCCed/cirrus-docs"
 edit_uri = "edit/main/docs/"
 
