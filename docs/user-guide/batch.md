@@ -198,7 +198,7 @@ jobs.
 | long         | Not set              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | Not set               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | Not set             | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to paying projects. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
+| lowpriority  | Not set             | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Only available to projects from UKRI access routes. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
 | reservation  | Not set             | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
 
 !!! Note
@@ -653,8 +653,10 @@ other, higher-priority, jobs cannot be run. Although jobs are not
 charged, you do need a valid, positive budget to be able to submit and run low
 priority jobs, i.e. you need at least 1 coreh in your budget.
 
-!!! note "Low priority only available for academic research projects"
-    Low priority access is only available for academic research projects. Other projects
+!!! note "Low priority only available for projects via UKRI access routes"
+    Low priority access is only available for projects that have access via UKRI access routes.
+    This is projects via Pump Priming, Access to HPC and UKRI grant/fellowship access (for the
+    latter, where Cirrus was included on the proposal as a notional cost only). Other projects
     will not be able to use the low priority facility.
 
 !!! important "Limits for low priority use in Pump Priming projects"
