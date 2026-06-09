@@ -1,5 +1,10 @@
 # Linaro Forge
 
+!!! important "Linaro Forge is not currently working on Cirrus"
+    As of 9 June 2026 Linaro Forge will not work on Cirrus due to a 
+    change on the system to protect against a known security issue.
+    If you wish to profile applications, you can use the CrayPAT tools
+    instead. We are working to resolve this issue.
 
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling
 tools for MPI parallel applications, and OpenMP or pthreads multi-threaded
