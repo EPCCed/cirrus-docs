@@ -174,7 +174,7 @@ script. The following table has a list of active partitions on Cirrus.
 
 | Partition | Description                                                                                   | Total nodes available | Notes |
 |-----------|-----------------------------------------------------------------------------------------------|-----------------------|-------|
-| standard  | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory                           | 256                   |       |
+| standard  | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory                           | 640                   |       |
 | highmem   | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 1,536 GB memory                          | 64                     |       |
 
 You can list the active partitions using
@@ -193,8 +193,8 @@ jobs.
 
 | QoS Name     | Jobs Running Per User | Jobs Submitted Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
-| standard     | Not set              | 256 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes or 18,432 cores in use by any one user at any time.      |
-| largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         | Minimum job size of 65 nodes      |
+| standard     | Not set              | 256 jobs             | 48 hours       | 128 nodes              | standard, highmem              | Maximum of 128 nodes or 36,864 cores in use by any one user at any time.      |
+| largescale   | 1 job                 | 4 jobs               | 212 hours     | 640 nodes | standard         | Minimum job size of 129 nodes      |
 | long         | Not set              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | Not set               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
@@ -202,7 +202,7 @@ jobs.
 | reservation  | Not set             | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
 
 !!! Note
-	When "Not set" appears, the limit is constrained by the "Jobs Submitted Per User"
+	  When "Not set" appears, the limit is constrained by the "Jobs Submitted Per User"
 
 You can find out the QoS that you can use by running the following
 command:
@@ -397,7 +397,7 @@ parallel processes and threads they require.
 !!! Note
     For parallel jobs, you should generally request exclusive node access with the
     `--exclusive` option to ensure you get the expected resources and
-    performance.
+    performance. For multi-node jobs, you **must** specify the `--exclusive` option.
 
 
 !!! Note

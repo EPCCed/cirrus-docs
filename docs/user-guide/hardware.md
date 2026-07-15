@@ -2,7 +2,7 @@
 
 ## System overview
 
-Cirrus is a HPE EX4000 supercomputing system which has a total of 256 compute nodes. Each compute node has 288 cores (dual AMD EPYC 9825 144-core 2.2 GHz processors) giving a total of 73,228 cores. Compute nodes are connected together by a HPE Slingshot 11 interconnect. 
+Cirrus is a HPE EX4000 supercomputing system which has a total of 640 compute nodes. Each compute node has 288 cores (dual AMD EPYC 9825 144-core 2.2 GHz processors) giving a total of 184,320 cores. Compute nodes are connected together by a HPE Slingshot 11 interconnect. There are 576 standard memory nodes and 64 high memory nodes. Standard memory nodes have 768 GB DDR5 memory, and high memory nodes have 1,536 GB DDR5 memory.
 
 There are additional User Access Nodes (UAN, also called login nodes), which provide access to the system.
 
