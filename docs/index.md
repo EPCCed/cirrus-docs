@@ -14,11 +14,11 @@ information on how to get access to the system please see the [Cirrus
 website](http://www.cirrus.ac.uk).
 
 The Cirrus service is an HPE Cray EX4000 CPU-based system. There are
-192 standard compute nodes with 768 GB per node DDR5 memory and 64
+576 standard compute nodes with 768 GB per node DDR5 memory and 64
 high memory nodes with 1,536 GB per node. All compute nodes have dual AMD
 EPYC 9825 processors with 144 physical cores each (288 physical
-cores per node). In total the system has 256 compute nodes with
-72,728 cores. Nodes are connected by a high-performance Slingshot 11 network.
+cores per node). In total the system has 640 compute nodes with
+184,320 cores. Nodes are connected by a high-performance Slingshot 11 network.
 
 The menu includes links to:
 
