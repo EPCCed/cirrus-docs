@@ -17,7 +17,7 @@ The work file system consists of an HPE ClusterStor E1000 Lustre storage system 
 ## Compute node overview
 
 The compute nodes each have 288 cores. They are dual socket nodes with two 144-core AMD EPYC 9825 processors. 
-There are 192 standard memory nodes and 64 high memory nodes.
+There are 576 standard memory nodes and 64 high memory nodes.
 
 !!! note
     Note due to Simultaneous Multi-Threading (SMT) each core has 2 threads, therefore a node has 288 cores / 576 threads. Most users will not want to use SMT.
