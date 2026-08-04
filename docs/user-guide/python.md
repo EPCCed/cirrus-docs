@@ -174,8 +174,8 @@ contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk)
 
 #### Install conda on the work file system
 
-To do this, specify an install location 
-in your directories on the work file system when prompted in the conda installation process.
+To do this, specify an install location in your directories on the work file system when
+prompted in the conda installation process.
 
 ### Conda additions to shell configuration files
 
@@ -216,6 +216,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 ```
+
+
+The effect of not having this section in your `~/.bashrc` is that conda must be initialised
+manually and the specific conda environment must be activated before it can be used as described below.
 
 You can manually activate your distribution by sourcing its `activate` script as
 follows, where you would replace the path to `miniconda3` with the path you
@@ -315,7 +319,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 # Load the Python module, ...
 module load cray-python
 
-# ..., or, if using local virtual environment
+# ..., or, if using a python venv with user-installed packages
 source <<path to virtual environment>>/bin/activate
 
 # ..., or, if using a Conda installation
