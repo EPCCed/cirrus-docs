@@ -324,7 +324,7 @@ Users can set stripe settings for a directory (or file) using the
 
 - `[--stripe-count|-c]` to set the stripe count; 0 means use the system
   default (usually 1) and -1 means stripe over all available OSTs.
-- `[--stripe-size|-s]` to set the stripe size; 0 means use the system
+- `[--stripe-size|-S]` to set the stripe size; 0 means use the system
   default (usually 1 MB) otherwise use k, m or g for KB, MB or GB
   respectively
 - `[--stripe-index|-i]` to set the OST index (starting at 0) on which to
@@ -335,4 +335,4 @@ Users can set stripe settings for a directory (or file) using the
 For example, to set a stripe size of 4 MiB for the existing directory
 `res_dir`, along with maximum striping count you would use:
 
-    [auser@login01:auser]$ lfs setstripe -s 4m -c -1 res_dir/
+    [auser@login01:auser]$ lfs setstripe -S 4m -c -1 res_dir/

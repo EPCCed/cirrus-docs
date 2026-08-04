@@ -51,7 +51,7 @@ showing that CP2K has been built with OpenMP, libint, FFTW3, and so on.
 To run CP2K using MPI and OpenMP, load the `cp2k` module and use the
 `cp2k.psmp` executable.
 
-For larger jobs requiing one or more nodes, an exclusive SLURM submission
+For larger jobs requiring one or more nodes, an exclusive SLURM submission
 is appropriate. For example, a job using two nodes (576 cores), with
 two cores (OpenMP threads) for each MPI process:
 
@@ -120,7 +120,7 @@ with two threads might be:
     This job will use a total of 36 cores.
 
 
-See [Running Jobs on Cirrus](/user-guide/batch) for further general
+See [Running Jobs on Cirrus](../user-guide/batch.md) for further general
 information on SLURM submissions.
 
 
@@ -138,8 +138,8 @@ $ module load spack
 
 For further information, see
 
-- [Using Spack on Cirrus](/software-tools/spack)
-- [Building CP2K using Spack](]https://manual.cp2k.org/trunk/getting-started/build-with-spack.html) from the CP2K documentation
+- [Using Spack on Cirrus](../software-tools/spack.md)
+- [Building CP2K using Spack](https://manual.cp2k.org/trunk/getting-started/build-with-spack.html) from the CP2K documentation
 
 
 ### Builds using the toolchain
@@ -147,4 +147,51 @@ For further information, see
 The recommendation for developers who wish to build their own version is
 to use the toolchain build process.
 
-FURTHER INFORMATION PENDING
+Use a starting point which is `PrgEnv-gnu`, and use
+MKL for linear algebra. This involves unloading the the default `cray-libsci`
+module and loading MKL, e.g.,
+```
+module load PrgEnv-gnu
+module load cray-python
+module load cray-fftw
+
+module unload cray-libsci
+export MKLROOT=/opt/intel/oneapi/mkl/2025.0
+
+source ${MKLROOT}/env/vars.sh
+```
+One should then be able to run the toochain build via, e.g.,
+```
+./install_cp2k_toolchain.sh --enable-cray --with-mkl=system
+```
+
+#### Testing
+
+The entire regression test suite can be run using, schematically,
+```
+CP2K_DIR=$(pwd)/cp2k
+
+source ${CP2K_DIR}/tools/toolchain/install/setup
+
+export OMP_NUM_THREADS=2
+export OMP_PLACES=cores
+
+${CP2K_DIR}/tests/do_regtest.py \
+        --workbasedir=$(pwd) \
+        --maxtasks=36 \
+        --mpiranks=2 \
+        --ompthreads=${OMP_NUM_THREADS} \
+        --mpiexec="srun --ntasks=2 --cpus-per-task=${OMP_NUM_THREADS}" \
+        ${CP2K_DIR}/exe/local psmp
+```
+All tests should pass. One should see, e.g.,
+```
+------------------------------- Summary --------------------------------
+Number of FAILED  tests 0
+Number of WRONG   tests 0
+Number of CORRECT tests 4261
+Total number of   tests 4261
+
+Summary: correct: 4261 / 4261; 11min
+Status: OK
+```

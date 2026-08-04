@@ -2,7 +2,7 @@
 
 ## System overview
 
-Cirrus is a HPE EX4000 supercomputing system which has a total of 256 compute nodes. Each compute node has 288 cores (dual AMD EPYC 9825 144-core 2.2 GHz processors) giving a total of 73,228 cores. Compute nodes are connected together by a HPE Slingshot 11 interconnect. 
+Cirrus is a HPE EX4000 supercomputing system which has a total of 640 compute nodes. Each compute node has 288 cores (dual AMD EPYC 9825 144-core 2.2 GHz processors) giving a total of 184,320 cores. Compute nodes are connected together by a HPE Slingshot 11 interconnect. There are 576 standard memory nodes and 64 high memory nodes. Standard memory nodes have 768 GB DDR5 memory, and high memory nodes have 1,536 GB DDR5 memory.
 
 There are additional User Access Nodes (UAN, also called login nodes), which provide access to the system.
 
@@ -17,7 +17,7 @@ The work file system consists of an HPE ClusterStor E1000 Lustre storage system 
 ## Compute node overview
 
 The compute nodes each have 288 cores. They are dual socket nodes with two 144-core AMD EPYC 9825 processors. 
-There are 192 standard memory nodes and 64 high memory nodes.
+There are 576 standard memory nodes and 64 high memory nodes.
 
 !!! note
     Note due to Simultaneous Multi-Threading (SMT) each core has 2 threads, therefore a node has 288 cores / 576 threads. Most users will not want to use SMT.
@@ -33,7 +33,7 @@ There are 192 standard memory nodes and 64 high memory nodes.
 | L2 cache           | 1 MB/core                                          |
 | L3 cache           | 32 MB/CCD                                          |
 | Vector support     | AVX512                                             |
-| Network connection | 2x 100 Gb/s injection ports per node               |
+| Network connection | 2x 200 Gb/s injection ports per node               |
 
 Each socket contains 12 *Core Complex Dies* (CCDs) and one I/O die (IOD). Each CCD contains 12 cores and 32 MB of L3 cache. Thus, there are 144 cores per socket and 288 cores per node.
 
@@ -70,7 +70,7 @@ AMD 9825 is a 64-bit x86 server microprocessor. A partial list of instructions a
 Each core:
 
 * Can sustain execution of four x86 instructions per cycle, using features such as the micro-op cache, advanced branch prediction, and prefetching. The prefetcher works on streaming data and on variable strides, allowing it to accelerate many different data structures.
-* Has two 256-bit Fused Multiply-Add (FMA) units and can deliver up to 16 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 128 cores x 2.25 GHz x 16 = 4.6 teraflops.
+* Has two 512-bit Fused Multiply-Add (FMA) units and can deliver up to 32 double-precision floating point operations (flops) per cycle. Thus, the peak double-precision flops per node (at base frequency) is: 244 cores x 2.2 GHz x 32 = 17.2 teraflops.
 * Can support Simultaneous Multi-threading (SMT), allowing two threads to execute simultaneously per core. SMT is available on Cirrus compute nodes but example submission scripts all use physical cores only as SMT is not usually beneficial for HPC applications.
 
 <!-- Need to check details from here

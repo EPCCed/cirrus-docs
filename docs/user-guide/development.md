@@ -461,6 +461,20 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
+##### CMake projects
+
+When building a project using `CMake` it expects the `crayftn` compiler to generate `SUBMODULE.mod` files for submodules.
+Newer CCE versions (such as installed on Cirrus) instead generate `MODULE.SUBMODULE.smod` files for submodules, breaking `CMake` build systems for Fortran programs featuring submodules.
+This problem can be resolved by adding
+```
+if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 19.0.0)
+  message(STATUS "Setting submodules for new CrayFTN")
+  set(CMAKE_Fortran_SUBMODULE_SEP ".")
+  set(CMAKE_Fortran_SUBMODULE_EXT ".smod")
+endif()
+```
+in your CMake script.
+
 #### CCE Reference Documentation
 
 * [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
@@ -575,7 +589,7 @@ libraries without the matching software modules loaded.
     The RUNPATH setting in the executable only works for default versions
     of libraries. If you want to use non-default versions then you need
     to add some additional commands at compile time and in your job submission
-    scripts. See the [Using non-default versions of HPE Cray libraries on Cirrus](#using-non-default-versions-of-hpe-cray-libraries-on-cirrus).
+    scripts. See the [Using non-default versions of HPE Cray libraries on Cirrus](#using-non-default-versions-of-hpe-cray-libraries).
 
 
 The library RUNPATH associated with an executable can be inspected via,
@@ -593,8 +607,7 @@ first choice for access to software libraries if available.
 
 !!! tip
     More information on the different software libraries on Cirrus can
-    be found in the [Software libraries](../../software-libraries/)
-    section of the user guide.
+    be found in the Software libraries section of the documentation.
 
 ## HPE Cray Programming Environment (CPE) releases
 
@@ -808,7 +821,7 @@ make
     ```
 
 You can also use a compute node in an interactive way using `salloc`. Please see
-Section [Using salloc to reserve resources](../scheduler/#using-salloc-to-reserve-resources)
+Section [Using salloc to reserve resources](batch.md#using-salloc-with-srun)
 for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.
 
 ## Using the compiler wrappers for serial compilations

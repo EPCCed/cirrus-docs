@@ -147,7 +147,7 @@ memory available (as there are 288 CPU cores per node). So, if you
 request the full node (288 cores), then you will be allocated a maximum
 of all of the memory (768 GB or 1,536 GB) available on the node; however,
 if you request 1 core, then you will be assigned a maximum of 768/288 = 2.66 GB
-of the memory available on a standard memory node or 5.33 GB on a high 
+of the memory available on a standard memory node or 5.33 GB on a high
 memory node.
 
 !!! Note
@@ -174,7 +174,7 @@ script. The following table has a list of active partitions on Cirrus.
 
 | Partition | Description                                                                                   | Total nodes available | Notes |
 |-----------|-----------------------------------------------------------------------------------------------|-----------------------|-------|
-| standard  | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory                           | 256                   |       |
+| standard  | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 768 GB or 1,536 GB memory                           | 640                   |       |
 | highmem   | CPU nodes with 2x 144-core AMD EPYC 9825 processors, 1,536 GB memory                          | 64                     |       |
 
 You can list the active partitions using
@@ -191,22 +191,87 @@ resource limits. The following table has a list of active QoS on Cirrus.
 Note that the number of jobs queued includes both pending and running
 jobs.
 
-| QoS Name     | Jobs Running Per User | Jobs Queued Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
+| QoS Name     | Jobs Running Per User | Jobs Submitted Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
-| standard     | No limit              | 512 jobs             | 48 hours       | 64 nodes              | standard, highmem              | Maximum of 64 nodes in use by any one user at any time.      |
-| largescale   | 1 job                 | 4 jobs               | 24 hours     | 192 nodes | standard         |       |
-| long         | No limit              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 64 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
-| highpriority | No limit               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes in use by any one user at any time. Maximum of 128 nodes in use by this QoS. |
+| standard     | Not set              | 256 jobs             | 48 hours       | 128 nodes              | standard, highmem              | Maximum of 128 nodes or 36,864 cores in use by any one user at any time.      |
+| largescale   | 1 job                 | 4 jobs               | 212 hours     | 640 nodes | standard         | Minimum job size of 129 nodes      |
+| long         | Not set              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
+| highpriority | Not set               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
-| lowpriority  | No limit              | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Not available to industrial projects. |
-| reservation  | No limit              | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
+| lowpriority  | Not set             | 100 jobs             | 24 hours       | 64 nodes     | standard        | Usage is not charged. Only available to projects from UKRI access routes. Maximum of 64 nodes or 18,432 cores in use by any one user at any time. |
+| reservation  | Not set             | No limit             | No limit       | No limit     | standard, highmem        | Only usable within reservation. |
 
-#### Cirrus QoS
+!!! Note
+	  When "Not set" appears, the limit is constrained by the "Jobs Submitted Per User"
 
 You can find out the QoS that you can use by running the following
 command:
 
     sacctmgr show assoc user=$USER cluster=cirrus format=cluster,account,user,qos%50
+
+### E-mail notifications
+
+E-mail notifications from the scheduler are not currently available
+on Cirrus.
+
+### Priority
+
+Job priority on Cirrus depends on a number of different factors:
+
+ - The QoS your job has specified
+ - The amount of time you have been queuing for
+ - The number of nodes you have requested (job size)
+ - Your current fairshare factor
+
+Each of these factors is normalised to a value between 0 and 1, is multiplied
+with a weight and the resulting values combined to produce a priority for the job.
+The current job priority formula on ARCHER2 is:
+
+```
+Priority = [50000 * P(QoS)] + [864 * P(Age)] + [576 * P(Fairshare)] + [192 * P(size)]
+```
+
+The priority factors are:
+
+- P(QoS) - The QoS priority normalised to a value between 0 and 1. The maximum raw
+  value is 10000 and the minimum is 0. Most QoS on Cirrus have a raw priority of 500; the
+  `lowpriority` QoS has a raw priority of 1.
+- P(Age) - The priority based on the job age normalised to a value between 0 and 1.
+  The maximum raw value is 36 days (where P(Age) = 1).
+- P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
+  fairshare priority is determined by a combination of your project fairshare
+  value and your user fairshare value within that project. The more use that
+  the project you are using has made of the system recently relative to other
+  projects on the system, the lower the project fairshare value will be; and the more
+  use you have made of the system recently relative to other users within your
+  project, the lower your user fairshare value will be. The number of shares that
+  a project has within the fairshare system is linked to its coreh allocation - so 
+  a project that has a larger allocation on Cirrus, will have a larger number of
+  shares within the fairshare system. A floor value of 1% is set for allocation shares
+  so all projects with 1% or lower allocations have the same number of shares. The
+  decay half life for fairshare on Cirrus is set to 2 days. [More information on the
+  Slurm fairshare algorithm](https://slurm.schedmd.com/fair_tree.html).
+- P(Size) - The priority based on the job size normalised to a value between 0 and 1.
+  The maximum size is the total number of Cirrus cores.
+
+You can view the priorities for current queued jobs on the system with the `sprio`
+command:
+
+```
+[auser@login02 ~] sprio -l
+          JOBID PARTITION   PRIORITY       SITE        AGE  FAIRSHARE    JOBSIZE        QOS
+         828764 standard        1049          0         45          0          4       1000
+         828765 standard        1049          0         45          0          4       1000
+         828770 standard        1049          0         45          0          4       1000
+         828771 standard        1012          0          8          0          4       1000
+         828773 standard        1012          0          8          0          4       1000
+         828791 standard        1012          0          8          0          4       1000
+         828797 standard        1118          0        115          0          4       1000
+         828800 standard        1154          0        150          0          4       1000
+         828801 standard        1154          0        150          0          4       1000
+         828805 standard        1118          0        115          0          4       1000
+         828806 standard        1154          0        150          0          4       1000
+```
 
 ## Troubleshooting
 
@@ -332,6 +397,7 @@ Slurm Job Reasons
 For a full list of see [Job
 Reasons](https://slurm.schedmd.com/squeue.html#lbAF)
 
+
 ## Output from Slurm jobs
 
 Slurm places standard output (STDOUT) and standard error (STDERR) for
@@ -396,7 +462,7 @@ parallel processes and threads they require.
 !!! Note
     For parallel jobs, you should generally request exclusive node access with the
     `--exclusive` option to ensure you get the expected resources and
-    performance.
+    performance. For multi-node jobs, you **must** specify the `--exclusive` option.
 
 
 !!! Note
@@ -423,11 +489,11 @@ you typically use `srun` with the following options:
   cores
 - `--distribution=block:block` - Place parallel (usually MPI) processes sequentially
   on cores on the node. This typically gives the best parallel performance for
-  MPI collective communications. 
+  MPI collective communications.
 
 `srun` will use the specification of nodes and tasks from your job script, `sbatch` or
 `salloc` command to launch the correct number of parallel tasks so these should not
-be specified again for the `srun` command unless you want to use resources in a 
+be specified again for the `srun` command unless you want to use resources in a
 different way from the original specification.
 
 !!! Note
@@ -472,7 +538,6 @@ and 576 MPI processes per node for 20 minutes would look like:
 export OMP_NUM_THREADS=1
 
 # Launch the parallel job
-#   Using 144 MPI processes and 36 MPI processes per node
 #   srun picks up the distribution from the sbatch options
 srun --hint=nomultithread --distribution=block:block ./my_mpi_executable.x
 ```
@@ -539,7 +604,7 @@ MPI process. This results in all 288 physical cores per node being used.
 !!! important
     Using 24 MPI processes per node (1 per CCD) and 12 OpenMP processes
     per MPI process is likely to be the highest number of OpenMP threads
-    that will produce good performance as each 12-core CCD shares L3 
+    that will produce good performance as each 12-core CCD shares L3
     cache.
 
 !!! Note
@@ -645,6 +710,35 @@ threads (one per physical core).
 See above for a more detailed discussion of the different `sbatch`
 options
 
+## Low priority access
+
+Low priority jobs are not charged against your allocation but will only run when
+other, higher-priority, jobs cannot be run. Although jobs are not
+charged, you do need a valid, positive budget to be able to submit and run low
+priority jobs, i.e. you need at least 1 coreh in your budget.
+
+!!! note "Low priority only available for projects via UKRI access routes"
+    Low priority access is only available for projects that have access via UKRI access routes.
+    This is projects via Pump Priming, Access to HPC and UKRI grant/fellowship access (for the
+    latter, where Cirrus was included on the proposal as a notional cost only). Other projects
+    will not be able to use the low priority facility.
+
+!!! important "Limits for low priority use in Pump Priming projects"
+    While we allow Pump Priming projects to take advantage of low priority, projects should
+    take care to ensure that they do not abuse this facility to run extremely large amounts
+    of uncharged work. As a rough guide, we expect that Pump Priming projects should use a
+    maximum of 80,000 coreh of low priority use over the duration of the project.
+
+Low priority access is always available. Consult the QoS table above for limits on low priority jobs.
+
+You submit a low priority job on Cirrus by using the `lowpriority` QoS. For example,
+you would usually have the following line in your job submission script sbatch
+options:
+
+```slurm
+#SBATCH --qos=lowpriority
+```
+
 ## Job arrays
 
 The Slurm job scheduling system offers the *job array* concept, for
@@ -671,7 +765,6 @@ per core and specifies 4 hours maximum runtime per subjob:
 #!/bin/bash
 # Slurm job options (name, compute nodes, job time)
 
-#SBATCH --name=Example_Array_Job
 #SBATCH --time=04:00:00
 #SBATCH --exclusive
 #SBATCH --nodes=1
@@ -697,14 +790,51 @@ export OMP_NUM_THREADS=1
 srun --hint=nomultithread --distribution=block:block /path/to/exe $SLURM_ARRAY_TASK_ID
 ```
 
+### Non-exclusive array elements for smaller jobs
+
+In the previous example, the `--exclusive` flag was used to reserve an
+entire node per array element. If the individual elements were smaller
+(e.g., an element used only 12 cores), this would be wasteful. In this
+case the `--exclusive` should be removed. Schematically, this might
+include, for an OpenMP application using threads:
+
+```
+#!/bin/bash
+
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=12
+...
+#SBATCH --array=0-255
+
+export OMP_NUM_THREADS=12
+
+srun ./my_threaded_application
+
+```
+
+There is one caveat to this advice. If one is particularly concerned with
+placement of tasks/threads on a node, one may have to return to the
+`--exclusive` picture to have full control of this placement.
+A non-exclusive job will not guarantee a contiguous set of physical cores
+is allocated.
+
+
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
 ```
-sbatch job_script.slurm
+$ sbatch job_script.slurm
+Submitted batch job 42123
 ```
+The single parent job id (that returned at the point of submission) is
+available from within the script as `SLURM_ARRAY_JOB_ID`. Each separate
+element has a unique `SLURM_JOB_ID` and `SLURM_ARRAY_TASK_ID`, the latter
+being the array element index counting from zero. The standard
+SLURM output files for each element of the job will be `slurm_42123_0.out`,
+`slurm_42123_1.out` and so on (using the example parent id).
+
 
 ## Job chaining
 
@@ -835,6 +965,22 @@ completed.
 The `salloc` method may be useful if one wishes to associate operations
 on the login node with work in the allocation itself.
 
+
+### Using `srun --unbuffered`
+
+It is sometimes possible that a job will fail or be cancelled and
+produce no output, e.g., to the standard output file. This may be
+because output units are buffered before actually being written
+to file, and the contents cannot be flushed at the point of
+failure/cancellation. To ensure all output is immediately flushed
+to file, one can specify
+```
+srun --unbuffered ...
+```
+in the SLURM submission script. This can help solve problems where
+there is apparently no output.
+
+
 ## Reservations
 
 Reservations are available on Cirrus. These allow users to reserve a
@@ -930,8 +1076,8 @@ srun ./my_serial_executable.x
 
 !!! Note
     Remember that you will be allocated memory based on the number of tasks
-    (i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on 
-    standard memory nodess and ~5.3 GB per task/core on high memory nodes.
+    (i.e. CPU cores) that you request. You will get ~2.7 GB per task/core on
+    standard memory nodes and ~5.3 GB per task/core on high memory nodes.
     If you need more than this for your serial job then you should ask for
     the number of tasks you need for the required memory (or use the
     `--exclusive` option to get access to all the memory on a node) and

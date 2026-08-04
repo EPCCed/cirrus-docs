@@ -7,24 +7,18 @@ Cirrus is a HPC and data science service hosted and run by
 Edinburgh](http://www.ed.ac.uk). It is supported by the [Edinburgh
 and South East Scotland City Region Deal](https://esescityregiondeal.org.uk)
 and by  [EPSRC](http://www.epsrc.ac.uk). It is one of the
-[UKRI](http://www.ukri.org) Tier-2 National HPC Services.
+[UKRI](http://www.ukri.org) National Compute Resources.
 
 Cirrus is available to industry and academic researchers. For
 information on how to get access to the system please see the [Cirrus
 website](http://www.cirrus.ac.uk).
 
 The Cirrus service is an HPE Cray EX4000 CPU-based system. There are
-192 standard compute nodes with 768 GB per node DDR5 memory and 64
+576 standard compute nodes with 768 GB per node DDR5 memory and 64
 high memory nodes with 1,536 GB per node. All compute nodes have dual AMD
 EPYC 9825 processors with 144 physical cores each (288 physical
-cores per node). In total the system has 256 compute nodes with
-72,728 cores. Nodes are connected by a high-performance Slingshot 11 network.
-
-!!! important
-    This documentation is for the new Cirrus EX4000 system that started
-    service on 24 November 2025. The old Cirrus SIG ICE will continue
-    running in parallel for a short time (until 8 December 2025).
-    [Documentation for the older Cirrus system is still available](https://epcced.github.io/legacy-cirrus-docs/).
+cores per node). In total the system has 640 compute nodes with
+184,320 cores. Nodes are connected by a high-performance Slingshot 11 network.
 
 The menu includes links to:
 

@@ -128,8 +128,8 @@ submission:
     ```
     where an appropriate `budget-code` is needed.
 
-See [Running Jobs on Cirrus](/user-guide/batch) for general information on
-SLURM submissions.
+See [Running Jobs on Cirrus](../user-guide/batch.md) for general information
+on SLURM submissions.
 
 
 ### Efficient file handling for larger OpenFOAM jobs
@@ -187,5 +187,5 @@ $ spack info openfoam
 $ spack info openfoam-org
 ```
 
-See [using Spack on Cirrus](/software-tools/spack) for further information
+See [using Spack on Cirrus](../software-tools/spack.md) for further information
 on Spack.

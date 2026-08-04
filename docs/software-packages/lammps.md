@@ -18,31 +18,34 @@ mesoscale, or continuum scale.
 
 LAMMPS is Open Source software, and is freely available to all Cirrus
 users. Centrally installed versions are managed by
-[Spack on Cirrus](/software-tools/spack).
+[Spack on Cirrus](../software-tools/spack.md).
 
-To see what versions are available in the current programming environment:
+To see what versions are available:
 
 ```
   $ module avail lammps
-
----- /work/y07/shared/cirrus-ex/cirrus-ex-software/spack-cirrus-ex/0.2/cirrus-ex-cse/modules/cce/19.0.0 ----
+...
    lammps/20250612
 ```
-indicating the release version of 12th June 2025 is available. (The `cce` in
-the module path indicates this is `PrgEnv-cray`.) Centrally installed versions
-are available in `PrgEnv-cray` and `PrgEnv-gnu`.
+indicating the release version of 12th June 2025 is available.
 
 ### Optional LAMMPS packages
 
-The centrally installed module versions of LAMMPS has a limited standand set of
-packages compiled. For the full configuration, try
+The centrally installed module versions of LAMMPS have a limited standand
+set of packages compiled. For the full configuration, try
 ```
 $ module load lammps
 $ lmp -h
 ...
 Installed packages:
 
-KSPACE MANYBODY MOLECULE RIGID
+AMOEBA ASPHERE BOCS BODY BPM BROWNIAN CG-DNA CG-SPICA CLASS2 COLLOID COLVARS 
+COMPRESS CORESHELL DIELECTRIC DIFFRACTION DIPOLE DPD-BASIC DPD-MESO DPD-REACT 
+DPD-SMOOTH DRUDE EFF ELECTRODE EXTRA-COMMAND EXTRA-COMPUTE EXTRA-DUMP 
+EXTRA-FIX EXTRA-MOLECULE EXTRA-PAIR FEP GRANULAR INTERLAYER KSPACE LEPTON 
+MACHDYN MANYBODY MC MEAM MESONT MISC ML-IAP ML-POD ML-SNAP ML-UF3 MOFFF 
+MOLECULE OPT ORIENT PERI PHONON PLUGIN QEQ REACTION REAXFF REPLICA RHEO RIGID 
+SHOCK SPH SPIN SRD TALLY UEF VORONOI YAFF 
 ...
 ```
 a list which includes available pair, bond, angle, etc, styles, and fix and
@@ -51,9 +54,8 @@ compute styles (which is omitted here for brevity).
 
 ## Running parallel LAMMPS jobs (MPI)
 
-LAMMPS can exploit multiple nodes on Cirrus and will generally be run in
-exclusive mode over more than one node.
-
+LAMMPS scales well for appropriate problem sizes and can make use of more
+than one node.
 For example, the following script will run a LAMMPS job using 2 nodes
 (576 cores) with MPI in the Cray programming environment.
 
@@ -73,7 +75,6 @@ For example, the following script will run a LAMMPS job using 2 nodes
     #SBATCH --distribution=block:block
     #SBATCH --hint=nomultithread
 
-    module load PrgEnv-cray
     module load lammps
 
     srun --ntasks=576 --ntasks-per-node=288 --cpus-per-task=1 lmp < in.test
@@ -89,8 +90,8 @@ For example, the following script will run a LAMMPS job using 2 nodes
 
 ### Non-exclusive jobs
 
-Smaller jobs, requiring less than 288 cores (a full node), may be run in
-non-exclusive mode. Such a job might require only 36 MPI tasks.
+Smaller problem sizes, requiring less than 288 cores (a full node), may be
+run in non-exclusive mode. Such a job might require only 36 MPI tasks.
 
 ??? info "Non-exclusive SLURM submission script for LAMMPS"
     ```{.yaml .copy}
@@ -126,18 +127,22 @@ a separation compilation will be required.
 
 ### Using Spack
 
-LAMMPS may be installed using `spack`. For information on availability:
+LAMMPS may be installed using Spack. For information on availability:
 ```
 $ module load spack
 $ spack info lammps
 ```
-See [using Spack on Cirrus](/software-tools/spack) for further information
-on `spack`.
+See [using Spack on Cirrus](../software-tools/spack.md) for further information
+on Spack.
 
 ### Using CMake
 
 LAMMPS offers developers a relatively simple and robust build mechanism
 using CMake.
+
+!!!tip "Central install is equivalent to `most.cmake`"
+   The central install of LAMMPS on Cirrus has been built with the same
+   packages enabled as you would get from using `most.cmake`.
 
 A standard LAMMPS CMake configuration for "most" packages might look like,
 schematically:

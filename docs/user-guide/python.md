@@ -168,14 +168,6 @@ As the container image is a single large file, you end up doing a single large r
 than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
 detrimental impact on the wider file system performance for all users.
 
-We have pre-built a Apptainer container with the Anaconda distribution in on 
-ARCHER2. Users can access it at `$EPCC_CONTAINER_DIR/anaconda3.sif`. To run a Python
-script with the centrally-installed image, you can use:
-
-```
-apptainer exec -B $PWD $EPCC_CONTAINER_DIR/anaconda3.sif python my_script.py
-```
-
 If you want additional packages that are not available in the standard container images then
 you will need to build your own container images. If you need help to do this, then please
 contact the [Cirrus Service Desk](mailto:support@cirrus.ac.uk)
@@ -225,10 +217,87 @@ unset __conda_setup
 # <<< conda initialize <<<
 ```
 
+
 The effect of not having this section in your `~/.bashrc` is that conda must be initialised
-manually and the specific conda environment must be activated before it can be used. The 
-submission script below shows how this can be done. It can also be done with the same commands 
-in an interactive shell.
+manually and the specific conda environment must be activated before it can be used as described below.
+
+You can manually activate your distribution by sourcing its `activate` script as
+follows, where you would replace the path to `miniconda3` with the path you
+chose for your own installation:
+
+```
+source /work/t01/t01/auser/miniconda3/bin/activate
+```
+
+### Using Cray Python packages in Conda
+
+Conda will by default install all the packages you request from its own
+repositories. This can cause issues on Cirrus if those packages make use of MPI
+in any way, as Conda installations of MPI will typically not be set up to use
+Cirrus's Slingshot interconnect. You may be unable to run jobs over more than
+one node, or at all. To bypass this issue, Conda should be be configured to
+reuse the packages provided by the central Cray Python installation which are
+intended for use on Cirrus. These include mpi4py, NumPy, SciPy, pandas and Dask.
+
+Once you have installed and activated your Conda-based distribution as described
+above, you should see the name of the `base` Conda environment prepended to your
+prompt, for example:
+```
+(base) [auser@login01 ~]$
+```
+At this point you should create a new Conda environment which you will layer on
+top of the Cray Python packages. You can give it a name such as `cray-python`,
+as is shown in the following example, but you will probably wish to name it
+something that is more meaningful to your work. You may notice that we set the
+version of Python itself to be the same as that provided by Cray Python, to
+ensure compatibility between our new installation and the existing centrally
+installed packages.
+```
+(base) [auser@login01 ~]$ conda create --name=cray-python python=3.11
+```
+
+To configure this environment to use the centrally installed packages, rather
+than install new ones from external sources, we will place a new `.pth` file in
+the environment. Any paths in a file with this extension at the location below
+will be checked by conda for external packages (*i.e.* it does not need to be
+named `cray-python.pth` as we do here -- anything ending in `.pth` will work --
+but this name makes sense). If you installed Conda at
+`/work/t01/t01/auser/miniconda3`, then you should open
+`/work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth`
+in the text editor of your choice, such as `nano`, `vim` or `emacs`:
+```
+(base) [auser@login01 ~]$ vim /work/t01/t01/auser/miniconda3/envs/cray-test/lib/python3.11/site-packages/cray-python.pth
+```
+In this file, add a single line which is the path to the location of the Cray
+Python packages:
+```
+/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages
+```
+Once you have added this line, save and close the file.
+
+At this point Conda should be able to detect and use the Cray Python packages
+when your new environment is activated. Do so with the following command, again
+changing the environment name to whatever you chose previously. You will see
+that the prompt name changes to reflect this.
+```
+(base) [auser@login01 ~]$ conda activate cray-python
+(cray-python) [auser@login01 ~]$
+```
+With your environment active, all the Cray Python packages are available for you
+to use. You can test this by starting the Python interpreter and trying to
+import some of the packages, checking that the locations of their components are
+in the `/opt/cray/pe/python` directories:
+```
+(cray-python) [auser@login01 ~]$ python
+Python 3.11.14 (main, Oct 21 2025, 18:31:21) [GCC 11.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import numpy as np
+>>> np.__file__
+'/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/numpy/__init__.py'
+>>> from mpi4py import MPI
+>>> MPI.__file__
+'/opt/cray/pe/python/3.11.7/lib/python3.11/site-packages/mpi4py/MPI.cpython-311-x86_64-linux-gnu.so'
+```
 
 
 ## Running Python
@@ -253,9 +322,9 @@ module load cray-python
 # ..., or, if using a python venv with user-installed packages
 source <<path to virtual environment>>/bin/activate
 
-# ..., or, if using a conda environment installed on the /work filesystem
-eval "$('/work/t01/t01/auser/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-conda activate mycondaenv
+# ..., or, if using a Conda installation
+source <<path to Conda installation>>/bin/activate
+conda activate <<name of your conda environment>>
     
 # Run your Python program
 python python_test.py
@@ -287,6 +356,10 @@ module load cray-python
 
 # ..., or, if using local virtual environment
 source <<path to virtual environment>>/bin/activate
+
+# ..., or, if using a Conda installation
+source <<path to Conda installation>>/bin/activate
+conda activate <<name of your conda environment>>
 
 # Pass cpus-per-task setting to srun
 export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
@@ -344,7 +417,7 @@ the `CRAY_PYTHON_LEVEL` environment variable is set as a conseqeunce of loading 
 
 -->
 
-## Using JupyterLab on ARCHER2
+## Using JupyterLab on Cirrus
 
 It is possible to view and run Jupyter notebooks from both login nodes 
 and compute nodes on Cirrus.
@@ -411,12 +484,12 @@ Please follow these steps.
     - Click on the `Tunnelling` button above the MobaXterm terminal. Create a new tunnel by clicking on `New SSH tunnel` in the window that opens.
     - In the new window that opens, make sure the `Local port forwarding` radio button is selected.
     - In the `forwarded port` text box on the left under `My computer with MobaXterm`, enter the port number indicated in the JupyterLab server output (e.g., 8888 or 8890).
-    - In the three text boxes on the bottom right under `SSH server` enter `login.archer2.ac.uk`, your ARCHER2 username and then `22`.
+    - In the three text boxes on the bottom right under `SSH server` enter `login.cirrus.ac.uk`, your Cirrus username and then `22`.
     - At the top right, under `Remote server`, enter the id of the login or compute node running the JupyterLab server and the associated port number.
     - Click on the `Save` button.
     - In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it.
-    - Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to ARCHER2. You should tell it to use the same `.ppk` private key that you normally use when connecting to ARCHER2.
-    - The tunnel should now be configured. Click on the small start button (like a play '>' icon) for the new tunnel to open it. You'll be asked to enter your ARCHER2 account password -- please do so.
+    - Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to Cirrus. You should tell it to use the same `.ppk` private key that you normally use when connecting to Cirrus.
+    - The tunnel should now be configured. Click on the small start button (like a play '>' icon) for the new tunnel to open it. You'll be asked to enter your Cirrus account password -- please do so.
 
 6. Now, if you open a browser window locally, you should be able to navigate to the URL
    from step 3, and this should display the JupyterLab server. If JupyterLab is running
