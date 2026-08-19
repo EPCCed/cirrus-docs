@@ -474,11 +474,11 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the LD_LIBRARY_PATH environment variable within the container
 # to ensure that it used the correct MPI libraries.
-export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich:/opt/cray/libfabric/1.22.0/lib64:/opt/cray/pals/1.6/lib:/opt/cray/pe/lib64:/opt/xpmem/lib64:/lib64"
+export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich:/opt/cray/libfabric/2.3.1/lib64:/opt/cray/pals/1.6/lib:/opt/cray/pe/lib64:/opt/xpmem/lib64:/lib64"
 
 # This makes sure HPE Cray Slingshot interconnect libraries are available
 # from inside the container.
-export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.22.0/lib64/libfabric.so.1,/lib64/libatomic.so.1,/lib64/libgcc_s.so.1,/lib64/libgfortran.so.5,/lib64/libquadmath.so.0,/opt/cray/pals/1.6/lib/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/lib64/libmunge.so.2,/lib64/libnl-3.so.200,/lib64/libnl-genl-3.so.200,/lib64/libnl-route-3.so.200,/lib64/librdmacm.so.1,/lib64/libcxi.so.1,/lib64/libm.so.6"
+export APPTAINER_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.32/ofi/gnu/11.2/lib-abi-mpich,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/2.3.1/lib64/libfabric.so.1,/lib64/libatomic.so.1,/lib64/libgcc_s.so.1,/lib64/libgfortran.so.5,/lib64/libquadmath.so.0,/opt/cray/pals/1.6/lib/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/lib64/libmunge.so.2,/lib64/libnl-3.so.200,/lib64/libnl-genl-3.so.200,/lib64/libnl-route-3.so.200,/lib64/librdmacm.so.1,/lib64/libcxi.so.1,/lib64/libm.so.6"
 
 # Launch the parallel job.
 srun --hint=nomultithread --distribution=block:block \
