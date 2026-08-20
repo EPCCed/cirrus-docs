@@ -131,7 +131,10 @@ narrow it down:
     [auser@login03 ~]$ spack find gromacs
 
 You can see your packages' install locations using `spack find --paths` or
-`spack find -p`.
+`spack find -p`. 
+
+!!! tip
+    The spack load command does not set the `LD_LIBRARY_PATH` or many other common environment variables. That means if you are trying to build you own software, the build system may fail to find those libraries. You could set those environment variables manually, or you might want to consider generating module files from a [spack environment](#creating-an-environment) .
 
 ### Maintaining your Spack installations
 
@@ -166,9 +169,63 @@ required:
 
 If you commonly use a set of Spack packages together you may want to consider
 using a Spack environment to assist you in their installation and management.
-Please see the [Spack
+
+
+### Creating an environment
+
+You can generate a local spack environment. A spack environment is similar to a virtual python environment. It is a virtual environment containing all the software you install on Cirrus.
+You can create an environment with the name `my_environment` in your local folder with
+
+```bash
+[auser@login03 ~]$ spack env create -d my_environment
+```
+
+This will create a folder called `my_environment` in your current directory, containing the environment configuration.
+Before adding or loading any package from an environment you will need to activate the environment with
+
+```bash
+[auser@login03 ~]$ spack env activate my_environment
+```
+
+You can now add any package you wish to install with the `spack add` command followed by the spec of the package you wish to add. For instance, if you wanted to add the `gsl` package to the environment, you could type
+
+```bash
+[auser@login03 ~]$ spack add gsl
+```
+
+Once you have added all the packages you wish to install, you can use the usual install command. If the command is given no argument, it will install all the packages added to the environment
+
+```bash
+[auser@login03 ~]$ spack install
+```
+
+For more information about environments, please see the [Spack
 documentation](https://spack.readthedocs.io/en/latest/environments.html) for
 more information.
+
+### Generating modules from an environment
+
+The packages in an anctivated environment can be loaded as usual with the `spack load` command. An alternative is to generate and activate module files. This allows you to use the regular module system commands to load packages. 
+The generation of module files can be automated by spack.
+First activate the environment and then generate the module files with the `spack module lmod refresh --delete-tree` command
+
+```
+[auser@login03 ~]$ spack activate my_environment
+[auser@login03 ~]$ spack module lmod refresh --delete-tree 
+```
+
+This will generate module files in your environment folder, within the `modules/Core` subdirectory. You can activate the modules using the `module use` command. 
+For instance if your environment is located in the `my_environment` folder, type
+
+```
+[auser@login03 ~]$ module use my_environment/modules/Core
+```
+
+You can now load any package added to the environment, as you would load any other module from the module system. For instance, if you wanted to load the `gsl` library you would type
+
+```
+[auser@login03 ~]$ module load gsl
+```
 
 ## Custom configuration
 
