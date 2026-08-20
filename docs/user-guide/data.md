@@ -29,8 +29,8 @@ node types:
 | Storage     | Login nodes | Compute nodes | Notes     |
 |-------------|-------------|---------------|-----------|
 | Home        | yes         | no            | No backup |
-| EPCCfs      | yes         | yes           | No backup |
-| Work        | yes         | yes           | No backup, read-only, available until at least 21 Nov 2026 |
+| EPCCfs      | yes         | yes           | No backup, available from 16 Sep 2026 |
+| Work        | yes         | yes           | No backup. read-only from 16 Sep 2026, available until at least 21 Nov 2026 |
 
 
 ### Home file system

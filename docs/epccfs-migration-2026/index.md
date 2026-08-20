@@ -7,12 +7,12 @@ This section of the documentation covers the process of moving from the current
 storage for compute jobs (`/work` file system) to new storage (`epccfs` file 
 system).
 
-The current `/work` storage is coming to its end of life so in September 2026 we
+The current `/work` storage is coming to its end of life so on **Wed 16 Sep 2026** we
 are moving to new storage mounted on Cirrus login and compute nodes as `/epccfs`.
 
 ## Migration process
 
-There will be a full maintenance session (date TBC) with no jobs running on compute
+There will be a full maintenance session (Wed 16 Sep 2026) with no jobs running on compute
 nodes for this switch. During this maintenance session, the following high level
 steps will be followed:
 
