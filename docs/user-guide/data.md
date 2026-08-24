@@ -104,7 +104,14 @@ A full path name can be specified if required.
 
 ### Work file system
 
-!!! Important
+!!! Note "Read only from 16 Sep 2026"
+    As part of the work to switch to the [EPCCfs storage](#epccfs-storage), the
+    Work file system will be read-only from 16 Sep 2026. Read-only access will be
+    maintained until at least 21 Nov 2026 - users should copy any data they wish to
+    keep off of Work before this date.
+
+
+!!! Important "No backup"
     There are no backups of any data on the work file system. You should
     ensure you have copies of any critical data in a secure location to
     protect against loss of data from hardware failures.
@@ -185,6 +192,9 @@ pid 3773301 is using default file quota setting
 the limit of `13.57T` indicates the quota for the project.
 
 ## EPCCfs storage
+
+!!! Note "Available from 16 Sep 2026"
+    The EPCCfs storage will be available to users from 16 Sep 2026.
 
 Every project has an allocation on the EPCCfs storage and your
 project's space can always be accessed via the path

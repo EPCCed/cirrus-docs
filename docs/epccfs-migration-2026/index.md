@@ -39,6 +39,7 @@ new `/epccfs` storage.
 - Following the maintenance session, you will no longer be able to write data to 
   any locations in `/work`. This data will remain available in read-only mode 
   until at least 21 Nov 2026.
+  - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
 
 ## EPCCfs storage
 
