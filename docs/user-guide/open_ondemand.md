@@ -78,6 +78,11 @@ should edit or replace this job script, leaving in its place a valid Cirrus job 
 documentation's [section on running jobs](batch.md). Use Open OnDemand's in-browser editor by clicking 'Open Editor', or
 work as you otherwise do normally.
 
+!!! tip
+    Once you have created one job, you can quickly create a new one from it by going to 'New Job' and then 'From 
+    Selected Job'. This will essentially copy the currently highlighted job's files into a new directory to be 
+    further worked on before submission there.
+
 Once you are happy with a job, make sure it is highlighted in the job table and click the green 'Submit' button to 
 send it to Slurm.
 
@@ -112,6 +117,15 @@ the template from the table on the left, and then filling out 'Create New' box o
 the same files that were used when creating the template.
 
 ### Working in a project
+
+So far the jobs created through the Job Composer have been created in a preconfigured `ondemand` directory in your work
+directory and are fairly standalone. If you wish to, you can create and work in an Open OnDemand project by going to
+'Jobs' in the top menu bar of the window, and then 'Project Manager'. Projects allow you to set up large reusable sets
+of job scripts and data, and to configure launchers which provide a way of quickly reconfiguring and resubmitting these
+jobs to the queue. A project workflow in turn can chain these launchers together.
+
+If you are interested in setting up a project, please read 
+[Open OnDemand's project tutorial](https://osc.github.io/ood-documentation/latest/tutorials/tutorials-project-manager.html).
 
 ## Running Jupyter Notebooks on Open OnDemand
 
