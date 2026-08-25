@@ -83,6 +83,11 @@ work as you otherwise do normally.
     Selected Job'. This will essentially copy the currently highlighted job's files into a new directory to be 
     further worked on before submission there.
 
+!!! note
+    Clicking the button to delete a job in Open OnDemand deletes the directory containing it on the Cirrus work file
+    system. This means that the job script as well as any input data and previously generated output data will be 
+    deleted. Before you delete a job, make sure that there is nothing listed in this directory that you want keep.
+
 Once you are happy with a job, make sure it is highlighted in the job table and click the green 'Submit' button to 
 send it to Slurm.
 
