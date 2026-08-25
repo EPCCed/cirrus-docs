@@ -111,6 +111,11 @@ button next to 'Submit'.
 
 Otherwise, the job will run just the same as one set up manually and submitted through a terminal session.
 
+The top level menu item 'Jobs' also has an item 'Active Jobs'. This is the closest equivalent to running `squeue` in 
+a terminal. This will display a table of your queued, running and recently completed jobs. Clicking the arrow button 
+on the far left produces more information for a given job. By default this page will only show your own jobs, but 
+you can view all jobs on the system by clicking on the blue 'Your Jobs' button on the upper right.
+
 ### Job templates
 
 Once you have set a job up, meaning that a working job script and all input data are in place, you can create a template
@@ -134,3 +139,31 @@ If you are interested in setting up a project, please read
 
 ## Running Jupyter Notebooks on Open OnDemand
 
+You can run Jupyter notebooks on the Cirrus compute nodes and control them from your browser. Doing so through Open 
+OnDemand is likely simpler than setting your own JupyterLab installation. To start a job, click on the 'Cirrus 
+Jupyter Lab' button on the main Open OnDemand dashboard, or go to 'Apps' and then 'Cirrus Jupyter Lab' on the top 
+menu bar.
+
+In the new page that opens, you can provide the job details (which budget to charge, which partition and QoS, the 
+number of nodes and cores, maximum walltime) as well as the working directory in which to start Jupyter, and,
+importantly, the location of the Python virtual environment to use. If you don't yet have one, and won't need to install
+your own packages beyond NumPy and SciPy, you can tick the box to tell Open OnDemand to create a simple one for you at 
+the selected location.
+
+!!! tip
+    If you need to use your own Python packages in a notebook, create a virtual environment for them first in a terminal
+    session on the login nodes. Then, tell Open OnDemand the virtual environment's install location on the Jupyter 
+    launch menu.
+
+When your job is configured, click the large 'Launch' button at the bottom of the page. This will submit the job to the
+Slurm queue and take you to the 'My Interactive Sessions' page in Open OnDemand, which lists any queued and running
+JupyterLab jobs (as well as, helpfully, the remaining wall time on them). Your new job will be listed here now. You can 
+always get back to this page by clicking 'My Interactive Sessions' on the top menu bar.
+
+Your new job will appear in the 'Queued' state. You'll see this move to 'Starting'; if you chose to install a new 
+Python virtual environment for this job, this status might take a minute or so to move on. When it does, you will 
+see the job is now 'Running'. Click the 'Connect to Jupyter' button and your browser will open a new window 
+connected to the JupyterLab instance running in the job on the Cirrus compute nodes.
+
+When you are done working, return to the 'My Interactive Sessions' page in Open OnDemand and click the 'Delete' 
+button on the job to end it.
