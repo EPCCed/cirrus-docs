@@ -20,8 +20,9 @@ Open OnDemand enables users to log in to Cirrus using a traditional SSH terminal
 you will not need to generate or provide an SSH key in order to authenticate yourself for login in this way.
 
 !!! tip
-    As logging in to Cirrus through Open OnDemand doesn't require an SSH key to be set up for Cirrus on the machine 
-    you're using, this can make a quick and easy way to log in from a machine different from the one you normally use.
+    Logging in to Cirrus through Open OnDemand doesn't require an SSH key to be set up for Cirrus on the machine 
+    you're using. That means it can make a quick and easy way to log in from a machine different from the one you 
+    normally use.
 
 To do so click on the 'Clusters' item on the top menu bar followed by 'Cirrus Shell Access' from the drop-down menu that
 it opens. This will open a new tab running the terminal. As always, you will be prompted to provide your TOTP the 
@@ -45,7 +46,7 @@ directory to move into it. Clicking on a text-based file will open a new tab con
 - 'Refresh': The file browser shows you the contents of the current directory at the point you moved to it. Later
   changes, such as from a currently running job's generated output, will not be reflected without first clicking on the
   'Refresh' button
-- 'New file' / 'New directory: Create a new file or directory with a given name in this directory.
+- 'New file' / 'New directory': Create a new file or directory with a given name in this directory.
 - 'Upload': Select a file or files on your local machine to upload to this location on Cirrus.
 - 'Download': Download to your local machine any ticked files or directories from the contents below.
 - 'Copy/Move': Copy or move the selected files or directories to another location on Cirrus. Firstly, tick the items you
@@ -113,7 +114,7 @@ Otherwise, the job will run just the same as one set up manually and submitted t
 
 The top level menu item 'Jobs' also has an item 'Active Jobs'. This is the closest equivalent to running `squeue` in 
 a terminal. This will display a table of your queued, running and recently completed jobs. Clicking the arrow button 
-on the far left produces more information for a given job. By default this page will only show your own jobs, but 
+on the far left produces more information for a given job. By default, this page will only show your own jobs, but 
 you can view all jobs on the system by clicking on the blue 'Your Jobs' button on the upper right.
 
 ### Job templates
@@ -145,10 +146,10 @@ Jupyter Lab' button on the main Open OnDemand dashboard, or go to 'Apps' and the
 menu bar.
 
 In the new page that opens, you can provide the job details (which budget to charge, which partition and QoS, the 
-number of nodes and cores, maximum walltime) as well as the working directory in which to start Jupyter, and,
-importantly, the location of the Python virtual environment to use. If you don't yet have one, and won't need to install
-your own packages beyond NumPy and SciPy, you can tick the box to tell Open OnDemand to create a simple one for you at 
-the selected location.
+number of nodes and cores, maximum wall time) as well as the working directory in which to start Jupyter. Importantly, 
+you must also provide the location of the Python virtual environment to use. If you don't yet have one, and won't need
+to install your own packages beyond NumPy and SciPy, you can tick the box to tell Open OnDemand to create a simple 
+one for you at the selected location.
 
 !!! tip
     If you need to use your own Python packages in a notebook, create a virtual environment for them first in a terminal
