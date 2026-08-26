@@ -1,10 +1,10 @@
 # Migration to EPCCfs storage
 
 !!! important
-    This information was last updated on 20 Aug 2026.
+    This information was last updated on 26 Aug 2026.
 
 This section of the documentation covers the process of moving from the current
-storage for compute jobs (`/work` file system) to new storage (`epccfs` file 
+storage for compute jobs (`/work` file system) to new storage (`/epccfs` file 
 system).
 
 The current `/work` storage is coming to its end of life so on **Wed 16 Sep 2026** we
@@ -87,7 +87,7 @@ and project code).
 
 !!! tip "Use rclone parallel local data transfers for large datasets"
     If you are transferring a large amount of data to EPCCfs, you should consider
-    using [rclone local data transfer](#local-file-transfer) (perhaps in a 
+    using [rclone local data transfer](../user-guide/data.md#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
 #### Quotas on EPCCfs
