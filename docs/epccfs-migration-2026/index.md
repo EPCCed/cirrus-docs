@@ -31,6 +31,8 @@ new `/epccfs` storage.
 
 ## Impacts for users
 
+- All current Cirrus projects and user accounts will get directories on the new storage
+  with quotas set as they are on the current `/work` storage.
 - Any jobs in Pending state at the start of the maintenance session for the switch
   will be deleted. You must resubmit them (using the new `/epccfs` storage) once the
   system returns from maintenance.
