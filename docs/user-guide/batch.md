@@ -529,7 +529,7 @@ and 576 MPI processes per node for 20 minutes would look like:
 #SBATCH --account=[budget code]
 # We use the "standard" partition as we are running on CPU nodes
 #SBATCH --partition=standard
-# We use the "standard" QoS as our runtime is less than 4 days
+# We use the "standard" QoS as our runtime is less than 2 days
 #SBATCH --qos=standard
 
 # Set the number of threads to 1
@@ -626,9 +626,9 @@ MPI process. This results in all 288 physical cores per node being used.
 
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
-# We use the "standard" partition as we are running on CPU nodes
+# We use the "standard" partition for standard memory nodes
 #SBATCH --partition=standard
-# We use the "standard" QoS as our runtime is less than 4 days
+# We use the "standard" QoS as our runtime is less than 2 days
 #SBATCH --qos=standard
 
 # Change to the submission directory
@@ -683,9 +683,9 @@ nodes and 12 threads for 20 minutes would look like:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# We use the "standard" partition as we are running on CPU nodes
+# We use the "standard" partition for standard memory nodes
 #SBATCH --partition=standard
-# We use the "standard" QoS as our runtime is less than 4 days
+# We use the "standard" QoS as our runtime is less than 2 days
 #SBATCH --qos=standard
 
 # Change to the submission directory
@@ -776,7 +776,7 @@ per core and specifies 4 hours maximum runtime per subjob:
 #SBATCH --account=[budget code]
 # We use the "standard" partition for standard memory nodes
 #SBATCH --partition=standard
-# We use the "standard" QoS as our runtime is less than 4 days
+# We use the "standard" QoS as our runtime is less than 2 days
 #SBATCH --qos=standard
 
 # Change to the submission directory
