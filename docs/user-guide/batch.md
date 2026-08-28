@@ -774,7 +774,7 @@ per core and specifies 4 hours maximum runtime per subjob:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# We use the "standard" partition as we are running on CPU nodes
+# We use the "standard" partition for standard memory nodes
 #SBATCH --partition=standard
 # We use the "standard" QoS as our runtime is less than 4 days
 #SBATCH --qos=standard
@@ -1058,7 +1058,7 @@ For example, a serial job submission script could look like:
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]
-# We use the "standard" partition as we are running on CPU nodes
+# We use the "standard" partition for standard memory nodes
 #SBATCH --partition=standard
 # We use the "standard" QoS as our runtime is less than 4 days
 #SBATCH --qos=standard
