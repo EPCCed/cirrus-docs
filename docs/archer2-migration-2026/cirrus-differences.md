@@ -33,6 +33,15 @@ information where appropriate.
   Cirrus NCR wherever possible
 - A smaller number of research software packages are provided centrally on Cirrus
   compared to ARCHER2
+- Cirrus supports the use of the Intel compilers on top of Cray compilers (CCE),
+  GCC and AMD compilers (AOCC)
+- The current Cray Programming Environment (CPE) on Cirrus (25.09) is newer than the
+  CPE on ARCHER2 and provides the following versions:
+  + CCE 19.0.0 (ARCHER2: CCE 16.0.0)
+  + GCC 14.2.0 (ARCHER2: GCC 11.2.0)
+  + AOCC 5.0.0 (ARCHER2: AOCC 5.0.0)
+  + Intel OneAPI 25.0 (ARCHER2: N/A)
+  + Cray MPICH 8.1.32 or 9.0.0 (ARCHER2: Cray MPICH 8.1.23)
 
 ## Slurm scheduler configuration
 
