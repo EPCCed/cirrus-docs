@@ -110,7 +110,7 @@ and can contact the Cirrus service desk to request assistance.
     
 #### Installing LIKWID
 
-To use LIKWID on Cirrus you should download *version 5.2.2* or later as this incorporates changes for improved compatibility with Cray MPI and convenience on Cirrus, in particular the `--nompibind` option which is reflected in documentation and example job scripts provided here. 
+To use LIKWID on Cirrus you should download **version 5.2.2** or later as this incorporates changes for improved compatibility with Cray MPI and convenience on Cirrus, in particular the `--nompibind` option which is reflected in documentation and example job scripts provided here. 
 
 ```
 > wget https://github.com/RRZE-HPC/likwid/archive/refs/tags/v5.5.2.tar.gz 
@@ -173,8 +173,7 @@ syntax.
 
 `-g/--group <perf>`
 
-Specify one or more predefined (by LIKWID) groupings of which events to measure using which hardware performance counters (the "eventset"), and which metrics to derive from these measurements. The predefined groups for the Zen5 architecture of Cirrus's AMD EPYC processors can be found at [https://github.com/RRZE-HPC/likwid/tree/master/groups/zen5](https://github.com/RRZE-HPC/likwid/tree/master/groups/zen5). For context the LIKWID wiki has an overview describing available counters and events for the slightly older Zen4 architecture at
-[https://github.com/RRZE-HPC/likwid/wiki/Zen4](https://github.com/RRZE-HPC/likwid/wiki/Zen4), but at time of writing no equivalent summary page for Zen5 exists yet. Users can easily define a [custom performance group](https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr-extra#defining-custom-performance-groups) (events + metrics) or a [custom eventset](https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr-extra#using-custom-event-sets).
+Specify one or more predefined (by LIKWID) groupings of which events to measure using which hardware performance counters (the "eventset"), and which metrics to derive from these measurements. There are [predefined groups for the Zen5 architecture](https://github.com/RRZE-HPC/likwid/tree/master/groups/zen5) relevant to Cirrus's AMD EPYC processors. For context the LIKWID wiki has an [overview describing available counters and events for the slightly older Zen4](https://github.com/RRZE-HPC/likwid/wiki/Zen4), however at time of writing no equivalent summary page for Zen5 exists yet. Users can easily [define a custom performance group](https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr-extra#defining-custom-performance-groups) (events + metrics) or a [custom eventset](https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr-extra#using-custom-event-sets).
 
 
 `--nompibind`
@@ -283,8 +282,8 @@ Two fully populated nodes (288 ranks per node):
 module load likwid
 module load xthi
 
-export OMP_NUM_THREADS=1
-export SRUN_CPUS_PER_TASK=1
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 likwid-mpirun -n $SLURM_NTASKS --nompibind -s 0x0 -g FLOPS_DP --debug xthi_mpi &> xthi_mpi.out
 likwid-mpirun -n $SLURM_NTASKS --nompibind -s 0x0 -g FLOPS_DP myApplication &> application.out
@@ -295,7 +294,7 @@ likwid-mpirun -n $SLURM_NTASKS --nompibind -s 0x0 -g FLOPS_DP myApplication &> a
 #### Underpopulated node(s)
 
 
-Two nodes, two ranks per node, one rank per socket (i.e. per 144-core AMD EPYC processor):
+Two nodes, two ranks per node, one rank per socket (i.e. one rank per 144-core AMD EPYC processor):
 
 ```slurm
 #!/bin/bash
@@ -345,7 +344,7 @@ module load likwid
 module load xthi
 
 export OMP_NUM_THREADS=1
-export SRUN_CPUS_PER_TASK=36
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:36_N:72_N:108 --nompibind -s 0x0 -g FLOPS_DP --debug xthi_mpi &> xthi_mpi.out
 likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:36_N:72_N:108 --nompibind -s 0x0 -g FLOPS_DP myApplication &> application.out
@@ -381,9 +380,9 @@ with `-pin M0:0_M1:0_M2:0_M3:0` instead of `-pin N:0_N:36_N:72_N:108`
 module load likwid
 module load xthi
 
-export OMP_NUM_THREADS=288
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
-export SRUN_CPUS_PER_TASK=288
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 likwid-mpirun -n 1 -t 288 --nompibind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
 likwid-mpirun -n 1 -t 288 --nompibind -s 0x0 -g FLOPS_DP myApplication &> application.out
@@ -412,7 +411,7 @@ shown below in the equivalent job script to the fully populated
 module load likwid
 module load xthi
 
-export OMP_NUM_THREADS=256
+export OMP_NUM_THREADS=288
 export OMP_PLACES=cores
 
 likwid-perfctr -C N:0-287 -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
@@ -492,9 +491,9 @@ version `-C E:N:4:1:24` would achieve the same, following the logic laid out in 
 module load likwid
 module load xthi
 
-export OMP_NUM_THREADS=144
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
-export SRUN_CPUS_PER_TASK=144
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 likwid-mpirun -n $SLURM_NTASKS -t 144 --nompibind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
 likwid-mpirun -n $SLURM_NTASKS -t 144 --nompibind -s 0x0 -g FLOPS_DP myApplication &> application.out
