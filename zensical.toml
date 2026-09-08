@@ -19,6 +19,7 @@ nav = [
     {"Introduction" = "user-guide/introduction.md"},
     {"Hardware" = "user-guide/hardware.md"},
     {"Connecting to Cirrus" = "user-guide/connecting.md"},
+    {"Using Open OnDemand" = "user-guide/open_ondemand.md"},
     {"Data Management and Transfer" = "user-guide/data.md"},
     {"File and Resource Management" = "user-guide/resource_management.md"},
     {"Software environment" = "user-guide/sw-environment.md"},
