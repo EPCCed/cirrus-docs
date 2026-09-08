@@ -14,7 +14,7 @@ This section covers the following questions:
 
 ## When will I be able to access Cirrus NCR?
 
-This depends on your project but the migration process is starting in August 2026.
+This depends on your project but the migration process is starting from 16 Sep 2026
 As soon as Cirrus resources have been assigned to the project, you will be able to
 request an account and login to Cirrus.
 
