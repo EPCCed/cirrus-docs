@@ -1,7 +1,7 @@
 # ARCHER2 - Cirrus project migration 2026
 
 !!! important
-    This information was last updated on 17 Aug 2026.
+    This information was last updated on 8 Sep 2026.
 
 This section of the documentation is a guide on the migration process for 
 projects migrating from the [ARCHER2 National Supercomputing Service](https://www.archer2.ac.uk)
