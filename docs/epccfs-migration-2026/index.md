@@ -1,4 +1,4 @@
-# Migration to EPCCfs storage
+# Migration to EPCCFS storage
 
 !!! important
     This information was last updated on 26 Aug 2026.
@@ -43,30 +43,30 @@ new `/epccfs` storage.
   until at least 21 Nov 2026.
   - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
 
-## EPCCfs storage
+## EPCCFS storage
 
 !!! note 
     This is a copy of the documentation in the [Data section](../user-guide/data.md) of the
     Cirrus User Guide. 
 
-Every project has an allocation on the EPCCfs storage and your
+Every project has an allocation on the EPCCFS storage and your
 project's space can always be accessed via the path
-`/epccfs/[project-code]`. The EPCCfs storage provides a large 
+`/epccfs/[project-code]`. The EPCCFS storage provides a large 
 capacity (more than 30 PB) and is currently implemented using
 the VAST technology.
 
 !!! warning
-    EPCCfs is not backed up at all.
+    EPCCFS is not backed up at all.
 
 
-You can find your directory on the EPCCfs at:
+You can find your directory on the EPCCFS at:
 
 ```
 /epccfs/<project code>/<project code>/<username>
 ```
 
 For example, if your username is `auser` and you are in the `e05` project, then
-your EPCCfs directory will be at:
+your EPCCFS directory will be at:
 
 ```
 /epccfs/e05/e05/auser
@@ -75,7 +75,7 @@ your EPCCfs directory will be at:
 #### Copying data to `/epccfs` from `/work` file systems
 
 You can use the standard Linux `cp` command to copy data from other Cirrus file
-systems to EPCCfs or vice versa. For example, to
+systems to EPCCFS or vice versa. For example, to
 transfer the file `important-data.tar.gz` from the `/work` file system to
 `/epccfs` you would use the following command (assuming you are user `auser`
 in project `e05`):
@@ -88,17 +88,17 @@ cp /work/e05/e05/auser/important-data.tar.gz /epccfs/e05/e05/auser/
 and project code).
 
 !!! tip "Use rclone parallel local data transfers for large datasets"
-    If you are transferring a large amount of data to EPCCfs, you should consider
+    If you are transferring a large amount of data to EPCCFS, you should consider
     using [rclone local data transfer](../user-guide/data.md#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
-#### Quotas on EPCCfs
+#### Quotas on EPCCFS
 
 As for the other Cirrus storage systems, all projects are assigned a quota on
-EPCCfs. The project PI or manager can split this quota up
+EPCCFS. The project PI or manager can split this quota up
 between users or groups of users if they wish.
 
-You can view any EPCCfs quotas that apply to your account by
+You can view any EPCCFS quotas that apply to your account by
 logging into SAFE and navigating to the page for your Cirrus login
 account.
 
@@ -113,7 +113,7 @@ account.
     Quota and usage data on SAFE is updated twice daily so may not be
     exactly up to date with the situation on the systems themselves.
 
-You can also query quotas that apply to your current EPCCfs directory from the
+You can also query quotas that apply to your current EPCCFS directory from the
 the command line using the `df -h $PWD` command, for example:
 
 ```
