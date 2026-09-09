@@ -8,7 +8,7 @@ edit_uri = "edit/main/docs/"
 
 nav = [
   {"Overview" = "index.md"},
-  {"EPCCfs storage migration 2026" = "epccfs-migration-2026/index.md"},
+  {"EPCCFS storage migration 2026" = "epccfs-migration-2026/index.md"},
   {"ARCHER2 Project Migration 2026" = [
     {"Overview" = "archer2-migration-2026/index.md"},
     {"Account/Project Migration" = "archer2-migration-2026/account-migration.md"},
