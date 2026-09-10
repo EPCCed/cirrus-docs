@@ -1,20 +1,20 @@
 # Migration to EPCCFS storage
 
 !!! important
-    This information was last updated on 26 Aug 2026.
+    This information was last updated on 10 Sep 2026.
 
 This section of the documentation covers the process of moving from the current
 storage for compute jobs (`/work` file system) to new storage (`/epccfs` file 
 system).
 
-The current `/work` storage is coming to its end of life so on **Wed 16 Sep 2026** we
-are moving to new storage mounted on Cirrus login and compute nodes as `/epccfs`.
+The current `/work` storage is coming to its end of life so on
+**Wed 16 Sep 2026** weare moving to new storage mounted on Cirrus login and compute nodes as `/epccfs`.
 
 ## Migration process
 
-There will be a full maintenance session (Wed 16 Sep 2026) with no jobs running on compute
-nodes for this switch. During this maintenance session, the following high level
-steps will be followed:
+There will be a full maintenance session (starting at 09:00 BST on Wed 16 Sep 2026)
+with no jobs running on compute nodes for this switch. During this maintenance session,
+the following high level steps will be followed:
 
 1. All jobs Pending in the queue will be deleted
    - This step is necessary as jobs in the Pending queue before the switch will 
@@ -72,7 +72,7 @@ your EPCCFS directory will be at:
 /epccfs/e05/e05/auser
 ```
 
-#### Copying data to `/epccfs` from `/work` file systems
+### Copying data to `/epccfs` from `/work` file systems
 
 You can use the standard Linux `cp` command to copy data from other Cirrus file
 systems to EPCCFS or vice versa. For example, to
@@ -92,7 +92,7 @@ and project code).
     using [rclone local data transfer](../user-guide/data.md#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
-#### Quotas on EPCCFS
+### Quotas on EPCCFS
 
 As for the other Cirrus storage systems, all projects are assigned a quota on
 EPCCFS. The project PI or manager can split this quota up
@@ -121,3 +121,10 @@ auser@uan01:/epccfs/e05/e05/auser> df -h $PWD
 Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/cirrus  8.8T  1.8G  8.8T   1% /mnt/nfs/epccfs
 ```
+
+### Snapshots on EPCCFS
+
+EPCCFS retain snapshots which can be used to recover past versions of files.
+Snapshots are taken weekly (for each of the past two weeks), daily (for each
+of the past two days) and hourly (for each of the last 6 hours). You can
+access the snapshots at `.snapshot` from any given directory on EPCCFS.
