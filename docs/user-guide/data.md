@@ -191,7 +191,7 @@ pid 3773301 is using default file quota setting
 ```
 the limit of `13.57T` indicates the quota for the project.
 
-## EPCCFS storage
+### EPCCFS storage
 
 !!! Note "Available from 16 Sep 2026"
     The EPCCFS storage will be available to users from 16 Sep 2026.
@@ -219,7 +219,7 @@ your EPCCFS directory will be at:
 /epccfs/e05/e05/auser
 ```
 
-### Copying data to `/epccfs` from `/work` file systems
+#### Copying data to `/epccfs` from `/work` file systems
 
 You can use the standard Linux `cp` command to copy data from other Cirrus file
 systems to EPCCFS or vice versa. For example, to
@@ -239,7 +239,7 @@ and project code).
     using [rclone local data transfer](#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
-### Quotas on EPCCFS
+#### Quotas on EPCCFS
 
 As for the other Cirrus storage systems, all projects are assigned a quota on
 EPCCFS. The project PI or manager can split this quota up
@@ -268,7 +268,7 @@ auser@uan01:/epccfs/e05/e05/auser> df -h $PWD
 Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/cirrus  8.8T  1.8G  8.8T   1% /mnt/nfs/epccfs
 ```
-### Snapshots on EPCCFS
+#### Snapshots on EPCCFS
 
 EPCCFS retains snapshots which can be used to recover past versions of files.
 Snapshots are taken weekly (for each of the past two weeks), daily (for each
