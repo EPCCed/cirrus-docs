@@ -26,11 +26,11 @@ Each type of node sees a different combination of the storage types. The
 following table shows which storage options are available on different
 node types:
 
-| Storage     | Login nodes | Compute nodes | Notes     |
-|-------------|-------------|---------------|-----------|
-| Home        | yes         | no            | No backup |
-| EPCCFS      | yes         | yes           | No backup |
-| Work        | yes         | yes           | Deprecated. No backup. read-only, available until at least 21 Nov 2026 |
+| Storage     | Login nodes | Compute nodes | Location  | Notes     |
+|-------------|-------------|---------------|-----------|-----------|
+| Home        | yes         | no            | `/home`   | No backup |
+| EPCCFS      | yes         | yes           | `/epccfs` | No backup |
+| Work        | yes         | yes           | `/work`   | Deprecated. No backup. read-only, available until at least 21 Nov 2026 |
 
 
 ### Home file system
@@ -102,25 +102,7 @@ have a corresponding recursive version, respectively: `rfiles`,
 
 A full path name can be specified if required.
 
-### Work file system
 
-!!! Important "Read only from 16 Sep 2026"
-    As part of the work to switch to the [EPCCFS storage](#epccfs-storage), the
-    Work file system has been read-only from 16 Sep 2026. Read-only access will be
-    maintained until at least 21 Nov 2026 - users should copy any data they wish to
-    keep off of Work before this date.
-
-!!! Important "No backup"
-    There are no backups of any data on the work file system. You should
-    ensure you have copies of any critical data in a secure location to
-    protect against loss of data from hardware failures.
-
-The work file system is now deprecated - please use [EPCCFS storage](#epccfs-storage)
-instead for data needed during Slurm jobs.
-
-Every project has an allocation on the work file system and your
-project's space can always be accessed via the path
-`/work/[project-code]`. 
 
 ### EPCCFS storage
 
@@ -221,6 +203,26 @@ EPCCFS retain snapshots which can be used to recover past versions of files.
 Snapshots are taken weekly (for each of the past 5 weeks), daily (for each
 of the past 8 days) and hourly (for each of the last 25 hours). You can
 access the snapshots at `.snapshot` from any given directory on EPCCFS.
+
+### Work file system
+
+!!! Important "Read only from 16 Sep 2026"
+    As part of the work to switch to the [EPCCFS storage](#epccfs-storage), the
+    Work file system has been read-only from 16 Sep 2026. Read-only access will be
+    maintained until at least 21 Nov 2026 - users should copy any data they wish to
+    keep off of Work before this date.
+
+!!! Important "No backup"
+    There are no backups of any data on the work file system. You should
+    ensure you have copies of any critical data in a secure location to
+    protect against loss of data from hardware failures.
+
+The work file system is now deprecated - please use [EPCCFS storage](#epccfs-storage)
+instead for data needed during Slurm jobs.
+
+Every project has an allocation on the work file system and your
+project's space can always be accessed via the path
+`/work/[project-code]`. 
 
 ## Archiving
 
