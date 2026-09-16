@@ -1,27 +1,28 @@
 # Migration to EPCCFS storage
 
 !!! important
-    This information was last updated on 10 Sep 2026.
+    This information was last updated on 16 Sep 2026. The migration is now
+    complete.
 
 This section of the documentation covers the process of moving from the current
 storage for compute jobs (`/work` file system) to new storage (`/epccfs` file 
 system).
 
 The current `/work` storage is coming to its end of life so on
-**Wed 16 Sep 2026** weare moving to new storage mounted on Cirrus login and compute nodes as `/epccfs`.
+**Wed 16 Sep 2026** we moved to new storage mounted on Cirrus login and compute nodes as `/epccfs`.
 
 ## Migration process
 
-There will be a full maintenance session (starting at 09:00 BST on Wed 16 Sep 2026)
+There was full maintenance session (starting at 09:00 BST on Wed 16 Sep 2026)
 with no jobs running on compute nodes for this switch. During this maintenance session,
-the following high level steps will be followed:
+the following high level steps were followed:
 
-1. All jobs Pending in the queue will be deleted
-   - This step is necessary as jobs in the Pending queue before the switch will 
-     expect to be able to write to `/work`. As this will not be possible after the
-     switch, any pending jobs would fail.
-2. Current `/work` storage will be changed to read-only mode
-3. `/epccfs` storage will be made available in read/write-mode
+1. All jobs Pending in the queue were deleted
+   - This step was necessary as jobs in the Pending queue before the switch would have 
+     expected to be able to write to `/work`. As this was not be possible after the
+     switch, any pending jobs would have failed when the system returned.
+2. Current `/work` storage changed to read-only mode
+3. `/epccfs` storage made available in read/write-mode
 4. Final testing of `/epccfs`
 5. Service returned to users
 
@@ -31,17 +32,15 @@ new `/epccfs` storage.
 
 ## Impacts for users
 
-- All current Cirrus projects and user accounts will get directories on the new storage
-  with quotas set as they are on the current `/work` storage.
+- All current Cirrus projects and user accounts have directories on the new EPCCFS storage
+  with quotas set as they are on the old `/work` storage.
 - Any jobs in Pending state at the start of the maintenance session for the switch
-  will be deleted. You must resubmit them (using the new `/epccfs` storage) once the
-  system returns from maintenance.
+  were deleted. You must resubmit them (using the new `/epccfs` storage).
 - Any jobs submitted after the maintenance session must write to locations in 
   `/epccfs`. Any jobs that attempt to write to locations in `/work` will fail.
-- Following the maintenance session, you will no longer be able to write data to 
-  any locations in `/work`. This data will remain available in read-only mode 
-  until at least 21 Nov 2026.
-  - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
+- You are no longer able to write data to any locations in `/work`.
+- The existing data will remain available in read-only mode until at least 21 Nov 2026.
+   - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
 
 ## EPCCFS storage
 
@@ -49,15 +48,33 @@ new `/epccfs` storage.
     This is a copy of the documentation in the [Data section](../user-guide/data.md) of the
     Cirrus User Guide. 
 
+!!! Important "No backup"
+    There are no backups of any data on the EPCCFS storage. You should
+    ensure you have copies of any critical data in a secure location to
+    protect against loss of data from hardware failures.
+
 Every project has an allocation on the EPCCFS storage and your
 project's space can always be accessed via the path
 `/epccfs/[project-code]`. The EPCCFS storage provides a large 
 capacity (more than 30 PB) and is currently implemented using
 the VAST technology.
 
-!!! warning
-    EPCCFS is not backed up at all.
+Ideally, EPCCFS storage should only contain data that is:
 
+- actively in use;
+- recently generated and in the process of being saved elsewhere; or
+- being made ready for up-coming work.
+
+In practice it may be convenient to keep copies of datasets on the EPCCFS
+fstorage that you know will be needed at a later date. However, make
+sure that important data is always backed up elsewhere and that your
+work would not be significantly impacted if the data on the EPCCFS storage
+was lost.
+
+If you have data on the EPCCFS storage that you are not going to need
+in the future please delete it.
+
+### Directory locations
 
 You can find your directory on the EPCCFS at:
 
@@ -121,7 +138,6 @@ auser@uan01:/epccfs/e05/e05/auser> df -h $PWD
 Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/cirrus  8.8T  1.8G  8.8T   1% /mnt/nfs/epccfs
 ```
-
 ### Snapshots on EPCCFS
 
 EPCCFS retain snapshots which can be used to recover past versions of files.
