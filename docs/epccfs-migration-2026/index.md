@@ -18,9 +18,9 @@ with no jobs running on compute nodes for this switch. During this maintenance s
 the following high level steps were followed:
 
 1. All jobs Pending in the queue were deleted
-   - This step was necessary as jobs in the Pending queue before the switch would have 
-     expected to be able to write to `/work`. As this was not be possible after the
-     switch, any pending jobs would have failed when the system returned.
+    - This step was necessary as jobs in the Pending queue before the switch would have 
+      expected to be able to write to `/work`. As this was not be possible after the
+      switch, any pending jobs would have failed when the system returned.
 2. Current `/work` storage changed to read-only mode
 3. `/epccfs` storage made available in read/write-mode
 4. Final testing of `/epccfs`
@@ -40,7 +40,7 @@ new `/epccfs` storage.
   `/epccfs`. Any jobs that attempt to write to locations in `/work` will fail.
 - You are no longer able to write data to any locations in `/work`.
 - The existing data will remain available in read-only mode until at least 21 Nov 2026.
-   - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
+    - Users should copy any data they wish to keep off `/work` before 21 Nov 2026.
 
 ## EPCCFS storage
 
