@@ -12,7 +12,7 @@ There are three different data storage types available to users:
 
 - Home file system (CephFS)
 - EPCCFS (VAST)
-- Work file system (Lustre)
+- Work file system (Lustre) - deprecated
 
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
@@ -29,8 +29,8 @@ node types:
 | Storage     | Login nodes | Compute nodes | Notes     |
 |-------------|-------------|---------------|-----------|
 | Home        | yes         | no            | No backup |
-| EPCCFS      | yes         | yes           | No backup, available from 16 Sep 2026 |
-| Work        | yes         | yes           | No backup. read-only from 16 Sep 2026, available until at least 21 Nov 2026 |
+| EPCCFS      | yes         | yes           | No backup |
+| Work        | yes         | yes           | Deprecated. No backup. read-only, available until at least 21 Nov 2026 |
 
 
 ### Home file system
@@ -104,97 +104,31 @@ A full path name can be specified if required.
 
 ### Work file system
 
-!!! Note "Read only from 16 Sep 2026"
+!!! Important "Read only from 16 Sep 2026"
     As part of the work to switch to the [EPCCFS storage](#epccfs-storage), the
-    Work file system will be read-only from 16 Sep 2026. Read-only access will be
+    Work file system has been read-only from 16 Sep 2026. Read-only access will be
     maintained until at least 21 Nov 2026 - users should copy any data they wish to
     keep off of Work before this date.
-
 
 !!! Important "No backup"
     There are no backups of any data on the work file system. You should
     ensure you have copies of any critical data in a secure location to
     protect against loss of data from hardware failures.
 
+The work file system is now deprecated - please use [EPCCFS storage](#epccfs-storage)
+instead for data needed during Slurm jobs.
+
 Every project has an allocation on the work file system and your
 project's space can always be accessed via the path
-`/work/[project-code]`. The work file system is approximately 1 PB in
-size and is implemented using the Lustre parallel file system
-technology. They are designed to support data in large files. The
-performance for data stored in large numbers of small files is probably
-not going to be as good.
-
-Ideally, the work file system should only contain data that is:
-
-- actively in use;
-- recently generated and in the process of being saved elsewhere; or
-- being made ready for up-coming work.
-
-In practice it may be convenient to keep copies of datasets on the work
-file system that you know will be needed at a later date. However, make
-sure that important data is always backed up elsewhere and that your
-work would not be significantly impacted if the data on the work file
-system was lost.
-
-If you have data on the work file system that you are not going to need
-in the future please delete it.
-
-#### Quotas on the work file system
-
-As for the home file system, all projects are assigned a quota on the
-work file system. The project PI or manager can split this quota up
-between groups of users if they wish.
-
-You can view any work file system quotas that apply to your account by
-logging into SAFE and navigating to the page for your Cirrus login
-account.
-
-1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
-2.  Use the "Login accounts" menu and select your Cirrus login account
-3.  The "Login account details" table lists any user or project quotas
-    that are linked with your account. (If there is no quota shown for a
-    row then you have an unlimited quota for that item, but you may
-    still may be limited by another quota.)
-
-Quota and usage data on SAFE is updated twice daily so may not be
-exactly up to date with the situation on the system itself.
-
-You can also examine up to date quotas and usage on the Cirrus system
-itself using the `lfs quota` command. To do this:
-
-Change directory to the work directory where you want to check the
-quota. For example, if I wanted to check the quota for user `auser` in
-project `t01` then I would:
-
-```bash
-[auser@login01:~]$ cd /work/t01/t01/auser
-
-[auser@login01:auser]$ lfs quota -hu auser .
-Disk quotas for usr auser (uid 68826):
-        Filesystem    used   quota   limit   grace   files   quota   limit   grace
-                .  5.915G      0k      0k       -   51652       0       0       -
-uid 68826 is using default block quota setting
-uid 68826 is using default file quota setting
-```
-
-the quota and limit of 0k here indicate that no user quota is set for
-this user.
-
-To check your project quota, you would use the command:
-
-```bash
-[auser@login01:auser]$ lfs quota -hp $(id -g)'01' .
-Disk quotas for prj 3773301 (pid 3773301):
-    Filesystem    used   quota   limit   grace   files   quota   limit   grace
-            .   958.3G     0k  13.57T       - 9038326       0       0       -
-pid 3773301 is using default file quota setting
-```
-the limit of `13.57T` indicates the quota for the project.
+`/work/[project-code]`. 
 
 ### EPCCFS storage
 
-!!! Note "Available from 16 Sep 2026"
-    The EPCCFS storage will be available to users from 16 Sep 2026.
+
+!!! Important "No backup"
+    There are no backups of any data on the EPCCFS storage. You should
+    ensure you have copies of any critical data in a secure location to
+    protect against loss of data from hardware failures.
 
 Every project has an allocation on the EPCCFS storage and your
 project's space can always be accessed via the path
@@ -202,9 +136,22 @@ project's space can always be accessed via the path
 capacity (more than 30 PB) and is currently implemented using
 the VAST technology.
 
-!!! warning
-    EPCCFS is not backed up at all.
+Ideally, EPCCFS storage should only contain data that is:
 
+- actively in use;
+- recently generated and in the process of being saved elsewhere; or
+- being made ready for up-coming work.
+
+In practice it may be convenient to keep copies of datasets on the EPCCFS
+fstorage that you know will be needed at a later date. However, make
+sure that important data is always backed up elsewhere and that your
+work would not be significantly impacted if the data on the EPCCFS storage
+was lost.
+
+If you have data on the EPCCFS storage that you are not going to need
+in the future please delete it.
+
+#### Directory locations
 
 You can find your directory on the EPCCFS at:
 
