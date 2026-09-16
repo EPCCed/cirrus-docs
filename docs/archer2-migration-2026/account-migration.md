@@ -51,11 +51,32 @@ your account has access to through SAFE as you can for ARCHER2 accounts.
     ARCHER2. If you try to choose a different username from your ARCHER2 username
     then SAFE will give an error.
 
+There are two different cases for account setup:
+
+- **Case 1:** You already have an account labelled "<username>@eidf" in SAFE the project that is migrating
+   (this will usually be the case if your project has RDFaaS storage associated with it)
+- **Case 2:** You do not yet have an account labelled "<username>@eidf" in SAFE the project that is migrating
+
+### Case 1: Account labelled "<username>@eidf" already exists in SAFE
+
+1. Login to [SAFE](https://safe.epcc.ed.ac.uk)
+2. Use the "Login accounts" menu to select the "<username>@eidf" account in the migrating project
+3. Click the "Add machine" button
+4. Select "Cirrus" from the drop down menu and click "Join"
+
+Once the account has been approved by the project lead, you will need to setup
+credentials (MFA/TOTP token and SSH key) in the same way
+as you have done for your ARCHER2 account to be able to login to Cirrus NCR. See
+[the Access Credentials section of the Cirrus Documentation](https://docs.cirrus.ac.uk/user-guide/connecting/#access-credentials-mfa) for more information on how to do this.
+
+### Case 2: No account labelled "<username>@eidf" exists in SAFE
+
 Use the [standard account creation process in SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-a-machine-account) and select "Cirrus"
 for the machine to request an account on. You **must** use the same username you have in 
 the project on ARCHER2 for your Cirrus NCR account. 
 
-You will need to setup credentials (MFA/TOTP token and SSH key) in the same way
+Once the account has been approved by the project lead, you will need to setup
+credentials (MFA/TOTP token and SSH key) in the same way
 as you have done for your ARCHER2 account to be able to login to Cirrus NCR. See
 [the Access Credentials section of the Cirrus Documentation](https://docs.cirrus.ac.uk/user-guide/connecting/#access-credentials-mfa) for more information on how to do this.
 
