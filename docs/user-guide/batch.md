@@ -726,7 +726,7 @@ priority jobs, i.e. you need at least 1 coreh in your budget.
 !!! important "Limits for low priority use in Pump Priming projects"
     While we allow Pump Priming projects to take advantage of low priority, projects should
     take care to ensure that they do not abuse this facility to run extremely large amounts
-    of uncharged work. As a rough guide, we expect that Pump Priming projects should use a
+    of uncharged work. As a guide, we expect that Pump Priming projects should use a
     maximum of 200,000 coreh of low priority use over the duration of the project.
 
 Low priority access is always available. Consult the QoS table above for limits on low priority jobs.
