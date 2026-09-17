@@ -35,8 +35,8 @@ When you are finished working on the system, simply close the browser tab contai
 ## Working with the Cirrus file systems
 
 The first item on the top menu bar in Open OnDemand is 'Files'. Clicking this drop-down menu gives options that, if you
-select one, will take you to either your Home or Work file system directory, *i.e.* your 
-`/home/<projectid>/<projectid>/<username>` and `/work/<projectid>/<projectid>/<username>` directories.
+select one, will take you to either your Home or EPCCFS file system directory, *i.e.* your 
+`/home/<projectid>/<projectid>/<username>` and `/epccfs/<projectid>/<projectid>/<username>` directories.
 
 The new window that opens is the File Manager, showing you the contents of the directory you pick. You can click on a 
 directory to move into it. Clicking on a text-based file will open a new tab containing its contents.
@@ -73,7 +73,7 @@ of whichever job is currently selected. You might want to at a minimum set a job
 distinguish this from any later ones generated from the default template, which would otherwise have the same name.
 
 You will see that the default job sets up a directory for it to run in, located within an `ondemand` directory in your
-work directory, as well as a `main_job.sh` job script. These directories are dynamically created for you as you set 
+EPCCFS directory, as well as a `main_job.sh` job script. These directories are dynamically created for you as you set 
 up new jobs. The files in the directory and the job script's contents are shown on the right hand side of the page. You
 should edit or replace this job script, leaving in its place a valid Cirrus job script as described in the Cirrus
 documentation's [section on running jobs](batch.md). Use Open OnDemand's in-browser editor by clicking 'Open Editor', or
@@ -85,7 +85,7 @@ work as you otherwise do normally.
     further worked on before submission there.
 
 !!! note
-    Clicking the button to delete a job in Open OnDemand deletes the directory containing it on the Cirrus work file
+    Clicking the button to delete a job in Open OnDemand deletes the directory containing it on the EPCCFS file
     system. This means that the job script as well as any input data and previously generated output data will be 
     deleted. Before you delete a job, make sure that there is nothing listed in this directory that you want keep.
 
@@ -129,7 +129,7 @@ the same files that were used when creating the template.
 
 ### Working in a project
 
-So far the jobs created through the Job Composer have been created in a preconfigured `ondemand` directory in your work
+So far the jobs created through the Job Composer have been created in a preconfigured `ondemand` directory in your EPCCFS
 directory and are fairly standalone. If you wish to, you can create and work in an Open OnDemand project by going to
 'Jobs' in the top menu bar of the window, and then 'Project Manager'. Projects allow you to set up large reusable sets
 of job scripts and data, and to configure launchers which provide a way of quickly reconfiguring and resubmitting these
