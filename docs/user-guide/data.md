@@ -220,9 +220,8 @@ access the snapshots at `.snapshot` from any given directory on EPCCFS.
 The work file system is now deprecated - please use [EPCCFS storage](#epccfs-storage)
 instead for data needed during Slurm jobs.
 
-Every project has an allocation on the work file system and your
-project's space can always be accessed via the path
-`/work/[project-code]`. 
+Older Cirrus projects may have had an allocation on the work file system and their
+space can be accessed via the path `/work/[project-code]`. 
 
 ## Archiving
 
