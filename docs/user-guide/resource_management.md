@@ -9,7 +9,7 @@ of changing these permissions to the desired setting. This leads on to
 the sharing of data between users and systems often a vital tool for
 project groups and collaboration.
 
-Finally we cover some guidelines for I/O and data archiving on Cirrus.
+Finally, we cover some general guidelines for I/O strategies.
 
 ## The Cirrus Administration Web Site (SAFE)
 
@@ -50,7 +50,7 @@ descriptions in the [Data Management and Transfer section](data.md)
 ## Backup policies
 
 - The `/home` file system is not backed up.
-- The `/work` file system is not backed up.
+- The EPCCFS storage is not backed up.
 
 We strongly advise that you keep copies of any critical data on on an
 alternative system that is fully backed up.
@@ -63,33 +63,33 @@ folders that can be used for sharing data.
 
 ### Sharing data with Cirrus users in your project
 
-Each project has an inner shared folder on the `/home` and `/work`
+Each project has an inner shared folder on the `/home` and `/epccfs`
 filesystems:
 
     /home/[project code]/[project code]/shared
 
-    /work/[project code]/[project code]/shared
+    /epccfs/[project code]/[project code]/shared
 
 This folder has read/write permissions for all project members. You can
 place any data you wish to share with other project members in this
 directory. For example, if your project code is `x01` the inner shared
-folder on the `/work` file system would be located at
-`/work/x01/x01/shared`.
+folder on the `/epccfs` file system would be located at
+`/epccfs/x01/x01/shared`.
 
 ### Sharing data with all Cirrus users
 
-Each project also has an outer shared folder on the `/home` and `/work`
-filesystems:
+Each project also has an outer shared folder on the `/home` and `/epccfs`
+file systems:
 
     /home/[project code]/shared
 
-    /work/[project code]/shared
+    /epccfs/[project code]/shared
 
 It is writable by all project members and readable by any user on the
 system. You can place any data you wish to share with other Cirrus users
 who are not members of your project in this directory. For example, if
-your project code is `x01` the outer shared folder on the `/work` file
-system would be located at `/work/x01/shared`.
+your project code is `x01` the outer shared folder on the `/epccfs file
+system would be located at `/epccfs/x01/shared`.
 
 ## File permissions and security
 
@@ -100,18 +100,18 @@ account. Files of the latter type are likely to be readable by you only.
 The chmod command below shows how to make sure that a file placed in the
 outer shared folder is also readable by all Cirrus users.
 
-    chmod a+r /work/x01/shared/your-shared-file.txt
+    chmod a+r /epccfs/x01/shared/your-shared-file.txt
 
 Similarly, for the inner shared folder, chmod can be called such that
 read permission is granted to all users within the x01 project.
 
-    chmod g+r /work/x01/x01/shared/your-shared-file.txt
+    chmod g+r /epccfs/x01/x01/shared/your-shared-file.txt
 
 If you're sharing a set of files stored within a folder hierarchy the
 chmod is slightly more complicated.
 
-    chmod -R a+Xr /work/x01/shared/my-shared-folder
-    chmod -R g+Xr /work/x01/x01/shared/my-shared-folder
+    chmod -R a+Xr /epccfs/x01/shared/my-shared-folder
+    chmod -R g+Xr /epccfs/x01/x01/shared/my-shared-folder
 
 The `-R` option ensures that the read permission is enabled recursively
 and the `+X` guarantees that the user(s) you're sharing the folder with
@@ -266,73 +266,3 @@ explicitly coordinated to avoid clashes. It is only through collective
 I/O that the full bandwidth of the file system can be realised while
 accessing a single file.
 
-## Achieving efficient I/O
-
-This section provides information on getting the best performance out of
-the `/work` parallel file system on Cirrus when writing data,
-particularly using parallel I/O patterns.
-
-You may find that using the `/user-guide/solidstate` gives better
-performance than `/work` for some applications and IO patterns.
-
-### Lustre
-
-The Cirrus `/work` file system use Lustre as a parallel file system
-technology. The Lustre file system provides POSIX semantics (changes on
-one node are immediately visible on other nodes) and can support very
-high data rates for appropriate I/O patterns.
-
-### Striping
-
-One of the main factors leading to the high performance of `/work`
-Lustre file systems is the ability to stripe data across multiple Object
-Storage Targets (OSTs) in a round-robin fashion. Files are striped when
-the data is split up in chunks that will then be stored on different
-OSTs across the `/work` file system. Striping might improve the I/O
-performance because it increases the available bandwidth since multiple
-processes can read and write the same files simultaneously. However
-striping can also increase the overhead. Choosing the right striping
-configuration is key to obtain high performance results.
-
-Users have control of a number of striping settings on Lustre file
-systems. Although these parameters can be set on a per-file basis they
-are usually set on directory where your output files will be written so
-that all output files inherit the settings.
-
-#### Default configuration
-
-The work (Lustre) file system on Cirrus has the following default stripe settings:
-
-- A default stripe count of 1
-- A default stripe size of 1 MiB (1048576 bytes)
-
-These settings have been chosen to provide a good compromise for the
-wide variety of I/O patterns that are seen on the system but are
-unlikely to be optimal for any one particular scenario. The Lustre
-command to query the stripe settings for a directory (or file) is
-`lfs getstripe`. For example, to query the stripe settings of an already
-created directory `res_dir`:
-
-    [auser@login01:auser]$ lfs getstripe res_dir/
-    res_dir
-    stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
-
-#### Setting Custom Striping Configurations
-
-Users can set stripe settings for a directory (or file) using the
-`lfs setstripe` command. The options for `lfs setstripe` are:
-
-- `[--stripe-count|-c]` to set the stripe count; 0 means use the system
-  default (usually 1) and -1 means stripe over all available OSTs.
-- `[--stripe-size|-S]` to set the stripe size; 0 means use the system
-  default (usually 1 MB) otherwise use k, m or g for KB, MB or GB
-  respectively
-- `[--stripe-index|-i]` to set the OST index (starting at 0) on which to
-  start striping for this file. An index of -1 allows the MDS to choose
-  the starting index and it is strongly recommended, as this allows
-  space and load balancing to be done by the MDS as needed.
-
-For example, to set a stripe size of 4 MiB for the existing directory
-`res_dir`, along with maximum striping count you would use:
-
-    [auser@login01:auser]$ lfs setstripe -S 4m -c -1 res_dir/
