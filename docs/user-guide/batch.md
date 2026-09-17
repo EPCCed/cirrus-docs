@@ -25,13 +25,13 @@ login nodes (to submit, check and cancel jobs), and by specifying Slurm
 directives that describe the resources required for your jobs in job
 submission scripts.
 
-## Use of the `/work` file system
+## Use of the EPCCFS storage
 
-Jobs executing in the batch system should use the `/work` file system. In
-particular, the `/home` file system (including home directories `${HOME}`)
+Jobs executing in the batch system should use the EPCCFS storage (mounted at `/epccfs`)
+In particular, the `/home` file system (including home directories `${HOME}`)
 are not available to batch jobs. All relevant software installation, scripts,
 executable files, and input data should be stored in an appropriate
-location in `/work` before submitting batch jobs.
+location in `/epccfs` before submitting batch jobs.
 
 
 ## Basic Slurm commands
@@ -727,7 +727,7 @@ priority jobs, i.e. you need at least 1 coreh in your budget.
     While we allow Pump Priming projects to take advantage of low priority, projects should
     take care to ensure that they do not abuse this facility to run extremely large amounts
     of uncharged work. As a rough guide, we expect that Pump Priming projects should use a
-    maximum of 80,000 coreh of low priority use over the duration of the project.
+    maximum of 200,000 coreh of low priority use over the duration of the project.
 
 Low priority access is always available. Consult the QoS table above for limits on low priority jobs.
 
