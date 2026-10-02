@@ -47,6 +47,7 @@ nav = [
   ]},
   {"Software Tools" = [
     {"Forge" = "software-tools/forge.md"},
+    {"Julia" = "software-tools/julia.md"},
     {"Likwid" = "software-tools/likwid.md"},
     {"PerfTools" = "software-tools/perftools.md"},
     {"Spack" = "software-tools/spack.md"}
