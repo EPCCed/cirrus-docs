@@ -46,6 +46,6 @@ and project code).
 
 !!! tip "Use rclone parallel local data transfers for large datasets"
     If you are transferring a large amount of data to EPCCFS/NSCDS, you should consider
-    using [rclone local data transfer](../user-guide/data.md#local-file-transfer) (perhaps in a 
+    using parallel [rclone local data transfer](../user-guide/data.md#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 

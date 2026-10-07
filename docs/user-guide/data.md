@@ -480,12 +480,12 @@ from your laptop to Cirrus. The rclone website contains further instructions on
 Once all the above is done, you're ready to go. If you want to copy a directory,
 please use:
 
-```./rclone copy <cirrus_directory> remote:<cloud_directory>```
+```rclone copy <cirrus_directory> remote:<cloud_directory>```
 
 Please note that "remote" is the name that you have chosen when running
 `rclone config`. To copy files, please use:
 
-```./rclone copyto <cirrus_file> remote:<cloud_file>```
+```rclone copyto <cirrus_file> remote:<cloud_file>```
 
 !!! note
     If the session times out while the data transfer takes place, adding the
@@ -500,12 +500,22 @@ is that it supports parallel data transfer, copying multiple files
 simultaneously for better performance. To copy local files, simply specify the
 source and destination directory paths:
 
-```./rclone copy <cirrus_directory> <another_cirrus_directory>```
+```rclone copy <cirrus_directory> <another_cirrus_directory>```
 
 By default `rclone` will run 4 transfers simultaneously. However this can
 be customised using the `--transfers` option:
 
-```./rclone --transfers 8 copy <cirrus_directory> <another_cirrus_directory>```
+```rclone --transfers 8 copy <cirrus_directory> <another_cirrus_directory>```
+
+
+!!! tip "`rclone` does not preserve symlinks"
+    Copying using `rclone` does not preserve symlinks - it can either make
+    a note of the symlinks in dedicated files (using the `--links` option)
+    or follow symlinks and copy the files it finds (using the `--copy-links`
+    option).
+
+    If you have lots of symlinks you wish to preserve then you should use
+    `rsync` or `cp` instead.
 
 #### SFTP transfers
 
