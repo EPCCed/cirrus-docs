@@ -480,12 +480,18 @@ from your laptop to Cirrus. The rclone website contains further instructions on
 Once all the above is done, you're ready to go. If you want to copy a directory,
 please use:
 
-```rclone copy <cirrus_directory> remote:<cloud_directory>```
+```
+module load rclone
+rclone copy <cirrus_directory> remote:<cloud_directory>
+```
 
 Please note that "remote" is the name that you have chosen when running
 `rclone config`. To copy files, please use:
 
-```rclone copyto <cirrus_file> remote:<cloud_file>```
+```
+module load rclone
+rclone copyto <cirrus_file> remote:<cloud_file>
+```
 
 !!! note
     If the session times out while the data transfer takes place, adding the
@@ -500,12 +506,18 @@ is that it supports parallel data transfer, copying multiple files
 simultaneously for better performance. To copy local files, simply specify the
 source and destination directory paths:
 
-```rclone copy <cirrus_directory> <another_cirrus_directory>```
+```
+module load rclone
+rclone copy <cirrus_directory> <another_cirrus_directory>
+```
 
 By default `rclone` will run 4 transfers simultaneously. However this can
 be customised using the `--transfers` option:
 
-```rclone --transfers 8 copy <cirrus_directory> <another_cirrus_directory>```
+```
+module load rclone
+rclone --transfers 8 copy <cirrus_directory> <another_cirrus_directory>
+```
 
 
 !!! tip "`rclone` does not preserve symlinks"
