@@ -25,6 +25,7 @@ nav = [
     {"Software environment" = "user-guide/sw-environment.md"},
     {"Scheduler and Running Jobs" = "user-guide/batch.md"},
     {"Application Development Environment" = "user-guide/development.md"},
+    {"Use of generative AI with Cirrus" = "user-guide/ai.md"},
     {"Using Containers" = "user-guide/containers.md"},
     {"Using Python" = "user-guide/python.md"},
     {"Using R" = "user-guide/r.md"}
