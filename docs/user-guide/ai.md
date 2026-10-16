@@ -12,7 +12,7 @@ Breaches of policies by generative AI using your Cirrus account are treated the 
 
 In particular:
 
-- Cirrus access credentials should never be shared with AI
+- Cirrus access credentials should never be shared with AI (this includes passwords, SSH keys, MFA shared secrets - e.g passkey/QR code)
 - Other people should not be given access to AI that is accessing your Cirrus account
 - It is your responsibility to ensure any AI-generated code, scripts or commands running on Cirrus comply with access policies
 
