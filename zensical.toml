@@ -18,6 +18,7 @@ nav = [
   {"User Guide" = [
     {"Introduction" = "user-guide/introduction.md"},
     {"Hardware" = "user-guide/hardware.md"},
+    {"Energy use, emissions and responsible computing" = "user-guide/responsible-computing.md"},
     {"Connecting to Cirrus" = "user-guide/connecting.md"},
     {"Using Open OnDemand" = "user-guide/open_ondemand.md"},
     {"Data Management and Transfer" = "user-guide/data.md"},
