@@ -24,7 +24,7 @@ A full step-by-step guide on transferring data to/from Cirrus is provided below.
 2. Log in with your Globus identity (this could be a globusid.org or other identity).
 3. In File Manager, use the search tool to search for the relevant collection (i.e. "CephFS" or "NAIDIN"). Select it.
 4. In the transfer pane, you are told that Authentication/Consent is required. Click *Continue*.
-5. Click on the ARCHER2 Safe (safe.epcc.ed.ac.uk) link.
+5. Click on the EPCC SAFE (safe.epcc.ed.ac.uk) link.
 6. Select the correct User account (if you have more than one). Click *Accept*.
 7. Now confirm your Globus credentials. click *Allow*.
 8. The top-level Cirrus directory will be shown (i.e. `/home` or `/epccfs` ).
@@ -53,11 +53,11 @@ Once you are connected to both the Source and Destination Collections, you can u
 - A pop-up will appear once the Transfer request has been submitted successfully
 - Clicking on the “View Details” will show the progress and final status of the transfer
 
-### Using a different ARCHER2 account
+### Using a different Cirrus account
 
 If you want to use Globus with a different account on Cirrus, you will have to go to Settings
 
-![Settings to change ARCHER2 account](../images/globus/17-settings.jpg)
+![Settings to change Cirrus account](../images/globus/17-settings.jpg)
 
 Manage Identities
 
