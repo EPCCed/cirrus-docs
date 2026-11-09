@@ -1,11 +1,5 @@
 # Linaro Forge
 
-!!! important "Linaro Forge is not currently working on Cirrus"
-    As of 9 June 2026 Linaro Forge will not work on Cirrus due to a 
-    change on the system to protect against a known security issue.
-    If you wish to profile applications, you can use the CrayPAT tools
-    instead. We are working to resolve this issue.
-
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling
 tools for MPI parallel applications, and OpenMP or pthreads multi-threaded
 applications (and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP
@@ -32,26 +26,26 @@ is discussed further in
 A preliminary step is required to set up the necessary
 Forge configuration files that allow DDT and MAP to initialise its
 environment correctly so that it can, for example, interact with
-the Slurm queue system. These steps should be performed in the `/work`
+the Slurm queue system. These steps should be performed in the `/epccfs`
 file system on Cirrus.
 
-It is recommended that these commands are performed in the top-level work
-file system directory for the user account, i.e., `${HOME/home/work}`.
+It is recommended that these commands are performed in the top-level working
+file system directory for the user account, i.e., `${HOME/home/epccfs}`.
 
 ```bash
 module load forge
-cd ${HOME/home/work}
+cd ${HOME/home/epccfs}
 source ${FORGE_ROOT}/config-init
 ```
 
-Running the `source` command will create a directory `${HOME/home/work}/.forge` that contains the
+Running the `source` command will create a directory `${HOME/home/epccfs}/.forge` that contains the
 following files.
 
 ```output
 system.config  user.config
 ```
 
-Within the `system.config` file you should find that `shared directory` is set to the equivalent of `${HOME/home/work/.forge}`.
+Within the `system.config` file you should find that `shared directory` is set to the equivalent of `${HOME/home/epccfs/.forge}`.
 That directory will also store other relevant files when Forge is run.
 
 ## Using DDT
@@ -176,7 +170,7 @@ standard time limit of 20 minutes. An account code is also required.
 The default template is a non-exclusive submission.
 
 Alternatively, one can copy the `cirrus.qtf` template file
-to a suitable location in your work file space and make the relevant changes.
+to a suitable location in your `/epccfs` file space and make the relevant changes.
 For example, if the application does not use the default programming
 eniovironment, or requires additional modules to be loaded, module
 commands should be added in the new queue template file.
@@ -244,7 +238,7 @@ commands on connection. A default script is provided in the location
 shown.
 
 ```output
-/work/y07/shared/cirrus-ex/cirrus-ex-software/utils/core/forge/latest/remote-init
+/epccfs/y07/shared/cirrus-ex/cirrus-ex-software/utils/core/forge/latest/remote-init
 ```
 
 Other settings can be as shown. Remember to click ***OK*** when done.
@@ -258,10 +252,10 @@ password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.
 
 If different commands are required on connection, a copy of the
-`remote-init` script can be placed in, e.g., `${HOME/home/work}/.forge`
+`remote-init` script can be placed in, e.g., `${HOME/home/epccfs}/.forge`
 and edited as necessary. The full path of the new script should then be
 specified in the remote launch settings dialog box.
-Note that the script changes the directory to the `/work/` file system so
+Note that the script changes the directory to the `/epccfs` file system so
 that batch submissions via `sbatch` will not be rejected.
 
 Finally, note that `ssh` may need to be configured so that it picks up
@@ -274,11 +268,9 @@ A common cause of problems in the use of the remote client is incorrect
 Forge configuration in the `.forge/system.config` file, particularly in the
 specification of the shared directory. The should be of the form
 ```
-shared directory = /mnt/lustre/e1000/home/project/project/user/.forge
+shared directory = /epccfs/project/project/username/.forge
 ```
-(and certainly not the home directory `~`). The full mount point your
-work directory can be obtained with e.g., `pwd -P` (somewhat
-confusingly, `/mnt/lustre/e1000/home` is `/work`).
+(and certainly not the home directory `~`).
 
 If you submit a job to the queue via the remote client, and the job starts
 (can check using `squeue` interactively), but the client does not connect,
