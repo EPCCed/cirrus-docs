@@ -7,7 +7,7 @@ Globus is a service that enables high-performance and convenient data transfer a
 
 ## Using Globus on Cirrus
 
-The Cirrus file systems have Globus Collections (formerly known as an endpoint):
+There are two different Globus Collections (formerly known as an endpoint) that link to Cirrus file systems:
 
 | Collection name | Cirrus file system |
 |---|---|
