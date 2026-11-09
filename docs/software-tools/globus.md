@@ -26,7 +26,7 @@ A full step-by-step guide on transferring data to/from Cirrus is provided below.
 4. In the transfer pane, you are told that Authentication/Consent is required. Click *Continue*.
 5. Click on the EPCC SAFE (safe.epcc.ed.ac.uk) link.
 6. Select the correct User account (if you have more than one). Click *Accept*.
-7. Now confirm your Globus credentials. click *Allow*.
+7. Now confirm your Globus credentials. Click *Allow*.
 8. The top-level Cirrus directory will be shown (i.e. `/home` or `/epccfs` ).
 9. Navigate to the directory you want to transfer data to/from.
 
@@ -40,11 +40,12 @@ A full step-by-step guide on transferring data to/from Cirrus is provided below.
 1. If you wish to transfer data to/from your personal laptop or other device, click on the Collection Search in the right-hand panel
 2. Use the link to “Get Globus Connect Personal” to create a Collection for your local drive.
 
-#### Other server e.g. JASMIN 
+#### Other server with Globus Collection
 
-If you wish to connect to another server, you will need to search for the Collection e.g. JASMIN Default Collection and authenticate
+If you wish to connect to another server, you will need to search for the Collection and authenticate
 
-Please see the [JASMIN Globus page for more information](https://help.jasmin.ac.uk/docs/data-transfer/globus-transfers-with-jasmin/)
+!!! tip "Transfer to JASMIN: UK data analysis facility for environmental science"
+    A common use case fro Globus is to transfer data from Cirrus to the JASMIN data analysis facility. Please see the [JASMIN Globus page for more information](https://help.jasmin.ac.uk/docs/data-transfer/globus-transfers-with-jasmin/) on how to transfer data to/from JASMIN using Gobus.
 
 ### Setting up and initiating the transfer
 
