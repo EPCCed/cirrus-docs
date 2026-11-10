@@ -4,9 +4,10 @@ If you want any of your ARCHER2 data on Cirrus, you must transfer this yourself
 using standard data transfer methods as documented in [the ARCHER2 documentation
 on data transfer](https://docs.archer2.ac.uk/user-guide/data/#archiving-and-data-transfer).
 
-!!! important
-    Globus Online is not yet available on Cirrus for data transfer so you cannot
-    use this method at the moment.
+!!! tip "Globus can be used to transfer data"
+    Globus Online is available on both Cirrus and ARCHER2 so can be used to move data between
+    the systems. See [Cirrus Globus docs](../software-tools/globus.md) and
+    [ARCHER2 Globus docs](https://docs.archer2.ac.uk/data-tools/globus/).
 
 !!! tip "Use EPCCFS/NSCDS to move data from ARCHER2 to Cirrus"
     The EPCCFS/NSCDS storage is shared between ARCHER2 and Cirrus so copying data to this
