@@ -22,9 +22,9 @@ If you have any concerns or questions about your use of generative AI with Cirru
 
 The guiding principles and key checks from the [top-level Cirrus NCR AI skill](https://skills.cirrus.ac.uk/site/plugins/cirrus/skills/general/SKILL.html) are included here. The easiest way to use these are to use the [Cirrus AI Skills](https://skills.cirrus.ac.uk) when using generative AI with Cirrus.
 
-### Principals
+### Principles
 
-AI should always follow these rules when generating or suggesting code for Cirrus system.
+These principles are taken from the top-level Cirrus AI skill and try to define the terms of interaction of AI with the Cirrus service. AI should always follow these rules when generating or suggesting code for Cirrus system.
 
 | Principle | Rule |
 |---|---|
@@ -37,6 +37,8 @@ AI should always follow these rules when generating or suggesting code for Cirru
 | **Do not attempt to escalate privileges** | Never try to use sudo or exploits to gain administrator or root access on Cirrus |
 
 ### Responsible AI-generated code checklist
+
+This checklist is also taken from the top-level Cirrus AI skill that tries to define the terms of interaction of AI with the Cirrus service.
 
 Before submitting any AI-generated code or job script to Cirrus:
 
