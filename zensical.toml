@@ -8,7 +8,6 @@ edit_uri = "edit/main/docs/"
 
 nav = [
   {"Overview" = "index.md"},
-  {"EPCCFS storage migration 2026" = "epccfs-migration-2026/index.md"},
   {"ARCHER2 Project Migration 2026" = [
     {"Overview" = "archer2-migration-2026/index.md"},
     {"Account/Project Migration" = "archer2-migration-2026/account-migration.md"},
@@ -26,7 +25,7 @@ nav = [
     {"Software environment" = "user-guide/sw-environment.md"},
     {"Scheduler and Running Jobs" = "user-guide/batch.md"},
     {"Application Development Environment" = "user-guide/development.md"},
-    {"Use of generative AI with Cirrus" = "user-guide/ai.md"},
+    {"Use of AI with Cirrus" = "user-guide/ai.md"},
     {"Using Containers" = "user-guide/containers.md"},
     {"Using Python" = "user-guide/python.md"},
     {"Using R" = "user-guide/r.md"}
