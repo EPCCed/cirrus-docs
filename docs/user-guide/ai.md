@@ -1,14 +1,14 @@
-# Use of generative AI with Cirrus
+# Use of agentic AI with Cirrus
 
-This section provides guidance and useful links for the use of generative AI with the Cirrus service. It covers how use of AI interacts with the Cirrus access and use policies, guidance on rules for AI use with Cirrus, links for AI skills for use with Cirrus.
+This section provides guidance and useful links for the use of agentic AI with the Cirrus service. It covers how use of AI interacts with the Cirrus access and use policies, guidance on rules for AI use with Cirrus, links for AI skills for use with Cirrus.
 
 ## AI and access policies
 
-It is your responsibility to ensure that any use of generative AI on Cirrus complies with the terms and conditions of access to Cirrus and all other policies that cover the use of Cirrus as listed at:
+It is your responsibility to ensure that any use of AI on Cirrus complies with the terms and conditions of access to Cirrus and all other policies that cover the use of Cirrus as listed at:
 
 - [Cirrus Service Policies](https://www.cirrus.ac.uk/about/policies/)
 
-Breaches of policies by generative AI using your Cirrus account are treated the same as breaches by you.
+Breaches of policies by AI using your Cirrus account are treated the same as breaches by you.
 
 In particular:
 
@@ -16,7 +16,7 @@ In particular:
 - Other people should not be given access to AI that is accessing your Cirrus account
 - It is your responsibility to ensure any AI-generated code, scripts or commands running on Cirrus comply with access policies
 
-If you have any concerns or questions about your use of generative AI with Cirrus, [contact the Cirrus Service Desk](https://www.cirrus.ac.uk/support-access/user-support/) to discuss them.
+If you have any concerns or questions about your use of AI with Cirrus, [contact the Cirrus Service Desk](https://www.cirrus.ac.uk/support-access/user-support/) to discuss them.
 
 ## Key guiding rules and checks for AI use with Cirrus
 
