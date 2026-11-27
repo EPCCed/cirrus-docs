@@ -194,7 +194,7 @@ jobs.
 | QoS Name     | Jobs Running Per User | Jobs Submitted Per User | Max Walltime | Max Size                                | Applies to Partitions | Notes |
 |--------------|-----------------------|----------------------|--------------|-----------------------------------------|-----------------------|-------|
 | standard     | Not set              | 256 jobs             | 48 hours       | 128 nodes              | standard, highmem              | Maximum of 128 nodes or 36,864 cores in use by any one user at any time.      |
-| largescale   | 1 job                 | 4 jobs               | 212 hours     | 640 nodes | standard         | Minimum job size of 129 nodes      |
+| largescale   | 1 job                 | 4 jobs               | 12 hours     | 640 nodes | standard         | Minimum job size of 129 nodes      |
 | long         | Not set              | 128 jobs             | 4 days       | 16 nodes                     | standard         | Maximum of 16 nodes or 4,608 cores in use by any one user at any time. Maximum of 128 nodes in use by this QoS.      |
 | highpriority | Not set               | 256 jobs              | 48 hours       | 128 nodes                               | standard, highmem              | Chargd at 1.5x normal rate. Maximum of 128 nodes or 36,864 cores in use by any one user at any time. Maximum of 256 nodes in use by this QoS. |
 | short        | 1 job                 | 2 jobs               | 20 minutes   | 2 nodes                       | standard         |       |
